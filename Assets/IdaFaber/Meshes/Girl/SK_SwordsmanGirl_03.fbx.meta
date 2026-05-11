@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: 06eb3b19eb058df4b8235f508d5a634a
+AssetOrigin:
+  serializedVersion: 1
+  productId: 178252
+  packageName: Swordsman Girl - RPG Dark Fantasy Modular Female
+  packageVersion: 2.1
+  assetPath: Assets/IdaFaber/Meshes/Girl/SK_SwordsmanGirl_03.fbx
+  uploadId: 833200
 ModelImporter:
-  serializedVersion: 21300
+  serializedVersion: 24200
   internalIDToNameTable: []
   externalObjects:
   - first:
@@ -111,8 +118,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 1
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -135,6 +140,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
+    importPhysicalCameras: 1
     importVisibility: 0
     importBlendShapes: 1
     importCameras: 0
@@ -152,6 +158,9 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
+    generateMeshLods: 0
+    meshLodGenerationFlags: 0
+    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -617,37 +626,17 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: SK_SwordsmanGirl_AllPartsTogether(Clone)
+    - name: SK_SwordsmanGirl_03(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Body
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
+      parentName: SK_SwordsmanGirl_03(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: SK_SWORDSMANGIRL_BODY_01
-      parentName: Body
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_02
-      parentName: Body
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_03
-      parentName: Body
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_04
-      parentName: Body
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_05
       parentName: Body
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
@@ -657,58 +646,68 @@ ModelImporter:
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_07
-      parentName: Body
+    - name: Clothes
+      parentName: SK_SwordsmanGirl_03(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_08
-      parentName: Body
+    - name: SK_SWORDSMANGIRL_BELT
+      parentName: Clothes
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_09
-      parentName: Body
+    - name: SK_SWORDSMANGIRL_BLOUSE
+      parentName: Clothes
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_10
-      parentName: Body
+    - name: SK_SWORDSMANGIRL_BOOTS
+      parentName: Clothes
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_11
-      parentName: Body
+    - name: SK_SWORDSMANGIRL_CAPE_OFF
+      parentName: Clothes
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_12
-      parentName: Body
+    - name: SK_SWORDSMANGIRL_CORSET
+      parentName: Clothes
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BODY_FULL
-      parentName: Body
+    - name: SK_SWORDSMANGIRL_GLOVES
+      parentName: Clothes
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_NAILS
-      parentName: Body
+    - name: SK_SWORDSMANGIRL_SHIRT
+      parentName: Clothes
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SK_SWORDSMANGIRL_SHOULDERPAD
+      parentName: Clothes
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SK_SWORDSMANGIRL_SKIRT
+      parentName: Clothes
+      position: {x: -0, y: -0.0049190433, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SK_SWORDSMANGIRL_SOCKS
+      parentName: Clothes
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SK_SWORDSMANGIRL_TROUSERS
+      parentName: Clothes
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hair
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_HAIR_01
-      parentName: Hair
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_HAIR_01_for_cape
-      parentName: Hair
+      parentName: SK_SwordsmanGirl_03(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
@@ -717,27 +716,17 @@ ModelImporter:
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_HAIR_02_for_cape
-      parentName: Hair
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_HAIR_03
-      parentName: Hair
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_HAIR_03_for_cape
-      parentName: Hair
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
     - name: Head
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
+      parentName: SK_SwordsmanGirl_03(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: SK_SWORDSMANGIRL_CARUNCLE
+      parentName: Head
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0, y: -0, z: -0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: SK_SWORDSMANGIRL_CORNEA
       parentName: Head
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
@@ -763,7 +752,7 @@ ModelImporter:
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: root
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
+      parentName: SK_SwordsmanGirl_03(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
@@ -790,7 +779,7 @@ ModelImporter:
     - name: ik_hand_gun
       parentName: ik_hand_root
       position: {x: 0.42556715, y: 0.01394714, z: 1.0984755}
-      rotation: {x: 0.6083674, y: 0.17933679, z: -0.4612589, w: 0.6204576}
+      rotation: {x: 0.6083674, y: 0.1793368, z: -0.4612589, w: 0.62045765}
       scale: {x: 1, y: 1, z: 1}
     - name: ik_hand_l
       parentName: ik_hand_gun
@@ -875,7 +864,7 @@ ModelImporter:
     - name: lowerarm_l
       parentName: upperarm_l
       position: {x: -0.24381919, y: 0.00000030857043, z: 0.0000026596983}
-      rotation: {x: -0.115306914, y: 0.018473318, z: 0.035976797, w: 0.99250627}
+      rotation: {x: -0.11530693, y: 0.018473318, z: 0.035976805, w: 0.99250627}
       scale: {x: 1, y: 1, z: 1}
     - name: hand_l
       parentName: lowerarm_l
@@ -910,7 +899,7 @@ ModelImporter:
     - name: middle_01_l
       parentName: middle_metacarpal_l
       position: {x: -0.046016283, y: 0.000000225352, z: 0.000000001088684}
-      rotation: {x: 0.0075019263, y: -0.031796187, z: -0.04428498, w: 0.99848473}
+      rotation: {x: 0.0075019253, y: -0.031796183, z: -0.044284977, w: 0.9984846}
       scale: {x: 1, y: 1, z: 1}
     - name: middle_02_l
       parentName: middle_01_l
@@ -935,7 +924,7 @@ ModelImporter:
     - name: pinky_02_l
       parentName: pinky_01_l
       position: {x: -0.03479102, y: 0.00000009076163, z: 0.000000090722686}
-      rotation: {x: 0.004118646, y: -0.0035459085, z: -0.030015467, w: 0.9995346}
+      rotation: {x: 0.0041186465, y: -0.0035459087, z: -0.030015469, w: 0.99953467}
       scale: {x: 1, y: 1, z: 1}
     - name: pinky_03_l
       parentName: pinky_02_l
@@ -1000,7 +989,7 @@ ModelImporter:
     - name: clavicle_r
       parentName: spine_05
       position: {x: -0.07578186, y: -0.023245959, z: 0.017595308}
-      rotation: {x: 0.69380116, y: 0.1365279, z: 0.70083314, w: 0.09398326}
+      rotation: {x: 0.6938012, y: 0.13652791, z: 0.7008332, w: 0.09398327}
       scale: {x: 1, y: 1, z: 1}
     - name: upperarm_r
       parentName: clavicle_r
@@ -1065,12 +1054,12 @@ ModelImporter:
     - name: pinky_01_r
       parentName: pinky_metacarpal_r
       position: {x: 0.04339408, y: 1.4210854e-16, z: -1.7763567e-16}
-      rotation: {x: -0.036082543, y: -0.121454015, z: 0.050904427, w: 0.99063396}
+      rotation: {x: -0.036082547, y: -0.12145402, z: 0.05090443, w: 0.990634}
       scale: {x: 1, y: 1, z: 1}
     - name: pinky_02_r
       parentName: pinky_01_r
       position: {x: 0.034792278, y: 0, z: -1.7763568e-17}
-      rotation: {x: 0.0041179373, y: -0.0035446712, z: -0.030018685, w: 0.99953455}
+      rotation: {x: 0.0041179378, y: -0.0035446715, z: -0.030018687, w: 0.9995346}
       scale: {x: 1, y: 1, z: 1}
     - name: pinky_03_r
       parentName: pinky_02_r
@@ -1100,7 +1089,7 @@ ModelImporter:
     - name: thumb_01_r
       parentName: hand_r
       position: {x: 0.01856734, y: -0.004775755, z: 0.019133879}
-      rotation: {x: 0.44256327, y: -0.07657342, z: 0.1387651, w: 0.8826202}
+      rotation: {x: 0.4425633, y: -0.076573424, z: 0.13876511, w: 0.8826203}
       scale: {x: 1, y: 1, z: 1}
     - name: thumb_02_r
       parentName: thumb_01_r
@@ -1185,7 +1174,7 @@ ModelImporter:
     - name: dk_bun_front_04_l
       parentName: dk_bun_front_03_l
       position: {x: -0.055853598, y: -1.4876988e-16, z: -2.8865798e-17}
-      rotation: {x: 0.50550485, y: 0.8162925, z: 0.14716455, w: -0.23764229}
+      rotation: {x: 0.5055049, y: 0.8162926, z: 0.14716457, w: -0.2376423}
       scale: {x: 1, y: 1, z: 1}
     - name: dk_bun_front_01_mid
       parentName: head
@@ -1449,7 +1438,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: ball_l
       parentName: foot_l
-      position: {x: 0.06536768, y: -0.1193218, z: 0.0072637377}
+      position: {x: 0.1504, y: -0.119, z: 0.007}
       rotation: {x: -1.3945223e-31, y: 2.0290842e-15, z: 0.7071068, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: thigh_twist_01_l
@@ -1489,7 +1478,7 @@ ModelImporter:
       scale: {x: 1, y: 1, z: 1}
     - name: ball_r
       parentName: foot_r
-      position: {x: -0.06536763, y: 0.11932167, z: -0.0072643696}
+      position: {x: -0.1506, y: 0.119, z: -0.007}
       rotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
       scale: {x: 1, y: 1, z: 1}
     - name: thigh_twist_01_r
@@ -1501,76 +1490,6 @@ ModelImporter:
       parentName: thigh_r
       position: {x: -0.3050129, y: -2.0428103e-16, z: -7.105427e-17}
       rotation: {x: 0.07386713, y: 0.0024995003, z: -0.00028123593, w: 0.9972649}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_F_LINGERIE_BRA
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_F_LINGERIE_PANTS
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BELT
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BLOUSE
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_BOOTS
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_CAPE_OFF
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_CAPE_ON
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_CORSET
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_GLOVES
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_SHIRT
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_SHOULDERPAD
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_SKIRT
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: -0.0049190433, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_SOCKS
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
-      scale: {x: 1, y: 1, z: 1}
-    - name: SK_SWORDSMANGIRL_TROUSERS
-      parentName: SK_SwordsmanGirl_AllPartsTogether(Clone)
-      position: {x: -0, y: 0, z: 0}
-      rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
     foreArmTwist: 0.5
@@ -1590,15 +1509,9 @@ ModelImporter:
   humanoidOversampling: 1
   avatarSetup: 1
   addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 0
   remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 178252
-  packageName: Swordsman Girl - RPG Dark Fantasy Modular Female
-  packageVersion: 2.1
-  assetPath: Assets/IdaFaber/Meshes/Girl/SK_SwordsmanGirl_03.fbx
-  uploadId: 833200
