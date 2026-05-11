@@ -5329,6 +5329,7 @@ GameObject:
   - component: {fileID: 4416926083347132239}
   - component: {fileID: 6982812147933622148}
   - component: {fileID: 6982812147933622149}
+  - component: {fileID: 6982812147933622150}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -7680,6 +7681,21 @@ MonoBehaviour:
   defaultDamage: 0
   currentDamage: 0
   equipDamage: 0
+--- !u!114 &6982812147933622150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4416926083347132227}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8355753f464ef274188db0aebc1089a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDance
+  m_Animator: {fileID: 0}
+  m_PlayerInputReader: {fileID: 0}
+  danceTriggerName: Dance
 --- !u!1 &6983507245892776377
 GameObject:
   m_ObjectHideFlags: 0
