@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85100cc4fe76c3c42931c56e8cf86f13, type: 3}
   m_Name: Weapon_IronSword
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponId: 
-  weaponName: 
-  weaponType: 
+  weaponId: weapon_ironsword
+  weaponName: "\uCCA0\uAC80"
+  weaponType: 2
+  jobs: 0300000001000000
   icon: {fileID: 0}
-  damage: 0
-  attackRange: 0
-  attackRate: 0
+  damage: 55
+  attackRange: 3
+  attackRate: 1.5
   criticalChance: 0
   criticalMulitiplier: 1.5
   magazineSize: 0
   reloadTime: 0
   useAmmo: 0
+  isMelee: 1
   weaponPrefab: {fileID: 0}
   projectilePrefab: {fileID: 0}
   fireEffect: {fileID: 0}

@@ -12,18 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85100cc4fe76c3c42931c56e8cf86f13, type: 3}
   m_Name: Weapon_FireStaff
   m_EditorClassIdentifier: Assembly-CSharp::WeaponData
-  weaponId: 
-  weaponName: 
-  weaponType: 
+  weaponId: weapon_firestaff
+  weaponName: "\uD30C\uC774\uC5B4\uC2A4\uD0DC\uD504"
+  weaponType: 3
+  jobs: 02000000
   icon: {fileID: 0}
-  damage: 0
-  attackRange: 0
-  attackRate: 0
+  damage: 35
+  attackRange: 25
+  attackRate: 0.8
   criticalChance: 0
   criticalMulitiplier: 1.5
   magazineSize: 0
   reloadTime: 0
   useAmmo: 0
+  isMelee: 0
   weaponPrefab: {fileID: 0}
   projectilePrefab: {fileID: 0}
   fireEffect: {fileID: 0}
