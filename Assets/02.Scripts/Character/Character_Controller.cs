@@ -1,127 +1,63 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
-using UnityEngine.InputSystem;
-#endif
+using Fusion;
+using Unity.Cinemachine;
 
 [RequireComponent(typeof(CharacterController))]
-#if ENABLE_INPUT_SYSTEM
-[RequireComponent(typeof(PlayerInput))]
-#endif
-public class Character_Controller : MonoBehaviour
+public class Character_Controller : NetworkBehaviour
 {
-    public enum CharacterState
-    {
-        Idle,
-        Move,
-        Jump,
-        Fall,
-        Land
-    }
-
     [Header("Move")]
-    public float MoveSpeed = 5.0f;
-    public float SprintSpeed = 12.0f;
-    public float RotationSmoothTime = 0.12f;
-    public float SpeedChangeRate = 10.0f;
+    public float MoveSpeed = 5f;
+    public float SprintSpeed = 8f;
+    public float RotationSmoothTime = 0.05f;
 
     [Header("Jump")]
     public float JumpHeight = 1.2f;
-    public float Gravity = -15.0f;
-    public float TerminalVelocity = 20.0f;
-
-    [Header("Ground")]
-    public bool Grounded = false;
+    public float Gravity = -35f;
 
     [Header("Camera")]
     public GameObject CinemachineCameraTarget;
-    public float TopClamp = 70.0f;
-    public float BottomClamp = -30.0f;
-    public bool LockCameraPosition = false;
 
-    private CharacterState _currentState;
+    private CharacterController _controller;
+    private Animator _animator;
+    private NetworkMecanimAnimator _networkAnimator;
+
+    private Transform _cameraTransform;
+
+    private float _verticalVelocity;
+    private float _targetRotation;
+    private float _rotationVelocity;
 
     private float _cinemachineTargetYaw;
     private float _cinemachineTargetPitch;
 
-    private float _speed;
-    private float _animationBlend;
-    private float _targetRotation;
-    private float _rotationVelocity;
-    private float _verticalVelocity;
+    private bool _grounded;
 
-    // Animator IDs
     private int _animIDMoving;
-    private int _animIDAnimationSpeed;
     private int _animIDVelocity;
     private int _animIDJumping;
-    private int _animIDTrigger;
-    private int _animIDTriggerNumber;
+    private int _animIDFalling;
 
-    private Animator _animator;
-    private CharacterController _controller;
-    private StarterAssetsInputs _input;
-    private PlayerInput _playerInput;
-    private GameObject _mainCamera;
-
-    private const float _threshold = 0.01f;
-
-    private bool _landed;
-
-    private bool IsCurrentDeviceMouse
+    public override void Spawned()
     {
-        get
-        {
-#if ENABLE_INPUT_SYSTEM
-            return _playerInput.currentControlScheme == "KeyboardMouse";
-#else
-            return false;
-#endif
-        }
-    }
-
-    private void Awake()
-    {
-        _mainCamera =
-            GameObject.FindGameObjectWithTag("MainCamera");
-    }
-
-    private void Start()
-    {
-        _cinemachineTargetYaw =
-            CinemachineCameraTarget
-            .transform.rotation.eulerAngles.y;
+        _controller =
+            GetComponent<CharacterController>();
 
         _animator =
             GetComponent<Animator>();
 
-        _controller =
-            GetComponent<CharacterController>();
-
-        _input =
-            GetComponent<StarterAssetsInputs>();
-
-        _playerInput =
-            GetComponent<PlayerInput>();
+        _networkAnimator =
+            GetComponent<NetworkMecanimAnimator>();
 
         AssignAnimationIDs();
 
-        ChangeState(CharacterState.Idle);
-    }
+        ConnectCamera();
 
-    private void Update()
-    {
-        GroundedCheck();
+        _cinemachineTargetYaw =
+            CinemachineCameraTarget
+            .transform.eulerAngles.y;
 
-        JumpAndGravity();
-
-        Move();
-
-        UpdateAnimator();
-    }
-
-    private void LateUpdate()
-    {
-        CameraRotation();
+        _cameraTransform =
+            Camera.main.transform;
     }
 
     private void AssignAnimationIDs()
@@ -129,215 +65,92 @@ public class Character_Controller : MonoBehaviour
         _animIDMoving =
             Animator.StringToHash("Moving");
 
-        _animIDAnimationSpeed =
-            Animator.StringToHash("Animation Speed");
-
         _animIDVelocity =
             Animator.StringToHash("Velocity");
 
         _animIDJumping =
             Animator.StringToHash("Jumping");
 
-        _animIDTrigger =
-            Animator.StringToHash("Trigger");
-
-        _animIDTriggerNumber =
-            Animator.StringToHash("Trigger Number");
+        _animIDFalling =
+            Animator.StringToHash("Falling");
     }
 
-    private void SetAnimatorTrigger(int number)
+    private void ConnectCamera()
     {
-        _animator.SetInteger(
-            _animIDTriggerNumber,
-            number
-        );
-
-        _animator.SetTrigger(
-            _animIDTrigger
-        );
-    }
-
-    private void ChangeState(CharacterState newState)
-    {
-        if (_currentState == newState)
+        if (!HasStateAuthority)
             return;
 
-        _currentState = newState;
+        Invoke(nameof(SetCamera), 0.2f);
+    }
 
-        switch (_currentState)
-        {
-            case CharacterState.Idle:
+    private void SetCamera()
+    {
+        CinemachineCamera camera =
+            FindFirstObjectByType<CinemachineCamera>();
 
-                _animator.SetBool(
-                    _animIDMoving,
-                    false
-                );
+        if (camera == null)
+            return;
 
-                _animator.SetInteger(
-                    _animIDJumping,
-                    0
-                );
+        camera.Follow =
+            CinemachineCameraTarget.transform;
 
-                break;
+        camera.LookAt =
+            CinemachineCameraTarget.transform;
+    }
 
-            case CharacterState.Move:
+    public override void FixedUpdateNetwork()
+    {
+        if (!GetInput(out NetworkInputData data))
+            return;
 
-                _animator.SetBool(
-                    _animIDMoving,
-                    true
-                );
+        GroundedCheck();
 
-                _animator.SetInteger(
-                    _animIDJumping,
-                    0
-                );
+        Move(data);
 
-                break;
+        Jump(data);
 
-            case CharacterState.Jump:
+        GravityUpdate();
 
-                _landed = false;
-
-                _animator.SetInteger(
-                    _animIDJumping,
-                    1
-                );
-
-                SetAnimatorTrigger(1);
-
-                break;
-
-            case CharacterState.Fall:
-
-                _animator.SetInteger(
-                    _animIDJumping,
-                    2
-                );
-
-                SetAnimatorTrigger(1);
-
-                break;
-
-            case CharacterState.Land:
-
-                _animator.SetInteger(
-                    _animIDJumping,
-                    0
-                );
-
-                SetAnimatorTrigger(1);
-
-                break;
-        }
-
-        Debug.Log("STATE : " + _currentState);
+        CameraRotation(data);
     }
 
     private void GroundedCheck()
     {
-        Grounded = _controller.isGrounded;
+        _grounded =
+            _controller.isGrounded;
     }
 
-    private void CameraRotation()
+    private void Move(NetworkInputData data)
     {
-        if (_input.look.sqrMagnitude >= _threshold
-            && !LockCameraPosition)
-        {
-            float deltaTimeMultiplier =
-                IsCurrentDeviceMouse
-                ? 1.0f
-                : Time.deltaTime;
+        Vector2 moveInput =
+            data.Move;
 
-            _cinemachineTargetYaw +=
-                _input.look.x * deltaTimeMultiplier;
-
-            _cinemachineTargetPitch +=
-                _input.look.y * deltaTimeMultiplier;
-        }
-
-        _cinemachineTargetPitch =
-            Mathf.Clamp(
-                _cinemachineTargetPitch,
-                BottomClamp,
-                TopClamp
-            );
-
-        CinemachineCameraTarget.transform.rotation =
-            Quaternion.Euler(
-                _cinemachineTargetPitch,
-                _cinemachineTargetYaw,
-                0.0f
-            );
-    }
-
-    private void Move()
-    {
         float targetSpeed =
-            _input.sprint
+            data.Buttons.IsSet(
+                (int)EInputButtons.Sprint)
             ? SprintSpeed
             : MoveSpeed;
 
-        if (_input.move == Vector2.zero)
+        if (moveInput == Vector2.zero)
         {
-            targetSpeed = 0.0f;
+            targetSpeed = 0f;
         }
-
-        float currentHorizontalSpeed =
-            new Vector3(
-                _controller.velocity.x,
-                0.0f,
-                _controller.velocity.z
-            ).magnitude;
-
-        float speedOffset = 0.1f;
-
-        float inputMagnitude =
-            _input.analogMovement
-            ? _input.move.magnitude
-            : 1f;
-
-        if (currentHorizontalSpeed
-            < targetSpeed - speedOffset
-            ||
-            currentHorizontalSpeed
-            > targetSpeed + speedOffset)
-        {
-            _speed = Mathf.Lerp(
-                currentHorizontalSpeed,
-                targetSpeed * inputMagnitude,
-                Time.deltaTime * SpeedChangeRate
-            );
-
-            _speed =
-                Mathf.Round(_speed * 1000f)
-                / 1000f;
-        }
-        else
-        {
-            _speed = targetSpeed;
-        }
-
-        _animationBlend = Mathf.Lerp(
-            _animationBlend,
-            targetSpeed,
-            Time.deltaTime * SpeedChangeRate
-        );
 
         Vector3 inputDirection =
             new Vector3(
-                _input.move.x,
-                0.0f,
-                _input.move.y
+                moveInput.x,
+                0f,
+                moveInput.y
             ).normalized;
 
-        if (_input.move != Vector2.zero)
+        if (moveInput != Vector2.zero)
         {
             _targetRotation =
                 Mathf.Atan2(
                     inputDirection.x,
                     inputDirection.z
                 ) * Mathf.Rad2Deg
-                + _mainCamera.transform.eulerAngles.y;
+                + _cameraTransform.eulerAngles.y;
 
             float rotation =
                 Mathf.SmoothDampAngle(
@@ -349,160 +162,157 @@ public class Character_Controller : MonoBehaviour
 
             transform.rotation =
                 Quaternion.Euler(
-                    0.0f,
+                    0f,
                     rotation,
-                    0.0f
+                    0f
                 );
         }
 
         Vector3 targetDirection =
             Quaternion.Euler(
-                0.0f,
+                0f,
                 _targetRotation,
-                0.0f
+                0f
             ) * Vector3.forward;
 
         _controller.Move(
-            targetDirection.normalized
-            * (_speed * Time.deltaTime)
-            +
-            new Vector3(
-                0.0f,
-                _verticalVelocity,
-                0.0f
-            ) * Time.deltaTime
+            (
+                targetDirection.normalized
+                * targetSpeed
+                +
+                Vector3.up
+                * _verticalVelocity
+            )
+            * Runner.DeltaTime
         );
 
-        if (Grounded)
-        {
-            if (_currentState == CharacterState.Idle
-                || _currentState == CharacterState.Move)
-            {
-                if (_input.move != Vector2.zero)
-                {
-                    ChangeState(CharacterState.Move);
-                }
-                else
-                {
-                    ChangeState(CharacterState.Idle);
-                }
-            }
-        }
-    }
-
-    private void JumpAndGravity()
-    {
-        switch (_currentState)
-        {
-            case CharacterState.Idle:
-            case CharacterState.Move:
-
-                if (!Grounded)
-                {
-                    ChangeState(CharacterState.Fall);
-                    return;
-                }
-
-                if (_verticalVelocity < 0)
-                {
-                    _verticalVelocity = -2f;
-                }
-
-                if (_input.jump)
-                {
-                    _verticalVelocity =
-                        Mathf.Sqrt(
-                            JumpHeight
-                            * -2f
-                            * Gravity
-                        );
-
-                    ChangeState(CharacterState.Jump);
-
-                    _input.jump = false;
-
-                    return;
-                }
-
-                break;
-
-            case CharacterState.Jump:
-
-                if (_verticalVelocity <= 0)
-                {
-                    ChangeState(CharacterState.Fall);
-                    return;
-                }
-
-                break;
-
-            case CharacterState.Fall:
-
-                if (Grounded && !_landed)
-                {
-                    _landed = true;
-
-                    _verticalVelocity = -2f;
-
-                    ChangeState(CharacterState.Land);
-
-                    return;
-                }
-
-                break;
-
-            case CharacterState.Land:
-
-                if (_input.move != Vector2.zero)
-                {
-                    ChangeState(CharacterState.Move);
-                }
-                else
-                {
-                    ChangeState(CharacterState.Idle);
-                }
-
-                break;
-        }
-
-        if (_verticalVelocity > -TerminalVelocity)
-        {
-            _verticalVelocity +=
-                Gravity * Time.deltaTime;
-        }
-    }
-
-    private void UpdateAnimator()
-    {
-        if (_animator == null)
-            return;
-
-        float currentVelocity =
-            transform.InverseTransformDirection(
-                _controller.velocity
-            ).z;
+        _animator.SetBool(
+            _animIDMoving,
+            moveInput != Vector2.zero
+        );
 
         _animator.SetFloat(
             _animIDVelocity,
-            currentVelocity
-        );
-
-        _animator.SetFloat(
-            _animIDAnimationSpeed,
-            AnimationCurve(currentVelocity)
+            targetSpeed
         );
     }
 
-    private float AnimationCurve(float velocity)
+    private void Jump(NetworkInputData data)
     {
-        float normalized =
-            Mathf.Abs(velocity) / SprintSpeed;
+        bool jumpPressed =
+            data.Buttons.IsSet(
+                (int)EInputButtons.Jump);
 
-        return Mathf.Lerp(
-            0.8f,
-            1.4f,
-            normalized
-        );
+        if (_grounded
+            &&
+            _verticalVelocity < 0)
+        {
+            _verticalVelocity = -2f;
+
+            _animator.SetBool(
+                _animIDFalling,
+                false
+            );
+        }
+
+        if (jumpPressed
+            &&
+            _grounded)
+        {
+            _verticalVelocity =
+                Mathf.Sqrt(
+                    JumpHeight
+                    * -2f
+                    * Gravity
+                );
+
+            _grounded = false;
+
+            _animator.SetBool(
+                _animIDJumping,
+                true
+            );
+
+            _animator.SetBool(
+                _animIDFalling,
+                false
+            );
+        }
+
+        if (!_grounded
+            &&
+            _verticalVelocity < 0)
+        {
+            _animator.SetBool(
+                _animIDJumping,
+                false
+            );
+
+            _animator.SetBool(
+                _animIDFalling,
+                true
+            );
+        }
+
+        if (_grounded
+            &&
+            _verticalVelocity <= 0)
+        {
+            _animator.SetBool(
+                _animIDJumping,
+                false
+            );
+
+            _animator.SetBool(
+                _animIDFalling,
+                false
+            );
+        }
+    }
+
+    private void GravityUpdate()
+    {
+        if (_verticalVelocity > -50f)
+        {
+            _verticalVelocity +=
+                Gravity
+                * Runner.DeltaTime;
+        }
+    }
+
+    private void CameraRotation(
+        NetworkInputData data)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        Vector2 look =
+            data.Look;
+
+        _cinemachineTargetYaw +=
+            look.x * 0.1f;
+
+        _cinemachineTargetPitch -=
+            look.y * 0.1f;
+
+        _cinemachineTargetPitch =
+            Mathf.Clamp(
+                _cinemachineTargetPitch,
+                -30f,
+                70f
+            );
+
+        CinemachineCameraTarget
+            .transform.rotation =
+            Quaternion.Euler(
+                _cinemachineTargetPitch,
+                _cinemachineTargetYaw,
+                0f
+            );
+    }
+
+    public void Land()
+    {
     }
 
     public void FootL()
@@ -510,10 +320,6 @@ public class Character_Controller : MonoBehaviour
     }
 
     public void FootR()
-    {
-    }
-
-    public void Land()
     {
     }
 }
