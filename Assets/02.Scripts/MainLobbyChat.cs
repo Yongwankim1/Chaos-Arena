@@ -1,10 +1,12 @@
 using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Client;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class MainLobbyChat : MonoBehaviour, IChatClientListener
 {
@@ -17,7 +19,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     [SerializeField] private TMP_InputField inputField;
     [SerializeField] private Transform contentParent;
     [SerializeField] private TMP_Text chatTextPrefab;
-
+    [SerializeField] private ScrollRect scrollRect;
     private ChatClient chatClient;
 
     private void Start()
@@ -42,7 +44,16 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
             SendChat();
         }
     }
+    private IEnumerator ScrollToBottomRoutine()
+    {
+        yield return null;
 
+        Canvas.ForceUpdateCanvases();
+
+        scrollRect.verticalNormalizedPosition = 0f;
+
+        Canvas.ForceUpdateCanvases();
+    }
     public void SendChat()
     {
         if (chatClient == null) return;
@@ -72,6 +83,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
             TMP_Text chatText = Instantiate(chatTextPrefab, contentParent);
             chatText.text = $"{senders[i]} : {messages[i]}";
         }
+        StartCoroutine(ScrollToBottomRoutine());
     }
 
     public void OnDisconnected()
