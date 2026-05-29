@@ -14,9 +14,15 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     public override void Spawned()
     {
         Runner.AddCallbacks(this);
+        SpawnAllPlayers(Runner);
     }
 
-    // ¾À ·Îµù ¿Ï·á ÈÄ ±âÁ¸ ÇÃ·¹ÀÌ¾î »ı¼º
+    {
+        SpawnAllPlayers(runner);
+    }
+
+    private void SpawnAllPlayers(NetworkRunner runner)
+    // ì”¬ ë¡œë”© ì™„ë£Œ í›„ ê¸°ì¡´ í”Œë ˆì´ì–´ ìƒì„±
     public void OnSceneLoadDone(NetworkRunner runner)
     {
         if (!runner.IsServer)
@@ -73,8 +79,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        NetworkStarterAssetsInput localInput =
-            FindObjectOfType<NetworkStarterAssetsInput>();
+        NetworkStarterAssetsInput localInput = NetworkStarterAssetsInput.Local;
 
         if (localInput == null)
             return;
