@@ -480,6 +480,9 @@ MonoBehaviour:
   startButton: {fileID: 459992021}
   lobbyPanel: {fileID: 556076285}
   roomPanel: {fileID: 1920070382}
+  roomNumberText: {fileID: 495469017}
+  playerListText: {fileID: 1464248385}
+  roomStatusText: {fileID: 1461747902}
 --- !u!1 &495469015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1493,7 +1496,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: create
+  m_text: start
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1630,7 +1633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'join
+  m_text: 'exit
 
 '
   m_isRightToLeft: 0

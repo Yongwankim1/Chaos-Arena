@@ -7,7 +7,10 @@ using UnityEngine.SceneManagement;
 public class FusionLobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     public NetworkRunner runnerPrefab;
+    public string CurrentRoomCode => runner != null ? runner.SessionInfo.Name : "";
+    private readonly List<PlayerRef> _players = new();
 
+    public IReadOnlyList<PlayerRef> Players => _players;
     private NetworkRunner runner;
     public void StartGame()
     {
@@ -63,8 +66,19 @@ public class FusionLobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
+    public void OnPlayerJoined(
+      NetworkRunner runner,
+      PlayerRef player)
+    {
+        if (!_players.Contains(player))
+            _players.Add(player);
+    }
+    public void OnPlayerLeft(
+     NetworkRunner runner,
+     PlayerRef player)
+    {
+        _players.Remove(player);
+    }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
         var starter = FindFirstObjectByType<StarterAssetsInputs>();

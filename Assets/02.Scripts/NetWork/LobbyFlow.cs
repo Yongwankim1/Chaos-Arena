@@ -15,6 +15,9 @@ public class LobbyFlow : MonoBehaviour
     public Button startButton;
     public GameObject lobbyPanel;
     public GameObject roomPanel;
+    public TMP_Text roomNumberText;
+    public TMP_Text playerListText;
+    public TMP_Text roomStatusText;
     private void Start()
     {
         roomPanel.SetActive(false);
@@ -24,7 +27,26 @@ public class LobbyFlow : MonoBehaviour
         joinButton.onClick.AddListener(JoinRoom);
         startButton.onClick.AddListener(StartGame);
     }
+    private void Update()
+    {
+        var lobby = FindFirstObjectByType<FusionLobbyManager>();
 
+        if (lobby == null) return;
+
+        roomNumberText.text =
+            $"Room_Num : {lobby.CurrentRoomCode}";
+
+        playerListText.text = "";
+
+        foreach (var player in lobby.Players)
+        {
+            playerListText.text +=
+                $"Player {player.PlayerId}\n";
+        }
+
+        roomStatusText.text =
+            $"Player_Count : {lobby.Players.Count}";
+    }
     private void CreateRoom()
     {
         lobbyPanel.SetActive(false);
