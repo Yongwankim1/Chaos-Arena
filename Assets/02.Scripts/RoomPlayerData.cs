@@ -1,4 +1,5 @@
 using Fusion;
+using UnityEngine;
 
 public class RoomPlayerData : NetworkBehaviour
 {
@@ -10,10 +11,17 @@ public class RoomPlayerData : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (Object.HasInputAuthority)
+        if (!Object.HasInputAuthority)
+            return;
+
+        string nickName = UserDataManager.Instance.UserData.UserName;
+
+        if (string.IsNullOrWhiteSpace(nickName))
         {
-            RPC_SetNickName(UserDataManager.Instance.UserData.UserName);
+            nickName = "Player";
         }
+
+        RPC_SetNickName(nickName);
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
