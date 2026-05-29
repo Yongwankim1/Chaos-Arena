@@ -54,12 +54,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _animator = GetComponent<Animator>();
         _controller = GetComponent<NetworkCharacterController>();
 
-        NetworkStarterAssetsInput input = GetComponent<NetworkStarterAssetsInput>();
-        if (input != null)
-        {
-            input.SetInputAuthority(HasInputAuthority);
-        }
-
         AssignAnimationIDs();
 
         _jumpTimeoutDelta = JumpTimeout;
