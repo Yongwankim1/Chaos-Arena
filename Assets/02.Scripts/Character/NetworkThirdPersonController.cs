@@ -14,6 +14,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
     [Header("Jump")]
     public float JumpTimeout = 0.5f;
     public float FallTimeout = 0.15f;
+    [Networked]
+    private int JumpCounter { get; set; }
+
+    private int _lastJumpCounter;
 
     [Header("Ground")]
     public bool Grounded = true;
@@ -53,6 +57,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private NetworkInputData _lastInput;
     public override void Spawned()
     {
+        Debug.Log(
+        $"Spawned {Object.Id} " +
+        $"Input:{Object.InputAuthority} " +
+        $"State:{Object.StateAuthority}");
+
         _animator = GetComponent<Animator>();
         _controller = GetComponent<NetworkCharacterController>();
 
@@ -94,6 +103,16 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (HasInputAuthority)
         {
             CameraRotation(_lastInput);
+        }
+    }
+
+    public override void Render()
+    {
+        if (JumpCounter != _lastJumpCounter)
+        {
+            _lastJumpCounter = JumpCounter;
+
+            _animator.SetTrigger("Jump");
         }
     }
 
@@ -140,6 +159,22 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Move(NetworkInputData input)
     {
+    Debug.Log(
+    $"Obj:{Object.Id} " +
+    $"InputAuth:{Object.InputAuthority} " +
+    $"StateAuth:{Object.StateAuthority} " +
+    $"HasInput:{HasInputAuthority}");
+
+        Debug.Log(
+    $"Input:{HasInputAuthority} " +
+    $"State:{HasStateAuthority}"
+);
+
+        Debug.Log(
+    $"Runner:{Runner.Mode} " +
+    $"Input:{HasInputAuthority} " +
+    $"State:{HasStateAuthority}"
+);
         float targetSpeed =
             input.Sprint
                 ? SprintSpeed
@@ -194,11 +229,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
                     input.Move.y).normalized;
 
             _targetRotation =
-        Mathf.Atan2(
-            inputDirection.x,
-            inputDirection.z) *
-        Mathf.Rad2Deg +
-        _cinemachineTargetYaw;
+         Mathf.Atan2(
+             inputDirection.x,
+             inputDirection.z) *
+         Mathf.Rad2Deg +
+         input.Yaw;
 
             float rotation =
                 Mathf.SmoothDampAngle(
@@ -248,10 +283,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
             _fallTimeoutDelta = FallTimeout;
 
             _animator.SetBool(
-                _animIDJump,
-                false);
-
-            _animator.SetBool(
                 _animIDFreeFall,
                 false);
 
@@ -260,9 +291,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
             {
                 _controller.Jump();
 
-                _animator.SetBool(
-                    _animIDJump,
-                    true);
+                // 점프 애니메이션 이벤트 전송
+                JumpCounter++;
             }
 
             if (_jumpTimeoutDelta >= 0f)

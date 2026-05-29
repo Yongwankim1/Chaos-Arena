@@ -79,6 +79,9 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
         data.Move = InputManager.Instance.Move;
         data.Look = InputManager.Instance.Look;
+
+        data.Yaw = Camera.main.transform.eulerAngles.y;
+
         data.Jump = InputManager.Instance.ConsumeJump();
         data.Sprint = InputManager.Instance.Sprint;
 

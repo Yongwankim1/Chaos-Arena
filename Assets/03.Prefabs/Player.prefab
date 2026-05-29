@@ -833,7 +833,7 @@ MonoBehaviour:
   acceleration: 10
   braking: 10
   maxSpeed: 2
-  rotationSpeed: 0
+  rotationSpeed: 7
 --- !u!114 &5240049542016148038
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -878,6 +878,7 @@ MonoBehaviour:
   TopClamp: 70
   BottomClamp: -30
   CameraAngleOverride: 0
+  lookMultiplier: 0.2
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0
