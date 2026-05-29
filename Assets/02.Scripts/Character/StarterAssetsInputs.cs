@@ -1,24 +1,19 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
-#endif
 
 public class StarterAssetsInputs : MonoBehaviour
 {
-    [Header("Character Input Values")]
+    [Header("Input Values")]
     public Vector2 move;
     public Vector2 look;
+
     public bool jump;
     public bool sprint;
 
-    [Header("Movement Settings")]
-    public bool analogMovement;
-
-    [Header("Mouse Cursor Settings")]
+    [Header("Mouse Settings")]
     public bool cursorLocked = true;
     public bool cursorInputForLook = true;
 
-#if ENABLE_INPUT_SYSTEM
     public void OnMove(InputValue value)
     {
         move = value.Get<Vector2>();
@@ -34,22 +29,27 @@ public class StarterAssetsInputs : MonoBehaviour
 
     public void OnJump(InputValue value)
     {
-        jump = value.isPressed;
+        if (value.isPressed)
+        {
+            jump = true;
+        }
+    }
+
+    public void ConsumeJump()
+    {
+        jump = false;
     }
 
     public void OnSprint(InputValue value)
     {
         sprint = value.isPressed;
     }
-#endif
 
     private void OnApplicationFocus(bool hasFocus)
     {
-        SetCursorState(cursorLocked);
-    }
-
-    private void SetCursorState(bool newState)
-    {
-        Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+        Cursor.lockState =
+            cursorLocked
+                ? CursorLockMode.Locked
+                : CursorLockMode.None;
     }
 }

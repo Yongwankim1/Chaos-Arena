@@ -4,14 +4,8 @@ using UnityEngine;
 public struct NetworkInputData : INetworkInput
 {
     public Vector2 Move;
-
     public Vector2 Look;
 
-    public NetworkButtons Buttons;
-}
-
-public enum EInputButtons
-{
-    Jump,
-    Sprint
+    public NetworkBool Jump;
+    public NetworkBool Sprint;
 }

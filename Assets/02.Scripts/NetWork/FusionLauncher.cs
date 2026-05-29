@@ -3,20 +3,19 @@ using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class FusionLauncher : MonoBehaviour, INetworkRunnerCallbacks
 {
-    public NetworkPrefabRef warriorPrefab;
+    public NetworkPrefabRef characterPrefab;
 
     private NetworkRunner _runner;
+    private StarterAssetsInputs _localInput;
 
     async void Start()
     {
         DontDestroyOnLoad(gameObject);
 
-        //_runner = gameObject.AddComponent<NetworkRunner>();
         _runner = GetComponent<NetworkRunner>();
         _runner.ProvideInput = true;
 
@@ -24,8 +23,7 @@ public class FusionLauncher : MonoBehaviour, INetworkRunnerCallbacks
             SceneRef.FromIndex(
                 SceneManager
                 .GetActiveScene()
-                .buildIndex
-            );
+                .buildIndex);
 
         await _runner.StartGame(
             new StartGameArgs
@@ -34,9 +32,44 @@ public class FusionLauncher : MonoBehaviour, INetworkRunnerCallbacks
                 SessionName = "Room",
                 Scene = scene,
                 SceneManager =
-                    GetComponent
-                    <NetworkSceneManagerDefault>()
+                    GetComponent<NetworkSceneManagerDefault>()
             });
+    }
+
+    public void OnInput(
+        NetworkRunner runner,
+        NetworkInput input)
+    {
+        if (_localInput == null)
+        {
+            _localInput =
+                FindFirstObjectByType<StarterAssetsInputs>();
+
+            if (_localInput == null)
+                return;
+        }
+
+        NetworkInputData data =
+            new NetworkInputData();
+
+        data.Move =
+            _localInput.move;
+
+        data.Look =
+            _localInput.look;
+
+        data.Jump =
+            _localInput.jump;
+
+        data.Sprint =
+            _localInput.sprint;
+
+        if (_localInput.jump)
+        {
+            _localInput.ConsumeJump();
+        }
+
+        input.Set(data);
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -47,144 +80,75 @@ public class FusionLauncher : MonoBehaviour, INetworkRunnerCallbacks
                 new Vector3(
                     UnityEngine.Random.Range(-5, 5),
                     0.5f,
-                    UnityEngine.Random.Range(-5, 5)
-                );
-
-            NetworkPrefabRef selectedPrefab =
-                warriorPrefab;
+                    UnityEngine.Random.Range(-5, 5));
 
             runner.Spawn(
-                selectedPrefab,
+                characterPrefab,
                 spawnPos,
                 Quaternion.identity,
-                player
-            );
+                player);
         }
     }
 
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-    {
-    }
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
 
-    public void OnInput(
-    NetworkRunner runner,
-    NetworkInput input)
-    {
-        NetworkInputData data =
-            new NetworkInputData();
+    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
 
-        if (Keyboard.current == null)
-            return;
+    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
 
-        Vector2 move =
-            Vector2.zero;
+    public void OnConnectedToServer(NetworkRunner runner) { }
 
-        if (Keyboard.current.wKey.isPressed)
-            move.y += 1;
+    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason) { }
 
-        if (Keyboard.current.sKey.isPressed)
-            move.y -= 1;
+    public void OnConnectRequest(NetworkRunner runner,
+        NetworkRunnerCallbackArgs.ConnectRequest request,
+        byte[] token)
+    { }
 
-        if (Keyboard.current.aKey.isPressed)
-            move.x -= 1;
+    public void OnConnectFailed(NetworkRunner runner,
+        NetAddress remoteAddress,
+        NetConnectFailedReason reason)
+    { }
 
-        if (Keyboard.current.dKey.isPressed)
-            move.x += 1;
+    public void OnUserSimulationMessage(NetworkRunner runner,
+        SimulationMessagePtr message)
+    { }
 
-        data.Move = move;
+    public void OnSessionListUpdated(NetworkRunner runner,
+        List<SessionInfo> sessionList)
+    { }
 
-        Vector2 look =
-            Vector2.zero;
+    public void OnCustomAuthenticationResponse(NetworkRunner runner,
+        Dictionary<string, object> data)
+    { }
 
-        if (Mouse.current != null)
-        {
-            look.x =
-                Mouse.current.delta.x.ReadValue();
+    public void OnHostMigration(NetworkRunner runner,
+        HostMigrationToken hostMigrationToken)
+    { }
 
-            look.y =
-                Mouse.current.delta.y.ReadValue();
-        }
+    public void OnSceneLoadDone(NetworkRunner runner) { }
 
-        data.Look = look;
+    public void OnSceneLoadStart(NetworkRunner runner) { }
 
-        NetworkButtons buttons =
-            new NetworkButtons();
+    public void OnObjectExitAOI(NetworkRunner runner,
+        NetworkObject obj,
+        PlayerRef player)
+    { }
 
-        buttons.Set(
-            (int)EInputButtons.Jump,
-            Keyboard.current.spaceKey.isPressed
-        );
+    public void OnObjectEnterAOI(NetworkRunner runner,
+        NetworkObject obj,
+        PlayerRef player)
+    { }
 
-        buttons.Set(
-            (int)EInputButtons.Sprint,
-            Keyboard.current.leftShiftKey.isPressed
-        );
+    public void OnReliableDataReceived(NetworkRunner runner,
+        PlayerRef player,
+        ReliableKey key,
+        ArraySegment<byte> data)
+    { }
 
-        data.Buttons = buttons;
-
-        input.Set(data);
-    }
-    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
-    {
-    }
-
-    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
-    {
-    }
-
-    public void OnConnectedToServer(NetworkRunner runner)
-    {
-    }
-
-    public void OnDisconnectedFromServer(NetworkRunner runner, NetDisconnectReason reason)
-    {
-    }
-
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
-    {
-    }
-
-    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason)
-    {
-    }
-
-    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
-    {
-    }
-
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
-    {
-    }
-
-    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
-    {
-    }
-
-    public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken)
-    {
-    }
-
-    public void OnSceneLoadDone(NetworkRunner runner)
-    {
-    }
-
-    public void OnSceneLoadStart(NetworkRunner runner)
-    {
-    }
-
-    public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-    }
-
-    public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player)
-    {
-    }
-
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ReliableKey key, ArraySegment<byte> data)
-    {
-    }
-
-    public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
-    {
-    }
+    public void OnReliableDataProgress(NetworkRunner runner,
+        PlayerRef player,
+        ReliableKey key,
+        float progress)
+    { }
 }
