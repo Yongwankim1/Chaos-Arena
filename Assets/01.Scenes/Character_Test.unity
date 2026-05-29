@@ -368,6 +368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 815552954}
+  - component: {fileID: 815552956}
   - component: {fileID: 815552955}
   m_Layer: 0
   m_Name: GameBootstrap
@@ -400,10 +401,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 815552953}
   m_Enabled: 1
   m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 281716492
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 815552956}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &815552956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815552953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b43fc890b25e68342923a81b4f0d8e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
-  playerPrefab: {fileID: 3980448334548358518, guid: 612460e52582b7f40a072ff1394e9f84, type: 3}
+  playerPrefab: {fileID: 8547570258107433689, guid: 612460e52582b7f40a072ff1394e9f84, type: 3}
 --- !u!1 &1436750567
 GameObject:
   m_ObjectHideFlags: 0

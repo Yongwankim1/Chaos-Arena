@@ -474,15 +474,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyFlow
   runnerPrefab: {fileID: 362780332776016981, guid: f20525d14c7fdc8479ff451c4cdc639e, type: 3}
-  roomInput: {fileID: 2020513679}
-  createButton: {fileID: 984571201}
-  joinButton: {fileID: 1580717856}
-  startButton: {fileID: 459992021}
-  lobbyPanel: {fileID: 556076285}
+  mainLobbyPanel: {fileID: 556076285}
   roomPanel: {fileID: 1920070382}
+  roomNumberInput: {fileID: 2020513679}
+  createRoomButton: {fileID: 984571201}
+  joinButton: {fileID: 1580717856}
+  mainStatusText: {fileID: 1049213698}
   roomNumberText: {fileID: 495469017}
-  playerListText: {fileID: 1464248385}
+  startButton: {fileID: 459992021}
+  exitButton: {fileID: 721023760}
   roomStatusText: {fileID: 1461747902}
+  playerListText: {fileID: 1464248385}
+  gameSceneBuildIndex: 1
 --- !u!1 &495469015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1724,7 +1727,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1331539795}
-  - component: {fileID: 1331539794}
   m_Layer: 0
   m_Name: FusionLobbyManager
   m_TagString: Untagged
@@ -1732,19 +1734,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1331539794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1331539793}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6394733620769e546b02486e87b4d10b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FusionLobbyManager
-  runnerPrefab: {fileID: 362780332776016981, guid: f20525d14c7fdc8479ff451c4cdc639e, type: 3}
 --- !u!4 &1331539795
 Transform:
   m_ObjectHideFlags: 0

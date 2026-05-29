@@ -1,24 +1,22 @@
 using Fusion;
-using UnityEngine;
 using Unity.Cinemachine;
+using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(NetworkCharacterController))]
 public class NetworkThirdPersonController : NetworkBehaviour
 {
-    [Header("Movement")]
-    public float MoveSpeed = 2f;
+    [Header("Player")]
+    public float MoveSpeed = 2.0f;
     public float SprintSpeed = 5.335f;
     public float RotationSmoothTime = 0.12f;
-    public float SpeedChangeRate = 10f;
+    public float SpeedChangeRate = 10.0f;
 
     [Header("Jump")]
-    public float JumpHeight = 1.2f;
-    public float Gravity = -15f;
     public float JumpTimeout = 0.5f;
     public float FallTimeout = 0.15f;
 
     [Header("Ground")]
-    public bool Grounded;
+    public bool Grounded = true;
     public float GroundedOffset = -0.14f;
     public float GroundedRadius = 0.28f;
     public LayerMask GroundLayers;
@@ -27,25 +25,21 @@ public class NetworkThirdPersonController : NetworkBehaviour
     public Transform PlayerCameraRoot;
     public float TopClamp = 70f;
     public float BottomClamp = -30f;
+    public float CameraAngleOverride = 0f;
 
-    private CharacterController _controller;
-    private Animator _animator;
+    private float _cinemachineTargetYaw;
+    private float _cinemachineTargetPitch;
 
     private float _speed;
     private float _animationBlend;
     private float _targetRotation;
     private float _rotationVelocity;
 
-    private float _verticalVelocity;
-    private const float _terminalVelocity = -53f;
-
     private float _jumpTimeoutDelta;
     private float _fallTimeoutDelta;
 
-    private float _yaw;
-    private float _pitch;
-
-    private GameObject _mainCamera;
+    private Animator _animator;
+    private NetworkCharacterController _controller;
 
     private int _animIDSpeed;
     private int _animIDGrounded;
@@ -53,49 +47,51 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
 
+    private const float _threshold = 0.01f;
+
     public override void Spawned()
     {
-        _controller = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
+        _controller = GetComponent<NetworkCharacterController>();
 
-        _animIDSpeed = Animator.StringToHash("Speed");
-        _animIDGrounded = Animator.StringToHash("Grounded");
-        _animIDJump = Animator.StringToHash("Jump");
-        _animIDFreeFall = Animator.StringToHash("FreeFall");
-        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+        AssignAnimationIDs();
 
         _jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
 
         if (HasInputAuthority)
         {
-            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            var cam = FindObjectOfType<CinemachineCamera>();
 
-            var cine = FindFirstObjectByType<CinemachineCamera>();
-            if (cine != null)
-                cine.Target.TrackingTarget = PlayerCameraRoot;
+            if (cam != null)
+            {
+                cam.Target.TrackingTarget = PlayerCameraRoot;
+                cam.Target.LookAtTarget = PlayerCameraRoot;
+            }
 
-            Cursor.lockState = CursorLockMode.Locked;
+            _cinemachineTargetYaw =
+                PlayerCameraRoot.rotation.eulerAngles.y;
         }
     }
 
     public override void FixedUpdateNetwork()
     {
-        if (!GetInput<NetworkInputData>(out var input))
+        if (!GetInput(out NetworkInputData input))
             return;
 
-        GroundedCheck();
-        CameraRotation(input.Look);
-        JumpAndGravity(input);
+        CameraRotation(input);
         Move(input);
+        GroundedCheck();
+        JumpAndGravity(input);
     }
 
     private void GroundedCheck()
     {
-        Vector3 spherePosition = new Vector3(
-            transform.position.x,
-            transform.position.y - GroundedOffset,
-            transform.position.z);
+        Vector3 spherePosition =
+            new Vector3(
+                transform.position.x,
+                transform.position.y - GroundedOffset,
+                transform.position.z);
 
         Grounded = Physics.CheckSphere(
             spherePosition,
@@ -106,41 +102,89 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _animator.SetBool(_animIDGrounded, Grounded);
     }
 
-    private void CameraRotation(Vector2 lookInput)
+    private void CameraRotation(NetworkInputData input)
     {
         if (!HasInputAuthority)
             return;
 
-        _yaw += lookInput.x;
-        _pitch += lookInput.y;
+        if (input.Look.sqrMagnitude >= _threshold)
+        {
+            _cinemachineTargetYaw += input.Look.x;
+            _cinemachineTargetPitch += input.Look.y;
+        }
 
-        _pitch = Mathf.Clamp(_pitch, BottomClamp, TopClamp);
+        _cinemachineTargetPitch =
+            Mathf.Clamp(
+                _cinemachineTargetPitch,
+                BottomClamp,
+                TopClamp);
 
         PlayerCameraRoot.rotation =
-            Quaternion.Euler(_pitch, _yaw, 0f);
+            Quaternion.Euler(
+                _cinemachineTargetPitch + CameraAngleOverride,
+                _cinemachineTargetYaw,
+                0f);
     }
 
     private void Move(NetworkInputData input)
     {
-        float targetSpeed = input.Sprint ? SprintSpeed : MoveSpeed;
+        float targetSpeed =
+            input.Sprint
+                ? SprintSpeed
+                : MoveSpeed;
 
         if (input.Move == Vector2.zero)
             targetSpeed = 0f;
 
-        float inputMagnitude = Mathf.Clamp01(input.Move.magnitude);
+        float currentHorizontalSpeed =
+            new Vector3(
+                _controller.Velocity.x,
+                0,
+                _controller.Velocity.z).magnitude;
 
-        _speed = targetSpeed * inputMagnitude;
-        _animationBlend = _speed;
+        float speedOffset = 0.1f;
+        float inputMagnitude = 1f;
+
+        if (currentHorizontalSpeed <
+            targetSpeed - speedOffset ||
+            currentHorizontalSpeed >
+            targetSpeed + speedOffset)
+        {
+            _speed = Mathf.Lerp(
+                currentHorizontalSpeed,
+                targetSpeed,
+                Runner.DeltaTime * SpeedChangeRate);
+
+            _speed =
+                Mathf.Round(_speed * 1000f) / 1000f;
+        }
+        else
+        {
+            _speed = targetSpeed;
+        }
+
+        _animationBlend = Mathf.Lerp(
+            _animationBlend,
+            targetSpeed,
+            Runner.DeltaTime * SpeedChangeRate);
+
+        if (_animationBlend < 0.01f)
+            _animationBlend = 0f;
 
         Vector3 inputDirection =
-            new Vector3(input.Move.x, 0f, input.Move.y).normalized;
+            new Vector3(
+                input.Move.x,
+                0f,
+                input.Move.y).normalized;
 
         if (input.Move != Vector2.zero)
         {
             _targetRotation =
-                Mathf.Atan2(inputDirection.x, inputDirection.z) *
+                Mathf.Atan2(
+                    inputDirection.x,
+                    inputDirection.z) *
                 Mathf.Rad2Deg +
-                _mainCamera.transform.eulerAngles.y;
+                _cinemachineTargetYaw;
 
             float rotation =
                 Mathf.SmoothDampAngle(
@@ -150,22 +194,31 @@ public class NetworkThirdPersonController : NetworkBehaviour
                     RotationSmoothTime);
 
             transform.rotation =
-                Quaternion.Euler(0f, rotation, 0f);
+                Quaternion.Euler(
+                    0f,
+                    rotation,
+                    0f);
         }
 
         Vector3 targetDirection =
-            Quaternion.Euler(0f, _targetRotation, 0f) *
+            Quaternion.Euler(
+                0f,
+                _targetRotation,
+                0f) *
             Vector3.forward;
 
-        _controller.Move(
-            targetDirection.normalized *
-            (_speed * Runner.DeltaTime) +
-            Vector3.up *
-            _verticalVelocity *
-            Runner.DeltaTime);
+        _controller.maxSpeed = _speed;
 
-        _animator.SetFloat(_animIDSpeed, _animationBlend);
-        _animator.SetFloat(_animIDMotionSpeed, inputMagnitude);
+        _controller.Move(
+            targetDirection.normalized);
+
+        _animator.SetFloat(
+            _animIDSpeed,
+            _animationBlend);
+
+        _animator.SetFloat(
+            _animIDMotionSpeed,
+            inputMagnitude);
     }
 
     private void JumpAndGravity(NetworkInputData input)
@@ -174,22 +227,28 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             _fallTimeoutDelta = FallTimeout;
 
-            _animator.SetBool(_animIDJump, false);
-            _animator.SetBool(_animIDFreeFall, false);
+            _animator.SetBool(
+                _animIDJump,
+                false);
 
-            if (_verticalVelocity < 0f)
-                _verticalVelocity = -2f;
+            _animator.SetBool(
+                _animIDFreeFall,
+                false);
 
-            if (input.Jump && _jumpTimeoutDelta <= 0f)
+            if (input.Jump &&
+                _jumpTimeoutDelta <= 0f)
             {
-                _verticalVelocity =
-                    Mathf.Sqrt(JumpHeight * -2f * Gravity);
+                _controller.Jump();
 
-                _animator.SetBool(_animIDJump, true);
+                _animator.SetBool(
+                    _animIDJump,
+                    true);
             }
 
             if (_jumpTimeoutDelta >= 0f)
+            {
                 _jumpTimeoutDelta -= Runner.DeltaTime;
+            }
         }
         else
         {
@@ -201,15 +260,29 @@ public class NetworkThirdPersonController : NetworkBehaviour
             }
             else
             {
-                _animator.SetBool(_animIDFreeFall, true);
+                _animator.SetBool(
+                    _animIDFreeFall,
+                    true);
             }
         }
+    }
 
-        if (_verticalVelocity > _terminalVelocity)
-        {
-            _verticalVelocity +=
-                Gravity * Runner.DeltaTime;
-        }
+    private void AssignAnimationIDs()
+    {
+        _animIDSpeed =
+            Animator.StringToHash("Speed");
+
+        _animIDGrounded =
+            Animator.StringToHash("Grounded");
+
+        _animIDJump =
+            Animator.StringToHash("Jump");
+
+        _animIDFreeFall =
+            Animator.StringToHash("FreeFall");
+
+        _animIDMotionSpeed =
+            Animator.StringToHash("MotionSpeed");
     }
     private void Land()
     {
