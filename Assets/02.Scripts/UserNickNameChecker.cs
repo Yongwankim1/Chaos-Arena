@@ -1,6 +1,9 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
+
 
 public class UserNickNameChecker : MonoBehaviour
 {
@@ -11,13 +14,12 @@ public class UserNickNameChecker : MonoBehaviour
     [SerializeField] Button checkBtn;
     [SerializeField] GameObject lobbyPanel;
 
-    [SerializeField] MainLobbyChat chat;
     public string NickName => nickName;
+
+    public event Action OnSetNickName;
 
     private void Start()
     {
-        if(chat == null) chat = GetComponent<MainLobbyChat>();
-
         if (string.IsNullOrEmpty(UserDataManager.Instance.UserData.UserName))
         {
             OpenPanel();
@@ -25,7 +27,7 @@ public class UserNickNameChecker : MonoBehaviour
         else
         {
             lobbyPanel.SetActive(true);
-            chat.Connect();
+            OnSetNickName?.Invoke();
         }
 
     }
@@ -44,6 +46,6 @@ public class UserNickNameChecker : MonoBehaviour
         createPlayerPanel.SetActive(false);
 
         lobbyPanel.SetActive(true);
-        chat.Connect();
+        OnSetNickName?.Invoke();
     }
 }
