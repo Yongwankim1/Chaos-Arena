@@ -12,6 +12,10 @@ public class FusionLobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public IReadOnlyList<PlayerRef> Players => _players;
     private NetworkRunner runner;
+    private void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
     public void StartGame()
     {
         if (runner != null && runner.IsServer)
@@ -21,6 +25,7 @@ public class FusionLobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     }
     public async void StartHost()
     {
+
         runner = Instantiate(runnerPrefab);
 
         runner.ProvideInput = true;
