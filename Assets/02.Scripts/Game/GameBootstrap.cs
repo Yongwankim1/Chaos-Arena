@@ -73,11 +73,10 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        NetworkStarterAssetsInput localInput =
-            FindObjectOfType<NetworkStarterAssetsInput>();
-
-        if (localInput == null)
+        if (NetworkStarterAssetsInput.Local == null)
             return;
+
+        var localInput = NetworkStarterAssetsInput.Local;
 
         NetworkInputData data = new NetworkInputData();
 
