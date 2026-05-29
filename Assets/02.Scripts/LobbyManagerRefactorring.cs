@@ -36,6 +36,10 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private Transform roomListParent;
     [SerializeField] private RoomSlot roomSlotPrefab;
 
+    [Header("RoomUserInfo")]
+    [SerializeField] private Transform userInfoParent;
+    [SerializeField] private UserInfo userInfoPrefab;
+
     private SessionInfo selectedSession;
     private List<SessionInfo> cachedSessionList = new List<SessionInfo>();
     void Awake()
@@ -130,7 +134,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
         var result = await currentRunner.StartGame(new StartGameArgs
         {
-            GameMode = GameMode.Shared,
+            GameMode = GameMode.Host,
             SessionName = sessionName,
             PlayerCount = 2,
             SessionProperties = properties,
@@ -197,7 +201,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
         var result = await currentRunner.StartGame(new StartGameArgs
         {
-            GameMode = GameMode.Shared,
+            GameMode = GameMode.Client,
             SessionName = selectedSession.Name,
             SceneManager = currentRunner.GetComponent<NetworkSceneManagerDefault>()
         });
