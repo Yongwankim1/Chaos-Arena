@@ -8,7 +8,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     [Header("Player")]
     public float MoveSpeed = 2.0f;
     public float SprintSpeed = 5.335f;
-    public float RotationSmoothTime = 0.12f;
+    public float RotationSmoothTime = 0.01f;
     public float SpeedChangeRate = 10.0f;
 
     [Header("Jump")]
@@ -48,7 +48,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private int _animIDMotionSpeed;
 
     private const float _threshold = 0.01f;
-
+    [SerializeField]
+    float lookMultiplier = 0.2f;
+    private NetworkInputData _lastInput;
     public override void Spawned()
     {
         _animator = GetComponent<Animator>();
@@ -61,16 +63,18 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (HasInputAuthority)
         {
-            var cam = FindObjectOfType<CinemachineCamera>();
+            GetComponent<NetworkStarterAssetsInput>()
+                ?.RegisterAsLocal();
+
+            var cam = FindObjectOfType<Unity.Cinemachine.CinemachineCamera>();
 
             if (cam != null)
             {
                 cam.Target.TrackingTarget = PlayerCameraRoot;
-                cam.Target.LookAtTarget = PlayerCameraRoot;
+                //cam.Target.LookAtTarget = PlayerCameraRoot;
             }
 
-            _cinemachineTargetYaw =
-                PlayerCameraRoot.rotation.eulerAngles.y;
+            _cinemachineTargetYaw = transform.eulerAngles.y;
         }
     }
 
@@ -78,11 +82,19 @@ public class NetworkThirdPersonController : NetworkBehaviour
     {
         if (!GetInput(out NetworkInputData input))
             return;
-
-        CameraRotation(input);
+        _lastInput = input;
+        // CameraRotation(input);
         Move(input);
         GroundedCheck();
         JumpAndGravity(input);
+    }
+
+    private void LateUpdate()
+    {
+        if (HasInputAuthority)
+        {
+            CameraRotation(_lastInput);
+        }
     }
 
     private void GroundedCheck()
@@ -109,8 +121,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (input.Look.sqrMagnitude >= _threshold)
         {
-            _cinemachineTargetYaw += input.Look.x;
-            _cinemachineTargetPitch += input.Look.y;
+            _cinemachineTargetYaw += input.Look.x * lookMultiplier;
+            _cinemachineTargetPitch -= input.Look.y * lookMultiplier;
         }
 
         _cinemachineTargetPitch =
@@ -134,21 +146,20 @@ public class NetworkThirdPersonController : NetworkBehaviour
                 : MoveSpeed;
 
         if (input.Move == Vector2.zero)
-            targetSpeed = 0f;
+            targetSpeed = 0.0f;
 
         float currentHorizontalSpeed =
             new Vector3(
                 _controller.Velocity.x,
-                0,
-                _controller.Velocity.z).magnitude;
+                0.0f,
+                _controller.Velocity.z)
+            .magnitude;
 
         float speedOffset = 0.1f;
-        float inputMagnitude = 1f;
+        float inputMagnitude = input.Move == Vector2.zero ? 0f : 1f;
 
-        if (currentHorizontalSpeed <
-            targetSpeed - speedOffset ||
-            currentHorizontalSpeed >
-            targetSpeed + speedOffset)
+        if (currentHorizontalSpeed < targetSpeed - speedOffset ||
+            currentHorizontalSpeed > targetSpeed + speedOffset)
         {
             _speed = Mathf.Lerp(
                 currentHorizontalSpeed,
@@ -156,7 +167,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
                 Runner.DeltaTime * SpeedChangeRate);
 
             _speed =
-                Mathf.Round(_speed * 1000f) / 1000f;
+                Mathf.Round(_speed * 1000f) /
+                1000f;
         }
         else
         {
@@ -171,20 +183,22 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (_animationBlend < 0.01f)
             _animationBlend = 0f;
 
-        Vector3 inputDirection =
-            new Vector3(
-                input.Move.x,
-                0f,
-                input.Move.y).normalized;
+        Vector3 moveDirection = Vector3.zero;
 
         if (input.Move != Vector2.zero)
         {
+            Vector3 inputDirection =
+                new Vector3(
+                    input.Move.x,
+                    0.0f,
+                    input.Move.y).normalized;
+
             _targetRotation =
                 Mathf.Atan2(
                     inputDirection.x,
                     inputDirection.z) *
                 Mathf.Rad2Deg +
-                _cinemachineTargetYaw;
+                Camera.main.transform.eulerAngles.y;
 
             float rotation =
                 Mathf.SmoothDampAngle(
@@ -195,30 +209,36 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
             transform.rotation =
                 Quaternion.Euler(
-                    0f,
+                    0.0f,
                     rotation,
-                    0f);
+                    0.0f);
+
+            Vector3 targetDirection =
+                Quaternion.Euler(
+                    0.0f,
+                    _targetRotation,
+                    0.0f) *
+                Vector3.forward;
+
+            moveDirection =
+                targetDirection.normalized *
+                _speed;
         }
 
-        Vector3 targetDirection =
-            Quaternion.Euler(
-                0f,
-                _targetRotation,
-                0f) *
-            Vector3.forward;
-
-        _controller.maxSpeed = _speed;
-
         _controller.Move(
-            targetDirection.normalized);
+            moveDirection *
+            Runner.DeltaTime);
 
-        _animator.SetFloat(
-            _animIDSpeed,
-            _animationBlend);
+        if (_animator)
+        {
+            _animator.SetFloat(
+                _animIDSpeed,
+                _animationBlend);
 
-        _animator.SetFloat(
-            _animIDMotionSpeed,
-            inputMagnitude);
+            _animator.SetFloat(
+                _animIDMotionSpeed,
+                inputMagnitude);
+        }
     }
 
     private void JumpAndGravity(NetworkInputData input)

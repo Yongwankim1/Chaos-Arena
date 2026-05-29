@@ -1,15 +1,20 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class NetworkStarterAssetsInput : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
-    public static NetworkStarterAssetsInput Local;
+    public static InputManager Instance;
 
     public Vector2 Move;
     public Vector2 Look;
 
     public bool Jump;
     public bool Sprint;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
 
     private void Start()
     {
@@ -26,11 +31,6 @@ public class NetworkStarterAssetsInput : MonoBehaviour
         }
     }
 
-    public void RegisterAsLocal()
-    {
-        Local = this;
-    }
-
     public void OnMove(InputValue value)
     {
         Move = value.Get<Vector2>();
@@ -45,12 +45,6 @@ public class NetworkStarterAssetsInput : MonoBehaviour
     {
         Jump = value.isPressed;
     }
-
-    public void OnSprint(InputValue value)
-    {
-        Sprint = value.isPressed;
-    }
-
     public bool ConsumeJump()
     {
         if (!Jump)
@@ -58,5 +52,9 @@ public class NetworkStarterAssetsInput : MonoBehaviour
 
         Jump = false;
         return true;
+    }
+    public void OnSprint(InputValue value)
+    {
+        Sprint = value.isPressed;
     }
 }

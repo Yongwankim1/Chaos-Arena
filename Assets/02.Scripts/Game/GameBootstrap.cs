@@ -70,21 +70,17 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             _spawnedPlayers.Remove(player);
         }
     }
-
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        NetworkStarterAssetsInput localInput =
-            FindObjectOfType<NetworkStarterAssetsInput>();
-
-        if (localInput == null)
+        if (InputManager.Instance == null)
             return;
 
         NetworkInputData data = new NetworkInputData();
 
-        data.Move = localInput.Move;
-        data.Look = localInput.Look;
-        data.Jump = localInput.ConsumeJump();
-        data.Sprint = localInput.Sprint;
+        data.Move = InputManager.Instance.Move;
+        data.Look = InputManager.Instance.Look;
+        data.Jump = InputManager.Instance.ConsumeJump();
+        data.Sprint = InputManager.Instance.Sprint;
 
         input.Set(data);
     }
