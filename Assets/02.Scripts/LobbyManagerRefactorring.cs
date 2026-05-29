@@ -42,6 +42,9 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     private SessionInfo selectedSession;
     private List<SessionInfo> cachedSessionList = new List<SessionInfo>();
+
+    [Header("Network Room Player Data")]
+    [SerializeField] private NetworkObject roomPlayerDataPrefab;
     void Awake()
     {
         if(nicknameChecker == null) nicknameChecker = GetComponent<UserNickNameChecker>();
@@ -151,6 +154,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
             roomPanel.SetActive(true);
 
             chat.Unsubscribe();
+
+            SpawnRoomPlayerData();
         }
         else
         {
@@ -214,6 +219,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
             roomPanel.SetActive(true);
 
             chat.Unsubscribe();
+
+            SpawnRoomPlayerData();
         }
         else
         {
@@ -238,7 +245,44 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
             slot.Init(this, session);
         }
     }
+    private void SpawnRoomPlayerData()
+    {
+        if (currentRunner == null)
+            return;
 
+        currentRunner.Spawn(
+            roomPlayerDataPrefab,
+            Vector3.zero,
+            Quaternion.identity,
+            currentRunner.LocalPlayer
+        );
+
+        Invoke(nameof(RefreshRoomUserInfo), 0.2f);
+    }
+    private void RefreshRoomUserInfo()
+    {
+        foreach (Transform child in userInfoParent)
+        {
+            Destroy(child.gameObject);
+        }
+
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            UserInfo userInfo = Instantiate(userInfoPrefab, userInfoParent);
+
+            string nickName = player.NickName.ToString();
+
+            if (string.IsNullOrWhiteSpace(nickName))
+            {
+                nickName = "Player";
+            }
+
+            userInfo.Init(nickName, player.IsReady);
+        }
+    }
     public void OnConnectedToServer(NetworkRunner runner)
     {
     }
@@ -281,10 +325,12 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        Invoke(nameof(RefreshRoomUserInfo), 0.2f);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        RefreshRoomUserInfo();
     }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)

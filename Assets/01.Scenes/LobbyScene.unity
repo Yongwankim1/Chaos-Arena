@@ -10009,6 +10009,7 @@ MonoBehaviour:
   roomSlotPrefab: {fileID: 7600474082799372053, guid: 3e380595d20e0314eb5a2dc5bd97da0e, type: 3}
   userInfoParent: {fileID: 1750710956}
   userInfoPrefab: {fileID: 4814249797896317689, guid: db5354d3883625b44b54222abe24ee01, type: 3}
+  roomPlayerDataPrefab: {fileID: 7159869014628281251, guid: 5dd7e672de033f54c93739ff5f9ed0ca, type: 3}
 --- !u!114 &2068660857
 MonoBehaviour:
   m_ObjectHideFlags: 0
