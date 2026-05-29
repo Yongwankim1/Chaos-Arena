@@ -21,23 +21,33 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     [SerializeField] private TMP_Text chatTextPrefab;
     [SerializeField] private ScrollRect scrollRect;
     private ChatClient chatClient;
-    void Awake()
+
+
+    public void Connect()
     {
         TMP_Text text = Instantiate(chatTextPrefab, contentParent);
         text.text = "채널 입장 중...";
-    }
-    private void Start()
-    {
         chatClient = new ChatClient(this);
-        chatClient.AuthValues = new AuthenticationValues
+
+        string userName = UserDataManager.Instance.UserData.UserName;
+
+        if (string.IsNullOrWhiteSpace(userName))
         {
-            UserId = "nickname"
-        };
+            userName = "Player_" + Random.Range(1000, 9999);
+        }
+
         ChatAppSettings chatAppSettings = new ChatAppSettings();
         chatAppSettings.AppIdChat = chatAppId;
         chatAppSettings.AppVersion = appVersion;
-        chatClient.ConnectUsingSettings(chatAppSettings);
+
+        chatClient.AuthValues = new AuthenticationValues(userName);
+
+        bool isConnectStart = chatClient.ConnectUsingSettings(chatAppSettings);
+
+        Debug.Log("Chat Connect Start: " + isConnectStart);
+        Debug.Log("Chat UserId: " + chatClient.UserId);
     }
+
     private bool IsInputFocused()
     {
         return EventSystem.current.currentSelectedGameObject == inputField.gameObject;
