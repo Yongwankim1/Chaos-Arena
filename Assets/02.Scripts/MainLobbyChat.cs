@@ -7,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
-
+using UnityEngine.EventSystems;
 public class MainLobbyChat : MonoBehaviour, IChatClientListener
 {
     [Header("Photon Chat")]
@@ -21,26 +21,45 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     [SerializeField] private TMP_Text chatTextPrefab;
     [SerializeField] private ScrollRect scrollRect;
     private ChatClient chatClient;
-
+    void Awake()
+    {
+        TMP_Text text = Instantiate(chatTextPrefab, contentParent);
+        text.text = "채널 입장 중...";
+    }
     private void Start()
     {
         chatClient = new ChatClient(this);
-
-        AuthenticationValues auth = new AuthenticationValues();
-        auth.UserId = "Player_" + Random.Range(1000, 9999);
-
-        chatClient.Connect(chatAppId, appVersion, auth);
+        chatClient.AuthValues = new AuthenticationValues
+        {
+            UserId = "nickname"
+        };
+        ChatAppSettings chatAppSettings = new ChatAppSettings();
+        chatAppSettings.AppIdChat = chatAppId;
+        chatAppSettings.AppVersion = appVersion;
+        chatClient.ConnectUsingSettings(chatAppSettings);
     }
-
+    private bool IsInputFocused()
+    {
+        return EventSystem.current.currentSelectedGameObject == inputField.gameObject;
+    }
     private void Update()
     {
-        if (chatClient != null)
-        {
-            chatClient.Service();
-        }
+        chatClient?.Service();
 
         if (Keyboard.current.enterKey.wasPressedThisFrame)
         {
+            if (!IsInputFocused())
+            {
+                inputField.ActivateInputField();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(inputField.text))
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                return;
+            }
+
             SendChat();
         }
     }
@@ -74,6 +93,8 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     public void OnSubscribed(string[] channels, bool[] results)
     {
         Debug.Log("채널 입장 성공: " + channels[0]);
+        TMP_Text text = Instantiate(chatTextPrefab, contentParent);
+        text.text = "채널 입장!";
     }
 
     public void OnGetMessages(string channelName, string[] senders, object[] messages)

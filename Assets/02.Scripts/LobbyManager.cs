@@ -44,17 +44,17 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private void OnEnable()
     {
-        //createRoomButton.onClick.AddListener(() => StartGame(GameMode.Host));
-        //joinButton.onClick.AddListener(() => StartGame(GameMode.Client));
-        //startButton.onClick.AddListener(OnClickStartGameScene);
-        //exitButton.onClick.AddListener(OnClickExitRoom);
+        createRoomButton.onClick.AddListener(() => StartGame(GameMode.Host));
+        joinButton.onClick.AddListener(() => StartGame(GameMode.Client));
+        startButton.onClick.AddListener(OnClickStartGameScene);
+        exitButton.onClick.AddListener(OnClickExitRoom);
     }
     private void OnDisable()
     {
-        //createRoomButton.onClick.RemoveAllListeners();
-        //joinButton.onClick.RemoveAllListeners();
-        //startButton.onClick.RemoveAllListeners();
-        //exitButton.onClick.RemoveAllListeners();
+        createRoomButton.onClick.RemoveAllListeners();
+        joinButton.onClick.RemoveAllListeners();
+        startButton.onClick.RemoveAllListeners();
+        exitButton.onClick.RemoveAllListeners();
     }
     // ==================================================================================
     // 1. 게임 세션 시작 로직 (Host/Client 공통)
