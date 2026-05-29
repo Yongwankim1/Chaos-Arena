@@ -194,11 +194,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
                     input.Move.y).normalized;
 
             _targetRotation =
-                Mathf.Atan2(
-                    inputDirection.x,
-                    inputDirection.z) *
-                Mathf.Rad2Deg +
-                Camera.main.transform.eulerAngles.y;
+        Mathf.Atan2(
+            inputDirection.x,
+            inputDirection.z) *
+        Mathf.Rad2Deg +
+        _cinemachineTargetYaw;
 
             float rotation =
                 Mathf.SmoothDampAngle(
