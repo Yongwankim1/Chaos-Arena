@@ -45,6 +45,14 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     [Header("Network Room Player Data")]
     [SerializeField] private NetworkObject roomPlayerDataPrefab;
+
+    private readonly Dictionary<PlayerRef, NetworkObject> roomPlayerDataObjects = new Dictionary<PlayerRef, NetworkObject>();
+
+    [Header("Room Action")]
+    [SerializeField] private Button roomActionButton;
+    [SerializeField] private TMP_Text roomActionButtonText;
+    [SerializeField] private int gameSceneBuildIndex = 1;
+
     void Awake()
     {
         if(nicknameChecker == null) nicknameChecker = GetComponent<UserNickNameChecker>();
@@ -58,6 +66,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         yesCreateBtn.onClick.AddListener(CreateRoom);
         closeBtn.onClick.AddListener(CloseCreateRoomPanel);
 
+        roomActionButton.onClick.AddListener(OnClickRoomActionButton);
     }
     void OnDisable()
     {
@@ -66,10 +75,23 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         roomCreateBtn.onClick.RemoveAllListeners();
         yesCreateBtn.onClick.RemoveAllListeners();
         closeBtn.onClick.RemoveAllListeners();
+
+        roomActionButton.onClick.RemoveAllListeners();
     }
 
     public async void FusionConnect()
     {
+        if (currentRunner != null)
+        {
+            await currentRunner.Shutdown();
+
+            if (currentRunner != null)
+            {
+                Destroy(currentRunner.gameObject);
+                currentRunner = null;
+            }
+        }
+
         currentRunner = Instantiate(runnerPrefab);
         currentRunner.AddCallbacks(this);
 
@@ -87,12 +109,6 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    private void ShowMainLobby()
-    {
-        roomPanel.SetActive(false);
-        mainLobbyPanel.SetActive(true);
-        chat.Connect();
-    }
     private void CloseCreateRoomPanel()
     {
         EscManager.Instance.ClosePanel();
@@ -155,7 +171,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
             chat.Unsubscribe();
 
-            SpawnRoomPlayerData();
+            //SpawnRoomPlayerData();
+            SetupRoomActionButton();
         }
         else
         {
@@ -220,7 +237,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
             chat.Unsubscribe();
 
-            SpawnRoomPlayerData();
+            //SpawnRoomPlayerData();
+            SetupRoomActionButton();
         }
         else
         {
@@ -245,21 +263,26 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
             slot.Init(this, session);
         }
     }
-    private void SpawnRoomPlayerData()
+    private void SpawnRoomPlayerData(NetworkRunner runner, PlayerRef player)
     {
-        if (currentRunner == null)
+        if (!runner.IsServer)
             return;
 
-        currentRunner.Spawn(
+        if (roomPlayerDataObjects.ContainsKey(player))
+            return;
+
+        NetworkObject obj = runner.Spawn(
             roomPlayerDataPrefab,
             Vector3.zero,
             Quaternion.identity,
-            currentRunner.LocalPlayer
+            player
         );
+
+        roomPlayerDataObjects.Add(player, obj);
 
         Invoke(nameof(RefreshRoomUserInfo), 0.2f);
     }
-    private void RefreshRoomUserInfo()
+    public void RefreshRoomUserInfo()
     {
         foreach (Transform child in userInfoParent)
         {
@@ -271,16 +294,199 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
         foreach (RoomPlayerData player in players)
         {
-            UserInfo userInfo = Instantiate(userInfoPrefab, userInfoParent);
+            if (player == null)
+                continue;
 
-            string nickName = player.NickName.ToString();
+            if (player.Object == null)
+                continue;
+
+            if (!player.Object.IsValid)
+                continue;
+
+            string nickName;
+            bool isReady;
+
+            try
+            {
+                nickName = player.NickName.ToString();
+                isReady = player.IsReady;
+            }
+            catch
+            {
+                continue;
+            }
 
             if (string.IsNullOrWhiteSpace(nickName))
             {
                 nickName = "Player";
             }
 
-            userInfo.Init(nickName, player.IsReady);
+            UserInfo userInfo = Instantiate(userInfoPrefab, userInfoParent);
+            userInfo.Init(nickName, isReady);
+        }
+
+        UpdateRoomActionButton();
+    }
+
+    private void SetupRoomActionButton()
+    {
+        if (currentRunner == null) return;
+
+        if (currentRunner.IsServer)
+        {
+            roomActionButtonText.text = "시작";
+            roomActionButton.interactable = false;
+        }
+        else
+        {
+            roomActionButtonText.text = "레디";
+            roomActionButton.interactable = true;
+        }
+
+        Invoke(nameof(RefreshRoomUserInfo), 0.2f);
+        Invoke(nameof(UpdateRoomActionButton), 0.2f);
+    }
+
+    private void OnClickRoomActionButton()
+    {
+        if (currentRunner == null) return;
+
+        if (currentRunner.IsServer)
+        {
+            TryStartGame();
+        }
+        else
+        {
+            ToggleReady();
+        }
+    }
+    private void ToggleReady()
+    {
+        RoomPlayerData localData = GetLocalRoomPlayerData();
+
+        if (localData == null)
+        {
+            Debug.Log("내 RoomPlayerData를 찾지 못했습니다.");
+            return;
+        }
+
+        bool nextReady = !localData.IsReady;
+
+        localData.RPC_SetReady(nextReady);
+
+        roomActionButtonText.text = nextReady ? "레디 취소" : "레디";
+
+        Invoke(nameof(RefreshRoomUserInfo), 0.2f);
+        Invoke(nameof(UpdateRoomActionButton), 0.2f);
+    }
+    private void TryStartGame()
+    {
+        if (currentRunner == null) return;
+        if (!currentRunner.IsServer) return;
+        if (!AreAllClientsReady()) return;
+
+        Debug.Log("게임 시작");
+
+        currentRunner.LoadScene(SceneRef.FromIndex(gameSceneBuildIndex));
+    }
+    private RoomPlayerData GetLocalRoomPlayerData()
+    {
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player.Object.HasInputAuthority)
+            {
+                return player;
+            }
+        }
+
+        return null;
+    }
+    private bool AreAllClientsReady()
+    {
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        if (players.Length < 2)
+        {
+            return false;
+        }
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player.Object.InputAuthority == currentRunner.LocalPlayer)
+            {
+                continue;
+            }
+
+            if (!player.IsReady)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+    private void UpdateRoomActionButton()
+    {
+        if (currentRunner == null) return;
+
+        if (currentRunner.IsServer)
+        {
+            roomActionButtonText.text = "시작";
+            roomActionButton.interactable = AreAllClientsReady();
+        }
+        else
+        {
+            RoomPlayerData localData = GetLocalRoomPlayerData();
+
+            bool isReady = localData != null && localData.IsReady;
+
+            roomActionButtonText.text = isReady ? "레디 취소" : "레디";
+            roomActionButton.interactable = true;
+        }
+    }
+
+    public async void ExitRoom()
+    {
+        if (currentRunner == null)
+            return;
+
+        Debug.Log("방 나가기 시작");
+
+        roomActionButton.interactable = false;
+
+        await currentRunner.Shutdown();
+
+        if (currentRunner != null)
+        {
+            Destroy(currentRunner.gameObject);
+            currentRunner = null;
+        }
+
+        ClearRoomUserInfoUI();
+
+        roomPanel.SetActive(false);
+        mainLobbyPanel.SetActive(true);
+
+        roomCreateBtn.interactable = false;
+
+        FusionConnect();
+
+        if (chat != null)
+        {
+            chat.Connect();
+        }
+
+        Debug.Log("방 나가기 완료");
+    }
+    private void ClearRoomUserInfoUI()
+    {
+        foreach (Transform child in userInfoParent)
+        {
+            Destroy(child.gameObject);
         }
     }
     public void OnConnectedToServer(NetworkRunner runner)
@@ -325,12 +531,31 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Invoke(nameof(RefreshRoomUserInfo), 0.2f);
+        if (!runner.IsServer)
+            return;
+
+        SpawnRoomPlayerData(runner, player);
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        RefreshRoomUserInfo();
+        Debug.Log("플레이어 나감: " + player);
+
+        if (runner.IsServer)
+        {
+            if (roomPlayerDataObjects.TryGetValue(player, out NetworkObject obj))
+            {
+                if (obj != null && obj.IsValid)
+                {
+                    runner.Despawn(obj);
+                }
+
+                roomPlayerDataObjects.Remove(player);
+            }
+        }
+
+        Invoke(nameof(RefreshRoomUserInfo), 0.2f);
+        Invoke(nameof(UpdateRoomActionButton), 0.2f);
     }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
@@ -351,6 +576,19 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
+        Debug.Log("Runner 종료: " + shutdownReason);
+
+        ClearRoomUserInfoUI();
+
+        if (currentRunner == runner)
+        {
+            currentRunner = null;
+        }
+
+        roomPanel.SetActive(false);
+        mainLobbyPanel.SetActive(true);
+
+        roomCreateBtn.interactable = false;
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
