@@ -1,4 +1,4 @@
-using Fusion;
+﻿using Fusion;
 using System;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ public class RoomPlayerData : NetworkBehaviour
 
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
-
+        OnRoomPlayerDataChanged?.Invoke();
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
@@ -41,6 +41,19 @@ public class RoomPlayerData : NetworkBehaviour
     {
         IsReady = isReady;
         RPC_NotifyRoomPlayerDataChanged();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    public void RPC_RequestExitRoomByHost()
+    {
+        if (!Object.HasInputAuthority)
+            return;
+
+        LobbyManager lobby = FindFirstObjectByType<LobbyManager>();
+        if (lobby == null)
+            return;
+
+        lobby.ExitRoomRequestedByHost();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

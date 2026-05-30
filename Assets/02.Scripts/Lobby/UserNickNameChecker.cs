@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 
 public class UserNickNameChecker : MonoBehaviour
 {
-    [Header("À¯Àú ´Ð³×ÀÓ")]
+    [Header("ìœ ì € ë‹‰ë„¤ìž„")]
     [SerializeField] private string nickName;
     [SerializeField] TMP_InputField inputField;
     [SerializeField] GameObject createPlayerPanel;

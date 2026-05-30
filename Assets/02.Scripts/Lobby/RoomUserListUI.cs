@@ -17,6 +17,9 @@ public class RoomUserListUI : MonoBehaviour
 
     public void Refresh()
     {
+        if (!isActiveAndEnabled || !gameObject.activeInHierarchy)
+            return;
+
         Clear();
 
         RoomPlayerData[] players =
@@ -34,8 +37,10 @@ public class RoomUserListUI : MonoBehaviour
 
     public void Clear()
     {
-        foreach (Transform child in userInfoParent)
+        for (int i = userInfoParent.childCount - 1; i >= 0; i--)
         {
+            Transform child = userInfoParent.GetChild(i);
+            child.SetParent(null);
             Destroy(child.gameObject);
         }
     }

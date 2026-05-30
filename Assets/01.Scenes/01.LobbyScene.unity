@@ -8676,6 +8676,8 @@ GameObject:
   - component: {fileID: 1336126760}
   - component: {fileID: 1336126759}
   - component: {fileID: 1336126758}
+  - component: {fileID: 1336126761}
+  - component: {fileID: 1336126762}
   m_Layer: 0
   m_Name: RoomManager
   m_TagString: Untagged
@@ -8727,6 +8729,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1336126761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336126757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615eab320aa9cde4097dfa14d4de7a7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  exitButton: {fileID: 1760133167}
+--- !u!114 &1336126762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1336126757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e609c03bf79d040b581fa2a6d99522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  roomNameText: {fileID: 1994071470}
+  hostNameText: {fileID: 1307869998}
 --- !u!1 &1339504042
 GameObject:
   m_ObjectHideFlags: 0
@@ -11359,7 +11388,7 @@ GameObject:
   - component: {fileID: 1760133168}
   - component: {fileID: 1760133167}
   m_Layer: 5
-  m_Name: Button
+  m_Name: ExitBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11637,7 +11666,7 @@ GameObject:
   - component: {fileID: 1767546388}
   - component: {fileID: 1767546387}
   m_Layer: 5
-  m_Name: Content
+  m_Name: RoomListParentContent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13632,7 +13661,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2068660853}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66d69538afcd79644889d5a1ee5d3e7a, type: 3}
+  m_Script: {fileID: 11500000, guid: f83ba5dbe11257a4c87f68bfed03d3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LobbyManagerRefactorring
   runnerPrefab: {fileID: 6808546041092260094, guid: 22e8f5ba9ac70f841bff0bb1dab0e445, type: 3}
@@ -13651,6 +13680,8 @@ MonoBehaviour:
   roomPlayerDataPrefab: {fileID: 7159869014628281251, guid: 5dd7e672de033f54c93739ff5f9ed0ca, type: 3}
   roomUserListUI: {fileID: 1336126759}
   roomActionButtonUI: {fileID: 1336126758}
+  roomExitButtonUI: {fileID: 1336126761}
+  roomInfoView: {fileID: 0}
 --- !u!114 &2068660857
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13866,6 +13897,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2097867848}
   m_CullTransparentMesh: 1
+--- !u!1 &2109179415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2109179416}
+  m_Layer: 0
+  m_Name: RegionHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2109179416
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2109179415}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2111316823
 GameObject:
   m_ObjectHideFlags: 0
@@ -14153,3 +14215,4 @@ SceneRoots:
   - {fileID: 2068660855}
   - {fileID: 1819944393}
   - {fileID: 1336126760}
+  - {fileID: 2109179416}

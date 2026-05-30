@@ -1,13 +1,14 @@
-using Fusion;
+Ôªøusing Fusion;
 using Fusion.Sockets;
 using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
+public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner runnerPrefab;
 
@@ -17,6 +18,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private UserNickNameChecker nicknameChecker;
     private NetworkRunner currentRunner;
     private bool isJoiningRoom;
+    private bool isLeavingRoom;
+    private bool isRecoveringLobby;
 
     [Header("Panels")]
     [SerializeField] private GameObject mainLobbyPanel;
@@ -47,12 +50,14 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     [Header("Room UI")]
     [SerializeField] private RoomUserListUI roomUserListUI;
     [SerializeField] private RoomActionButtonUI roomActionButtonUI;
-
+    [SerializeField] private RoomExitButtonUI roomExitButtonUI;
+    [SerializeField] private RoomInfoView roomInfoView;
     void Awake()
     {
         if(nicknameChecker == null) nicknameChecker = GetComponent<UserNickNameChecker>();
         if (roomUserListUI == null) roomUserListUI = FindFirstObjectByType<RoomUserListUI>(FindObjectsInactive.Include);
         if (roomActionButtonUI == null) roomActionButtonUI = FindFirstObjectByType<RoomActionButtonUI>(FindObjectsInactive.Include);
+        if (roomInfoView == null) roomInfoView = FindFirstObjectByType<RoomInfoView>(FindObjectsInactive.Include);
         roomCreateBtn.interactable = false;
     }
     void OnEnable()
@@ -86,18 +91,19 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         currentRunner = Instantiate(runnerPrefab);
+        currentRunner.ProvideInput = true;
         currentRunner.AddCallbacks(this);
 
         var result = await currentRunner.JoinSessionLobby(SessionLobby.Shared);
 
         if (result.Ok)
         {
-            Debug.Log("Fusion ∑Œ∫Ò ¡¢º” º∫∞¯");
+            Debug.Log("Fusion Î°úÎπÑ Ï†ëÏÜç ÏÑ±Í≥µ");
             roomCreateBtn.interactable = true;
         }
         else
         {
-            Debug.Log("Fusion ∑Œ∫Ò ¡¢º” Ω«∆–: " + result.ShutdownReason);
+            Debug.Log("Fusion Î°úÎπÑ Ï†ëÏÜç Ïã§Ìå®: " + result.ShutdownReason);
             roomCreateBtn.interactable = false;
         }
     }
@@ -114,7 +120,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     {
         if(currentRunner == null)
         {
-            Debug.Log("∑Ø≥  ¡ÿ∫Òµ«¡ˆ æ ¿Ω");
+            Debug.Log("Îü¨ÎÑà Ï§ÄÎπÑÎêòÏßÄ ÏïäÏùå");
             return;
         }
         string sessionName = roomNameIF.text.Trim();
@@ -127,7 +133,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
         if (IsRoomNameExists(sessionName))
         {
-            Debug.Log("¿ÃπÃ ¡∏¿Á«œ¥¬ πÊ ¿Ã∏ß¿‘¥œ¥Ÿ.");
+            Debug.Log("Ïù¥ÎØ∏ Ï°¥Ïû¨ÌïòÎäî Î∞© Ïù¥Î¶ÑÏûÖÎãàÎã§.");
             return;
         }
         Dictionary<string, SessionProperty> properties = new Dictionary<string, SessionProperty>();
@@ -155,7 +161,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
         if (result.Ok)
         {
-            Debug.Log("πÊ ª˝º∫ º∫∞¯: " + sessionName);
+            Debug.Log("Î∞© ÏÉùÏÑ± ÏÑ±Í≥µ: " + sessionName);
 
             EscManager.Instance.ClosePanel();
 
@@ -166,10 +172,12 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
             roomUserListUI.Refresh();
             roomActionButtonUI.Init(currentRunner);
+            roomExitButtonUI.Init(this);
+            roomInfoView.SetRoomInfo(sessionName, UserDataManager.Instance.UserData.UserName);
         }
         else
         {
-            Debug.Log("πÊ ª˝º∫ Ω«∆–: " + result.ShutdownReason);
+            Debug.Log("Î∞© ÏÉùÏÑ± Ïã§Ìå®: " + result.ShutdownReason);
         }
     }
 
@@ -264,6 +272,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
                 roomUserListUI.Refresh();
                 roomActionButtonUI.Init(currentRunner);
+                roomExitButtonUI.Init(this);
+                roomInfoView.SetRoomInfo(selectedSession.Name, GetHostName(selectedSession));
             }
             else
             {
@@ -302,6 +312,9 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     private void RefreshRoomUI()
     {
+        if (!roomPanel.activeInHierarchy)
+            return;
+
         if (roomUserListUI != null)
         {
             roomUserListUI.Refresh();
@@ -338,13 +351,22 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         if (currentRunner == null)
             return;
 
-        Debug.Log("πÊ ≥™∞°±‚ Ω√¿€");
+        Debug.Log("Î∞© ÎÇòÍ∞ÄÍ∏∞ ÏãúÏûë");
 
-        await currentRunner.Shutdown();
+        isLeavingRoom = true;
+        NetworkRunner runner = currentRunner;
 
-        if (currentRunner != null)
+        if (runner.IsServer && HasRemotePlayersInRoom())
         {
-            Destroy(currentRunner.gameObject);
+            RequestRemotePlayersExitRoom();
+            await WaitUntilRemotePlayersLeft(2000);
+        }
+
+        await runner.Shutdown();
+
+        if (runner != null)
+        {
+            Destroy(runner.gameObject);
             currentRunner = null;
         }
 
@@ -362,11 +384,98 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
             chat.Connect();
         }
 
-        Debug.Log("πÊ ≥™∞°±‚ øœ∑·");
+        isLeavingRoom = false;
+        Debug.Log("Î∞© ÎÇòÍ∞ÄÍ∏∞ ÏôÑÎ£å");
+    }
+
+    public async void ExitRoomRequestedByHost()
+    {
+        if (currentRunner == null)
+            return;
+
+        Debug.Log("Ìò∏Ïä§Ìä∏Í∞Ä Î∞©ÏùÑ Ï¢ÖÎ£åÌïòÏó¨ Î°úÎπÑÎ°ú ÎèåÏïÑÍ∞ëÎãàÎã§.");
+
+        isLeavingRoom = true;
+        NetworkRunner runner = currentRunner;
+
+        await runner.Shutdown();
+
+        if (runner != null)
+        {
+            Destroy(runner.gameObject);
+            currentRunner = null;
+        }
+
+        ClearRoomUI();
+
+        roomPanel.SetActive(false);
+        mainLobbyPanel.SetActive(true);
+
+        roomCreateBtn.interactable = false;
+
+        FusionConnect();
+
+        if (chat != null)
+        {
+            chat.Connect();
+        }
+
+        isLeavingRoom = false;
+    }
+
+    private void RequestRemotePlayersExitRoom()
+    {
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player == null) continue;
+            if (player.Object == null) continue;
+            if (!player.Object.IsValid) continue;
+            if (player.Object.InputAuthority == currentRunner.LocalPlayer) continue;
+
+            player.RPC_RequestExitRoomByHost();
+        }
+    }
+
+    private async System.Threading.Tasks.Task WaitUntilRemotePlayersLeft(int timeoutMilliseconds)
+    {
+        int waitedMilliseconds = 0;
+        const int intervalMilliseconds = 100;
+
+        while (HasRemotePlayersInRoom() && waitedMilliseconds < timeoutMilliseconds)
+        {
+            await System.Threading.Tasks.Task.Delay(intervalMilliseconds);
+            waitedMilliseconds += intervalMilliseconds;
+        }
+    }
+
+    private bool HasRemotePlayersInRoom()
+    {
+        if (currentRunner == null)
+            return false;
+
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player == null) continue;
+            if (player.Object == null) continue;
+            if (!player.Object.IsValid) continue;
+
+            if (player.Object.InputAuthority != currentRunner.LocalPlayer)
+                return true;
+        }
+
+        return false;
     }
 
     private void ClearRoomUI()
     {
+        CancelInvoke(nameof(RefreshRoomUI));
+
         if (roomUserListUI != null)
         {
             roomUserListUI.Clear();
@@ -376,10 +485,30 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         {
             roomActionButtonUI.Clear();
         }
+
+        if (roomInfoView != null)
+        {
+            roomInfoView.Clear();
+        }
+    }
+
+    private string GetHostName(SessionInfo sessionInfo)
+    {
+        if (sessionInfo != null &&
+            sessionInfo.Properties.TryGetValue("hostName", out SessionProperty hostNameProperty))
+        {
+            return hostNameProperty.PropertyValue.ToString();
+        }
+
+        return "Unknown";
     }
 
     private async System.Threading.Tasks.Task RecoverLobbyAfterFailedJoin()
     {
+        if (isRecoveringLobby)
+            return;
+
+        isRecoveringLobby = true;
         selectedSession = null;
         ClearRoomUI();
 
@@ -406,6 +535,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         {
             chat.Connect();
         }
+
+        isRecoveringLobby = false;
     }
     public void OnConnectedToServer(NetworkRunner runner) {}
 
@@ -419,7 +550,24 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnHostMigration(NetworkRunner runner, HostMigrationToken hostMigrationToken){ }
 
-    public void OnInput(NetworkRunner runner, NetworkInput input){ }
+    public void OnInput(NetworkRunner runner, NetworkInput input)
+    {
+        var data = new NetworkInputData();
+
+        Keyboard keyboard = Keyboard.current;
+        if (keyboard != null)
+        {
+            if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) data.movementInput.x -= 1f;
+            if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) data.movementInput.x += 1f;
+            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) data.movementInput.y -= 1f;
+            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) data.movementInput.y += 1f;
+
+            data.isRuning = keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed;
+            data.KillInput = keyboard.fKey.isPressed;
+        }
+
+        input.Set(data);
+    }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input){ }
 
@@ -437,7 +585,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        Debug.Log("«√∑π¿ÃæÓ ≥™∞®: " + player);
+        Debug.Log("ÌîåÎ†àÏù¥Ïñ¥ ÎÇòÍ∞ê: " + player);
 
         if (runner.IsServer)
         {
@@ -465,7 +613,9 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
-        Debug.Log("Runner ¡æ∑·: " + shutdownReason);
+        Debug.Log("Runner Ï¢ÖÎ£å: " + shutdownReason);
+
+        bool wasInRoom = roomPanel.activeSelf;
 
         ClearRoomUI();
 
@@ -480,7 +630,34 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         mainLobbyPanel.SetActive(true);
 
         roomCreateBtn.interactable = false;
+
+        if (wasInRoom && !isLeavingRoom && !isRecoveringLobby)
+        {
+            RecoverLobbyAfterRemoteShutdown(runner);
+        }
     }
 
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+
+    private void RecoverLobbyAfterRemoteShutdown(NetworkRunner runner)
+    {
+        if (isRecoveringLobby)
+            return;
+
+        isRecoveringLobby = true;
+
+        if (runner != null)
+        {
+            Destroy(runner.gameObject);
+        }
+
+        FusionConnect();
+
+        if (chat != null)
+        {
+            chat.Connect();
+        }
+
+        isRecoveringLobby = false;
+    }
 }

@@ -1,4 +1,4 @@
-using ExitGames.Client.Photon;
+ï»¿using ExitGames.Client.Photon;
 using Photon.Chat;
 using Photon.Client;
 using System.Collections;
@@ -11,7 +11,7 @@ using UnityEngine.EventSystems;
 public class MainLobbyChat : MonoBehaviour, IChatClientListener
 {
     [Header("Photon Fusion")]
-    [SerializeField] private LobbyManagerRefactorring lobby;
+    [SerializeField] private LobbyManager lobby;
     [Header("UserNickNameChecker")]
     [SerializeField] private UserNickNameChecker nickNameChecker;
     [Header("Photon Chat")]
@@ -27,6 +27,8 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     [SerializeField] private Transform userListParent;
     private ChatClient chatClient;
     private string myNickName;
+    private bool isSubscribedToMainChannel;
+    private bool isSendingAfterImeCommit;
 
 
     [Header("Prefabs")]
@@ -49,15 +51,20 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
         if (chatClient != null)
         {
             if (chatClient.State == ChatState.ConnectedToFrontEnd ||
-                chatClient.State == ChatState.Authenticated ||
-                chatClient.State == ChatState.ConnectingToNameServer)
+                chatClient.State == ChatState.Authenticated)
             {
-                Debug.Log("ÀÌ¹Ì Ã¤ÆÃ ¿¬°á ÁßÀÌ°Å³ª ¿¬°áµÊ");
+                SubscribeMainChannel();
+                return;
+            }
+
+            if (chatClient.State == ChatState.ConnectingToNameServer)
+            {
+                Debug.Log("ì´ë¯¸ ì±„íŒ… ì—°ê²° ì¤‘ì´ê±°ë‚˜ ì—°ê²°ë¨");
                 return;
             }
         }
         TMP_Text text = Instantiate(chatTextPrefab, contentParent);
-        text.text = "Ã¤³Î ÀÔÀå Áß...";
+        text.text = "ì±„ë„ ì…ì¥ ì¤‘...";
 
         chatClient = new ChatClient(this);
 
@@ -85,6 +92,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     public void Unsubscribe()
     {
         if (chatClient == null) return;
+        isSubscribedToMainChannel = false;
         chatClient.Unsubscribe(new string[] { channelName });
     }
     private bool IsInputFocused()
@@ -109,8 +117,25 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
                 return;
             }
 
-            SendChat();
+            SendChatAfterImeCommit();
         }
+    }
+
+    private void SendChatAfterImeCommit()
+    {
+        if (isSendingAfterImeCommit)
+            return;
+
+        StartCoroutine(SendChatAfterImeCommitRoutine());
+    }
+
+    private IEnumerator SendChatAfterImeCommitRoutine()
+    {
+        isSendingAfterImeCommit = true;
+        yield return null;
+
+        SendChat();
+        isSendingAfterImeCommit = false;
     }
 
     private IEnumerator ScrollToBottomRoutine()
@@ -138,7 +163,15 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
 
     public void OnConnected()
     {
-        Debug.Log("Photon Chat ¼­¹ö ¿¬°á ¼º°ø");
+        Debug.Log("Photon Chat ì„œë²„ ì—°ê²° ì„±ê³µ");
+        SubscribeMainChannel();
+    }
+
+    private void SubscribeMainChannel()
+    {
+        if (chatClient == null) return;
+        if (isSubscribedToMainChannel) return;
+
         chatClient.Subscribe( channelName, 0,-1, new ChannelCreationOptions
         {
             PublishSubscribers = true
@@ -147,9 +180,10 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
 
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        Debug.Log("Ã¤³Î ÀÔÀå ¼º°ø: " + channels[0]);
+        Debug.Log("ì±„ë„ ì…ì¥ ì„±ê³µ: " + channels[0]);
+        isSubscribedToMainChannel = true;
         TMP_Text text = Instantiate(chatTextPrefab, contentParent);
-        text.text = "Ã¤³Î ÀÔÀå!";
+        text.text = "ì±„ë„ ì…ì¥!";
 
         UpdateUserList();
     }
@@ -183,7 +217,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
             userNickNames.Add(text);
         }
     }
-    [ContextMenu("ÇöÀç À¯Àú º¸±â")]
+    [ContextMenu("í˜„ì¬ ìœ ì € ë³´ê¸°")]
     void PrintUserList()
     {
         if (chatClient == null) return;
@@ -191,7 +225,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
 
         foreach (string user in channel.Subscribers)
         {
-            Debug.Log("ÇöÀç À¯Àú: " + user);
+            Debug.Log("í˜„ì¬ ìœ ì €: " + user);
         }
     }
 
@@ -222,22 +256,32 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
 
     public void OnDisconnected()
     {
-        Debug.Log("Photon Chat ¼­¹ö ¿¬°á ²÷±è");
+        Debug.Log("Photon Chat ì„œë²„ ì—°ê²° ëŠê¹€");
     }
 
     public void OnChatStateChange(ChatState state) { }
     public void DebugReturn(DebugLevel level, string message) { }
-    public void OnUnsubscribed(string[] channels) { }
+    public void OnUnsubscribed(string[] channels)
+    {
+        foreach (string channel in channels)
+        {
+            if (channel == channelName)
+            {
+                isSubscribedToMainChannel = false;
+                break;
+            }
+        }
+    }
     public void OnStatusUpdate(string user, int status, bool gotMessage, object message) { }
     public void OnPrivateMessage(string sender, object message, string channelName) { }
     public void OnUserSubscribed(string channel, string user)
     {
-        Debug.Log("À¯Àú ÀÔÀå: " + user);
+        Debug.Log("ìœ ì € ì…ì¥: " + user);
         UpdateUserList();
     }
     public void OnUserUnsubscribed(string channel, string user)
     {
-        Debug.Log("À¯Àú ÅğÀå: " + user);
+        Debug.Log("ìœ ì € í‡´ì¥: " + user);
         UpdateUserList();
     }
 

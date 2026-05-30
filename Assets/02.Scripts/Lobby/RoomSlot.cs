@@ -1,4 +1,4 @@
-using Fusion;
+﻿using Fusion;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +11,10 @@ public class RoomSlot : MonoBehaviour
     [SerializeField] private Toggle isLockToggle;
     [SerializeField] private Button joinButton;
 
-    private LobbyManagerRefactorring lobby;
+    private LobbyManager lobby;
     private SessionInfo sessionInfo;
 
-    public void Init(LobbyManagerRefactorring lobby, SessionInfo sessionInfo)
+    public void Init(LobbyManager lobby, SessionInfo sessionInfo)
     {
         this.lobby = lobby;
         this.sessionInfo = sessionInfo;

@@ -1,4 +1,4 @@
-using Fusion;
+ï»¿using Fusion;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,7 +46,7 @@ public class RoomActionButtonUI : MonoBehaviour
 
         if (runner.IsServer)
         {
-            roomActionButtonText.text = "½ÃÀÛ";
+            roomActionButtonText.text = "ì‹œìž‘";
             roomActionButton.interactable = AreAllClientsReady();
         }
         else
@@ -67,7 +67,7 @@ public class RoomActionButtonUI : MonoBehaviour
                 }
             }
 
-            roomActionButtonText.text = isReady ? "·¹µð Ãë¼Ò" : "·¹µð";
+            roomActionButtonText.text = isReady ? "ë ˆë”” ì·¨ì†Œ" : "ë ˆë””";
             roomActionButton.interactable = true;
         }
     }
@@ -92,7 +92,7 @@ public class RoomActionButtonUI : MonoBehaviour
 
         if (localData == null)
         {
-            Debug.Log("³» RoomPlayerData¸¦ Ã£Áö ¸øÇß½À´Ï´Ù.");
+            Debug.Log("ë‚´ RoomPlayerDataë¥¼ ì°¾ì§€ ëª»í–ˆìŠµë‹ˆë‹¤.");
             return;
         }
 
@@ -116,7 +116,7 @@ public class RoomActionButtonUI : MonoBehaviour
         if (!runner.IsServer) return;
         if (!AreAllClientsReady()) return;
 
-        Debug.Log("°ÔÀÓ ½ÃÀÛ");
+        Debug.Log("ê²Œìž„ ì‹œìž‘");
         runner.LoadScene(SceneRef.FromIndex(gameSceneBuildIndex));
     }
 
