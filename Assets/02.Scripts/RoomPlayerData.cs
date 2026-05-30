@@ -24,6 +24,11 @@ public class RoomPlayerData : NetworkBehaviour
         RPC_SetNickName(nickName);
     }
 
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+
+    }
+
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_SetNickName(string nickName)
     {

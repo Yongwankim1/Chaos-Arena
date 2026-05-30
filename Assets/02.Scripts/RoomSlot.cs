@@ -38,6 +38,8 @@ public class RoomSlot : MonoBehaviour
 
         isLockToggle.isOn = hasPassword ?  true : false;
 
+        joinButton.interactable = sessionInfo.IsOpen && sessionInfo.PlayerCount < sessionInfo.MaxPlayers;
+
         joinButton.onClick.RemoveAllListeners();
         joinButton.onClick.AddListener(OnClickJoin);
     }

@@ -16,6 +16,7 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     [Header("NickNameChecker")]
     [SerializeField] private UserNickNameChecker nicknameChecker;
     private NetworkRunner currentRunner;
+    private bool isJoiningRoom;
 
     [Header("Panels")]
     [SerializeField] private GameObject mainLobbyPanel;
@@ -50,6 +51,8 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     void Awake()
     {
         if(nicknameChecker == null) nicknameChecker = GetComponent<UserNickNameChecker>();
+        if (roomUserListUI == null) roomUserListUI = FindFirstObjectByType<RoomUserListUI>(FindObjectsInactive.Include);
+        if (roomActionButtonUI == null) roomActionButtonUI = FindFirstObjectByType<RoomActionButtonUI>(FindObjectsInactive.Include);
         roomCreateBtn.interactable = false;
     }
     void OnEnable()
@@ -184,14 +187,25 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     }
     public void SelectRoom(SessionInfo sessionInfo)
     {
+        if (isJoiningRoom)
+            return;
+
+        if (sessionInfo == null)
+            return;
+
+        if (!sessionInfo.IsOpen || sessionInfo.PlayerCount >= sessionInfo.MaxPlayers)
+        {
+            Debug.Log("Cannot join this room right now.");
+            return;
+        }
+
         selectedSession = sessionInfo;
 
-        Debug.Log("선택한 방: " + sessionInfo.Name);
+        Debug.Log("Selected room: " + sessionInfo.Name);
 
-        // 비밀번호 있는 방이면 비밀번호 입력 패널 열기
         if (sessionInfo.Properties.TryGetValue("hasPassword", out SessionProperty value) && (bool)value)
         {
-            Debug.Log("비밀번호 필요");
+            Debug.Log("Password required.");
             // EscManager.Instance.OpenPanel(passwordPanel);
             return;
         }
@@ -200,39 +214,71 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
     }
     public async void JoinSelectedRoom(string inputPassword)
     {
+        if (isJoiningRoom)
+            return;
+
         if (selectedSession == null) return;
+
+        if (currentRunner == null)
+        {
+            Debug.Log("Runner is not ready.");
+            FusionConnect();
+            return;
+        }
+
+        if (!selectedSession.IsOpen || selectedSession.PlayerCount >= selectedSession.MaxPlayers)
+        {
+            Debug.Log("Cannot join this room right now.");
+            return;
+        }
 
         if (selectedSession.Properties.TryGetValue("password", out SessionProperty pw))
         {
             if (pw.PropertyValue.ToString() != inputPassword)
             {
-                Debug.Log("비밀번호가 틀렸습니다.");
+                Debug.Log("Wrong password.");
                 return;
             }
         }
 
-        var result = await currentRunner.StartGame(new StartGameArgs
+        isJoiningRoom = true;
+        roomCreateBtn.interactable = false;
+
+        try
         {
-            GameMode = GameMode.Client,
-            SessionName = selectedSession.Name,
-            SceneManager = currentRunner.GetComponent<NetworkSceneManagerDefault>()
-        });
+            var result = await currentRunner.StartGame(new StartGameArgs
+            {
+                GameMode = GameMode.Client,
+                SessionName = selectedSession.Name,
+                SceneManager = currentRunner.GetComponent<NetworkSceneManagerDefault>()
+            });
 
-        if (result.Ok)
-        {
-            Debug.Log("방 입장 성공: " + selectedSession.Name);
+            if (result.Ok)
+            {
+                Debug.Log("Joined room: " + selectedSession.Name);
 
-            mainLobbyPanel.SetActive(false);
-            roomPanel.SetActive(true);
+                mainLobbyPanel.SetActive(false);
+                roomPanel.SetActive(true);
 
-            chat.Unsubscribe();
+                chat.Unsubscribe();
 
-            roomUserListUI.Refresh();
-            roomActionButtonUI.Init(currentRunner);
+                roomUserListUI.Refresh();
+                roomActionButtonUI.Init(currentRunner);
+            }
+            else
+            {
+                Debug.Log("Join room failed: " + result.ShutdownReason);
+                await RecoverLobbyAfterFailedJoin();
+            }
         }
-        else
+        catch (Exception exception)
         {
-            Debug.Log("방 입장 실패: " + result.ShutdownReason);
+            Debug.Log("Join room exception: " + exception.Message);
+            await RecoverLobbyAfterFailedJoin();
+        }
+        finally
+        {
+            isJoiningRoom = false;
         }
     }
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
@@ -329,6 +375,36 @@ public class LobbyManagerRefactorring : MonoBehaviour, INetworkRunnerCallbacks
         if (roomActionButtonUI != null)
         {
             roomActionButtonUI.Clear();
+        }
+    }
+
+    private async System.Threading.Tasks.Task RecoverLobbyAfterFailedJoin()
+    {
+        selectedSession = null;
+        ClearRoomUI();
+
+        roomPanel.SetActive(false);
+        mainLobbyPanel.SetActive(true);
+        roomCreateBtn.interactable = false;
+
+        if (currentRunner != null)
+        {
+            NetworkRunner runner = currentRunner;
+            currentRunner = null;
+
+            await runner.Shutdown();
+
+            if (runner != null)
+            {
+                Destroy(runner.gameObject);
+            }
+        }
+
+        FusionConnect();
+
+        if (chat != null)
+        {
+            chat.Connect();
         }
     }
     public void OnConnectedToServer(NetworkRunner runner) {}
