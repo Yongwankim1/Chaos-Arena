@@ -1,7 +1,11 @@
 using Fusion;
+using System;
+using UnityEngine;
 
 public class RoomPlayerData : NetworkBehaviour
 {
+    public static event Action OnRoomPlayerDataChanged;
+
     [Networked] public NetworkString<_32> NickName { get; set; }
     [Networked] public NetworkBool IsReady { get; set; }
 
@@ -19,28 +23,24 @@ public class RoomPlayerData : NetworkBehaviour
 
         RPC_SetNickName(nickName);
     }
-    public override void Render()
-    {
-        NotifyLobbyRefresh();
-    }
-    private void NotifyLobbyRefresh()
-    {
-        LobbyManagerRefactorring lobby =
-            FindFirstObjectByType<LobbyManagerRefactorring>();
 
-        if (lobby == null) return;
-
-        lobby.RefreshRoomUserInfo();
-    }
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     private void RPC_SetNickName(string nickName)
     {
         NickName = nickName;
+        RPC_NotifyRoomPlayerDataChanged();
     }
 
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     public void RPC_SetReady(bool isReady)
     {
         IsReady = isReady;
+        RPC_NotifyRoomPlayerDataChanged();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_NotifyRoomPlayerDataChanged()
+    {
+        OnRoomPlayerDataChanged?.Invoke();
     }
 }
