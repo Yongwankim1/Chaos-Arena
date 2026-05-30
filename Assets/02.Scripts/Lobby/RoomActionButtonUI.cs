@@ -1,4 +1,5 @@
 ﻿using Fusion;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -117,6 +118,12 @@ public class RoomActionButtonUI : MonoBehaviour
         if (!AreAllClientsReady()) return;
 
         Debug.Log("게임 시작");
+        runner.SessionInfo.IsOpen = false;
+        runner.SessionInfo.IsVisible = false;
+        runner.SessionInfo.UpdateCustomProperties(new Dictionary<string, SessionProperty>
+        {
+            { "isPlaying", true }
+        });
         runner.LoadScene(SceneRef.FromIndex(gameSceneBuildIndex));
     }
 

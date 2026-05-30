@@ -139,6 +139,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         Dictionary<string, SessionProperty> properties = new Dictionary<string, SessionProperty>();
 
         properties.Add("hostName", UserDataManager.Instance.UserData.UserName);
+        properties.Add("isPlaying", false);
 
         if (!string.IsNullOrWhiteSpace(password))
         {
@@ -207,6 +208,12 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
         }
 
+        if (IsSessionPlaying(sessionInfo))
+        {
+            Debug.Log("Game already started.");
+            return;
+        }
+
         selectedSession = sessionInfo;
 
         Debug.Log("Selected room: " + sessionInfo.Name);
@@ -237,6 +244,12 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (!selectedSession.IsOpen || selectedSession.PlayerCount >= selectedSession.MaxPlayers)
         {
             Debug.Log("Cannot join this room right now.");
+            return;
+        }
+
+        if (IsSessionPlaying(selectedSession))
+        {
+            Debug.Log("Game already started.");
             return;
         }
 
@@ -304,14 +317,42 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             if (!session.IsOpen) continue;
             if (!session.IsVisible) continue;
+            if (IsSessionPlaying(session)) continue;
 
             RoomSlot slot = Instantiate(roomSlotPrefab, roomListParent);
             slot.Init(this, session);
         }
     }
 
+    private bool IsSessionPlaying(SessionInfo sessionInfo)
+    {
+        if (sessionInfo == null)
+            return false;
+
+        if (!sessionInfo.Properties.TryGetValue("isPlaying", out SessionProperty isPlayingProperty))
+            return false;
+
+        return (bool)isPlayingProperty;
+    }
+
+    private bool CanUseLobbyUI()
+    {
+        return this != null && roomPanel != null && mainLobbyPanel != null && roomCreateBtn != null;
+    }
+
+    private void ScheduleRefreshRoomUI()
+    {
+        if (!CanUseLobbyUI() || !isActiveAndEnabled)
+            return;
+
+        Invoke(nameof(RefreshRoomUI), 0.2f);
+    }
+
     private void RefreshRoomUI()
     {
+        if (!CanUseLobbyUI())
+            return;
+
         if (!roomPanel.activeInHierarchy)
             return;
 
@@ -342,7 +383,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
         roomPlayerDataObjects.Add(player, obj);
 
-        Invoke(nameof(RefreshRoomUI), 0.2f);
+        ScheduleRefreshRoomUI();
     }
 
 
@@ -474,7 +515,13 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private void ClearRoomUI()
     {
+        if (this == null)
+            return;
+
         CancelInvoke(nameof(RefreshRoomUI));
+
+        if (!CanUseLobbyUI())
+            return;
 
         if (roomUserListUI != null)
         {
@@ -576,15 +623,21 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
+        if (!CanUseLobbyUI())
+            return;
+
         if (!runner.IsServer)
             return;
 
         SpawnRoomPlayerData(runner, player);
 
-        Invoke(nameof(RefreshRoomUI), 0.2f);
+        ScheduleRefreshRoomUI();
     }
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
+        if (!CanUseLobbyUI())
+            return;
+
         Debug.Log("플레이어 나감: " + player);
 
         if (runner.IsServer)
@@ -600,7 +653,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             }
         }
 
-        Invoke(nameof(RefreshRoomUI), 0.2f);
+        ScheduleRefreshRoomUI();
     }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress) { }
@@ -614,6 +667,18 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
         Debug.Log("Runner 종료: " + shutdownReason);
+
+        if (!CanUseLobbyUI())
+        {
+            roomPlayerDataObjects.Clear();
+
+            if (currentRunner == runner)
+            {
+                currentRunner = null;
+            }
+
+            return;
+        }
 
         bool wasInRoom = roomPanel.activeSelf;
 
