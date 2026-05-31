@@ -52,6 +52,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private int _animIDSpeed;
     private int _animIDGrounded;
     private int _animIDJump;
+    private int _animIDJumpLand;
     private int _animIDFreeFall;
     private int _animIDMotionSpeed;
 
@@ -100,7 +101,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
         // CameraRotation(input);
         GroundedCheck();
         JumpAndGravity(input);
-        Move(input);    
+        Move(input);
+        GroundedCheck();
     }
 
     private void LateUpdate()
@@ -131,7 +133,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
             _justLanded = true;
 
             _animator.ResetTrigger("Jump");
+            _animator.SetBool(_animIDGrounded, true);
             _animator.SetBool(_animIDFreeFall, false);
+            _animator.CrossFade(_animIDJumpLand, 0f, 0, 0f);
         }
 
         Grounded = groundedNow;
@@ -295,16 +299,27 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
             if (input.Jump && _jumpCooldownTimer <= 0f && _landingLockTimer <= 0f)
             {
-                Debug.Log("JUMP EXECUTED");
-
+                float previousVerticalVelocity = _controller.Velocity.y;
                 _controller.Jump();
 
-                _animator.ResetTrigger("Jump");
-                _animator.SetTrigger("Jump");
+                bool jumpStarted = _controller.Velocity.y > previousVerticalVelocity;
 
-                _jumpTriggered = true;
+                if (jumpStarted)
+                {
+                    Debug.Log("JUMP EXECUTED");
 
-                _jumpCooldownTimer = JumpCooldown;
+                    _controller.Grounded = false;
+                    Grounded = false;
+
+                    _animator.ResetTrigger("Jump");
+                    _animator.SetBool(_animIDGrounded, false);
+                    _animator.SetBool(_animIDFreeFall, false);
+                    _animator.SetTrigger(_animIDJump);
+
+                    _jumpTriggered = true;
+
+                    _jumpCooldownTimer = JumpCooldown;
+                }
             }
         }
         else
@@ -331,6 +346,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         _animIDJump =
             Animator.StringToHash("Jump");
+
+        _animIDJumpLand =
+            Animator.StringToHash("Base Layer.JumpLand");
 
         _animIDFreeFall =
             Animator.StringToHash("FreeFall");
