@@ -12,12 +12,14 @@ public class NetworkThirdPersonController : NetworkBehaviour
     public float SpeedChangeRate = 10.0f;
 
     [Header("Jump")]
-    public float JumpTimeout = 0.5f;
+    public float JumpCooldown = 0.5f;
     public float FallTimeout = 0.15f;
-    [Networked]
-    private int JumpCounter { get; set; }
+
+    [Networked] private int JumpCounter { get; set; }
 
     private int _lastJumpCounter;
+    private float _jumpCooldownTimer;
+    private float _fallTimeoutDelta;
 
     [Header("Ground")]
     public bool Grounded = true;
@@ -39,8 +41,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private float _targetRotation;
     private float _rotationVelocity;
 
-    private float _jumpTimeoutDelta;
-    private float _fallTimeoutDelta;
 
     private Animator _animator;
     private NetworkCharacterController _controller;
@@ -53,22 +53,19 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private const float _threshold = 0.01f;
     [SerializeField]
-    float lookMultiplier = 0.2f;
+    float lookMultiplier = 1.2f;
     private NetworkInputData _lastInput;
     public override void Spawned()
     {
-        Debug.Log(
-        $"Spawned {Object.Id} " +
-        $"Input:{Object.InputAuthority} " +
-        $"State:{Object.StateAuthority}");
 
         _animator = GetComponent<Animator>();
         _controller = GetComponent<NetworkCharacterController>();
 
         AssignAnimationIDs();
 
-        _jumpTimeoutDelta = JumpTimeout;
+        //_jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
+        _jumpCooldownTimer = 0f;
 
         if (HasInputAuthority)
         {
@@ -111,25 +108,12 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (JumpCounter != _lastJumpCounter)
         {
             _lastJumpCounter = JumpCounter;
-
             _animator.SetTrigger("Jump");
         }
     }
-
     private void GroundedCheck()
     {
-        Vector3 spherePosition =
-            new Vector3(
-                transform.position.x,
-                transform.position.y - GroundedOffset,
-                transform.position.z);
-
-        Grounded = Physics.CheckSphere(
-            spherePosition,
-            GroundedRadius,
-            GroundLayers,
-            QueryTriggerInteraction.Ignore);
-
+        Grounded = _controller.Grounded;
         _animator.SetBool(_animIDGrounded, Grounded);
     }
 
@@ -141,7 +125,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (input.Look.sqrMagnitude >= _threshold)
         {
             _cinemachineTargetYaw += input.Look.x * lookMultiplier;
-            _cinemachineTargetPitch -= input.Look.y * lookMultiplier;
+            _cinemachineTargetPitch += input.Look.y * lookMultiplier;
         }
 
         _cinemachineTargetPitch =
@@ -155,31 +139,21 @@ public class NetworkThirdPersonController : NetworkBehaviour
                 _cinemachineTargetPitch + CameraAngleOverride,
                 _cinemachineTargetYaw,
                 0f);
+
     }
 
     private void Move(NetworkInputData input)
     {
-    Debug.Log(
-    $"Obj:{Object.Id} " +
-    $"InputAuth:{Object.InputAuthority} " +
-    $"StateAuth:{Object.StateAuthority} " +
-    $"HasInput:{HasInputAuthority}");
-
         Debug.Log(
-    $"Input:{HasInputAuthority} " +
-    $"State:{HasStateAuthority}"
-);
-
-        Debug.Log(
-    $"Runner:{Runner.Mode} " +
-    $"Input:{HasInputAuthority} " +
-    $"State:{HasStateAuthority}"
-);
+           $"Sprint:{input.Sprint}"
+       );
         float targetSpeed =
             input.Sprint
                 ? SprintSpeed
                 : MoveSpeed;
-
+        Debug.Log(
+    $"TargetSpeed:{targetSpeed}"
+);
         if (input.Move == Vector2.zero)
             targetSpeed = 0.0f;
 
@@ -275,48 +249,34 @@ public class NetworkThirdPersonController : NetworkBehaviour
                 inputMagnitude);
         }
     }
-
     private void JumpAndGravity(NetworkInputData input)
     {
+        if (_jumpCooldownTimer > 0f) _jumpCooldownTimer -= Runner.DeltaTime;
+
         if (Grounded)
         {
             _fallTimeoutDelta = FallTimeout;
+            _animator.SetBool(_animIDFreeFall, false);
 
-            _animator.SetBool(
-                _animIDFreeFall,
-                false);
-
-            if (input.Jump &&
-                _jumpTimeoutDelta <= 0f)
+            if (input.Jump && _jumpCooldownTimer <= 0f)
             {
                 _controller.Jump();
-
-                // 점프 애니메이션 이벤트 전송
                 JumpCounter++;
-            }
-
-            if (_jumpTimeoutDelta >= 0f)
-            {
-                _jumpTimeoutDelta -= Runner.DeltaTime;
+                _jumpCooldownTimer = JumpCooldown;
             }
         }
         else
         {
-            _jumpTimeoutDelta = JumpTimeout;
-
-            if (_fallTimeoutDelta >= 0f)
+            if (_fallTimeoutDelta > 0f)
             {
                 _fallTimeoutDelta -= Runner.DeltaTime;
             }
             else
             {
-                _animator.SetBool(
-                    _animIDFreeFall,
-                    true);
+                _animator.SetBool(_animIDFreeFall, true);
             }
         }
     }
-
     private void AssignAnimationIDs()
     {
         _animIDSpeed =
