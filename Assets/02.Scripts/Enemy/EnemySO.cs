@@ -3,9 +3,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemySO", menuName = "Enemy/EnemySO")]
 public class EnemySO : ScriptableObject
 {
-    public int MaxHP;
-    public int Damage;
-    public int Defense;
-
-    public GameObject Effect;
+    public string monsterName;
+    public float maxHp;
+    public float chaseSpeed;
+    public float patrolSpeed;
+    public float detectRange;
+    public float attackRange;
+    public float attackDamage;
+    public float attackCooldown;
 }

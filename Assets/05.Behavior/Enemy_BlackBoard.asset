@@ -22,7 +22,6 @@ MonoBehaviour:
   - rid: 3952068806759940543
   - rid: 3952068806759940561
   - rid: 3952068806759940581
-  - rid: 3952068806759940603
   - rid: 3952068806759940652
   - rid: 3952068806759940678
   - rid: 3952068806759940706
@@ -30,7 +29,8 @@ MonoBehaviour:
   - rid: 3952068806759940768
   - rid: 3952068806759940818
   - rid: 3952068806759940854
-  m_VersionTimestamp: 639158284868871876
+  - rid: 3952068807948239583
+  m_VersionTimestamp: 639158334732229673
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: 7117304209035582068}
@@ -97,16 +97,6 @@ MonoBehaviour:
         IsExposed: 1
         m_IsShared: 0
         m_Value: 0
-    - rid: 3952068806759940603
-      type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 8006251098416337199
-          m_Value1: 13105565327789451104
-        Name: Self
-        IsExposed: 1
-        m_IsShared: 0
-        m_Value: {fileID: 0}
     - rid: 3952068806759940652
       type: {class: 'TypedVariableModel`1[[System.String, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -177,6 +167,16 @@ MonoBehaviour:
         IsExposed: 1
         m_IsShared: 0
         m_Value: []
+    - rid: 3952068807948239583
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 9061742577971331129
+          m_Value1: 13436108545243354838
+        Name: DetectRadius
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
 --- !u!114 &7117304209035582068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: Enemy_BlackBoard
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.RuntimeBlackboardAsset
-  VersionTimestamp: 639158284868871876
+  VersionTimestamp: 639158334732229673
   AssetID:
     m_Value0: 9534148792356573229
     m_Value1: 12947939812038791002
@@ -201,7 +201,6 @@ MonoBehaviour:
     - rid: 3952068806759940544
     - rid: 3952068806759940562
     - rid: 3952068806759940582
-    - rid: 3952068806759940604
     - rid: 3952068806759940653
     - rid: 3952068806759940679
     - rid: 3952068806759940707
@@ -209,6 +208,7 @@ MonoBehaviour:
     - rid: 3952068806759940769
     - rid: 3952068806759940819
     - rid: 3952068806759940855
+    - rid: 3952068807948239584
   m_SharedBlackboardVariableGuids: []
   references:
     version: 2
@@ -261,14 +261,6 @@ MonoBehaviour:
           m_Value1: 18085630801727821821
         Name: CanSeeTarget
         m_Value: 0
-    - rid: 3952068806759940604
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 8006251098416337199
-          m_Value1: 13105565327789451104
-        Name: Self
-        m_Value: {fileID: 0}
     - rid: 3952068806759940653
       type: {class: 'BlackboardVariable`1[[System.String, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -325,3 +317,11 @@ MonoBehaviour:
           m_Value1: 7494883591197087758
         Name: PatrolPoints
         m_Value: []
+    - rid: 3952068807948239584
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 9061742577971331129
+          m_Value1: 13436108545243354838
+        Name: DetectRadius
+        m_Value: 0
