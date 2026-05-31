@@ -12,12 +12,16 @@ public class NetworkThirdPersonController : NetworkBehaviour
     public float SpeedChangeRate = 10.0f;
 
     [Header("Jump")]
-    public float JumpCooldown = 0.5f;
-    public float FallTimeout = 0.15f;
+    public float JumpCooldown = 0.25f;
+    public float FallTimeout = 0.02f;
 
-    [Networked] private int JumpCounter { get; set; }
+    private bool _wasGrounded; 
+    private bool _justLanded;
 
-    private int _lastJumpCounter;
+    private bool _jumpTriggered;
+
+    private float _landingLockTimer;
+
     private float _jumpCooldownTimer;
     private float _fallTimeoutDelta;
 
@@ -66,6 +70,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
         //_jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
         _jumpCooldownTimer = 0f;
+        _jumpTriggered = false;
+
+        _wasGrounded = true;
+        _landingLockTimer = 0f;
 
         if (HasInputAuthority)
         {
@@ -90,9 +98,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
             return;
         _lastInput = input;
         // CameraRotation(input);
-        Move(input);
         GroundedCheck();
         JumpAndGravity(input);
+        Move(input);    
     }
 
     private void LateUpdate()
@@ -103,18 +111,36 @@ public class NetworkThirdPersonController : NetworkBehaviour
         }
     }
 
-    public override void Render()
-    {
-        if (JumpCounter != _lastJumpCounter)
-        {
-            _lastJumpCounter = JumpCounter;
-            _animator.SetTrigger("Jump");
-        }
-    }
+    //public override void Render()
+    //{
+    //    if (JumpCounter != _lastJumpCounter)
+    //    {
+    //        _lastJumpCounter = JumpCounter;
+    //        _animator.SetTrigger("Jump");
+    //    }
+    //}
     private void GroundedCheck()
     {
-        Grounded = _controller.Grounded;
-        _animator.SetBool(_animIDGrounded, Grounded);
+        bool groundedNow = _controller.Grounded;
+
+        _justLanded = false;
+
+        if (!_wasGrounded && groundedNow)
+        {
+            _landingLockTimer = 0.2f;
+            _justLanded = true;
+
+            _animator.ResetTrigger("Jump");
+            _animator.SetBool(_animIDFreeFall, false);
+        }
+
+        Grounded = groundedNow;
+
+        _animator.SetBool(
+            _animIDGrounded,
+            Grounded);
+
+        _wasGrounded = groundedNow;
     }
 
     private void CameraRotation(NetworkInputData input)
@@ -165,7 +191,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
             .magnitude;
 
         float speedOffset = 0.1f;
-        float inputMagnitude = input.Move == Vector2.zero ? 0f : 1f;
+        float inputMagnitude = input.Move == Vector2.zero ? 1f : 1f;
 
         if (currentHorizontalSpeed < targetSpeed - speedOffset ||
             currentHorizontalSpeed > targetSpeed + speedOffset)
@@ -246,22 +272,38 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
             _animator.SetFloat(
                 _animIDMotionSpeed,
-                inputMagnitude);
+                1f);
         }
     }
     private void JumpAndGravity(NetworkInputData input)
     {
-        if (_jumpCooldownTimer > 0f) _jumpCooldownTimer -= Runner.DeltaTime;
+        if (_jumpCooldownTimer > 0f)
+            _jumpCooldownTimer -= Runner.DeltaTime;
+
+        if (_landingLockTimer > 0f)
+            _landingLockTimer -= Runner.DeltaTime;
 
         if (Grounded)
         {
             _fallTimeoutDelta = FallTimeout;
-            _animator.SetBool(_animIDFreeFall, false);
 
-            if (input.Jump && _jumpCooldownTimer <= 0f)
+            _animator.SetBool(
+                _animIDFreeFall,
+                false);
+
+            _jumpTriggered = false;
+
+            if (input.Jump && _jumpCooldownTimer <= 0f && _landingLockTimer <= 0f)
             {
+                Debug.Log("JUMP EXECUTED");
+
                 _controller.Jump();
-                JumpCounter++;
+
+                _animator.ResetTrigger("Jump");
+                _animator.SetTrigger("Jump");
+
+                _jumpTriggered = true;
+
                 _jumpCooldownTimer = JumpCooldown;
             }
         }
@@ -273,7 +315,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
             }
             else
             {
-                _animator.SetBool(_animIDFreeFall, true);
+                _animator.SetBool(
+                    _animIDFreeFall,
+                    true);
             }
         }
     }
