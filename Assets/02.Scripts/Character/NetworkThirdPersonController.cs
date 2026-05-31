@@ -15,10 +15,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     public float JumpCooldown = 0.25f;
     public float FallTimeout = 0.02f;
 
-    private bool _wasGrounded; 
-    private bool _justLanded;
-
-    private bool _jumpTriggered;
+    private bool _wasGrounded;
 
     private float _landingLockTimer;
 
@@ -27,9 +24,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     [Header("Ground")]
     public bool Grounded = true;
-    public float GroundedOffset = -0.14f;
-    public float GroundedRadius = 0.28f;
-    public LayerMask GroundLayers;
 
     [Header("Camera")]
     public Transform PlayerCameraRoot;
@@ -82,10 +76,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         AssignAnimationIDs();
 
-        //_jumpTimeoutDelta = JumpTimeout;
         _fallTimeoutDelta = FallTimeout;
         _jumpCooldownTimer = 0f;
-        _jumpTriggered = false;
 
         _wasGrounded = true;
         _landingLockTimer = 0f;
@@ -100,7 +92,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
             if (cam != null)
             {
                 cam.Target.TrackingTarget = PlayerCameraRoot;
-                //cam.Target.LookAtTarget = PlayerCameraRoot;
             }
 
             _cinemachineTargetYaw = transform.eulerAngles.y;
@@ -112,7 +103,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (!GetInput(out NetworkInputData input))
             return;
         _lastInput = input;
-        // CameraRotation(input);
+
         GroundedCheck();
         JumpAndGravity(input);
         Move(input);
@@ -133,12 +124,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
     {
         bool groundedNow = _controller.Grounded;
 
-        _justLanded = false;
-
         if (!_wasGrounded && groundedNow)
         {
             _landingLockTimer = 0.2f;
-            _justLanded = true;
 
             if (HasStateAuthority)
             {
@@ -194,7 +182,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
             .magnitude;
 
         float speedOffset = 0.1f;
-        float inputMagnitude = input.Move == Vector2.zero ? 1f : 1f;
 
         if (currentHorizontalSpeed < targetSpeed - speedOffset ||
             currentHorizontalSpeed > targetSpeed + speedOffset)
@@ -279,8 +266,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             _fallTimeoutDelta = FallTimeout;
 
-            _jumpTriggered = false;
-
             if (input.Jump && _jumpCooldownTimer <= 0f && _landingLockTimer <= 0f)
             {
                 float previousVerticalVelocity = _controller.Velocity.y;
@@ -297,8 +282,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
                     {
                         RPC_PlayJumpAnimation();
                     }
-
-                    _jumpTriggered = true;
 
                     _jumpCooldownTimer = JumpCooldown;
                 }
@@ -391,9 +374,5 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private void RPC_PlayLandAnimation()
     {
         PlayLandAnimation();
-    }
-
-    private void Land()
-    {
     }
 }
