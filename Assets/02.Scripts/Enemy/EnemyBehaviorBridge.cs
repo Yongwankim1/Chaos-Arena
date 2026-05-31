@@ -1,9 +1,16 @@
+using Fusion;
+using Unity.Behavior;
 using UnityEngine;
+using UnityEngine.AI;
 
-public class EnemyBehaviorBridge : MonoBehaviour
+public class EnemyBehaviorBridge : NetworkBehaviour
 {
     [SerializeField] EnemySO dataSD;
     [SerializeField] private Transform[] patrolPoints;
+
+    private NavMeshAgent navMeshAgent;
+    private BehaviorGraphAgent behaviorGraphAgent;
+    private bool? lastCanRunAi;
 
     public EnemySO Config => dataSD;
     public Transform[] PatrolPoints => patrolPoints;
@@ -13,7 +20,41 @@ public class EnemyBehaviorBridge : MonoBehaviour
 
     private void Awake()
     {
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        behaviorGraphAgent = GetComponent<BehaviorGraphAgent>();
+
         TryPopulatePatrolPointsFromScene();
+    }
+
+    public override void Spawned()
+    {
+        ApplyAuthorityState();
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        ApplyAuthorityState();
+    }
+
+    private void ApplyAuthorityState()
+    {
+        bool canRunAi = Object == null || Object.HasStateAuthority;
+        if (lastCanRunAi == canRunAi)
+        {
+            return;
+        }
+
+        lastCanRunAi = canRunAi;
+
+        if (behaviorGraphAgent != null)
+        {
+            behaviorGraphAgent.enabled = canRunAi;
+        }
+
+        if (navMeshAgent != null)
+        {
+            navMeshAgent.enabled = canRunAi;
+        }
     }
 
     private void TryPopulatePatrolPointsFromScene()
