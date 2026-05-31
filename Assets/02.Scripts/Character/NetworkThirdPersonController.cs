@@ -60,6 +60,12 @@ public class NetworkThirdPersonController : NetworkBehaviour
     [SerializeField]
     float lookMultiplier = 1.2f;
     private NetworkInputData _lastInput;
+
+    [Networked]
+    private int JumpAnimationCounter { get; set; }
+
+    private int _lastRenderedJumpAnimationCounter;
+
     public override void Spawned()
     {
 
@@ -75,6 +81,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         _wasGrounded = true;
         _landingLockTimer = 0f;
+        _lastRenderedJumpAnimationCounter = JumpAnimationCounter;
 
         if (HasInputAuthority)
         {
@@ -113,14 +120,15 @@ public class NetworkThirdPersonController : NetworkBehaviour
         }
     }
 
-    //public override void Render()
-    //{
-    //    if (JumpCounter != _lastJumpCounter)
-    //    {
-    //        _lastJumpCounter = JumpCounter;
-    //        _animator.SetTrigger("Jump");
-    //    }
-    //}
+    public override void Render()
+    {
+        if (_lastRenderedJumpAnimationCounter == JumpAnimationCounter)
+            return;
+
+        _lastRenderedJumpAnimationCounter = JumpAnimationCounter;
+        PlayJumpAnimation();
+    }
+
     private void GroundedCheck()
     {
         bool groundedNow = _controller.Grounded;
@@ -311,10 +319,17 @@ public class NetworkThirdPersonController : NetworkBehaviour
                     _controller.Grounded = false;
                     Grounded = false;
 
-                    _animator.ResetTrigger("Jump");
-                    _animator.SetBool(_animIDGrounded, false);
-                    _animator.SetBool(_animIDFreeFall, false);
-                    _animator.SetTrigger(_animIDJump);
+                    if (HasStateAuthority)
+                    {
+                        JumpAnimationCounter++;
+                        _lastRenderedJumpAnimationCounter = JumpAnimationCounter;
+                    }
+                    else if (HasInputAuthority)
+                    {
+                        _lastRenderedJumpAnimationCounter = JumpAnimationCounter + 1;
+                    }
+
+                    PlayJumpAnimation();
 
                     _jumpTriggered = true;
 
@@ -355,6 +370,13 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         _animIDMotionSpeed =
             Animator.StringToHash("MotionSpeed");
+    }
+    private void PlayJumpAnimation()
+    {
+        _animator.ResetTrigger("Jump");
+        _animator.SetBool(_animIDGrounded, false);
+        _animator.SetBool(_animIDFreeFall, false);
+        _animator.SetTrigger(_animIDJump);
     }
     private void Land()
     {
