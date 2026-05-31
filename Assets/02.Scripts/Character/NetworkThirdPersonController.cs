@@ -62,9 +62,17 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private NetworkInputData _lastInput;
 
     [Networked]
-    private int JumpAnimationCounter { get; set; }
+    private float AnimatedSpeed { get; set; }
 
-    private int _lastRenderedJumpAnimationCounter;
+    [Networked]
+    private NetworkBool AnimatedGrounded { get; set; }
+
+    [Networked]
+    private NetworkBool AnimatedFreeFall { get; set; }
+
+    private float _localAnimatedSpeed;
+    private bool _localAnimatedGrounded = true;
+    private bool _localAnimatedFreeFall;
 
     public override void Spawned()
     {
@@ -81,7 +89,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         _wasGrounded = true;
         _landingLockTimer = 0f;
-        _lastRenderedJumpAnimationCounter = JumpAnimationCounter;
 
         if (HasInputAuthority)
         {
@@ -110,6 +117,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
         JumpAndGravity(input);
         Move(input);
         GroundedCheck();
+        CaptureAnimationState();
+        UpdateAnimatorParameters();
     }
 
     private void LateUpdate()
@@ -118,15 +127,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             CameraRotation(_lastInput);
         }
-    }
-
-    public override void Render()
-    {
-        if (_lastRenderedJumpAnimationCounter == JumpAnimationCounter)
-            return;
-
-        _lastRenderedJumpAnimationCounter = JumpAnimationCounter;
-        PlayJumpAnimation();
     }
 
     private void GroundedCheck()
@@ -140,17 +140,13 @@ public class NetworkThirdPersonController : NetworkBehaviour
             _landingLockTimer = 0.2f;
             _justLanded = true;
 
-            _animator.ResetTrigger("Jump");
-            _animator.SetBool(_animIDGrounded, true);
-            _animator.SetBool(_animIDFreeFall, false);
-            _animator.CrossFade(_animIDJumpLand, 0f, 0, 0f);
+            if (HasStateAuthority)
+            {
+                RPC_PlayLandAnimation();
+            }
         }
 
         Grounded = groundedNow;
-
-        _animator.SetBool(
-            _animIDGrounded,
-            Grounded);
 
         _wasGrounded = groundedNow;
     }
@@ -182,16 +178,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Move(NetworkInputData input)
     {
-        Debug.Log(
-           $"Sprint:{input.Sprint}"
-       );
         float targetSpeed =
             input.Sprint
                 ? SprintSpeed
                 : MoveSpeed;
-        Debug.Log(
-    $"TargetSpeed:{targetSpeed}"
-);
+
         if (input.Move == Vector2.zero)
             targetSpeed = 0.0f;
 
@@ -275,17 +266,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _controller.Move(
             moveDirection *
             Runner.DeltaTime);
-
-        if (_animator)
-        {
-            _animator.SetFloat(
-                _animIDSpeed,
-                _animationBlend);
-
-            _animator.SetFloat(
-                _animIDMotionSpeed,
-                1f);
-        }
     }
     private void JumpAndGravity(NetworkInputData input)
     {
@@ -299,10 +279,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             _fallTimeoutDelta = FallTimeout;
 
-            _animator.SetBool(
-                _animIDFreeFall,
-                false);
-
             _jumpTriggered = false;
 
             if (input.Jump && _jumpCooldownTimer <= 0f && _landingLockTimer <= 0f)
@@ -314,22 +290,13 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
                 if (jumpStarted)
                 {
-                    Debug.Log("JUMP EXECUTED");
-
                     _controller.Grounded = false;
                     Grounded = false;
 
                     if (HasStateAuthority)
                     {
-                        JumpAnimationCounter++;
-                        _lastRenderedJumpAnimationCounter = JumpAnimationCounter;
+                        RPC_PlayJumpAnimation();
                     }
-                    else if (HasInputAuthority)
-                    {
-                        _lastRenderedJumpAnimationCounter = JumpAnimationCounter + 1;
-                    }
-
-                    PlayJumpAnimation();
 
                     _jumpTriggered = true;
 
@@ -343,14 +310,42 @@ public class NetworkThirdPersonController : NetworkBehaviour
             {
                 _fallTimeoutDelta -= Runner.DeltaTime;
             }
-            else
-            {
-                _animator.SetBool(
-                    _animIDFreeFall,
-                    true);
-            }
         }
     }
+    private void CaptureAnimationState()
+    {
+        bool freeFall = !Grounded && _fallTimeoutDelta <= 0f;
+
+        if (HasInputAuthority)
+        {
+            _localAnimatedSpeed = _animationBlend;
+            _localAnimatedGrounded = Grounded;
+            _localAnimatedFreeFall = freeFall;
+        }
+
+        if (HasStateAuthority)
+        {
+            AnimatedSpeed = _animationBlend;
+            AnimatedGrounded = Grounded;
+            AnimatedFreeFall = freeFall;
+        }
+    }
+
+    private void UpdateAnimatorParameters()
+    {
+        if (!_animator)
+            return;
+
+        float speed = HasInputAuthority ? _localAnimatedSpeed : AnimatedSpeed;
+        bool grounded = HasInputAuthority ? _localAnimatedGrounded : (bool)AnimatedGrounded;
+        bool freeFall = HasInputAuthority ? _localAnimatedFreeFall : (bool)AnimatedFreeFall;
+
+        _animator.SetFloat(_animIDSpeed, speed);
+        _animator.SetFloat(_animIDMotionSpeed, 1f);
+        _animator.SetBool(_animIDGrounded, grounded);
+        _animator.SetBool(_animIDFreeFall, freeFall);
+    }
+
     private void AssignAnimationIDs()
     {
         _animIDSpeed =
@@ -373,11 +368,31 @@ public class NetworkThirdPersonController : NetworkBehaviour
     }
     private void PlayJumpAnimation()
     {
-        _animator.ResetTrigger("Jump");
         _animator.SetBool(_animIDGrounded, false);
         _animator.SetBool(_animIDFreeFall, false);
         _animator.SetTrigger(_animIDJump);
     }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayJumpAnimation()
+    {
+        PlayJumpAnimation();
+    }
+
+    private void PlayLandAnimation()
+    {
+        _animator.ResetTrigger("Jump");
+        _animator.SetBool(_animIDGrounded, true);
+        _animator.SetBool(_animIDFreeFall, false);
+        _animator.CrossFade(_animIDJumpLand, 0f, 0, 0f);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayLandAnimation()
+    {
+        PlayLandAnimation();
+    }
+
     private void Land()
     {
     }
