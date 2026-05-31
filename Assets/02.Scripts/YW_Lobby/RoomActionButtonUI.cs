@@ -9,6 +9,7 @@ public class RoomActionButtonUI : MonoBehaviour
     [SerializeField] private Button roomActionButton;
     [SerializeField] private TMP_Text roomActionButtonText;
     [SerializeField] private int gameSceneBuildIndex = 1;
+    [SerializeField] private bool allowSinglePlay;
 
     private NetworkRunner runner;
 
@@ -48,7 +49,7 @@ public class RoomActionButtonUI : MonoBehaviour
         if (runner.IsServer)
         {
             roomActionButtonText.text = "시작";
-            roomActionButton.interactable = AreAllClientsReady();
+            roomActionButton.interactable = CanStartGame();
         }
         else
         {
@@ -115,7 +116,7 @@ public class RoomActionButtonUI : MonoBehaviour
     {
         if (runner == null) return;
         if (!runner.IsServer) return;
-        if (!AreAllClientsReady()) return;
+        if (!CanStartGame()) return;
 
         Debug.Log("게임 시작");
         runner.SessionInfo.IsOpen = false;
@@ -125,6 +126,31 @@ public class RoomActionButtonUI : MonoBehaviour
             { "isPlaying", true }
         });
         runner.LoadScene(SceneRef.FromIndex(gameSceneBuildIndex));
+    }
+
+    private bool CanStartGame()
+    {
+        if (allowSinglePlay && HasAnyValidPlayer())
+            return true;
+
+        return AreAllClientsReady();
+    }
+
+    private bool HasAnyValidPlayer()
+    {
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player == null) continue;
+            if (player.Object == null) continue;
+            if (!player.Object.IsValid) continue;
+
+            return true;
+        }
+
+        return false;
     }
 
     private bool AreAllClientsReady()
