@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
   monsterName: Enemy_Melee
   maxHp: 100
-  chaseSpeed: 10
+  chaseSpeed: 4
   patrolSpeed: 13
   detectRange: 10
-  attackRange: 1.5
+  attackRange: 2.5
   attackDamage: 10
   attackCooldown: 3
