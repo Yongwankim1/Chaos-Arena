@@ -14,6 +14,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     [Header("Chat")]
     [SerializeField] private MainLobbyChat chat;
+    [SerializeField] private RoomChat roomChat;
     [Header("NickNameChecker")]
     [SerializeField] private UserNickNameChecker nicknameChecker;
     private NetworkRunner currentRunner;
@@ -170,6 +171,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             roomPanel.SetActive(true);
 
             chat.Unsubscribe();
+            roomChat?.ConnectToRoom(sessionName);
 
             roomUserListUI.Refresh();
             roomActionButtonUI.Init(currentRunner);
@@ -282,6 +284,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
                 roomPanel.SetActive(true);
 
                 chat.Unsubscribe();
+                roomChat?.ConnectToRoom(selectedSession.Name);
 
                 roomUserListUI.Refresh();
                 roomActionButtonUI.Init(currentRunner);
@@ -412,6 +415,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         ClearRoomUI();
+        roomChat?.LeaveRoom();
 
         roomPanel.SetActive(false);
         mainLobbyPanel.SetActive(true);
@@ -448,6 +452,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         ClearRoomUI();
+        roomChat?.LeaveRoom();
 
         roomPanel.SetActive(false);
         mainLobbyPanel.SetActive(true);
@@ -558,6 +563,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         isRecoveringLobby = true;
         selectedSession = null;
         ClearRoomUI();
+        roomChat?.LeaveRoom();
 
         roomPanel.SetActive(false);
         mainLobbyPanel.SetActive(true);
@@ -683,6 +689,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         bool wasInRoom = roomPanel.activeSelf;
 
         ClearRoomUI();
+        roomChat?.LeaveRoom();
 
         roomPlayerDataObjects.Clear();
 

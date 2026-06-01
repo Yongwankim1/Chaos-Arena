@@ -172,7 +172,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
         if (chatClient == null) return;
         if (isSubscribedToMainChannel) return;
 
-        chatClient.Subscribe( channelName, 0,-1, new ChannelCreationOptions
+        chatClient.Subscribe( channelName, 0, 0, new ChannelCreationOptions
         {
             PublishSubscribers = true
         });
