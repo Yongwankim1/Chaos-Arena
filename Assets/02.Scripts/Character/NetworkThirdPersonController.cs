@@ -6,10 +6,10 @@ using UnityEngine;
 public class NetworkThirdPersonController : NetworkBehaviour
 {
     [Header("Player")]
-    public float MoveSpeed = 2.0f;
-    public float SprintSpeed = 5.335f;
+    public float MoveSpeed = 20.0f;
+    public float SprintSpeed = 40.0f;
     public float RotationSmoothTime = 0.01f;
-    public float SpeedChangeRate = 10.0f;
+    public float SpeedChangeRate = 20.0f;
 
     [Header("Jump")]
     public float JumpCooldown = 0.25f;
@@ -21,6 +21,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private float _jumpCooldownTimer;
     private float _fallTimeoutDelta;
+
+    [Header("Attack")]
+    private int _animIDAttack;
 
     [Header("Ground")]
     public bool Grounded = true;
@@ -107,6 +110,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         GroundedCheck();
         JumpAndGravity(input);
         Move(input);
+        Attack(input);
         GroundedCheck();
         CaptureAnimationState();
         UpdateAnimatorParameters();
@@ -331,23 +335,19 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void AssignAnimationIDs()
     {
-        _animIDSpeed =
-            Animator.StringToHash("Speed");
+        _animIDSpeed = Animator.StringToHash("Speed");
 
-        _animIDGrounded =
-            Animator.StringToHash("Grounded");
+        _animIDGrounded = Animator.StringToHash("Grounded");
 
-        _animIDJump =
-            Animator.StringToHash("Jump");
+        _animIDJump = Animator.StringToHash("Jump");
 
-        _animIDJumpLand =
-            Animator.StringToHash("Base Layer.JumpLand");
+        _animIDJumpLand = Animator.StringToHash("Base Layer.JumpLand");
 
-        _animIDFreeFall =
-            Animator.StringToHash("FreeFall");
+        _animIDFreeFall = Animator.StringToHash("FreeFall");
 
-        _animIDMotionSpeed =
-            Animator.StringToHash("MotionSpeed");
+        _animIDMotionSpeed = Animator.StringToHash("MotionSpeed");
+
+        _animIDAttack = Animator.StringToHash("Attack");
     }
     private void PlayJumpAnimation()
     {
@@ -368,6 +368,27 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _animator.SetBool(_animIDGrounded, true);
         _animator.SetBool(_animIDFreeFall, false);
         _animator.CrossFade(_animIDJumpLand, 0f, 0, 0f);
+    }
+
+    private void Attack(NetworkInputData input)
+    {
+        if (!input.Attack)
+            return;
+
+        if (HasStateAuthority)
+        {
+            RPC_PlayAttackAnimation();
+        }
+    }
+    private void PlayAttackAnimation()
+    {
+        _animator.SetTrigger(_animIDAttack);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayAttackAnimation()
+    {
+        PlayAttackAnimation();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

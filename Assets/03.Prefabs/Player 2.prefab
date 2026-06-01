@@ -380,7 +380,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 97e5db5a0e4821a46b0efc57d7308489, type: 2}
+  - {fileID: 670224309865224971, guid: 51e212e5cbeda974b9878cac9f79d73d, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -675,7 +675,7 @@ GameObject:
   - component: {fileID: 5240049542016148038}
   - component: {fileID: 7883889268887263263}
   m_Layer: 0
-  m_Name: Player
+  m_Name: Player 2
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -711,7 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 1141307149
+  SortKey: 3705870556
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
@@ -787,8 +787,8 @@ MonoBehaviour:
   Animator: {fileID: 7961633600829976054}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd
-  TriggerHashes: 00000000
+  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd0d286c404e865f43
+  TriggerHashes: 0000000028a981070d286c40
   TotalWords: 3
 --- !u!143 &8382405528265806163
 CharacterController:

@@ -6,67 +6,162 @@ using UnityEngine;
 public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 {
     [Header("Player Prefab")]
-    [SerializeField] private NetworkObject playerPrefab;
+    [SerializeField]
+    private NetworkObject assassinPrefab;
+    [SerializeField]
+    private NetworkObject magePrefab;
+    [SerializeField]
+    private NetworkObject playerLobbyPrefab;
 
-    private readonly Dictionary<PlayerRef, NetworkObject> _spawnedPlayers =
-        new Dictionary<PlayerRef, NetworkObject>();
-
+    private readonly Dictionary<PlayerRef, NetworkObject> _spawnedPlayers = new Dictionary<PlayerRef, NetworkObject>();
+    private readonly Dictionary<PlayerRef, CharacterClassType>_selectedCharacters = new Dictionary<PlayerRef, CharacterClassType>();
+    private readonly Dictionary<PlayerRef, PlayerLobbyObject> _playerLobbies = new Dictionary<PlayerRef, PlayerLobbyObject>();
     public override void Spawned()
     {
         Runner.AddCallbacks(this);
     }
 
     // 씬 로딩 완료 후 기존 플레이어 생성
-    public void OnSceneLoadDone(NetworkRunner runner)
+    public void OnSceneLoadDone(
+     NetworkRunner runner)
     {
         if (!runner.IsServer)
             return;
 
-        foreach (var player in runner.ActivePlayers)
+        foreach (PlayerRef player in runner.ActivePlayers)
         {
-            SpawnPlayer(runner, player);
+            if (_playerLobbies.ContainsKey(player))
+                continue;
+
+            NetworkObject lobbyObject =
+                runner.Spawn(
+                    playerLobbyPrefab,
+                    Vector3.zero,
+                    Quaternion.identity,
+                    player);
+
+            PlayerLobbyObject lobby =
+                lobbyObject.GetComponent<PlayerLobbyObject>();
+
+            _playerLobbies.Add(
+                player,
+                lobby);
+
+            Debug.Log(
+                $"Lobby Object Spawned : {player.PlayerId}");
         }
     }
 
-    private void SpawnPlayer(NetworkRunner runner, PlayerRef player)
+    private void SpawnPlayer(NetworkRunner runner, PlayerRef player, CharacterClassType classType)
     {
         if (_spawnedPlayers.ContainsKey(player))
             return;
-
+        Debug.Log(
+    $"Spawning {classType} for {player.PlayerId}");
         Vector3 spawnPosition =
-            new Vector3(
+            new Vector3
+            (
                 Random.Range(-3f, 3f),
                 1f,
                 Random.Range(-3f, 3f)
-            );
+                );
+
+        NetworkObject prefab = GetCharacterPrefab(classType);
 
         NetworkObject playerObject =
             runner.Spawn(
-                playerPrefab,
+                prefab,
                 spawnPosition,
                 Quaternion.identity,
-                player
-            );
+                player);
 
         _spawnedPlayers.Add(player, playerObject);
+        Debug.Log(
+    $"Spawned {playerObject.name} InputAuthority:{player}");
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    public void SpawnSelectedCharacter(
+     PlayerRef player)
     {
-        if (runner.IsServer)
+        if (!_playerLobbies.TryGetValue(
+                player,
+                out PlayerLobbyObject lobby))
         {
-            SpawnPlayer(runner, player);
+            Debug.LogWarning(
+                $"Lobby not found : {player.PlayerId}");
+
+            return;
+        }
+
+        SpawnPlayer(
+            Runner,
+            player,
+            lobby.SelectedClass);
+    }
+
+    private NetworkObject GetCharacterPrefab(
+    CharacterClassType classType)
+    {
+        switch (classType)
+        {
+            case CharacterClassType.Assassin:
+                return assassinPrefab;
+
+            case CharacterClassType.Mage:
+                return magePrefab;
+
+            default:
+                return assassinPrefab;
         }
     }
 
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    public void OnPlayerJoined(
+      NetworkRunner runner,
+      PlayerRef player)
     {
         if (!runner.IsServer)
             return;
 
-        if (_spawnedPlayers.TryGetValue(player, out var playerObject))
+        NetworkObject lobbyObject =
+            runner.Spawn(
+                playerLobbyPrefab,
+                Vector3.zero,
+                Quaternion.identity,
+                player);
+
+        PlayerLobbyObject lobby =
+            lobbyObject.GetComponent<PlayerLobbyObject>();
+
+        _playerLobbies.Add(
+            player,
+            lobby);
+
+        Debug.Log(
+            $"Lobby Object Spawned : {player.PlayerId}");
+    }
+    public void OnPlayerLeft(
+     NetworkRunner runner,
+     PlayerRef player)
+    {
+        if (!runner.IsServer)
+            return;
+
+        if (_playerLobbies.TryGetValue(
+                player,
+                out PlayerLobbyObject lobby))
+        {
+            runner.Despawn(
+                lobby.Object);
+
+            _playerLobbies.Remove(player);
+        }
+
+        if (_spawnedPlayers.TryGetValue(
+                player,
+                out var playerObject))
         {
             runner.Despawn(playerObject);
+
             _spawnedPlayers.Remove(player);
         }
     }
@@ -84,7 +179,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
         data.Jump = InputManager.Instance.ConsumeJump();
         data.Sprint = InputManager.Instance.Sprint;
-
+        data.Attack = InputManager.Instance.ConsumeAttack();
         input.Set(data);
     }
 

@@ -11,6 +11,8 @@ public class InputManager : MonoBehaviour
     public bool Jump;
     public bool Sprint;
 
+    public bool Attack;
+
     private void Awake()
     {
         Instance = this;
@@ -18,16 +20,16 @@ public class InputManager : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        //Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.visible = false;
     }
 
     private void OnApplicationFocus(bool hasFocus)
     {
         if (hasFocus)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            //Cursor.lockState = CursorLockMode.Locked;
+            //Cursor.visible = false;
         }
     }
 
@@ -56,5 +58,19 @@ public class InputManager : MonoBehaviour
     public void OnSprint(InputValue value)
     {
         Sprint = value.isPressed;
+    }
+
+    public void OnAttack(InputValue value)
+    {
+        Attack = value.isPressed;
+    }
+    public bool ConsumeAttack()
+    {
+        if (!Attack)
+            return false;
+
+        Attack = false;
+
+        return true;
     }
 }

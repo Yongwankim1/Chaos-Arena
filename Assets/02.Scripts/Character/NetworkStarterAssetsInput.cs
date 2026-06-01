@@ -11,21 +11,15 @@ public class NetworkStarterAssetsInput : MonoBehaviour
     public bool Jump;
     public bool Sprint;
 
-    private void Start()
+    public void LockCursor()
     {
+        if (!GetComponent<Fusion.NetworkObject>()
+                .HasInputAuthority)
+            return;
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
-    private void OnApplicationFocus(bool hasFocus)
-    {
-        if (hasFocus)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
-    }
-
     public void RegisterAsLocal()
     {
         Local = this;

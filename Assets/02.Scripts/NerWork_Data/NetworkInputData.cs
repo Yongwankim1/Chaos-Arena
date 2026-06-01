@@ -9,4 +9,6 @@ public struct NetworkInputData : INetworkInput
 
     public NetworkBool Jump;
     public NetworkBool Sprint;
+
+    public NetworkBool Attack;
 }
