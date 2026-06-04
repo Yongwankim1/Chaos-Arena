@@ -16,7 +16,7 @@ public partial class SenseTargetAction : Action
     [SerializeReference] public BlackboardVariable<Vector3> LastKnownPosition;
     [SerializeReference] public BlackboardVariable<bool> HasLastKnownPosition;
     [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
-
+    [SerializeReference] public BlackboardVariable<bool> HasTarget;
     protected override Status OnUpdate()
     {
         if (Self?.Value == null)
@@ -66,7 +66,7 @@ public partial class SenseTargetAction : Action
         PlayerController closestPlayer = null;
         float closestSqrDistance = detectRange * detectRange;
         Vector3 selfPosition = Self.Value.transform.position;
-        PlayerController[] players = UnityEngine.Object.FindObjectsOfType<PlayerController>();
+        PlayerController[] players = UnityEngine.Object.FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
 
         foreach (PlayerController player in players)
         {

@@ -30,13 +30,24 @@ MonoBehaviour:
   - rid: 3952068806759940818
   - rid: 3952068806759940854
   - rid: 3952068807948239583
-  m_VersionTimestamp: 639158334732229673
+  - rid: 820696416940982387
+  m_VersionTimestamp: 639160111445782394
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: 7117304209035582068}
   references:
     version: 2
     RefIds:
+    - rid: 820696416940982387
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 4697048358040192878
+          m_Value1: 16426249158176511237
+        Name: HasTarget
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
     - rid: 3952068806759940363
       type: {class: 'TypedVariableModel`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -189,7 +200,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: Enemy_BlackBoard
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.RuntimeBlackboardAsset
-  VersionTimestamp: 639158334732229673
+  VersionTimestamp: 639160111445782394
   AssetID:
     m_Value0: 9534148792356573229
     m_Value1: 12947939812038791002
@@ -209,10 +220,19 @@ MonoBehaviour:
     - rid: 3952068806759940819
     - rid: 3952068806759940855
     - rid: 3952068807948239584
+    - rid: 820696416940982388
   m_SharedBlackboardVariableGuids: []
   references:
     version: 2
     RefIds:
+    - rid: 820696416940982388
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 4697048358040192878
+          m_Value1: 16426249158176511237
+        Name: HasTarget
+        m_Value: 0
     - rid: 3952068806759940364
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
