@@ -1,6 +1,5 @@
 ﻿using Fusion;
 using System;
-using UnityEngine;
 
 public class RoomPlayerData : NetworkBehaviour
 {

@@ -3,6 +3,7 @@ using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using System.Collections.Generic;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "SyncConfigFromSelfAction", story: "[Self] updates config", category: "Action", id: "fc86be8da164e4a926968cd95c485ca7")]
@@ -19,6 +20,9 @@ public partial class SyncConfigFromSelfAction : Action
     [SerializeReference] public BlackboardVariable<float> PatrolSpeed;
 
     [SerializeReference] public BlackboardVariable<float> AttackCooldown;
+
+    [SerializeReference] public BlackboardVariable<List<GameObject>> PatrolPoints;
+
     protected override Status OnUpdate()
     {
         if (Self?.Value == null) return Status.Failure;
@@ -34,6 +38,8 @@ public partial class SyncConfigFromSelfAction : Action
         ChaseSpeed.Value = config.chaseSpeed;
         PatrolSpeed.Value = config.patrolSpeed;
         AttackCooldown.Value = config.attackCooldown;
+
+        PatrolPoints.Value = bridge.GetPatrolPosition();
 
         return Status.Success;
     }

@@ -1,4 +1,5 @@
 using Fusion;
+using System.Collections.Generic;
 using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
@@ -94,5 +95,17 @@ public class EnemyBehaviorBridge : NetworkBehaviour
         int safeIndex = Mathf.Abs(index) % patrolPoints.Length;
         Transform point = patrolPoints[safeIndex];
         return point != null ? point.position : transform.position;
+    }
+
+    public List<GameObject> GetPatrolPosition()
+    {
+        List<GameObject> ret = new List<GameObject>();
+
+        foreach(Transform point in patrolPoints )
+        {
+            GameObject go = point.gameObject;
+            ret.Add( go );
+        }
+        return ret;
     }
 }

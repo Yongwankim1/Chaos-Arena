@@ -33,19 +33,34 @@ public partial class SenseTargetAction : Action
         }
 
         float detectRange = GetDetectRange();
-        PlayerController closestTarget = FindClosestAlivePlayer(detectRange);
 
-        if (closestTarget == null)
+        // TODO: 데미지/피격 코드에서 나를 때린 플레이어를 Target.Value에 넣어준다.
+        // 이 액션은 더 이상 가까운 플레이어를 먼저 찾지 않고, 피격으로 지정된 Target만 감지한다.
+        GameObject target = Self?.Value.GetComponent<EnemyHP>().Target;
+
+        if (target != null) Target.Value = target;
+
+        PlayerController hitAttackerTarget = Target?.Value != null
+            ? Target.Value.GetComponent<PlayerController>()
+            : null;
+
+        if (hitAttackerTarget == null || hitAttackerTarget.IsDead)
         {
             ClearTarget();
             return Status.Success;
         }
 
         Vector3 selfPosition = Self.Value.transform.position;
-        Vector3 targetPosition = closestTarget.transform.position;
+        Vector3 targetPosition = hitAttackerTarget.transform.position;
         float distance = Vector3.Distance(selfPosition, targetPosition);
 
-        SetTarget(closestTarget.gameObject, distance, targetPosition);
+        if (distance > detectRange)
+        {
+            ClearTarget();
+            return Status.Success;
+        }
+
+        SetTarget(hitAttackerTarget.gameObject, distance, targetPosition);
 
         return Status.Success;
     }
@@ -59,33 +74,6 @@ public partial class SenseTargetAction : Action
         }
 
         return Mathf.Infinity;
-    }
-
-    private PlayerController FindClosestAlivePlayer(float detectRange)
-    {
-        PlayerController closestPlayer = null;
-        float closestSqrDistance = detectRange * detectRange;
-        Vector3 selfPosition = Self.Value.transform.position;
-        PlayerController[] players = UnityEngine.Object.FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
-
-        foreach (PlayerController player in players)
-        {
-            if (player == null || player.IsDead)
-            {
-                continue;
-            }
-
-            float sqrDistance = (player.transform.position - selfPosition).sqrMagnitude;
-            if (sqrDistance > closestSqrDistance)
-            {
-                continue;
-            }
-
-            closestPlayer = player;
-            closestSqrDistance = sqrDistance;
-        }
-
-        return closestPlayer;
     }
 
     private void ClearTarget()
@@ -104,6 +92,16 @@ public partial class SenseTargetAction : Action
         {
             DistanceToTarget.Value = Mathf.Infinity;
         }
+
+        if (HasTarget != null)
+        {
+            HasTarget.Value = false;
+        }
+
+        if (HasLastKnownPosition != null)
+        {
+            HasLastKnownPosition.Value = false;
+        }
     }
 
     private void SetTarget(GameObject target, float distance, Vector3 targetPosition)
@@ -116,6 +114,11 @@ public partial class SenseTargetAction : Action
         if (CanSeeTarget != null)
         {
             CanSeeTarget.Value = true;
+        }
+
+        if (HasTarget != null)
+        {
+            HasTarget.Value = true;
         }
 
         if (DistanceToTarget != null)
