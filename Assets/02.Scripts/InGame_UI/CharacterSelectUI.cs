@@ -66,8 +66,8 @@ public class CharacterSelectUI : MonoBehaviour
             .RPC_SelectCharacter(
                 SelectedClass);
 
-        FindFirstObjectByType<NetworkStarterAssetsInput>()
-            ?.LockCursor();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
 
         gameObject.SetActive(false);
     }

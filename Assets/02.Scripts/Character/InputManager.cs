@@ -62,6 +62,8 @@ public class InputManager : MonoBehaviour
 
     public void OnAttack(InputValue value)
     {
+        Debug.Log(
+        $"Attack Input : {value.isPressed}");
         Attack = value.isPressed;
     }
     public bool ConsumeAttack()

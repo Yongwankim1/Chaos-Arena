@@ -674,6 +674,7 @@ GameObject:
   - component: {fileID: 6071844188690936054}
   - component: {fileID: 5240049542016148038}
   - component: {fileID: 7883889268887263263}
+  - component: {fileID: -2911714163384199722}
   m_Layer: 0
   m_Name: Player 2
   m_TagString: Player
@@ -719,6 +720,7 @@ MonoBehaviour:
   - {fileID: 390210500867859556}
   - {fileID: 6071844188690936054}
   - {fileID: 7883889268887263263}
+  - {fileID: -2911714163384199722}
   ForceRemoteRenderTimeframe: 0
 --- !u!95 &7961633600829976054
 Animator:
@@ -787,9 +789,9 @@ MonoBehaviour:
   Animator: {fileID: 7961633600829976054}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd0d286c404e865f43
-  TriggerHashes: 0000000028a981070d286c40
-  TotalWords: 3
+  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd0561760fb1d6f641c05dfb3674ea7b78755a8513d1229f30b066082a141e12090d286c404e865f43c24cfc35d9da2edd1ce6a3e4f073e5f9354f68c0
+  TriggerHashes: 0000000028a981070d286c402b122898
+  TotalWords: 4
 --- !u!143 &8382405528265806163
 CharacterController:
   m_ObjectHideFlags: 0
@@ -874,6 +876,19 @@ MonoBehaviour:
   BottomClamp: -30
   CameraAngleOverride: 0
   lookMultiplier: 1.4
+--- !u!114 &-2911714163384199722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f170e3c99c80f547a289b4bfc601462, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterCombat
+  comboInputTime: 0.5
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0

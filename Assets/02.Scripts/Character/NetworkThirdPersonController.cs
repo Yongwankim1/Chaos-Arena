@@ -24,6 +24,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     [Header("Attack")]
     private int _animIDAttack;
+    private CharacterCombat _combat;
+    private int _comboStep;
 
     [Header("Ground")]
     public bool Grounded = true;
@@ -76,6 +78,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         _animator = GetComponent<Animator>();
         _controller = GetComponent<NetworkCharacterController>();
+        _combat = GetComponent<CharacterCombat>();
 
         AssignAnimationIDs();
 
@@ -134,7 +137,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
             if (HasStateAuthority)
             {
-                RPC_PlayLandAnimation();
+                if (_combat == null ||
+                    !_combat.IsAttacking)
+                {
+                    RPC_PlayLandAnimation();
+                }
             }
         }
 
@@ -377,9 +384,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (HasStateAuthority)
         {
-            RPC_PlayAttackAnimation();
+            _combat?.AttackInput();
         }
     }
+
     private void PlayAttackAnimation()
     {
         _animator.SetTrigger(_animIDAttack);
