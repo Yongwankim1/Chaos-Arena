@@ -152,22 +152,5 @@ namespace Fusion {
       // Re-enable CC
       _controller.enabled = true;
     }
-        public void ForceMove(Vector3 delta)
-        {
-            var previousPos = transform.position;
-
-            _controller.Move(delta);
-
-            Data.Velocity =
-                (transform.position - previousPos) *
-                Runner.TickRate;
-
-            Data.TRSPData.Position =
-                transform.position;
-
-            Data.Grounded =
-                _controller.isGrounded;
-        }
-    }
-
+  }
 }
