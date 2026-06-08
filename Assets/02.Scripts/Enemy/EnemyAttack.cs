@@ -70,7 +70,6 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         if (Object != null && !Object.HasStateAuthority)
             return;
 
-        AimAtTarget();
         RPC_PlayEffect(effect);
     }
 
@@ -95,7 +94,7 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         return gameObject;
     }
 
-    private void AimAtTarget()
+    public void AimAtTarget()
     {
         if (enemyHP == null || enemyHP.Target == null)
             return;
