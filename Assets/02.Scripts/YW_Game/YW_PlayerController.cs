@@ -1,11 +1,9 @@
 ﻿using Fusion;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
-public class PlayerController : NetworkBehaviour
+public class YW_PlayerController : NetworkBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float runSpeed = 9f;
@@ -49,7 +47,7 @@ public class PlayerController : NetworkBehaviour
         if (HasInputAuthority)
         {
 
-            CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
+            YW_CameraFollow camFollow = Camera.main.GetComponent<YW_CameraFollow>();
             if (camFollow != null)
             {
                 camFollow.SetTarget(this.transform);
@@ -80,9 +78,9 @@ public class PlayerController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (IsDead) return;
-        if (GameManager.Instance != null && GameManager.Instance.IsGameOver) return;
+        if (YW_GameManager.Instance != null && YW_GameManager.Instance.IsGameOver) return;
 
-        if (GetInput(out NetworkInputData data))
+        if (GetInput(out YW_NetworkInputData data))
         {
             Vector3 moveDirection = new Vector3(
                 data.movementInput.x,
@@ -105,21 +103,21 @@ public class PlayerController : NetworkBehaviour
         List<GameObject> allPlayer = new List<GameObject>();
         GameObject.FindGameObjectsWithTag("Player", allPlayer);
 
-        List<PlayerController> alivePlayers = new List<PlayerController> ();
+        List<YW_PlayerController> alivePlayers = new List<YW_PlayerController> ();
 
         foreach (var p in allPlayer)
         {
-            if(!p.GetComponent<PlayerController>().IsDead && p != this)
+            if(!p.GetComponent<YW_PlayerController>().IsDead && p != this)
             {
-                alivePlayers.Add(p.GetComponent<PlayerController>());
+                alivePlayers.Add(p.GetComponent<YW_PlayerController>());
             }
         }
 
         if(alivePlayers.Count > 0)
         {
-            PlayerController targetToSpectate = alivePlayers[Random.Range(0,alivePlayers.Count)];
+            YW_PlayerController targetToSpectate = alivePlayers[Random.Range(0,alivePlayers.Count)];
 
-            CameraFollow camFollow = Camera.main.GetComponent<CameraFollow>();
+            YW_CameraFollow camFollow = Camera.main.GetComponent<YW_CameraFollow>();
             if (camFollow != null)
             {
                 camFollow.SetTarget(targetToSpectate.transform);

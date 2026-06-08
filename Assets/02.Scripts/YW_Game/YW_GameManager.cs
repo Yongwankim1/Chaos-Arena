@@ -1,13 +1,11 @@
 using Fusion;
 using System.Threading.Tasks;
-using TMPro;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class GameManager : NetworkBehaviour
+public class YW_GameManager : NetworkBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static YW_GameManager Instance { get; private set; }
     public Button okButton;
     public int lobbySceneIndex = 0;
     private bool isReturningToLobby;

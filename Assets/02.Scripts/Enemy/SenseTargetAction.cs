@@ -40,8 +40,8 @@ public partial class SenseTargetAction : Action
 
         if (target != null) Target.Value = target;
 
-        PlayerController hitAttackerTarget = Target?.Value != null
-            ? Target.Value.GetComponent<PlayerController>()
+        YW_PlayerController hitAttackerTarget = Target?.Value != null
+            ? Target.Value.GetComponent<YW_PlayerController>()
             : null;
 
         if (hitAttackerTarget == null || hitAttackerTarget.IsDead)

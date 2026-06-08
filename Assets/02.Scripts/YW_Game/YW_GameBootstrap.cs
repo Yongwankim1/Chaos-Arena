@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
+public class YW_GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 {
     [Header("Settings")]
     [SerializeField] private NetworkObject playerPrefab;
@@ -31,7 +31,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     {
         if (!runner.IsServer) return; // Host만 스폰 권한 가짐
 
-        List<PlayerController> spawnedList = new List<PlayerController>();
+        List<YW_PlayerController> spawnedList = new List<YW_PlayerController>();
         // 이미 접속해 있는 모든 플레이어에 대해 캐릭터 생성
         foreach (var player in runner.ActivePlayers)
         {
@@ -54,7 +54,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         Color.green, Color.blue, new Color(0.29f,0f, 0.51f), new Color(0.56f,0,1f)
     };
 
-    private  PlayerController SpawnPlayer(NetworkRunner runner, PlayerRef player)
+    private  YW_PlayerController SpawnPlayer(NetworkRunner runner, PlayerRef player)
     {
         // 1. 랜덤 위치 결정 (예시)
         Vector3 spawnPos = new Vector3(Random.Range(-3, 3), 0, Random.Range(-3, 3));
@@ -65,7 +65,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             playerPrefab, spawnPos, Quaternion.identity, player,
             (runner, obj) =>
             {
-                PlayerController pc = obj.GetComponent<PlayerController>();
+                YW_PlayerController pc = obj.GetComponent<YW_PlayerController>();
                 if (pc != null)
                 {
                     pc.PlayerColor = rainbowColors[Random.Range(0,rainbowColors.Length)];
@@ -74,7 +74,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         );
 
         _spawnedCharacters.Add(player, networkPlayerObject);
-        return networkPlayerObject.GetComponent<PlayerController>();
+        return networkPlayerObject.GetComponent<YW_PlayerController>();
     }
 
     // 게임 도중 새로 들어온 플레이어 처리
@@ -98,7 +98,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     #region Unused Callbacks
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        var data = new NetworkInputData();
+        var data = new YW_NetworkInputData();
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard != null)

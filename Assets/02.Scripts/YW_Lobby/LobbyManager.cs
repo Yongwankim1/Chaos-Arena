@@ -605,7 +605,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        var data = new NetworkInputData();
+        var data = new YW_NetworkInputData();
 
         Keyboard keyboard = Keyboard.current;
         if (keyboard != null)
