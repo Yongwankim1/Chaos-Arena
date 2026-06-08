@@ -834,7 +834,7 @@ MonoBehaviour:
   jumpImpulse: 8
   acceleration: 10
   braking: 10
-  maxSpeed: 2
+  maxSpeed: 20
   rotationSpeed: 7
 --- !u!114 &5240049542016148038
 MonoBehaviour:
@@ -889,6 +889,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCombat
   comboInputTime: 0.5
+  attackSpawnPoint: {fileID: 0}
+  comboAttackData: []
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0

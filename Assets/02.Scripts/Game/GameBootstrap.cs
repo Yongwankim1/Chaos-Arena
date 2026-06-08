@@ -52,7 +52,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    private void SpawnPlayer(NetworkRunner runner, PlayerRef player, CharacterClassType classType)
+    private async void SpawnPlayer( NetworkRunner runner, PlayerRef player, CharacterClassType classType)
     {
         if (_spawnedPlayers.ContainsKey(player))
             return;
@@ -76,8 +76,24 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
                 player);
 
         _spawnedPlayers.Add(player, playerObject);
+        ClassData classData =
+    await ClassDataLoader
+        .LoadClassData(classType);
+        Debug.Log(
+    $"Apply Stat : {classData.className}");
+        PlayerCharacter playerCharacter =
+            playerObject
+                .GetComponent<PlayerCharacter>();
+
+        if (playerCharacter != null)
+        {
+            playerCharacter.Initialize(
+                classData);
+        }
         Debug.Log(
     $"Spawned {playerObject.name} InputAuthority:{player}");
+        Debug.Log(
+    $"Loaded ClassData : {classData.className}");
     }
 
     public void SpawnSelectedCharacter(

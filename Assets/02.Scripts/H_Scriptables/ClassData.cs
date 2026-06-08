@@ -13,7 +13,9 @@ public class ClassData : ScriptableObject
     [Header("기본 능력치")]
     public float maxHP;
     public float maxMana;
-    public float moveSpeed;
+
+    public float walkSpeed;
+    public float sprintSpeed;
 
     // =========================
     // 추후 구현 예정

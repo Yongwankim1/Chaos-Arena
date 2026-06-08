@@ -10,6 +10,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
     public float SprintSpeed = 40.0f;
     public float RotationSmoothTime = 0.01f;
     public float SpeedChangeRate = 20.0f;
+    [SerializeField]
+    private float attackMoveSpeed = 100f;
 
     [Header("Jump")]
     public float JumpCooldown = 0.25f;
@@ -112,7 +114,16 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         GroundedCheck();
         JumpAndGravity(input);
-        Move(input);
+
+        if (_combat != null && _combat.AttackMoveRemain > 0f)
+        {
+            ApplyAttackDash();
+        }
+        else
+        {
+            Move(input);
+        }
+
         Attack(input);
         GroundedCheck();
         CaptureAnimationState();
@@ -125,6 +136,30 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             CameraRotation(_lastInput);
         }
+    }
+    private void ApplyAttackDash()
+    {
+        if (_combat == null)
+            return;
+
+        if (_combat.AttackMoveRemain <= 0f)
+            return;
+
+        float moveThisTick =
+            attackMoveSpeed *
+            Runner.DeltaTime;
+
+        moveThisTick =
+            Mathf.Min(
+                moveThisTick,
+                _combat.AttackMoveRemain);
+
+        _combat.AttackMoveRemain -=
+            moveThisTick;
+
+        _controller.ForceMove(
+            transform.forward *
+            moveThisTick);
     }
 
     private void GroundedCheck()
