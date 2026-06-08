@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/TextMesh Pro/Examples & Extras/Materials/Crate - URP.mat.meta
 guid: 3b5cc91c3bf8cf74391252247f52fb59
+========
+guid: 215993f7dd336484889e76b102391910
+>>>>>>>> main:Assets/99.Resources/NanumSquareNeoOTF-Bd SDF.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 2100000

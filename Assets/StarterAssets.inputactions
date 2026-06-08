@@ -44,17 +44,8 @@
                 },
                 {
                     "name": "Attack",
-                    "type": "Button",
-                    "id": "a1ed3a9a-ed84-42d2-a09a-57da5b1d3839",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Fire",
-                    "type": "Button",
-                    "id": "7af4dba7-554e-4e08-8920-92eba2e2cabf",
+                    "type": "PassThrough",
+                    "id": "8aff6eef-9cf1-4365-812d-d4c66066621f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -240,23 +231,12 @@
                 },
                 {
                     "name": "",
-                    "id": "4493b51b-35f7-48ce-9fd8-5127efd693d0",
+                    "id": "f4ed9950-5469-491e-a129-858a6008d5bc",
                     "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";KeyboardMouse",
                     "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "302d7583-881b-4b02-ab27-dd8a6ef1ede1",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Fire",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
