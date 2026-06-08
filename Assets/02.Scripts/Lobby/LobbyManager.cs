@@ -599,21 +599,6 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        var data = new NetworkInputData();
-
-        Keyboard keyboard = Keyboard.current;
-        if (keyboard != null)
-        {
-            if (keyboard.aKey.isPressed || keyboard.leftArrowKey.isPressed) data.movementInput.x -= 1f;
-            if (keyboard.dKey.isPressed || keyboard.rightArrowKey.isPressed) data.movementInput.x += 1f;
-            if (keyboard.sKey.isPressed || keyboard.downArrowKey.isPressed) data.movementInput.y -= 1f;
-            if (keyboard.wKey.isPressed || keyboard.upArrowKey.isPressed) data.movementInput.y += 1f;
-
-            data.isRuning = keyboard.leftShiftKey.isPressed || keyboard.rightShiftKey.isPressed;
-            data.KillInput = keyboard.fKey.isPressed;
-        }
-
-        input.Set(data);
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input){ }
