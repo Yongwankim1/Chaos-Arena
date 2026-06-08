@@ -1,0 +1,64 @@
+[33m6c8dc711[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m 병합
+[33m3719e8c2[m Merge pull request #3 from Yongwankim1/Character_Move
+[33mc452ea87[m[33m ([m[1;31morigin/Character_Move[m[33m, [m[1;32mCharacter_Move[m[33m)[m 이펙트
+[33m2fce66ae[m Merge branch 'main' into Character_Move
+[33md645c849[m 기본 UI(체력 마나) & 기본 데이터
+[33m60972950[m 콤보 애니메이션 및 콤보 쿨타임 기본 구현
+[33mc22a54ec[m 애니메이션(Attack)_수정
+[33m6de10b90[m 캐릭터 선택 추가
+[33m17e84f72[m 수정 최종
+[33mf8650fdd[m 점프 버그 수정완료
+[33m01549029[m 버그 수정중
+[33m78fb6700[m 점프 버그 수정
+[33md1c99cb5[m 점프 오류
+[33md3e6c098[m 동기화
+[33m2538976b[m Merge pull request #2 from Yongwankim1/로비-추가
+[33maed4c22a[m[33m ([m[1;31morigin/로비-추가[m[33m, [m[1;32m로비-추가[m[33m)[m 로비 룸 코어 완성
+[33m19178880[m 게임씬 넘기기 완료
+[33ma94369c8[m 수정 올림
+[33me1fd73e1[m 리팩토링 중
+[33mde9b55eb[m 룸 추가
+[33m6c641c05[m 캐릭터 이동 수정
+[33m7ea24518[m 룸패널 서버 동기화중
+[33m74785127[m 수정
+[33m0256cd6a[m Merge branch 'Character_Move' of https://github.com/Yongwankim1/Chaos-Arena into Character_Move
+[33m998cbd2b[m 멀티 이동 수정
+[33m7dd3d314[m 동기화 작업중
+[33m33a321fe[m 룸만 만들면됨
+[33m37f04a68[m Reapply "1"
+[33m2b442019[m Revert "1"
+[33mfc464c73[m Revert "Merge pull request #1 from Yongwankim1/codex/fix-player-scene-transition-issue"
+[33m7631a1ed[m Merge pull request #1 from Yongwankim1/codex/fix-player-scene-transition-issue
+[33me358ad87[m[33m ([m[1;31morigin/codex/fix-player-scene-transition-issue[m[33m, [m[1;32mcodex/fix-player-scene-transition-issue[m[33m)[m Fix multiplayer input authority handling
+[33m18b92d77[m[33m ([m[1;31morigin/test[m[33m)[m 1
+[33m0352d49f[m 임시 저장
+[33m4721c964[m 방만드는 중
+[33m0f3117d9[m 유저목록 추가중
+[33m90a2c9e2[m Merge branch 'Character_Move' of https://github.com/Yongwankim1/Chaos-Arena into Character_Move
+[33mb7ea8cb6[m 이동 안됨 수정
+[33m461aee97[m Update .gitignore
+[33m4934f045[m 방 UI 추가
+[33m3c7cc446[m Update .gitignore
+[33m48caed92[m 닉네임 설정 가능
+[33m3c27951c[m 임시 방 제작
+[33md960f596[m 캐릭터 애니메이션 이동 임시 저장
+[33mfdd86aa5[m 닉네임 추가 중
+[33mf8f44ef9[m 채팅 버그 자잘한 버그 수정
+[33m67f47806[m 로비씬 채팅 추가
+[33m4406fda6[m Character_Move_임시저장
+[33mc60e2b20[m 테스트
+[33m44a37131[m Character
+[33m87dc881b[m Merge branch 'main' of https://github.com/Yongwankim1/Chaos-Arena
+[33m4e4d79bb[m Character_Ninja
+[33ma3f88b98[m 러너 추가
+[33m84e588b9[m 버전컨트롤 추가
+[33m7cd9b4ae[m 포톤 퓨전 추가
+[33mf0ba8fbb[m 1차 캐릭터 삭제
+[33mbbc1cb99[m 3차 캐릭터
+[33m20a7d999[m 2차 캐릭터 업로드
+[33m94cc0ae0[m 1차
+[33m9c44985b[m 캐릭터 추가
+[33me1cc4715[m Create .gitattributes
+[33mbf1f9d3a[m Piloto Studio FX추가
+[33m97262258[m 프로젝트 생성
+[33m0447e99d[m Initial commit
