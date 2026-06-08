@@ -33,7 +33,7 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
             return;
         if (netAnimator == null) return;
         agent.isStopped = false;
-        transform.LookAt(enemyHP.Target.transform);
+        AimAtTarget();
         agent.isStopped = true;
         agent.ResetPath();
         RPC_DefaultAttack();
@@ -52,7 +52,7 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
             return;
         if (netAnimator == null) return;
         agent.isStopped = false;
-        transform.LookAt(enemyHP.Target.transform);
+        AimAtTarget();
         agent.isStopped = true;
         agent.ResetPath();
         RPC_StrongAttack();
@@ -70,6 +70,7 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         if (Object != null && !Object.HasStateAuthority)
             return;
 
+        AimAtTarget();
         RPC_PlayEffect(effect);
     }
 
@@ -94,5 +95,19 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         return gameObject;
     }
 
+    private void AimAtTarget()
+    {
+        if (enemyHP == null || enemyHP.Target == null)
+            return;
+
+        Vector3 targetPosition = enemyHP.Target.transform.position;
+        targetPosition.y = transform.position.y;
+
+        Vector3 direction = targetPosition - transform.position;
+        if (direction.sqrMagnitude <= 0.001f)
+            return;
+
+        transform.rotation = Quaternion.LookRotation(direction.normalized);
+    }
 
 }
