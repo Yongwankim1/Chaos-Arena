@@ -2,6 +2,7 @@ using UnityEngine;
 
 public interface IAttacker
 {
-    void Attack();
+    void DefaultAttack();
+
     GameObject GetAttacker();
 }

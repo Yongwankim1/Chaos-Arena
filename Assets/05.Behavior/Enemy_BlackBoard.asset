@@ -19,6 +19,7 @@ MonoBehaviour:
   - rid: 3952068806759940363
   - rid: 3952068806759940513
   - rid: 3952068806759940527
+  - rid: 820696484203987949
   - rid: 3952068806759940543
   - rid: 3952068806759940561
   - rid: 3952068806759940581
@@ -31,7 +32,8 @@ MonoBehaviour:
   - rid: 3952068806759940854
   - rid: 3952068807948239583
   - rid: 820696416940982387
-  m_VersionTimestamp: 639160111445782394
+  - rid: 820696484780441970
+  m_VersionTimestamp: 639162540264831529
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: 7117304209035582068}
@@ -45,6 +47,26 @@ MonoBehaviour:
           m_Value0: 4697048358040192878
           m_Value1: 16426249158176511237
         Name: HasTarget
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 820696484203987949
+      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 16096232840085776216
+          m_Value1: 6713813941899800055
+        Name: StrongAttackCoolDown
+        IsExposed: 1
+        m_IsShared: 0
+        m_Value: 0
+    - rid: 820696484780441970
+      type: {class: 'TypedVariableModel`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
+      data:
+        ID:
+          m_Value0: 18374107887862873128
+          m_Value1: 16717688845896730063
+        Name: IsAttacking
         IsExposed: 1
         m_IsShared: 0
         m_Value: 0
@@ -74,7 +96,7 @@ MonoBehaviour:
         ID:
           m_Value0: 17473220419772921981
           m_Value1: 107022264240021908
-        Name: AttackCoolDown
+        Name: DefaultAttackCoolDown
         IsExposed: 1
         m_IsShared: 0
         m_Value: 0
@@ -200,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c02bb70996b49eba31d0c206e28da24, type: 3}
   m_Name: Enemy_BlackBoard
   m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.RuntimeBlackboardAsset
-  VersionTimestamp: 639160111445782394
+  VersionTimestamp: 639162540264831529
   AssetID:
     m_Value0: 9534148792356573229
     m_Value1: 12947939812038791002
@@ -209,6 +231,7 @@ MonoBehaviour:
     - rid: 3952068806759940364
     - rid: 3952068806759940514
     - rid: 3952068806759940528
+    - rid: 820696484203987950
     - rid: 3952068806759940544
     - rid: 3952068806759940562
     - rid: 3952068806759940582
@@ -221,6 +244,7 @@ MonoBehaviour:
     - rid: 3952068806759940855
     - rid: 3952068807948239584
     - rid: 820696416940982388
+    - rid: 820696484780441971
   m_SharedBlackboardVariableGuids: []
   references:
     version: 2
@@ -232,6 +256,22 @@ MonoBehaviour:
           m_Value0: 4697048358040192878
           m_Value1: 16426249158176511237
         Name: HasTarget
+        m_Value: 0
+    - rid: 820696484203987950
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 16096232840085776216
+          m_Value1: 6713813941899800055
+        Name: StrongAttackCoolDown
+        m_Value: 0
+    - rid: 820696484780441971
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 18374107887862873128
+          m_Value1: 16717688845896730063
+        Name: IsAttacking
         m_Value: 0
     - rid: 3952068806759940364
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
@@ -255,7 +295,7 @@ MonoBehaviour:
         GUID:
           m_Value0: 17473220419772921981
           m_Value1: 107022264240021908
-        Name: AttackCoolDown
+        Name: DefaultAttackCoolDown
         m_Value: 0
     - rid: 3952068806759940544
       type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}

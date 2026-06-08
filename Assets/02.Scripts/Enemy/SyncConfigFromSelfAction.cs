@@ -10,17 +10,12 @@ using System.Collections.Generic;
 public partial class SyncConfigFromSelfAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
-
     [SerializeReference] public BlackboardVariable<float> AttackRange;
-
     [SerializeReference] public BlackboardVariable<float> DetectRadius;
-
     [SerializeReference] public BlackboardVariable<float> ChaseSpeed;
-
     [SerializeReference] public BlackboardVariable<float> PatrolSpeed;
-
-    [SerializeReference] public BlackboardVariable<float> AttackCooldown;
-
+    [SerializeReference] public BlackboardVariable<float> DefualtAttackCooldown;
+    [SerializeReference] public BlackboardVariable<float> StrongAttackCooldown;
     [SerializeReference] public BlackboardVariable<List<GameObject>> PatrolPoints;
 
     protected override Status OnUpdate()
@@ -37,7 +32,8 @@ public partial class SyncConfigFromSelfAction : Action
         DetectRadius.Value = config.detectRange;
         ChaseSpeed.Value = config.chaseSpeed;
         PatrolSpeed.Value = config.patrolSpeed;
-        AttackCooldown.Value = config.attackCooldown;
+        DefualtAttackCooldown.Value = config.defaultAttackCooldown;
+        StrongAttackCooldown.Value = config.StrongAttackCooldown;
 
         PatrolPoints.Value = bridge.GetPatrolPosition();
 

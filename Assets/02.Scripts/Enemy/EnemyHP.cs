@@ -16,5 +16,8 @@ public class EnemyHP : MonoBehaviour, IDamageable
         
     }
 
-
+    private void Update()
+    {
+        transform.rotation = Quaternion.Euler(0f, 90f, 0f);
+    }
 }

@@ -54,11 +54,11 @@ public partial class SenseTargetAction : Action
         Vector3 targetPosition = hitAttackerTarget.transform.position;
         float distance = Vector3.Distance(selfPosition, targetPosition);
 
-        if (distance > detectRange)
-        {
-            ClearTarget();
-            return Status.Success;
-        }
+        //if (distance > detectRange)
+        //{
+        //    ClearTarget();
+        //    return Status.Success;
+        //}
 
         SetTarget(hitAttackerTarget.gameObject, distance, targetPosition);
 

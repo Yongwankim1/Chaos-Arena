@@ -10,5 +10,10 @@ public class EnemySO : ScriptableObject
     public float detectRange;
     public float attackRange;
     public float attackDamage;
-    public float attackCooldown;
+    public float defaultAttackCooldown;
+    public float StrongAttackCooldown;
+    public float StrongAttackMultiplier;
+
+    public GameObject[] attackEffects;
+
 }

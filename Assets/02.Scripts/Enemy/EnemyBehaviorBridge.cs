@@ -6,17 +6,17 @@ using UnityEngine.AI;
 
 public class EnemyBehaviorBridge : NetworkBehaviour
 {
-    [SerializeField] EnemySO dataSD;
+    [SerializeField] EnemySO dataSO;
     [SerializeField] private Transform[] patrolPoints;
 
     private NavMeshAgent navMeshAgent;
     private BehaviorGraphAgent behaviorGraphAgent;
     private bool? lastCanRunAi;
 
-    public EnemySO Config => dataSD;
+    public EnemySO Config => dataSO;
     public Transform[] PatrolPoints => patrolPoints;
 
-    public bool HasConfig => dataSD != null;
+    public bool HasConfig => dataSO != null;
     public bool HasPatrolPoints => patrolPoints != null && patrolPoints.Length > 0;
 
     private void Awake()
@@ -107,5 +107,11 @@ public class EnemyBehaviorBridge : NetworkBehaviour
             ret.Add( go );
         }
         return ret;
+    }
+    public GameObject GetEffect(EffectType effectType)
+    {
+        if (dataSO.attackEffects.Length == 0 || (int)effectType > dataSO.attackEffects.Length) return null;
+
+        return dataSO.attackEffects[(int)effectType];
     }
 }

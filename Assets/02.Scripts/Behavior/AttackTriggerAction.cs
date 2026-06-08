@@ -11,7 +11,8 @@ public partial class AttackTriggerAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Self;
 
-    private IAttacker attacker;
+    [SerializeReference] public BlackboardVariable<bool> isDefaultAttack;
+    private IEnemyAttacker attacker;
     private NetworkObject networkObject;
 
     protected override Status OnStart()
@@ -27,7 +28,7 @@ public partial class AttackTriggerAction : Action
         if (!networkObject.HasStateAuthority)
             return Status.Failure;
 
-        attacker = Self.Value.GetComponent<IAttacker>();
+        attacker = Self.Value.GetComponent<IEnemyAttacker>();
 
         if (attacker == null)
             return Status.Failure;
@@ -49,8 +50,9 @@ public partial class AttackTriggerAction : Action
         if (attacker == null)
             return Status.Failure;
 
-        attacker.Attack();
-
+        if(isDefaultAttack.Value == true) attacker.DefaultAttack();
+        else attacker.StrongAttack();
+            
         return Status.Success;
     }
 

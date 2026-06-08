@@ -8,7 +8,7 @@ public class PlayerAttack : MonoBehaviour, IAttacker
     IDamageable damageable;
 
     [ContextMenu("AttackTest")]
-    public void Attack()
+    public void DefaultAttack()
     {
         damageable = targetHP.GetComponent<IDamageable>();
         damageable.TakeDamage(Damage, this);
