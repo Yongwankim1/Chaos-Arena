@@ -38,6 +38,7 @@ public class PlayerHUD : MonoBehaviour
 
     private void Refresh()
     {
+        Debug.Log(_player.MaxHP);
         float hpPercent =
             _player.CurrentHP /
             _player.MaxHP;
