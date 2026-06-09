@@ -316,6 +316,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8067007558656489660, guid: c6dfbe33a8412824399d52555c197906, type: 3}
+      propertyPath: attackPos
+      value: 
+      objectReference: {fileID: 58182015}
     - target: {fileID: 8326444142028689644, guid: c6dfbe33a8412824399d52555c197906, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -356,6 +360,11 @@ CapsuleCollider:
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.79, z: 0}
+--- !u!4 &58182015 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1047794884284145573, guid: c6dfbe33a8412824399d52555c197906, type: 3}
+  m_PrefabInstance: {fileID: 58182012}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &173202669
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,6 +1785,69 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1276805871}
   m_CullTransparentMesh: 1
+--- !u!1001 &1302229792
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1491088250}
+    m_Modifications:
+    - target: {fileID: 2653153344604433488, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_Name
+      value: VFX_Trail_Cosmos
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 1814538232, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+--- !u!4 &1302229793 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3836811505428075909, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+  m_PrefabInstance: {fileID: 1302229792}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1347480029
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,6 +2407,26 @@ PrefabInstance:
       propertyPath: SortKey
       value: 3286135986
       objectReference: {fileID: 0}
+    - target: {fileID: 3963968629033269827, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: 'patrolPoints.Array.data[0]'
+      value: 
+      objectReference: {fileID: 681506589}
+    - target: {fileID: 3963968629033269827, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: 'patrolPoints.Array.data[1]'
+      value: 
+      objectReference: {fileID: 681506588}
+    - target: {fileID: 3963968629033269827, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: 'patrolPoints.Array.data[2]'
+      value: 
+      objectReference: {fileID: 681506587}
+    - target: {fileID: 3963968629033269827, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: 'patrolPoints.Array.data[3]'
+      value: 
+      objectReference: {fileID: 681506586}
+    - target: {fileID: 3963968629033269827, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: 'patrolPoints.Array.data[4]'
+      value: 
+      objectReference: {fileID: 681506585}
     - target: {fileID: 5282119030261353244, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.6770573
@@ -2379,11 +2471,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy-Knight
       objectReference: {fileID: 0}
+    - target: {fileID: 8634894172141866125, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 4433368753352989086, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1302229793}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+--- !u!4 &1491088250 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4433368753352989086, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+  m_PrefabInstance: {fileID: 1491088249}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1590953882
 GameObject:
   m_ObjectHideFlags: 0

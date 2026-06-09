@@ -8,23 +8,21 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     [SerializeField] private string attackParam1 = "Attack";
     [SerializeField] private string attackParam2 = "Attack2";
     [SerializeField] private EnemyBehaviorBridge bridge;
-    [SerializeField] Transform firePoint;
+    [SerializeField] Transform attackPos;
 
     [SerializeField] NavMeshAgent agent;
     [SerializeField] EnemyHP enemyHP;
-    EnemyProjectile defaultAttackPrefab;
-    EnemyProjectile strongAttackPrefab;
+    EnemyAttackBase defaultAttackPrefab;
+    EnemyAttackBase strongAttackPrefab;
     private void Awake()
     {
-        if (netAnimator == null)
-        {
-            netAnimator = GetComponent<NetworkMecanimAnimator>();
-        }
+        if (attackPos == null) attackPos = transform;
+        if (netAnimator == null) netAnimator = GetComponent<NetworkMecanimAnimator>();
         if(bridge == null) bridge = GetComponent<EnemyBehaviorBridge>();
         if(agent == null) agent = GetComponent<NavMeshAgent>();
         if(enemyHP == null) enemyHP = GetComponent<EnemyHP>();
-        defaultAttackPrefab = bridge.GetEffect(EffectType.DefaultAttack).GetComponent<EnemyProjectile>();
-        strongAttackPrefab = bridge.GetEffect(EffectType.StrongAttack).GetComponent<EnemyProjectile>();
+        defaultAttackPrefab = bridge.GetEffect(EffectType.DefaultAttack).GetComponent<EnemyAttackBase>();
+        strongAttackPrefab = bridge.GetEffect(EffectType.StrongAttack).GetComponent<EnemyAttackBase>();
 
     }
     public void DefaultAttack()
@@ -79,11 +77,11 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         // TODO: Play attack effect and sound.
         Debug.Log("Attack effect");
         if (defaultAttackPrefab == null || strongAttackPrefab == null) return;
-        EnemyProjectile bullet = null;
+        EnemyAttackBase attackEffect = null;
         switch (effect)
         {
-            case EffectType.DefaultAttack: bullet = Instantiate(defaultAttackPrefab, firePoint.position, transform.rotation); bullet.Init(0); break;
-            case EffectType.StrongAttack: bullet = Instantiate(strongAttackPrefab, firePoint.position, transform.rotation); bullet.Init(0.6f); break;
+            case EffectType.DefaultAttack: attackEffect = Instantiate(defaultAttackPrefab, attackPos.position, transform.rotation); attackEffect.Init(); break;
+            case EffectType.StrongAttack: attackEffect = Instantiate(strongAttackPrefab, attackPos.position, transform.rotation); attackEffect.Init(); break;
         }
 
     }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd1e9336a03c3cc48a879d3be99cb145, type: 3}
   m_Name: EnemySO_Knight
   m_EditorClassIdentifier: Assembly-CSharp::EnemySO
-  monsterName: Enemy_Mage
+  monsterName: Enemy_Knight
   maxHp: 100
   chaseSpeed: 6
   patrolSpeed: 7
@@ -23,5 +23,5 @@ MonoBehaviour:
   StrongAttackCooldown: 5
   StrongAttackMultiplier: 1.3
   attackEffects:
-  - {fileID: 2268428576765071778, guid: 3f3c3459c5ac64349988a0856ee459e9, type: 3}
-  - {fileID: 7849629317300760581, guid: a1ebd0fc3b99c334da3f6ed2571d89ba, type: 3}
+  - {fileID: 8893727107283924020, guid: 124e89d582d87184a8d47c27234e818e, type: 3}
+  - {fileID: 6540957719115068254, guid: 2a8d7dd4af44caf42b1f09e61b630bec, type: 3}
