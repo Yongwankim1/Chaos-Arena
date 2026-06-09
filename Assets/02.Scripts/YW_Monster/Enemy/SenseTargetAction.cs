@@ -40,11 +40,11 @@ public partial class SenseTargetAction : Action
 
         if (target != null) Target.Value = target;
 
-        PlayerController hitAttackerTarget = Target?.Value != null
-            ? Target.Value.GetComponent<PlayerController>()
+        NetworkCharacterController hitAttackerTarget = Target?.Value != null
+            ? Target.Value.GetComponent<NetworkCharacterController>()
             : null;
-
-        if (hitAttackerTarget == null || hitAttackerTarget.IsDead)
+        //TODO: 이프에 isdead추가
+        if (hitAttackerTarget == null)
         {
             ClearTarget();
             return Status.Success;
