@@ -104,6 +104,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
             _cinemachineTargetYaw = transform.eulerAngles.y;
         }
+        Debug.Log(
+    $"Player Spawned | State:{HasStateAuthority} Input:{HasInputAuthority}");
     }
 
     public override void FixedUpdateNetwork()
@@ -416,6 +418,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
     {
         if (!input.Attack)
             return;
+        Debug.Log(
+       $"Attack Input | State:{HasStateAuthority} Input:{HasInputAuthority}");
 
         if (HasStateAuthority)
         {
