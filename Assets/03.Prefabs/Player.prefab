@@ -849,27 +849,27 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 5651274045008937097}
   comboAttackData:
   - SpawnType: 0
-    Damage: 0
+    Damage: 10
     Range: 1
     Radius: 0.6
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 0
+    Damage: 10
     Range: 1
     Radius: 0.6
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 0
+    Damage: 10
     Range: 1
     Radius: 0.6
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 0
+    Damage: 10
     Range: 1
     Radius: 0.6
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 0
+    Damage: 10
     Range: 1
     Radius: 0.6
     ProjectilePrefab: {fileID: 0}
@@ -902,6 +902,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6e6257b386d20489f98dc1cddd9f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
+  _ClassType: 0
   _CurrentHP: 0
   _CurrentMana: 0
 --- !u!1 &3486834125898397633

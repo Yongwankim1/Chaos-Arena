@@ -1,5 +1,6 @@
 using Fusion;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterCombat : NetworkBehaviour, IAttacker
@@ -14,6 +15,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     [SerializeField]
     private AttackData[] comboAttackData;
+    [Networked]
+    private int CurrentAttackIndex { get; set; }
 
     private Animator _animator;
 
@@ -103,11 +106,9 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     private void PlayAttack()
     {
-        Debug.Log(
-            $"PlayAttack | Combo:{_comboIndex}");
+        CurrentAttackIndex = _comboIndex;
 
         RPC_SetAttackState(true);
-
         RPC_PlayAttack(_comboIndex);
     }
 
@@ -168,38 +169,19 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     public void SpawnAttack()
     {
-        Debug.Log(
-            $"SpawnAttack | Combo:{_comboIndex} State:{HasStateAuthority} Input:{HasInputAuthority}");
-
         if (!HasStateAuthority)
-        {
-            Debug.Log(
-                "SpawnAttack Return - No Authority");
-
             return;
-        }
 
-        if (_comboIndex <= 0)
-        {
-            Debug.LogError(
-                $"Invalid ComboIndex : {_comboIndex}");
+        int attackIndex = CurrentAttackIndex;
 
+        if (attackIndex <= 0)
             return;
-        }
 
-        if (_comboIndex > comboAttackData.Length)
-        {
-            Debug.LogError(
-                $"Combo Overflow : {_comboIndex}");
-
+        if (attackIndex > comboAttackData.Length)
             return;
-        }
 
         AttackData data =
-            comboAttackData[_comboIndex - 1];
-
-        Debug.Log(
-            $"Attack Data | Damage:{data.Damage}");
+            comboAttackData[attackIndex - 1];
 
         switch (data.SpawnType)
         {
@@ -214,11 +196,10 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     }
     private void SpawnHitBox(AttackData data)
     {
-        Debug.Log("SpawnHitBox");
-
         Vector3 center =
             attackSpawnPoint.position +
-            transform.forward * (data.Range * 0.5f);
+            attackSpawnPoint.forward *
+            (data.Range * 0.5f);
 
         Collider[] hits =
             Physics.OverlapBox(
@@ -229,36 +210,27 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                     data.Range * 0.5f),
                 attackSpawnPoint.rotation);
 
-        Debug.Log(
-            $"Hit Count : {hits.Length}");
+        HashSet<IDamageable> damagedTargets =
+            new HashSet<IDamageable>();
 
         foreach (Collider hit in hits)
         {
-            Debug.Log(
-                $"Hit : {hit.name}");
-
-            PlayerCharacter target =
-                hit.GetComponentInParent<PlayerCharacter>();
-
-            Debug.Log(
-                $"Target : {target}");
-
-            if (target == null)
+            if (hit.transform.root == transform.root)
                 continue;
 
-            if (target.gameObject == gameObject)
-            {
-                Debug.Log(
-                    "Self Hit Ignore");
+            IDamageable damageable =
+                hit.GetComponentInParent<IDamageable>();
 
+            if (damageable == null)
                 continue;
-            }
 
-            Debug.Log(
-                $"Take Damage -> {data.Damage}");
+            if (damagedTargets.Contains(damageable))
+                continue;
 
-            target.TakeDamage(
-                (int)data.Damage,
+            damagedTargets.Add(damageable);
+
+            damageable.TakeDamage(
+                Mathf.RoundToInt(data.Damage),
                 this);
         }
     }

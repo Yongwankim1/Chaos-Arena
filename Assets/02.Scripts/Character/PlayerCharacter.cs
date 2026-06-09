@@ -95,31 +95,19 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable
         }
     }
     public void TakeDamage(
-    int damage,
-    IAttacker attacker)
+     int damage,
+     IAttacker attacker)
     {
-        Debug.Log(
-            $"TakeDamage Start | Damage:{damage} State:{HasStateAuthority}");
-
         if (!HasStateAuthority)
-        {
-            Debug.Log(
-                "TakeDamage Return - No StateAuthority");
-
             return;
-        }
 
-        CurrentHP -= damage;
-
-        Debug.Log(
-            $"HP Changed : {CurrentHP}");
+        CurrentHP =
+            Mathf.Max(
+                0,
+                CurrentHP - damage);
 
         if (CurrentHP <= 0)
         {
-            CurrentHP = 0;
-
-            Debug.Log("Dead");
-
             Die();
         }
     }
