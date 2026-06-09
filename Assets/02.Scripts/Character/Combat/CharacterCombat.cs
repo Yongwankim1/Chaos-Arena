@@ -108,6 +108,16 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     {
         CurrentAttackIndex = _comboIndex;
 
+        Animator animator =
+            GetComponent<Animator>();
+
+        if (animator != null)
+        {
+            animator.ResetTrigger("Jump");
+            animator.SetBool("FreeFall", false);
+            animator.SetBool("Grounded", true);
+        }
+
         RPC_SetAttackState(true);
         RPC_PlayAttack(_comboIndex);
     }
@@ -186,6 +196,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         switch (data.SpawnType)
         {
             case AttackSpawnType.HitBox:
+                SpawnAttackEffect();
                 SpawnHitBox(data);
                 break;
 
@@ -228,6 +239,15 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                 continue;
 
             damagedTargets.Add(damageable);
+
+            if (data.HitEffect != null)
+            {
+                Instantiate(
+                    data.HitEffect,
+                    hit.ClosestPoint(
+                        transform.position),
+                    Quaternion.identity);
+            }
 
             damageable.TakeDamage(
                 Mathf.RoundToInt(data.Damage),
@@ -284,6 +304,52 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             return;
 
         AttackMoveRemain += distance;
+    }
+
+    public void SpawnAttackEffect()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        RPC_PlayAttackEffect(
+            CurrentAttackIndex);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayAttackEffect(
+     int attackIndex)
+    {
+        if (attackIndex <= 0)
+            return;
+
+        if (attackIndex > comboAttackData.Length)
+            return;
+
+        AttackData data =
+            comboAttackData[attackIndex - 1];
+
+        if (data.AttackEffect == null)
+            return;
+
+        Vector3 spawnPosition =
+            attackSpawnPoint.position +
+            transform.TransformDirection(
+                data.EffectPositionOffset);
+
+        Quaternion spawnRotation =
+            transform.rotation *
+            Quaternion.Euler(
+                data.EffectRotationOffset);
+
+        GameObject effect =
+            Instantiate(
+                data.AttackEffect,
+                spawnPosition,
+                spawnRotation);
+
+        effect.transform.SetParent(
+            transform,
+            true);
     }
     public void DefaultAttack()
     {

@@ -852,26 +852,46 @@ MonoBehaviour:
     Damage: 10
     Range: 1
     Radius: 0.6
+    AttackEffect: {fileID: 3031006684049387128, guid: f4ef8c345f8b61f4da40ac1b469b82fb, type: 3}
+    EffectPositionOffset: {x: 0, y: 0, z: 0}
+    EffectRotationOffset: {x: 0, y: 90, z: 0}
+    HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     Damage: 10
     Range: 1
     Radius: 0.6
+    AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
+    EffectPositionOffset: {x: 0, y: 0, z: 0}
+    EffectRotationOffset: {x: 45, y: 90, z: 0}
+    HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     Damage: 10
     Range: 1
     Radius: 0.6
+    AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
+    EffectPositionOffset: {x: 0, y: 0, z: 0}
+    EffectRotationOffset: {x: 0, y: 90, z: 0}
+    HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     Damage: 10
     Range: 1
     Radius: 0.6
+    AttackEffect: {fileID: 1149029339946739509, guid: 99994b4d1bcfe2d43bca138323b8704c, type: 3}
+    EffectPositionOffset: {x: 0, y: 0, z: 0}
+    EffectRotationOffset: {x: 0, y: 180, z: 0}
+    HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     Damage: 10
     Range: 1
     Radius: 0.6
+    AttackEffect: {fileID: 8703879215163434798, guid: 9ce27536803f3ba40b31bed95e7c8166, type: 3}
+    EffectPositionOffset: {x: 0, y: -0.5, z: 0}
+    EffectRotationOffset: {x: 0, y: 140, z: 0}
+    HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   _AttackMoveRemain: 0
 --- !u!114 &6070649731673188414
