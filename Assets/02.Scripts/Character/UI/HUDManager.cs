@@ -12,9 +12,10 @@ public class HUDManager : MonoBehaviour
         Instance = this;
     }
 
-    public void BindPlayer(
-        PlayerCharacter player)
+    public void BindPlayer(PlayerCharacter player)
     {
+        Debug.Log($"BindPlayer : {player.name}");
+
         playerHUD.Initialize(player);
     }
 }

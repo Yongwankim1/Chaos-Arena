@@ -20,9 +20,9 @@ public class PlayerHUD : MonoBehaviour
 
     private PlayerCharacter _player;
 
-    public void Initialize(
-        PlayerCharacter player)
+    public void Initialize(PlayerCharacter player)
     {
+        Debug.Log("HUD Initialize");
         _player = player;
 
         Refresh();
