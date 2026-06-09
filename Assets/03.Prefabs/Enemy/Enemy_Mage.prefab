@@ -2057,7 +2057,7 @@ GameObject:
   - component: {fileID: 955614437954965183}
   - component: {fileID: 5765384124622976039}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Enemy_Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
