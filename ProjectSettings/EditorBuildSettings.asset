@@ -8,12 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/01.Scenes/01.LobbyScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 0
-    path: Assets/01.Scenes/03. MonsterTest.unity
-    guid: 258db35675863f04b8d8fb52a9fef317
   - enabled: 1
     path: Assets/01.Scenes/Character_Test.unity
     guid: 55f9598d96ec23742801293f934343f3
+  - enabled: 1
+    path: Assets/01.Scenes/03. MonsterTest.unity
+    guid: 258db35675863f04b8d8fb52a9fef317
   - enabled: 1
     path: Assets/01.Scenes/02.GameScene.unity
     guid: 7607b6a27a6f51340bfcd335582f5a9c
