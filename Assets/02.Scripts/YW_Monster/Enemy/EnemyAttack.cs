@@ -80,8 +80,8 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         EnemyAttackBase attackEffect = null;
         switch (effect)
         {
-            case EffectType.DefaultAttack: attackEffect = Instantiate(defaultAttackPrefab, attackPos.position, transform.rotation); attackEffect.Init(); break;
-            case EffectType.StrongAttack: attackEffect = Instantiate(strongAttackPrefab, attackPos.position, transform.rotation); attackEffect.Init(); break;
+            case EffectType.DefaultAttack: attackEffect = Instantiate(defaultAttackPrefab, attackPos.position, transform.rotation, attackPos); attackEffect.Init(); break;
+            case EffectType.StrongAttack: attackEffect = Instantiate(strongAttackPrefab, attackPos.position, transform.rotation, attackPos); attackEffect.Init(); break;
         }
 
     }

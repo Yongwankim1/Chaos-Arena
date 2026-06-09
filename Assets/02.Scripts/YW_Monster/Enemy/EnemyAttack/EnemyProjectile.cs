@@ -9,6 +9,7 @@ public class EnemyProjectile : EnemyAttackBase
     public override void Init()
     {
         base.Init();
+        transform.SetParent(null);
         if (fireRoutine != null)
             StopCoroutine(fireRoutine);
 
