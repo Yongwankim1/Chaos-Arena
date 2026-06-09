@@ -2055,6 +2055,7 @@ GameObject:
   - component: {fileID: 1748915281715245426}
   - component: {fileID: 8067007558656489660}
   - component: {fileID: 955614437954965183}
+  - component: {fileID: 5765384124622976039}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -2316,6 +2317,29 @@ MonoBehaviour:
   target: {fileID: 0}
   MaxHP: 100
   currentHP: 100
+--- !u!136 &5765384124622976039
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8326444142028689644}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.6
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.79, z: 0}
 --- !u!1 &8433603383317398258
 GameObject:
   m_ObjectHideFlags: 0

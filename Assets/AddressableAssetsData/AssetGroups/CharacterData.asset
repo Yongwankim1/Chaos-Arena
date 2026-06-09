@@ -15,14 +15,14 @@ MonoBehaviour:
   m_GroupName: CharacterData
   m_GUID: 852898d5c7d1b364091f207d487ee05e
   m_SerializeEntries:
-  - m_GUID: aa49119418ebe0441a4eb19ffab16e59
-    m_Address: Assassin
+  - m_GUID: 3fc8fb0f97b54d948a4aa8df237c51a1
+    m_Address: Mage
     m_ReadOnly: 0
     m_SerializedLabels:
     - Character
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3fc8fb0f97b54d948a4aa8df237c51a1
-    m_Address: Mage
+  - m_GUID: aa49119418ebe0441a4eb19ffab16e59
+    m_Address: Assassin
     m_ReadOnly: 0
     m_SerializedLabels:
     - Character
