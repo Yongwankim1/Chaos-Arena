@@ -1,3 +1,0 @@
-repository "Chaos-Arena/Chaos-Arena@14568765192421@cloud"
-  path "/"
-    smartbranch "/main" changeset "5"   
