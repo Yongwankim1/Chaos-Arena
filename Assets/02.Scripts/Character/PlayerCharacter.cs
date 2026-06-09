@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class PlayerCharacter : NetworkBehaviour
+public class PlayerCharacter : NetworkBehaviour, IDamageable
 {
     private ClassData _classData;
     [Networked]
@@ -21,9 +21,14 @@ public class PlayerCharacter : NetworkBehaviour
     public override void Spawned()
     {
         Debug.Log(
+            $"[Player] ObjectState:{Object.HasStateAuthority} ObjectInput:{Object.HasInputAuthority}");
+
+        Debug.Log(
+            $"[Player] State:{HasStateAuthority} Input:{HasInputAuthority}");
+
+        Debug.Log(
             $"Spawned : {ClassType}");
     }
-   
     private void LocalInitialize()
     {
         _classData =
@@ -88,5 +93,38 @@ public class PlayerCharacter : NetworkBehaviour
             cc.maxSpeed =
                 _classData.sprintSpeed;
         }
+    }
+    public void TakeDamage(
+    int damage,
+    IAttacker attacker)
+    {
+        Debug.Log(
+            $"TakeDamage Start | Damage:{damage} State:{HasStateAuthority}");
+
+        if (!HasStateAuthority)
+        {
+            Debug.Log(
+                "TakeDamage Return - No StateAuthority");
+
+            return;
+        }
+
+        CurrentHP -= damage;
+
+        Debug.Log(
+            $"HP Changed : {CurrentHP}");
+
+        if (CurrentHP <= 0)
+        {
+            CurrentHP = 0;
+
+            Debug.Log("Dead");
+
+            Die();
+        }
+    }
+    private void Die()
+    {
+        Debug.Log("Player Dead");
     }
 }

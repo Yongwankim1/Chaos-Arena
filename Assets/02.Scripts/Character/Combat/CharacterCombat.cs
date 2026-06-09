@@ -2,7 +2,7 @@ using Fusion;
 using System.Collections;
 using UnityEngine;
 
-public class CharacterCombat : NetworkBehaviour
+public class CharacterCombat : NetworkBehaviour, IAttacker
 {
     [Header("Combo")]
     [SerializeField]
@@ -63,15 +63,24 @@ public class CharacterCombat : NetworkBehaviour
 
     public void AttackInput()
     {
+        Debug.Log(
+            $"AttackInput | Combo:{_comboIndex} State:{HasStateAuthority} Input:{HasInputAuthority}");
+
         if (!HasStateAuthority)
+        {
+            Debug.Log("AttackInput Return");
             return;
+        }
 
         if (_waitingNextCombo)
         {
             _comboIndex++;
 
-            if (_comboIndex > 5)
+            if (_comboIndex > comboAttackData.Length)
                 _comboIndex = 1;
+
+            Debug.Log(
+                $"Next Combo : {_comboIndex}");
 
             _waitingNextCombo = false;
             _comboTimer = 0f;
@@ -85,12 +94,18 @@ public class CharacterCombat : NetworkBehaviour
         {
             _comboIndex = 1;
 
+            Debug.Log(
+                $"Start Combo : {_comboIndex}");
+
             PlayAttack();
         }
     }
 
     private void PlayAttack()
     {
+        Debug.Log(
+            $"PlayAttack | Combo:{_comboIndex}");
+
         RPC_SetAttackState(true);
 
         RPC_PlayAttack(_comboIndex);
@@ -153,11 +168,38 @@ public class CharacterCombat : NetworkBehaviour
 
     public void SpawnAttack()
     {
+        Debug.Log(
+            $"SpawnAttack | Combo:{_comboIndex} State:{HasStateAuthority} Input:{HasInputAuthority}");
+
         if (!HasStateAuthority)
+        {
+            Debug.Log(
+                "SpawnAttack Return - No Authority");
+
             return;
+        }
+
+        if (_comboIndex <= 0)
+        {
+            Debug.LogError(
+                $"Invalid ComboIndex : {_comboIndex}");
+
+            return;
+        }
+
+        if (_comboIndex > comboAttackData.Length)
+        {
+            Debug.LogError(
+                $"Combo Overflow : {_comboIndex}");
+
+            return;
+        }
 
         AttackData data =
             comboAttackData[_comboIndex - 1];
+
+        Debug.Log(
+            $"Attack Data | Damage:{data.Damage}");
 
         switch (data.SpawnType)
         {
@@ -172,22 +214,52 @@ public class CharacterCombat : NetworkBehaviour
     }
     private void SpawnHitBox(AttackData data)
     {
+        Debug.Log("SpawnHitBox");
+
         Vector3 center =
             attackSpawnPoint.position +
             transform.forward * (data.Range * 0.5f);
 
         Collider[] hits =
-      Physics.OverlapBox(
-          center,
-          new Vector3(
-              data.Radius,
-              1f,
-              data.Range * 0.5f),
-          attackSpawnPoint.rotation);
+            Physics.OverlapBox(
+                center,
+                new Vector3(
+                    data.Radius,
+                    1f,
+                    data.Range * 0.5f),
+                attackSpawnPoint.rotation);
+
+        Debug.Log(
+            $"Hit Count : {hits.Length}");
 
         foreach (Collider hit in hits)
         {
-            Debug.Log($"Hit : {hit.name}");
+            Debug.Log(
+                $"Hit : {hit.name}");
+
+            PlayerCharacter target =
+                hit.GetComponentInParent<PlayerCharacter>();
+
+            Debug.Log(
+                $"Target : {target}");
+
+            if (target == null)
+                continue;
+
+            if (target.gameObject == gameObject)
+            {
+                Debug.Log(
+                    "Self Hit Ignore");
+
+                continue;
+            }
+
+            Debug.Log(
+                $"Take Damage -> {data.Damage}");
+
+            target.TakeDamage(
+                (int)data.Damage,
+                this);
         }
     }
     private void OnDrawGizmos()
@@ -240,5 +312,12 @@ public class CharacterCombat : NetworkBehaviour
             return;
 
         AttackMoveRemain += distance;
+    }
+    public void DefaultAttack()
+    {
+    }
+    public GameObject GetAttacker()
+    {
+        return gameObject;
     }
 }
