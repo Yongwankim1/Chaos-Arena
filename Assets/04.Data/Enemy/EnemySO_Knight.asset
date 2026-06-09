@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd1e9336a03c3cc48a879d3be99cb145, type: 3}
+  m_Name: EnemySO_Knight
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySO
+  monsterName: Enemy_Mage
+  maxHp: 100
+  chaseSpeed: 6
+  patrolSpeed: 7
+  detectRange: 10
+  attackRange: 5
+  attackDamage: 10
+  defaultAttackCooldown: 1
+  StrongAttackCooldown: 5
+  StrongAttackMultiplier: 1.3
+  attackEffects:
+  - {fileID: 2268428576765071778, guid: 3f3c3459c5ac64349988a0856ee459e9, type: 3}
+  - {fileID: 7849629317300760581, guid: a1ebd0fc3b99c334da3f6ed2571d89ba, type: 3}

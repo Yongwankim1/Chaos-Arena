@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: d5080b8dbce772e4f89228f6c01e2261
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285390
+  packageName: Anime Slash VFX Element
+  packageVersion: 1.0
+  assetPath: Assets/Anime_Slash_VFX/Shader/M_Mesh.shadergraph
+  uploadId: 664943

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: f524b177e55a0024abe74bb67e1c582e
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285390
+  packageName: Anime Slash VFX Element
+  packageVersion: 1.0
+  assetPath: Assets/Anime_Slash_VFX/Shader/Material/MI_Flash_5.mat
+  uploadId: 664943

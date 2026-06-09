@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 57b33fa3f2f3aaa42ad33ea2ef4ee7b7
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285390
+  packageName: Anime Slash VFX Element
+  packageVersion: 1.0
+  assetPath: Assets/Anime_Slash_VFX/Shader/Material/MI_Sprite_58.mat
+  uploadId: 664943

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 28851a9d2d0627b45ac282b1d8715fd2
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285390
+  packageName: Anime Slash VFX Element
+  packageVersion: 1.0
+  assetPath: Assets/Anime_Slash_VFX/Shader/Material/MI_Sphere_2.mat
+  uploadId: 664943

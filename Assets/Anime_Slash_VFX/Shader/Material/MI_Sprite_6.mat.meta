@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 1c0eb7a38c10d444cb25b407afa5cb37
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 285390
+  packageName: Anime Slash VFX Element
+  packageVersion: 1.0
+  assetPath: Assets/Anime_Slash_VFX/Shader/Material/MI_Sprite_6.mat
+  uploadId: 664943
