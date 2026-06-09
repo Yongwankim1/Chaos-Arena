@@ -20,9 +20,9 @@ public class PlayerHUD : MonoBehaviour
 
     private PlayerCharacter _player;
 
-    public void Initialize(
-        PlayerCharacter player)
+    public void Initialize(PlayerCharacter player)
     {
+        Debug.Log("HUD Initialize");
         _player = player;
 
         Refresh();
@@ -38,7 +38,6 @@ public class PlayerHUD : MonoBehaviour
 
     private void Refresh()
     {
-        Debug.Log(_player.MaxHP);
         float hpPercent =
             _player.CurrentHP /
             _player.MaxHP;

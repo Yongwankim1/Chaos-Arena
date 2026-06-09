@@ -16,11 +16,32 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     private readonly Dictionary<PlayerRef, NetworkObject> _spawnedPlayers = new Dictionary<PlayerRef, NetworkObject>();
     private readonly Dictionary<PlayerRef, CharacterClassType>_selectedCharacters = new Dictionary<PlayerRef, CharacterClassType>();
     private readonly Dictionary<PlayerRef, PlayerLobbyObject> _playerLobbies = new Dictionary<PlayerRef, PlayerLobbyObject>();
-    public override void Spawned()
+    public override async void Spawned()
     {
         Runner.AddCallbacks(this);
-    }
 
+        await LoadClassDatas();
+    }
+    private async System.Threading.Tasks.Task LoadClassDatas()
+    {
+        ClassData assassin =
+            await ClassDataLoader.LoadClassData(
+                CharacterClassType.Assassin);
+
+        ClassDataManager.AddData(
+            CharacterClassType.Assassin,
+            assassin);
+
+        ClassData mage =
+            await ClassDataLoader.LoadClassData(
+                CharacterClassType.Mage);
+
+        ClassDataManager.AddData(
+            CharacterClassType.Mage,
+            mage);
+
+        Debug.Log("ClassData Load Complete");
+    }
     // 씬 로딩 완료 후 기존 플레이어 생성
     public void OnSceneLoadDone(
      NetworkRunner runner)
@@ -52,21 +73,22 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    private async void SpawnPlayer( NetworkRunner runner, PlayerRef player, CharacterClassType classType)
+    private void SpawnPlayer(
+      NetworkRunner runner,
+      PlayerRef player,
+      CharacterClassType classType)
     {
         if (_spawnedPlayers.ContainsKey(player))
             return;
-        Debug.Log(
-    $"Spawning {classType} for {player.PlayerId}");
+
         Vector3 spawnPosition =
-            new Vector3
-            (
+            new Vector3(
                 Random.Range(-3f, 3f),
                 1f,
-                Random.Range(-3f, 3f)
-                );
+                Random.Range(-3f, 3f));
 
-        NetworkObject prefab = GetCharacterPrefab(classType);
+        NetworkObject prefab =
+            GetCharacterPrefab(classType);
 
         NetworkObject playerObject =
             runner.Spawn(
@@ -75,27 +97,21 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
                 Quaternion.identity,
                 player);
 
-        _spawnedPlayers.Add(player, playerObject);
-        ClassData classData =
-    await ClassDataLoader
-        .LoadClassData(classType);
-        Debug.Log(
-    $"Apply Stat : {classData.className}");
-        PlayerCharacter playerCharacter =
-            playerObject
-                .GetComponent<PlayerCharacter>();
+        PlayerCharacter playerCharacter = playerObject.GetComponent<PlayerCharacter>();
 
         if (playerCharacter != null)
         {
-            playerCharacter.Initialize(
-                classData);
+            playerCharacter.ClassType =
+                classType;
         }
-        Debug.Log(
-    $"Spawned {playerObject.name} InputAuthority:{player}");
-        Debug.Log(
-    $"Loaded ClassData : {classData.className}");
-    }
 
+        _spawnedPlayers.Add(
+            player,
+            playerObject);
+
+        Debug.Log(
+            $"Spawned {playerObject.name} InputAuthority:{player}");
+    }
     public void SpawnSelectedCharacter(
      PlayerRef player)
     {

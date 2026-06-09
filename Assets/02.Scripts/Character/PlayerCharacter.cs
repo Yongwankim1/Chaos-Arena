@@ -4,36 +4,68 @@ using UnityEngine;
 public class PlayerCharacter : NetworkBehaviour
 {
     private ClassData _classData;
-
+    [Networked]
+    public CharacterClassType ClassType { get; set; }
+    private bool _isInitialized;
     [Networked]
     public float CurrentHP { get; set; }
 
     [Networked]
     public float CurrentMana { get; set; }
-    public float MaxHP => _classData.maxHP;
-    public float MaxMana => _classData.maxMana;
-    public void Initialize(
-        ClassData classData)
+
+    public float MaxHP =>
+        _classData.maxHP;
+
+    public float MaxMana =>
+        _classData.maxMana;
+    public override void Spawned()
     {
-        _classData = classData;
+        Debug.Log(
+            $"Spawned : {ClassType}");
+    }
+   
+    private void LocalInitialize()
+    {
+        _classData =
+            ClassDataManager.GetData(
+                ClassType);
+
+        ApplyMovementStat();
 
         if (HasStateAuthority)
         {
             CurrentHP =
-                classData.maxHP;
+                _classData.maxHP;
 
             CurrentMana =
-                classData.maxMana;
+                _classData.maxMana;
         }
-
-        ApplyMovementStat();
 
         if (HasInputAuthority)
         {
-            HUDManager.Instance?.BindPlayer(this);
+            Debug.Log(
+                $"HUD Bind : {ClassType}");
+
+            HUDManager.Instance
+                ?.BindPlayer(this);
         }
     }
+    public override void Render()
+    {
+        if (_isInitialized)
+            return;
 
+        if (ClassType == CharacterClassType.None)
+            return;
+
+        if (!ClassDataManager.IsLoaded(
+                ClassType))
+            return;
+
+        _isInitialized = true;
+
+        LocalInitialize();
+    }
     private void ApplyMovementStat()
     {
         var controller =
