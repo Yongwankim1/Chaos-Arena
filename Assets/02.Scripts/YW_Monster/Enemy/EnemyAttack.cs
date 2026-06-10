@@ -2,21 +2,22 @@
 using UnityEngine;
 using UnityEngine.AI;
 [RequireComponent(typeof(EnemyBehaviorBridge))]
-public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
+public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
 {
-    [SerializeField] NetworkMecanimAnimator netAnimator;
-    [SerializeField] private string attackParam1 = "Attack";
-    [SerializeField] private string attackParam2 = "Attack2";
-    [SerializeField] private EnemyBehaviorBridge bridge;
-    [SerializeField] Transform attackPos;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] EnemyHP enemyHP;
-    [SerializeField] EnemyAttackType enemyAttackType;
+    [SerializeField] protected NetworkMecanimAnimator netAnimator;
+    [SerializeField] protected string attackParam1 = "Attack";
+    [SerializeField] protected string attackParam2 = "Attack2";
+    [SerializeField] protected EnemyBehaviorBridge bridge;
+    [SerializeField] protected Transform attackPos;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected EnemyHP enemyHP;
+    [SerializeField] protected EnemyAttackType enemyAttackType;
+    [SerializeField] protected float damage;
 
-    EnemyAttackBase defaultAttackPrefab;
-    EnemyAttackBase strongAttackPrefab;
 
-    [SerializeField] Vector3 attackRangeSize = new Vector3(5f, 5f, 5f);
+    protected EnemyAttackBase defaultAttackPrefab;
+    protected EnemyAttackBase strongAttackPrefab;
+
     private void Awake()
     {
         if (attackPos == null) attackPos = transform;
@@ -26,6 +27,7 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         if(enemyHP == null) enemyHP = GetComponent<EnemyHP>();
         defaultAttackPrefab = bridge.GetEffect(EffectType.DefaultAttack).GetComponent<EnemyAttackBase>();
         strongAttackPrefab = bridge.GetEffect(EffectType.StrongAttack).GetComponent<EnemyAttackBase>();
+        damage = bridge.Config.attackDamage;
     }
     void Start()
     {
@@ -69,41 +71,10 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         Debug.Log("StrongAttack animation started");
     }
 
-    public void OnEffect(EffectType effect)
+    public virtual void OnEffect(EffectType effect)
     {
         if (Object != null && !Object.HasStateAuthority)
             return;
-
-        switch (enemyAttackType)
-        {
-            case EnemyAttackType.None: break;
-            case EnemyAttackType.Projectile: RPC_ProjectileEffect(effect); break;
-            case EnemyAttackType.Melee: RPC_MeleeEffect(effect); break;
-        }
-    }
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_ProjectileEffect(EffectType effect)
-    {
-        // TODO: Play attack effect and sound.
-        Debug.Log("Attack effect");
-        if (defaultAttackPrefab == null || strongAttackPrefab == null) return;
-        EnemyAttackBase attackEffect = null;
-        switch (effect)
-        {
-            case EffectType.DefaultAttack: attackEffect = Instantiate(defaultAttackPrefab, attackPos.position, transform.rotation, attackPos); attackEffect.Init(); break;
-            case EffectType.StrongAttack: attackEffect = Instantiate(strongAttackPrefab, attackPos.position, transform.rotation, attackPos); attackEffect.Init(); break;
-        }
-    }
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_MeleeEffect(EffectType effect)
-    {
-        // TODO: Play attack effect and sound.
-        Debug.Log("Attack effect");
-        if (defaultAttackPrefab == null || strongAttackPrefab == null) return;
-        EnemyAttackBase attackEffect = null;
-        attackEffect = Instantiate(defaultAttackPrefab, attackPos.position, transform.rotation, attackPos);
-        attackEffect.Init();
     }
 
 
@@ -125,15 +96,5 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
             return;
 
         transform.rotation = Quaternion.LookRotation(direction.normalized);
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        if (enemyAttackType != EnemyAttackType.Melee) return;
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(transform.position + transform.forward * 3, attackRangeSize);
-
-
     }
 }
