@@ -1,0 +1,2749 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &12045209123527629
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8325568646028774040}
+  m_Layer: 0
+  m_Name: demonKing_index01Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8325568646028774040
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 12045209123527629}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.074575916, y: 0.5603663, z: 0.018112577, w: 0.82468176}
+  m_LocalPosition: {x: -0.29679263, y: -0.14328338, z: -0.00017546346}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8337176444003050793}
+  m_Father: {fileID: 3526628432647996949}
+  m_LocalEulerAnglesHint: {x: -8.238972, y: 68.61583, z: -3.1107135}
+--- !u!1 &272914920864527688
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6888870762174262914}
+  m_Layer: 0
+  m_Name: demonKing_index03Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6888870762174262914
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272914920864527688}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.37328812, z: -0, w: 0.9277155}
+  m_LocalPosition: {x: -0.17236573, y: -1.0658141e-16, z: -5.684342e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8337176444003050793}
+  m_LocalEulerAnglesHint: {x: 0, y: 43.837093, z: 0}
+--- !u!1 &282279810205202055
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3238796225130331135}
+  m_Layer: 0
+  m_Name: demonKing_root
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3238796225130331135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282279810205202055}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.2775816, y: 0.5962145, z: -0.31795084, w: 0.68292314}
+  m_LocalPosition: {x: 0.023013629, y: 1.0291286, z: -0.16896999}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1498042390247901176}
+  - {fileID: 2810453431352069669}
+  - {fileID: 7079033936965859863}
+  - {fileID: 5597120867103514295}
+  m_Father: {fileID: 8783356378116222310}
+  m_LocalEulerAnglesHint: {x: 1.2830195, y: 99.92423, z: -57.63289}
+--- !u!1 &304234414890411047
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8993296945833848112}
+  m_Layer: 0
+  m_Name: demonKing_thumb02Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8993296945833848112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 304234414890411047}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0095147155, y: 0.02912859, z: -0.19704165, w: 0.97991616}
+  m_LocalPosition: {x: -0.17244713, y: 9.237055e-16, z: 7.958079e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9126349699656162811}
+  m_Father: {fileID: 8580798972562213694}
+  m_LocalEulerAnglesHint: {x: 1.7263714, y: 3.0588589, z: -11.264864}
+--- !u!1 &346460901736354455
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5476823836209169815}
+  m_Layer: 0
+  m_Name: demonKing_lowerLegLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5476823836209169815
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346460901736354455}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.012037796, y: -0.083359145, z: -0.30664384, w: 0.9480907}
+  m_LocalPosition: {x: -0.39771068, y: 2.0428103e-16, z: 4.2632563e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8196890817934579735}
+  m_Father: {fileID: 7079033936965859863}
+  m_LocalEulerAnglesHint: {x: -8.10726, y: -10.170403, z: -48.65578}
+--- !u!1 &404241126576494375
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8196890817934579735}
+  m_Layer: 0
+  m_Name: demonKing_feetLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8196890817934579735
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 404241126576494375}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.36755955, y: 0.5243357, z: 0.53311825, w: 0.552953}
+  m_LocalPosition: {x: -0.47036642, y: 1.8651746e-16, z: -1.847411e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2653405786068994156}
+  m_Father: {fileID: 5476823836209169815}
+  m_LocalEulerAnglesHint: {x: -17.18351, y: 69.5724, z: 75.783295}
+--- !u!1 &440029569677329771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8580798972562213694}
+  m_Layer: 0
+  m_Name: demonKing_thumb01Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8580798972562213694
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440029569677329771}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.13526897, y: -0.43890557, z: 0.18968345, w: 0.8678044}
+  m_LocalPosition: {x: -0.14384882, y: -0.2188633, z: -0.1187592}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8993296945833848112}
+  m_Father: {fileID: 3878435874668137684}
+  m_LocalEulerAnglesHint: {x: -3.9144962, y: -54.58599, z: 36.84696}
+--- !u!1 &451622043184226028
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2489571311979596803}
+  m_Layer: 0
+  m_Name: demonKing_index01Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2489571311979596803
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 451622043184226028}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.019498257, y: -0.13588643, z: 0.05816194, w: 0.98882353}
+  m_LocalPosition: {x: -0.29524103, y: -0.16016363, z: -0.0010482857}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4986042563497565178}
+  m_Father: {fileID: 3878435874668137684}
+  m_LocalEulerAnglesHint: {x: -2.7916183, y: -3.0959902, z: 6.461261}
+--- !u!1 &607994767449411155
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5694875795321982723}
+  m_Layer: 0
+  m_Name: demonKing_upperArmRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5694875795321982723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607994767449411155}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.19130738, y: 0.87959, z: 0.09774833, w: 0.42446235}
+  m_LocalPosition: {x: 0.1480043, y: 0.14871678, z: 0.59313095}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 617298722520717548}
+  m_Father: {fileID: 3460670212361107693}
+  m_LocalEulerAnglesHint: {x: 45.79169, y: 81.49123, z: -32.024994}
+--- !u!1 &1523409267378457683
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7725324329402234713}
+  - component: {fileID: 4055011095739145044}
+  - component: {fileID: 3805807063226569120}
+  m_Layer: 0
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &7725324329402234713
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523409267378457683}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5058460079505904936}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &4055011095739145044
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523409267378457683}
+  m_CullTransparentMesh: 1
+--- !u!114 &3805807063226569120
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1523409267378457683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 3f929bc2e87f64441ba0a9c7a42516ca, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!1 &1703738798927529620
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1498042390247901176}
+  m_Layer: 0
+  m_Name: demonKing_spine01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1498042390247901176
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1703738798927529620}
+  serializedVersion: 2
+  m_LocalRotation: {x: 5.551115e-17, y: 6.938894e-18, z: -0.24312116, w: 0.9699959}
+  m_LocalPosition: {x: -0.33345416, y: 0, z: 5.4089476e-17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3121873908304303762}
+  m_Father: {fileID: 3238796225130331135}
+  m_LocalEulerAnglesHint: {x: -2.9164839, y: 2.4749951, z: -46.74572}
+--- !u!1 &1829744863079367235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8921714996524029902}
+  m_Layer: 0
+  m_Name: demonKing_index03Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8921714996524029902
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829744863079367235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0003529199, y: 0.004351287, z: -0.08084077, w: 0.99671745}
+  m_LocalPosition: {x: -0.17236595, y: 8.5265126e-16, z: -3.410605e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4986042563497565178}
+  m_LocalEulerAnglesHint: {x: 0.097724944, y: 0.59886724, z: -9.275959}
+--- !u!1 &2177942258188623519
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5616686917240163300}
+  m_Layer: 0
+  m_Name: demonKing_head
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5616686917240163300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2177942258188623519}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.4920779, y: 0.5343513, z: -0.4655579, w: 0.50555307}
+  m_LocalPosition: {x: -0.3652351, y: 2.5579537e-15, z: -1.5543122e-17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6615941585642811893}
+  m_LocalEulerAnglesHint: {x: 79.83867, y: -19.34345, z: -108.95419}
+--- !u!1 &2202604045660070067
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4244720629463188048}
+  - component: {fileID: 6786589597538713990}
+  - component: {fileID: 5552937212797094538}
+  - component: {fileID: 4912684850004939237}
+  - component: {fileID: 231382418321524259}
+  - component: {fileID: 5563745966908176064}
+  - component: {fileID: 2981165483300229984}
+  - component: {fileID: 3361851046980675157}
+  - component: {fileID: 8345423581374555265}
+  - component: {fileID: 1208802260095530819}
+  - component: {fileID: 3512453633563942082}
+  - component: {fileID: 7657156027105957938}
+  - component: {fileID: 8926124842869163457}
+  m_Layer: 0
+  m_Name: Enemy-Knight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4244720629463188048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.6770573, y: 0.42480102, z: 16.997}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9214647290031682319}
+  - {fileID: 8783356378116222310}
+  - {fileID: 6907911914138453355}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6786589597538713990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 1528395926
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 5552937212797094538}
+  - {fileID: 5563745966908176064}
+  - {fileID: 2981165483300229984}
+  - {fileID: 8345423581374555265}
+  - {fileID: 7657156027105957938}
+  - {fileID: 8926124842869163457}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &5552937212797094538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
+--- !u!114 &4912684850004939237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0038c16c34866b4f9e25c9c0dc0f7e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Behavior::Unity.Behavior.BehaviorGraphAgent
+  m_Graph: {fileID: -31542011278063505, guid: 323fef9f8771dea4a927c45975aac11c, type: 2}
+  m_BlackboardVariableOverridesList:
+  - rid: 3952068806759940964
+  - rid: 3952068806759940965
+  - rid: 3952068807948238883
+  - rid: 820696462754054495
+  - rid: 820696466276483980
+  m_OriginalGraph: {fileID: -31542011278063505, guid: 323fef9f8771dea4a927c45975aac11c, type: 2}
+  m_IsInitialised: 0
+  m_IsStarted: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 820696462754054495
+      type: {class: 'BlackboardVariable`1[[UnityEngine.Animator, UnityEngine.AnimationModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 592721596662802319
+          m_Value1: 8051337413744475608
+        Name: SelfAnimator
+        m_Value: {fileID: 3361851046980675157}
+    - rid: 820696466276483980
+      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 4677958779951240569
+          m_Value1: 7494883591197087758
+        Name: PatrolPoints
+        m_Value: []
+    - rid: 3952068806759940964
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 1
+          m_Value1: 0
+        Name: Self
+        m_Value: {fileID: 2202604045660070067}
+    - rid: 3952068806759940965
+      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 7885018719584348477
+          m_Value1: 2729974724282209947
+        Name: Target
+        m_Value: {fileID: 0}
+    - rid: 3952068807948238883
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 2111238292421814137
+          m_Value1: 5076126633651167429
+        Name: ChaseSpeed
+        m_Value: 5
+--- !u!195 &231382418321524259
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.97
+  m_Speed: 1
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 720
+  m_StoppingDistance: 1.5
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 0
+  m_AutoRepath: 1
+  m_Height: 2.66
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
+--- !u!114 &5563745966908176064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc0f9d84cfa90324c95170f26ffc317d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  dataSO: {fileID: 11400000, guid: 746f577097df6ad4588eac4715e08d15, type: 2}
+  patrolPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+--- !u!114 &2981165483300229984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkMecanimAnimator
+  Animator: {fileID: 3361851046980675157}
+  ApplyTiming: 2
+  SyncSettings: 79
+  StateHashes: 0000000025793b6995888437bc91027431a37d5a9f2832f02fd98daeaee5f440d65bfc2105d20fcddb794eae781593f3ba675251
+  TriggerHashes: 00000000a1609f620d286c4098ae246437b93501
+  TotalWords: 4
+--- !u!95 &3361851046980675157
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 1a879ca13a1e4dfa95cc8b046f320609, type: 3}
+  m_Controller: {fileID: 9100000, guid: 628a97deedd066d43945847e5d654c55, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8345423581374555265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 484103fe453efac4fbe95f16ed7bdd6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  animator: {fileID: 3361851046980675157}
+  agent: {fileID: 231382418321524259}
+  movingParam: Moving
+  velocityXParam: Velocity X
+  velocityZParam: Velocity Z
+  movingThreshold: 0.05
+  movingHash: 0
+--- !u!114 &1208802260095530819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5ebcf8c6816e554086320c9fa9d2a69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  target: {fileID: 0}
+  MaxHP: 100
+  currentHP: 100
+--- !u!136 &3512453633563942082
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.73
+  m_Height: 2.66
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.28, z: 0}
+--- !u!114 &7657156027105957938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14922f09d7073ec499edf8cc132a8717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  graph: {fileID: 0}
+  agent: {fileID: 0}
+  bodyCollider: {fileID: 0}
+  animator: {fileID: 0}
+  DieParam: Die
+--- !u!114 &8926124842869163457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730d02adebb28064098c8d91e1c9970a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackMelee
+  netAnimator: {fileID: 2981165483300229984}
+  attackParam1: Attack
+  attackParam2: Attack2
+  bridge: {fileID: 5563745966908176064}
+  attackPos: {fileID: 0}
+  agent: {fileID: 231382418321524259}
+  enemyHP: {fileID: 1208802260095530819}
+  enemyAttackType: 2
+  isDebug: 0
+  defaultAttackSize: {x: 5, y: 5, z: 5}
+  strongAttackSize: {x: 5, y: 5, z: 5}
+  isAttack:
+    _value: 0
+--- !u!1 &2212554331636300030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6783314882802612639}
+  m_Layer: 0
+  m_Name: demonKing_middle01Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6783314882802612639
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2212554331636300030}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0077916645, y: -0.112451375, z: -0.014492851, w: 0.993521}
+  m_LocalPosition: {x: -0.3243365, y: 0.009677464, z: 0.06522889}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7527379685209103969}
+  m_Father: {fileID: 3878435874668137684}
+  m_LocalEulerAnglesHint: {x: -0.68378055, y: 0.550148, z: -1.7581031}
+--- !u!1 &2239061960698453265
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8783356378116222310}
+  m_Layer: 0
+  m_Name: DemonKing_Mesh
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8783356378116222310
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2239061960698453265}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8622675989799606766}
+  - {fileID: 3238796225130331135}
+  m_Father: {fileID: 4244720629463188048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2390015636206384690
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7079033936965859863}
+  m_Layer: 0
+  m_Name: demonKing_upperLegLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7079033936965859863
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2390015636206384690}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.46759373, y: 0.86267567, z: 0.031465586, w: -0.19014917}
+  m_LocalPosition: {x: 0.02252252, y: -0.14241959, z: -0.346776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5476823836209169815}
+  m_Father: {fileID: 3238796225130331135}
+  m_LocalEulerAnglesHint: {x: -17.369448, y: -154.02405, z: 45.969242}
+--- !u!1 &3097377092575706409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7049806216757773541}
+  m_Layer: 0
+  m_Name: demonKing_sword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7049806216757773541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3097377092575706409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 3.94465e-12, y: -1.0695099e-12, z: -1.5317116e-11, w: 1}
+  m_LocalPosition: {x: -0.23307502, y: 0.0049005053, z: 0.10218683}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5371732969697183796}
+  m_Father: {fileID: 3526628432647996949}
+  m_LocalEulerAnglesHint: {x: 3.2186115e-10, y: -8.718677e-11, z: -0.0000000012498227}
+--- !u!1 &3235974590081345004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8659503724690083048}
+  m_Layer: 0
+  m_Name: demonKing_backTop
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8659503724690083048
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3235974590081345004}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.47900146, y: 0.5201515, z: -0.47900146, w: 0.5201515}
+  m_LocalPosition: {x: 0.14584796, y: -0.16551852, z: -1.661356e-17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6615941585642811893}
+  m_LocalEulerAnglesHint: {x: 85.283195, y: 90, z: 0}
+--- !u!1 &3269147966415138821
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 807336493721987924}
+  - component: {fileID: 2721841676502662512}
+  - component: {fileID: 6680951297061210503}
+  m_Layer: 0
+  m_Name: Text (TMP)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &807336493721987924
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3269147966415138821}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5058460079505904936}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2721841676502662512
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3269147966415138821}
+  m_CullTransparentMesh: 1
+--- !u!114 &6680951297061210503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3269147966415138821}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 100/100
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: da2f880ca28696e4588f89e779472007, type: 2}
+  m_sharedMaterial: {fileID: -7268695362668277377, guid: da2f880ca28696e4588f89e779472007, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 0.4
+  m_fontSizeBase: 0.4
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_characterHorizontalScale: 1
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_TextWrappingMode: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 0
+  m_ActiveFontFeatures: 6e72656b
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_EmojiFallbackSupport: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &3484809165088269600
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3009805789406543369}
+  m_Layer: 0
+  m_Name: demonKing_tail04
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3009805789406543369
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3484809165088269600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.02297826, y: 0.1274328, z: -0.17596091, w: 0.9758436}
+  m_LocalPosition: {x: -0.4608972, y: -1.2789769e-15, z: -2.5872454e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7848856823769914320}
+  m_Father: {fileID: 2908578724752482595}
+  m_LocalEulerAnglesHint: {x: 6.558471, y: 13.372203, z: -25.662462}
+--- !u!1 &3626536056040405796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9012551685876001167}
+  m_Layer: 0
+  m_Name: demonKing_backRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9012551685876001167
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3626536056040405796}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.06949019, y: -0.703684, z: -0.06949019, w: 0.703684}
+  m_LocalPosition: {x: -0.07649216, y: 0.42551008, z: 0.30537298}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3460670212361107693}
+  m_LocalEulerAnglesHint: {x: -11.279572, y: -90, z: 0}
+--- !u!1 &4035870393253285756
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2908578724752482595}
+  m_Layer: 0
+  m_Name: demonKing_tail03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2908578724752482595
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4035870393253285756}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.013519714, y: 0.12878016, z: -0.10353009, w: 0.9861615}
+  m_LocalPosition: {x: -0.43525568, y: 1.4210854e-16, z: -2.409482e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3009805789406543369}
+  m_Father: {fileID: 3056805555178549946}
+  m_LocalEulerAnglesHint: {x: 4.323427, y: 14.242895, z: -16.54066}
+--- !u!1 &4059405620092916915
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3878435874668137684}
+  m_Layer: 0
+  m_Name: demonKing_handALeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3878435874668137684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4059405620092916915}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.13864772, y: -0.17160584, z: -0.023458255, w: 0.97507846}
+  m_LocalPosition: {x: -0.76763433, y: -1.1723955e-15, z: -4.8316907e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2489571311979596803}
+  - {fileID: 6783314882802612639}
+  - {fileID: 3650443469718410517}
+  - {fileID: 8580798972562213694}
+  m_Father: {fileID: 7387710653196467554}
+  m_LocalEulerAnglesHint: {x: -14.028083, y: 6.7736087, z: 2.0091078}
+--- !u!1 &4192479398953138802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9126349699656162811}
+  m_Layer: 0
+  m_Name: demonKing_thumb03Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9126349699656162811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4192479398953138802}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.00048631078, y: -0.0014174907, z: -0.107181646, w: 0.9942383}
+  m_LocalPosition: {x: -0.15436693, y: 1.2079227e-15, z: -3.9790393e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8993296945833848112}
+  m_LocalEulerAnglesHint: {x: 0.037996776, y: -0.16747105, z: -2.914981}
+--- !u!1 &4257669695839519310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7178820573455880965}
+  m_Layer: 0
+  m_Name: demonKing_middle03Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7178820573455880965
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4257669695839519310}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0020474321, y: -0.08978523, z: -0.022705613, w: 0.99570024}
+  m_LocalPosition: {x: -0.17236595, y: 3.9968027e-17, z: 5.1159075e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7527379685209103969}
+  m_LocalEulerAnglesHint: {x: -0.09425524, y: -2.0753155, z: -2.6044538}
+--- !u!1 &4617530866284852345
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3526628432647996949}
+  m_Layer: 0
+  m_Name: demonKing_handARight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3526628432647996949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4617530866284852345}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.51230425, y: 0.076364234, z: -0.14799955, w: 0.8425017}
+  m_LocalPosition: {x: -0.7676415, y: -1.0658141e-16, z: 1.7053025e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8325568646028774040}
+  - {fileID: 3383074558316658560}
+  - {fileID: 9064102299080865899}
+  - {fileID: 7049806216757773541}
+  - {fileID: 895145254644066708}
+  m_Father: {fileID: 617298722520717548}
+  m_LocalEulerAnglesHint: {x: 54.54743, y: 52.203133, z: 23.429794}
+--- !u!1 &4686904821929853257
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3121873908304303762}
+  m_Layer: 0
+  m_Name: demonKing_spine02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3121873908304303762
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4686904821929853257}
+  serializedVersion: 2
+  m_LocalRotation: {x: -6.245005e-17, y: 5.377643e-17, z: -0.16703464, w: 0.98595107}
+  m_LocalPosition: {x: -0.41430378, y: 7.105427e-17, z: 7.500036e-17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3460670212361107693}
+  m_Father: {fileID: 1498042390247901176}
+  m_LocalEulerAnglesHint: {x: -0.5682647, y: 9.518381, z: -10.582606}
+--- !u!1 &4768126066011846235
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5931940304760472732}
+  m_Layer: 0
+  m_Name: demonKing_lowerLegRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5931940304760472732
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4768126066011846235}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.007951434, y: 0.07259532, z: -0.2648748, w: 0.9615134}
+  m_LocalPosition: {x: -0.39771026, y: -2.0428103e-16, z: 1.4210854e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3957065777152689918}
+  m_Father: {fileID: 5597120867103514295}
+  m_LocalEulerAnglesHint: {x: 8.480483, y: 10.19285, z: -49.820797}
+--- !u!1 &4811440967333933493
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3650443469718410517}
+  m_Layer: 0
+  m_Name: demonKing_pinky01Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3650443469718410517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4811440967333933493}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0035023931, y: -0.118973464, z: -0.053922214, w: 0.991426}
+  m_LocalPosition: {x: -0.28022835, y: 0.15892978, z: 0.005965802}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 9188409770344527256}
+  m_Father: {fileID: 3878435874668137684}
+  m_LocalEulerAnglesHint: {x: -0.3455158, y: -1.778656, z: -7.3308244}
+--- !u!1 &4827649369514294965
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9188409770344527256}
+  m_Layer: 0
+  m_Name: demonKing_pinky02Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9188409770344527256
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4827649369514294965}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.010843378, y: -0.31507805, z: -0.00901184, w: 0.9489611}
+  m_LocalPosition: {x: -0.17707172, y: -1.2967404e-15, z: 3.694822e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7088476089608772436}
+  m_Father: {fileID: 3650443469718410517}
+  m_LocalEulerAnglesHint: {x: 1.1545601, y: -23.065681, z: -1.1311262}
+--- !u!1 &4857395831532176589
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2810453431352069669}
+  m_Layer: 0
+  m_Name: demonKing_tail01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2810453431352069669
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4857395831532176589}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.06930457, y: 0.9891561, z: -0.009050296, w: -0.12917124}
+  m_LocalPosition: {x: 0.36897898, y: 0.022894314, z: -0.06284914}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3056805555178549946}
+  m_Father: {fileID: 3238796225130331135}
+  m_LocalEulerAnglesHint: {x: 4.231143, y: -165.72682, z: -16.165575}
+--- !u!1 &4903515114492143355
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5058460079505904936}
+  - component: {fileID: 1699896014988113308}
+  - component: {fileID: 904585070527686456}
+  - component: {fileID: 1992459693772140149}
+  m_Layer: 0
+  m_Name: HPBarBackGround
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5058460079505904936
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4903515114492143355}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7725324329402234713}
+  - {fileID: 807336493721987924}
+  m_Father: {fileID: 6907911914138453355}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -0.099999905, y: 0}
+  m_SizeDelta: {x: -1.2, y: -0.6}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1699896014988113308
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4903515114492143355}
+  m_CullTransparentMesh: 1
+--- !u!114 &904585070527686456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4903515114492143355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.5849056, g: 0.5849056, b: 0.5849056, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 0
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1992459693772140149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4903515114492143355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44cd40a988f9fe342b82a58f933620b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  enemyHP: {fileID: 1208802260095530819}
+  hpBar: {fileID: 3805807063226569120}
+  hpText: {fileID: 6680951297061210503}
+--- !u!1 &4928249702146004903
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9214647290031682319}
+  m_Layer: 0
+  m_Name: AttackPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9214647290031682319
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4928249702146004903}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.15690055, y: -0.13504912, z: -0.10899558, w: -0.9722468}
+  m_LocalPosition: {x: 1.8526163, y: 1.4923682, z: 2.3954449}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4244720629463188048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4960337773365910229
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7088476089608772436}
+  m_Layer: 0
+  m_Name: demonKing_pinky03Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7088476089608772436
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4960337773365910229}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.0015345839, y: -0.06990536, z: 0.021893302, w: 0.9973122}
+  m_LocalPosition: {x: -0.16879864, y: 7.81597e-16, z: 1.7053025e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9188409770344527256}
+  m_LocalEulerAnglesHint: {x: -0.018939853, y: 0.4279766, z: 2.5086024}
+--- !u!1 &5634737897511369846
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5597120867103514295}
+  m_Layer: 0
+  m_Name: demonKing_upperLegRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5597120867103514295
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5634737897511369846}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.51594967, y: 0.8327788, z: -0.07435867, w: 0.1864032}
+  m_LocalPosition: {x: 0.022522869, y: -0.1424199, z: 0.346776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5931940304760472732}
+  m_Father: {fileID: 3238796225130331135}
+  m_LocalEulerAnglesHint: {x: 17.235802, y: 177.56769, z: 86.11985}
+--- !u!1 &5648858849723048118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3534814800369004}
+  m_Layer: 0
+  m_Name: demonKing_toeRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3534814800369004
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5648858849723048118}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.015360117, y: 0.030157864, z: -0.012337515, w: 0.99935097}
+  m_LocalPosition: {x: -0.26413256, y: -0.0007235831, z: -0.026282161}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3957065777152689918}
+  m_LocalEulerAnglesHint: {x: 1.8019294, y: 3.4356356, z: -1.3605773}
+--- !u!1 &5842887833924363516
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 652556898919770320}
+  m_Layer: 0
+  m_Name: demonKing_pinky03Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &652556898919770320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5842887833924363516}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.30419236, z: -0, w: 0.9526106}
+  m_LocalPosition: {x: -0.16879879, y: -2.842171e-16, z: 3.410605e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1898019929244904272}
+  m_LocalEulerAnglesHint: {x: 0, y: 35.41916, z: 0}
+--- !u!1 &6182095967003376259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3383074558316658560}
+  m_Layer: 0
+  m_Name: demonKing_middle01Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3383074558316658560
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6182095967003376259}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.013362922, y: 0.5372469, z: -0.009598907, w: 0.8432645}
+  m_LocalPosition: {x: -0.32433754, y: 0.009677325, z: -0.06523}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 600759780909949283}
+  m_Father: {fileID: 3526628432647996949}
+  m_LocalEulerAnglesHint: {x: 1.8825564, y: 65.00099, z: -0.10493438}
+--- !u!1 &6208390285522485724
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9064102299080865899}
+  m_Layer: 0
+  m_Name: demonKing_pinky01Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9064102299080865899
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6208390285522485724}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.09466271, y: 0.5689941, z: -0.059498157, w: 0.8147053}
+  m_LocalPosition: {x: -0.28489974, y: 0.13666256, z: -0.00794632}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1898019929244904272}
+  m_Father: {fileID: 3526628432647996949}
+  m_LocalEulerAnglesHint: {x: 12.823747, y: 69.93244, z: 0.63334954}
+--- !u!1 &6391499345424110350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4986042563497565178}
+  m_Layer: 0
+  m_Name: demonKing_index02Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4986042563497565178
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6391499345424110350}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.05705612, y: -0.3107873, z: -0.018693514, w: 0.9485813}
+  m_LocalPosition: {x: -0.19673416, y: -1.1013412e-15, z: 2.8421708e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8921714996524029902}
+  m_Father: {fileID: 2489571311979596803}
+  m_LocalEulerAnglesHint: {x: -6.050665, y: -23.959908, z: -0.450469}
+--- !u!1 &6516292856290457771
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3957065777152689918}
+  m_Layer: 0
+  m_Name: demonKing_feetRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3957065777152689918
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6516292856290457771}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.60952866, y: 0.49311975, z: 0.4986831, w: 0.36962536}
+  m_LocalPosition: {x: -0.4703665, y: 1.5987211e-16, z: 1.4210854e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3534814800369004}
+  m_Father: {fileID: 5931940304760472732}
+  m_LocalEulerAnglesHint: {x: 7.7147703, y: 84.72633, z: 83.16139}
+--- !u!1 &6643022217603063650
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6907911914138453355}
+  - component: {fileID: 2274212832966677785}
+  - component: {fileID: 386158783184123523}
+  - component: {fileID: 7529795222358118679}
+  - component: {fileID: 7988787408491826852}
+  m_Layer: 0
+  m_Name: Canvas - UI
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6907911914138453355
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6643022217603063650}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5058460079505904936}
+  m_Father: {fileID: 4244720629463188048}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 3.5}
+  m_SizeDelta: {x: 4.498, y: 1.375}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!223 &2274212832966677785
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6643022217603063650}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &386158783184123523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6643022217603063650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 100
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 1
+  m_PresetInfoIsWorld: 1
+--- !u!114 &7529795222358118679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6643022217603063650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.GraphicRaycaster
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &7988787408491826852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6643022217603063650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d859003ea35f3f744ac49e4749b097d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+--- !u!1 &6901293800075607425
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5371732969697183796}
+  - component: {fileID: 3653613961525689832}
+  - component: {fileID: 8671527678479146220}
+  m_Layer: 0
+  m_Name: DemonKingBlade
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5371732969697183796
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901293800075607425}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.50385785, y: 0.49611223, z: -0.50385785, w: 0.49611223}
+  m_LocalPosition: {x: 6.8925486e-12, y: 7.836149e-12, z: 1.5400018e-11}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7049806216757773541}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3653613961525689832
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901293800075607425}
+  m_Mesh: {fileID: 3616321592377091899, guid: 1a879ca13a1e4dfa95cc8b046f320609, type: 3}
+--- !u!23 &8671527678479146220
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6901293800075607425}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d08266fe4f3f28d42b021903a802296b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &6903883512315765050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6391687898570098059}
+  m_Layer: 0
+  m_Name: demonKing_middle03Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6391687898570098059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6903883512315765050}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0.2961095, z: -0, w: 0.955154}
+  m_LocalPosition: {x: -0.17237033, y: 4.440892e-18, z: 5.684342e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 600759780909949283}
+  m_LocalEulerAnglesHint: {x: 0, y: 34.448162, z: 0}
+--- !u!1 &7116497899543355322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3460670212361107693}
+  m_Layer: 0
+  m_Name: demonKing_spine03
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3460670212361107693
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7116497899543355322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 1.3877788e-17, y: 5.1608023e-17, z: 0.16145739, w: 0.9868797}
+  m_LocalPosition: {x: -0.35580447, y: 2.1316282e-16, z: 8.263953e-17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3944100604129402096}
+  - {fileID: 9012551685876001167}
+  - {fileID: 6615941585642811893}
+  - {fileID: 5783172270279959885}
+  - {fileID: 5694875795321982723}
+  m_Father: {fileID: 3121873908304303762}
+  m_LocalEulerAnglesHint: {x: 4.6166286, y: -11.307094, z: -8.629517}
+--- !u!1 &7146997498269762243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1898019929244904272}
+  m_Layer: 0
+  m_Name: demonKing_pinky02Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1898019929244904272
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7146997498269762243}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0044725416, y: 0.76746047, z: -0.0133726215, w: 0.6409412}
+  m_LocalPosition: {x: -0.17707068, y: -1.7763568e-17, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 652556898919770320}
+  m_Father: {fileID: 9064102299080865899}
+  m_LocalEulerAnglesHint: {x: 0.84759665, y: 100.25623, z: -1.3757905}
+--- !u!1 &7317162066760711611
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7387710653196467554}
+  m_Layer: 0
+  m_Name: demonKing_lowerArmLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7387710653196467554
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7317162066760711611}
+  serializedVersion: 2
+  m_LocalRotation: {x: 9.263483e-15, y: -2.200664e-14, z: 0.49558142, w: 0.8685615}
+  m_LocalPosition: {x: -0.6669303, y: -1.7763568e-17, z: 2.842171e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3878435874668137684}
+  m_Father: {fileID: 5783172270279959885}
+  m_LocalEulerAnglesHint: {x: 3.411336e-12, y: -1.2625195e-12, z: 76.57059}
+--- !u!1 &7320129602723882308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3056805555178549946}
+  m_Layer: 0
+  m_Name: demonKing_tail02
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3056805555178549946
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7320129602723882308}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.017058687, y: 0.12835933, z: -0.13063054, w: 0.98293877}
+  m_LocalPosition: {x: -0.42159468, y: -2.842171e-16, z: -1.519562e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2908578724752482595}
+  m_Father: {fileID: 2810453431352069669}
+  m_LocalEulerAnglesHint: {x: 5.6007376, y: 13.787241, z: -21.687601}
+--- !u!1 &7331690099568740338
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8185052559910855712}
+  m_Layer: 0
+  m_Name: demonKing_thumb03Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8185052559910855712
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7331690099568740338}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.15436608, y: -7.105427e-17, z: 2.2737367e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 500019651131168634}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7804343676023669813
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7848856823769914320}
+  m_Layer: 0
+  m_Name: demonKing_tail05
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7848856823769914320
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7804343676023669813}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: -0.022967145, w: 0.99973625}
+  m_LocalPosition: {x: -0.3618292, y: 1.4122036e-15, z: -1.8798598e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3009805789406543369}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -2.63207}
+--- !u!1 &7953378931070378764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6615941585642811893}
+  m_Layer: 0
+  m_Name: demonKing_neck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6615941585642811893
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7953378931070378764}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.74546194, y: 0.6646167, z: -0.040495235, w: 0.030517368}
+  m_LocalPosition: {x: -0.23456569, y: 7.105427e-17, z: 6.7849893e-17}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8659503724690083048}
+  - {fileID: 5616686917240163300}
+  m_Father: {fileID: 3460670212361107693}
+  m_LocalEulerAnglesHint: {x: -0.5074618, y: -175.12685, z: 78.06089}
+--- !u!1 &8156303351602308796
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3944100604129402096}
+  m_Layer: 0
+  m_Name: demonKing_backLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3944100604129402096
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8156303351602308796}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.06949019, y: -0.703684, z: -0.06949019, w: 0.703684}
+  m_LocalPosition: {x: -0.07648895, y: 0.4255098, z: -0.30537292}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3460670212361107693}
+  m_LocalEulerAnglesHint: {x: -11.279572, y: -90, z: 0}
+--- !u!1 &8469035881099702732
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8337176444003050793}
+  m_Layer: 0
+  m_Name: demonKing_index02Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8337176444003050793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8469035881099702732}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.057301674, y: 0.8038627, z: 0.017917717, w: 0.5917772}
+  m_LocalPosition: {x: -0.19673821, y: -4.973799e-16, z: -1.1368684e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6888870762174262914}
+  m_Father: {fileID: 8325568646028774040}
+  m_LocalEulerAnglesHint: {x: 2.23584, y: 107.40867, z: 6.512405}
+--- !u!1 &8473762609252646985
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 895145254644066708}
+  m_Layer: 0
+  m_Name: demonKing_thumb01Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &895145254644066708
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8473762609252646985}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.02953204, y: 0.6095797, z: -0.02019983, w: 0.791917}
+  m_LocalPosition: {x: -0.14384589, y: -0.21886338, z: 0.118760005}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 500019651131168634}
+  m_Father: {fileID: 3526628432647996949}
+  m_LocalEulerAnglesHint: {x: 4.09444, y: 75.18293, z: 0.23040582}
+--- !u!1 &8508411931818347049
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5783172270279959885}
+  m_Layer: 0
+  m_Name: demonKing_upperArmLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5783172270279959885
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8508411931818347049}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.13366015, y: 0.8800919, z: -0.010302976, w: -0.4554855}
+  m_LocalPosition: {x: 0.14800021, y: 0.14871754, z: -0.5931313}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7387710653196467554}
+  m_Father: {fileID: 3460670212361107693}
+  m_LocalEulerAnglesHint: {x: 36.796764, y: -116.79875, z: -19.07087}
+--- !u!1 &8978772079621878964
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 617298722520717548}
+  m_Layer: 0
+  m_Name: demonKing_lowerArmRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &617298722520717548
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8978772079621878964}
+  serializedVersion: 2
+  m_LocalRotation: {x: -6.3863095e-15, y: 1.2875137e-14, z: 0.50811964, w: 0.8612865}
+  m_LocalPosition: {x: -0.6669269, y: 4.1744386e-16, z: -1.1368684e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3526628432647996949}
+  m_Father: {fileID: 5694875795321982723}
+  m_LocalEulerAnglesHint: {x: -2.1724675e-12, y: 5.34383e-13, z: 80.33713}
+--- !u!1 &9068940323347004534
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 600759780909949283}
+  m_Layer: 0
+  m_Name: demonKing_middle02Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &600759780909949283
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9068940323347004534}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.016103456, y: 0.6311981, z: 0.0016045884, w: 0.7754528}
+  m_LocalPosition: {x: -0.19672444, y: -2.4868996e-16, z: 5.684342e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 6391687898570098059}
+  m_Father: {fileID: 3383074558316658560}
+  m_LocalEulerAnglesHint: {x: 1.3150154, y: 78.30436, z: 1.3078035}
+--- !u!1 &9072239103546600145
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2653405786068994156}
+  m_Layer: 0
+  m_Name: demonKing_toeLeft
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2653405786068994156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9072239103546600145}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.0036708664, y: -0.0019018688, z: 0.0007674916, w: 0.9999912}
+  m_LocalPosition: {x: -0.265272, y: -0.00938519, z: -0.00041935142}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8196890817934579735}
+  m_LocalEulerAnglesHint: {x: -0.42048407, y: -0.21826436, z: 0.088748395}
+--- !u!1 &9085364916855987010
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 500019651131168634}
+  m_Layer: 0
+  m_Name: demonKing_thumb02Right
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &500019651131168634
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085364916855987010}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.005905158, y: -0.030021738, z: -0.65029716, w: 0.75906354}
+  m_LocalPosition: {x: -0.1724449, y: -6.3948843e-16, z: -2.8421708e-15}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8185052559910855712}
+  m_Father: {fileID: 895145254644066708}
+  m_LocalEulerAnglesHint: {x: -1.7237905, y: -3.0542302, z: -81.128006}
+--- !u!1 &9154916813081240129
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7527379685209103969}
+  m_Layer: 0
+  m_Name: demonKing_middle02Left
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7527379685209103969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9154916813081240129}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.015608886, y: -0.31131968, z: -0.0042723957, w: 0.9501674}
+  m_LocalPosition: {x: -0.19673416, y: -3.0198067e-16, z: -5.684342e-16}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7178820573455880965}
+  m_Father: {fileID: 6783314882802612639}
+  m_LocalEulerAnglesHint: {x: -1.8347479, y: -25.735695, z: -0.24871677}
+--- !u!1 &9162784982581802820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8622675989799606766}
+  - component: {fileID: 25136254144914002}
+  m_Layer: 0
+  m_Name: DemonKing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8622675989799606766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162784982581802820}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8783356378116222310}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &25136254144914002
+SkinnedMeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9162784982581802820}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 3
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d08266fe4f3f28d42b021903a802296b, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_MaskInteraction: 0
+  serializedVersion: 2
+  m_Quality: 0
+  m_UpdateWhenOffscreen: 0
+  m_SkinnedMotionVectors: 1
+  m_Mesh: {fileID: 6431182135929894069, guid: 1a879ca13a1e4dfa95cc8b046f320609, type: 3}
+  m_Bones:
+  - {fileID: 3238796225130331135}
+  - {fileID: 1498042390247901176}
+  - {fileID: 3121873908304303762}
+  - {fileID: 3460670212361107693}
+  - {fileID: 6615941585642811893}
+  - {fileID: 5616686917240163300}
+  - {fileID: 8659503724690083048}
+  - {fileID: 3944100604129402096}
+  - {fileID: 5783172270279959885}
+  - {fileID: 7387710653196467554}
+  - {fileID: 3878435874668137684}
+  - {fileID: 3650443469718410517}
+  - {fileID: 9188409770344527256}
+  - {fileID: 7088476089608772436}
+  - {fileID: 6783314882802612639}
+  - {fileID: 7527379685209103969}
+  - {fileID: 7178820573455880965}
+  - {fileID: 2489571311979596803}
+  - {fileID: 4986042563497565178}
+  - {fileID: 8921714996524029902}
+  - {fileID: 8580798972562213694}
+  - {fileID: 8993296945833848112}
+  - {fileID: 9126349699656162811}
+  - {fileID: 9012551685876001167}
+  - {fileID: 5694875795321982723}
+  - {fileID: 617298722520717548}
+  - {fileID: 3526628432647996949}
+  - {fileID: 9064102299080865899}
+  - {fileID: 1898019929244904272}
+  - {fileID: 652556898919770320}
+  - {fileID: 3383074558316658560}
+  - {fileID: 600759780909949283}
+  - {fileID: 6391687898570098059}
+  - {fileID: 8325568646028774040}
+  - {fileID: 8337176444003050793}
+  - {fileID: 6888870762174262914}
+  - {fileID: 895145254644066708}
+  - {fileID: 500019651131168634}
+  - {fileID: 8185052559910855712}
+  - {fileID: 7049806216757773541}
+  - {fileID: 2810453431352069669}
+  - {fileID: 3056805555178549946}
+  - {fileID: 2908578724752482595}
+  - {fileID: 3009805789406543369}
+  - {fileID: 7848856823769914320}
+  - {fileID: 7079033936965859863}
+  - {fileID: 5476823836209169815}
+  - {fileID: 8196890817934579735}
+  - {fileID: 2653405786068994156}
+  - {fileID: 5597120867103514295}
+  - {fileID: 5931940304760472732}
+  - {fileID: 3957065777152689918}
+  - {fileID: 3534814800369004}
+  m_BlendShapeWeights: []
+  m_RootBone: {fileID: 3238796225130331135}
+  m_AABB:
+    m_Center: {x: -0.23435056, y: -0.047610343, z: 0.07723129}
+    m_Extent: {x: 2.1105003, y: 1.3979766, z: 2.2708626}
+  m_DirtyAABB: 0

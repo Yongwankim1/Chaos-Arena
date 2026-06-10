@@ -16,9 +16,9 @@ MonoBehaviour:
   maxHp: 100
   chaseSpeed: 6
   patrolSpeed: 7
-  detectRange: 10
+  detectRange: 20
   attackType: 1
-  attackRange: 5
+  attackRange: 10
   attackDamage: 10
   defaultAttackCooldown: 1
   StrongAttackCooldown: 5
