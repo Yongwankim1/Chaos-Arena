@@ -1,4 +1,4 @@
 public interface IDeathHandler
 {
-    void HandleDeath();
+    void HandleDeath(IAttacker attacker);
 }

@@ -1,4 +1,5 @@
 using Fusion;
+using System.Collections;
 using UnityEngine;
 
 public class RoundManager : NetworkBehaviour
@@ -31,11 +32,31 @@ public class RoundManager : NetworkBehaviour
     [Networked]
     public float StateRemainTime { get; set; }
 
+    [Networked]
+    public int BlueScore { get; set; }
+
+    [Networked]
+    public int RedScore { get; set; }
+
+    [Networked]
+    public int BlueRoundWin { get; set; }
+
+    [Networked]
+    public int RedRoundWin { get; set; }
+
     [SerializeField]
     private GameObject blueWall;
 
     [SerializeField]
     private GameObject redWall;
+
+    [SerializeField]
+    private float respawnTime = 10f;
+
+    [Networked]
+    public string RoundMessage { get; set; }
+    [Networked]
+    public RoundResultType RoundResult { get; set; }
 
     private void Awake()
     {
@@ -166,11 +187,164 @@ public class RoundManager : NetworkBehaviour
 
     private void DrawRound()
     {
+        RoundResult =
+            RoundResultType.Draw;
+
         Debug.Log(
             "Round Draw");
 
+        StartNextRound();
+    }
+    public void OnPlayerDeath(
+     PlayerCharacter victim,
+     IAttacker attacker)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        PlayerCharacter killer =
+            attacker.GetAttacker()
+                .GetComponent<PlayerCharacter>();
+
+        if (killer != null)
+        {
+            if (killer.Team ==
+                TeamType.Blue)
+            {
+                BlueScore++;
+            }
+            else
+            {
+                RedScore++;
+            }
+        }
+        CheckRoundEnd();
+
+        if (RoundResult == RoundResultType.None)
+        {
+            StartCoroutine(
+                RespawnRoutine(
+                    victim));
+        }
+    }
+
+    private void CheckRoundEnd()
+    {
+        if (BlueScore >= 3)
+        {
+            BlueRoundWin++;
+            RoundResult = RoundResultType.BlueWin;
+            Debug.Log(
+                $"Blue Round Win : {BlueRoundWin}");
+
+            CheckMatchEnd();
+
+            return;
+        }
+
+        if (RedScore >= 3)
+        {
+            RedRoundWin++;
+            RoundResult = RoundResultType.RedWin;
+            Debug.Log(
+                $"Red Round Win : {RedRoundWin}");
+
+            CheckMatchEnd();
+
+            return;
+        }
+    }
+    private void CheckMatchEnd()
+    {
+        if (BlueRoundWin >= 3)
+        {
+            Debug.Log(
+                "Blue Match Win");
+
+            EndMatch();
+
+            return;
+        }
+
+        if (RedRoundWin >= 3)
+        {
+            Debug.Log(
+                "Red Match Win");
+
+            EndMatch();
+
+            return;
+        }
+
+        StartNextRound();
+    }
+    private void StartNextRound()
+    {
+        StartCoroutine(NextRoundRoutine());
+    }
+    private IEnumerator NextRoundRoutine()
+    {
+        yield return new WaitForSeconds(2f);
+
+        RoundResult =
+            RoundResultType.None;
+
+        BlueScore = 0;
+        RedScore = 0;
+
+        RespawnAllPlayers();
+
+        SetSpawnWalls(true);
+
         ChangeState(
-            RoundState.RoundEnd,
-            0f);
+            RoundState.Preparation,
+            preparationTime);
+    }
+    private void RespawnAllPlayers()
+    {
+        PlayerCharacter[] players =
+            FindObjectsByType<PlayerCharacter>(
+                FindObjectsSortMode.None);
+
+        foreach (PlayerCharacter player in players)
+        {
+            Vector3 spawnPosition =
+                SpawnManager.Instance
+                    .GetSpawnPosition(
+                        player.Team);
+
+            player.Respawn(
+                spawnPosition);
+        }
+    }
+    private void EndMatch()
+    {
+        Debug.Log(
+            "Match End");
+
+        BlueScore = 0;
+        RedScore = 0;
+
+        BlueRoundWin = 0;
+        RedRoundWin = 0;
+
+        RespawnAllPlayers();
+
+        SetSpawnWalls(true);
+
+        ChangeState(
+            RoundState.Waiting,
+            waitingTime);
+    }
+    private IEnumerator RespawnRoutine(PlayerCharacter player)
+    {
+        yield return new WaitForSeconds(respawnTime);
+
+        Vector3 spawnPosition =
+            SpawnManager.Instance
+                .GetSpawnPosition(
+                    player.Team);
+
+        player.Respawn(spawnPosition);
     }
 }

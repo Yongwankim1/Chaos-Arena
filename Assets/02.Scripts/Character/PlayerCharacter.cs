@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class PlayerCharacter : NetworkBehaviour, IDamageable
+public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
 {
     private ClassData _classData;
     [Networked]
@@ -19,13 +19,21 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable
     [Networked]
     public NetworkBool IsDead { get; set; }
 
+    private IAttacker _lastAttacker;
+
     public float MaxHP =>
         _classData.maxHP;
 
     public float MaxMana =>
         _classData.maxMana;
+
+    private static readonly int DieHash =
+    Animator.StringToHash("Die");
+
+    private Animator _animator;
     public override void Spawned()
     {
+        _animator = GetComponent<Animator>();
         Debug.Log(
             $"[Player] ObjectState:{Object.HasStateAuthority} ObjectInput:{Object.HasInputAuthority}");
 
@@ -107,6 +115,9 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable
         if (!HasStateAuthority)
             return;
 
+        _lastAttacker =
+            attacker;
+
         CurrentHP =
             Mathf.Max(
                 0,
@@ -119,6 +130,67 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable
     }
     private void Die()
     {
-        Debug.Log("Player Dead");
+        if (IsDead)
+            return;
+
+        IsDead = true;
+
+        RPC_PlayDie();
+
+        HandleDeath(_lastAttacker);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayDie()
+    {
+        if (_animator == null)
+            return;
+
+        _animator.SetTrigger(
+            DieHash);
+    }
+
+    public void HandleDeath(IAttacker attacker)
+    {
+        RoundManager.Instance.OnPlayerDeath(this, attacker);
+    }
+    public void Respawn(
+       Vector3 position)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        CurrentHP =
+            MaxHP;
+
+        CurrentMana =
+            MaxMana;
+
+        IsDead =
+            false;
+
+        NetworkCharacterController controller =
+            GetComponent<NetworkCharacterController>();
+
+        if (controller != null)
+        {
+            controller.Teleport(position);
+        }
+        else
+        {
+            transform.position =
+                position;
+        }
+
+        RPC_ResetCharacter();
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_ResetCharacter()
+    {
+        if (_animator == null)
+            return;
+
+        _animator.Rebind();
+        _animator.Update(0f);
     }
 }
