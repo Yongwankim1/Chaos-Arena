@@ -12,6 +12,7 @@ public class EnemyAttack : NetworkBehaviour, IEnemyAttacker
 
     [SerializeField] NavMeshAgent agent;
     [SerializeField] EnemyHP enemyHP;
+
     EnemyAttackBase defaultAttackPrefab;
     EnemyAttackBase strongAttackPrefab;
     private void Awake()
