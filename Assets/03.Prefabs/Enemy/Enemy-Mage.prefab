@@ -1774,7 +1774,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8443050709543898980}
   - component: {fileID: 8937844260294982042}
-  - component: {fileID: 2938907481131966682}
   - component: {fileID: 5220424392222205294}
   - component: {fileID: 279010525095232265}
   - component: {fileID: 8730408137868423852}
@@ -1826,33 +1825,15 @@ MonoBehaviour:
   SortKey: 648285357
   ObjectInterest: 1
   Flags: 262145
-  NestedObjects:
-  - {fileID: 3807253502631241914}
+  NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 2938907481131966682}
   - {fileID: 8730408137868423852}
   - {fileID: 7170404540485164610}
   - {fileID: 2588323076768750958}
   - {fileID: 1979718124564895966}
   - {fileID: 623286148000363409}
+  - {fileID: 7001940840183482582}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &2938907481131966682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5356354989984908327}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
-  _stateAuthorityChangeErrorCorrectionDelta: 0
-  SyncScale: 0
-  SyncParent: 0
-  _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
 --- !u!114 &5220424392222205294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2085,7 +2066,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1a890aae6480514f8e7e977bdf96511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackRange
-  netAnimator: {fileID: 7170404540485164610}
+  animator: {fileID: 0}
   attackParam1: Attack
   attackParam2: Attack2
   bridge: {fileID: 8730408137868423852}
@@ -2778,7 +2759,6 @@ GameObject:
   - component: {fileID: 7247380623827331291}
   - component: {fileID: 7398670950577762527}
   - component: {fileID: 7001940840183482582}
-  - component: {fileID: 3807253502631241914}
   m_Layer: 7
   m_Name: HPBarBackGround
   m_TagString: Untagged
@@ -2860,25 +2840,6 @@ MonoBehaviour:
   enemyHP: {fileID: 5172735927215811527}
   hpBar: {fileID: 2158680210933978721}
   hpText: {fileID: 6592798995032655490}
---- !u!114 &3807253502631241914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8444164486948018278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 3217444131
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 7001940840183482582}
-  ForceRemoteRenderTimeframe: 0
 --- !u!1 &8466170796690146603
 GameObject:
   m_ObjectHideFlags: 0

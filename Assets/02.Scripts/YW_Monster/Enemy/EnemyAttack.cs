@@ -65,6 +65,12 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_AimAtRotation(Quaternion rotation)
+    {
+        transform.rotation = rotation;
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_StrongAttack()
     {
         animator.SetTrigger(attackParam1);
@@ -95,6 +101,6 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         if (direction.sqrMagnitude <= 0.001f)
             return;
 
-        transform.rotation = Quaternion.LookRotation(direction.normalized);
+        RPC_AimAtRotation(Quaternion.LookRotation(direction.normalized));
     }
 }

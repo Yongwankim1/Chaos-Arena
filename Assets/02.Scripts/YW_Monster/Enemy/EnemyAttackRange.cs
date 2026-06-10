@@ -15,8 +15,6 @@ public class EnemyAttackRange : EnemyAttack
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_ProjectileEffect(EffectType effect)
     {
-        // TODO: Play attack effect and sound.
-        Debug.Log("Attack effect");
         if (defaultAttackPrefab == null || strongAttackPrefab == null) return;
         EnemyAttackBase attackEffect = null;
         switch (effect)

@@ -469,7 +469,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4244720629463188048}
   - component: {fileID: 6786589597538713990}
-  - component: {fileID: 5552937212797094538}
   - component: {fileID: 4912684850004939237}
   - component: {fileID: 231382418321524259}
   - component: {fileID: 5563745966908176064}
@@ -521,33 +520,15 @@ MonoBehaviour:
   SortKey: 1528395926
   ObjectInterest: 1
   Flags: 262145
-  NestedObjects:
-  - {fileID: 5638611905357322249}
+  NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 5552937212797094538}
   - {fileID: 5563745966908176064}
   - {fileID: 2981165483300229984}
   - {fileID: 8345423581374555265}
   - {fileID: 7657156027105957938}
   - {fileID: 8926124842869163457}
+  - {fileID: 1992459693772140149}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &5552937212797094538
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2202604045660070067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
-  _stateAuthorityChangeErrorCorrectionDelta: 0
-  SyncScale: 0
-  SyncParent: 0
-  _autoAOIOverride: 1
-  DisableSharedModeInterpolation: 0
 --- !u!114 &4912684850004939237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -780,7 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 730d02adebb28064098c8d91e1c9970a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyAttackMelee
-  netAnimator: {fileID: 2981165483300229984}
+  animator: {fileID: 0}
   attackParam1: Attack
   attackParam2: Attack2
   bridge: {fileID: 5563745966908176064}
@@ -1508,7 +1489,6 @@ GameObject:
   - component: {fileID: 1699896014988113308}
   - component: {fileID: 904585070527686456}
   - component: {fileID: 1992459693772140149}
-  - component: {fileID: 5638611905357322249}
   m_Layer: 7
   m_Name: HPBarBackGround
   m_TagString: Untagged
@@ -1590,25 +1570,6 @@ MonoBehaviour:
   enemyHP: {fileID: 1208802260095530819}
   hpBar: {fileID: 3805807063226569120}
   hpText: {fileID: 6680951297061210503}
---- !u!114 &5638611905357322249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4903515114492143355}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 3319459341
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 1992459693772140149}
-  ForceRemoteRenderTimeframe: 0
 --- !u!1 &4928249702146004903
 GameObject:
   m_ObjectHideFlags: 0

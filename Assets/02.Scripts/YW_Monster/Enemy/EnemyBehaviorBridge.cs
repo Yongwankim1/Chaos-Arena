@@ -8,10 +8,16 @@ public class EnemyBehaviorBridge : NetworkBehaviour
 {
     [SerializeField] EnemySO dataSO;
     [SerializeField] private Transform[] patrolPoints;
+    [SerializeField] private float proxyPositionLerp = 20f;
+    [SerializeField] private float proxyRotationLerp = 20f;
 
     private NavMeshAgent navMeshAgent;
     private BehaviorGraphAgent behaviorGraphAgent;
     private bool? lastCanRunAi;
+    private bool proxyTransformInitialized;
+
+    [Networked] private Vector3 NetworkPosition { get; set; }
+    [Networked] private Quaternion NetworkRotation { get; set; }
 
     public EnemySO Config => dataSO;
     public Transform[] PatrolPoints => patrolPoints;
@@ -29,12 +35,63 @@ public class EnemyBehaviorBridge : NetworkBehaviour
 
     public override void Spawned()
     {
+        Debug.Log(
+        $"Enemy Authority | {name} " +
+        $"RunnerIsServer:{Runner.IsServer} " +
+        $"HasStateAuthority:{Object.HasStateAuthority} " +
+        $"NavMeshAgentEnabled:{navMeshAgent?.enabled}"
+    );
         ApplyAuthorityState();
+
+        if (Object == null || Object.HasStateAuthority)
+        {
+            NetworkPosition = transform.position;
+            NetworkRotation = transform.rotation;
+        }
     }
 
     public override void FixedUpdateNetwork()
     {
+        if (Object != null && Object.HasStateAuthority && Runner.Tick % 60 == 0)
+        {
+            Debug.Log(
+                $"Enemy Move | {name} " +
+                $"agentEnabled:{navMeshAgent.enabled} " +
+                $"graphEnabled:{behaviorGraphAgent.enabled} " +
+                $"isStopped:{navMeshAgent.isStopped} " +
+                $"speed:{navMeshAgent.speed} " +
+                $"velocity:{navMeshAgent.velocity.magnitude}"
+            );
+        }
+
         ApplyAuthorityState();
+
+        if (Object == null || Object.HasStateAuthority)
+        {
+            NetworkPosition = transform.position;
+            NetworkRotation = transform.rotation;
+        }
+    }
+
+    public override void Render()
+    {
+        if (Object == null || Object.HasStateAuthority)
+        {
+            return;
+        }
+
+        if (!proxyTransformInitialized)
+        {
+            transform.SetPositionAndRotation(NetworkPosition, NetworkRotation);
+            proxyTransformInitialized = true;
+            return;
+        }
+
+        float positionT = 1f - Mathf.Exp(-proxyPositionLerp * Time.deltaTime);
+        float rotationT = 1f - Mathf.Exp(-proxyRotationLerp * Time.deltaTime);
+
+        transform.position = Vector3.Lerp(transform.position, NetworkPosition, positionT);
+        transform.rotation = Quaternion.Slerp(transform.rotation, NetworkRotation, rotationT);
     }
 
     private void ApplyAuthorityState()
