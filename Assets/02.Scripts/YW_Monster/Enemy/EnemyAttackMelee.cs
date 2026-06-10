@@ -70,10 +70,10 @@ public class EnemyAttackMelee : EnemyAttack
 
         foreach (Collider hit in hits)
         {
-            IDamageable damageable = hit.GetComponentInParent<IDamageable>();
+            IDamageable damageable = hit.GetComponent<IDamageable>();
             if (damageable == null) continue;
             if (hitTargets.Contains(damageable)) continue;
-
+            Debug.Log(hit.tag);
             hitTargets.Add(damageable);
             damageable.TakeDamage(Mathf.RoundToInt(damage), this);
         }

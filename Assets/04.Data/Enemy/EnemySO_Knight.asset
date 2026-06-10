@@ -25,3 +25,4 @@ MonoBehaviour:
   StrongAttackMultiplier: 1.3
   attackEffects:
   - {fileID: 2653153344604433488, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
+  - {fileID: 2653153344604433488, guid: 416c77af1d9a2ff4892c9246eaaf3496, type: 3}
