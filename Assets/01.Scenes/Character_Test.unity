@@ -249,10 +249,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 134223132804317817, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-      propertyPath: patrolPoints.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 134223132804317817, guid: c6dfbe33a8412824399d52555c197906, type: 3}
       propertyPath: 'patrolPoints.Array.data[0]'
       value: 
       objectReference: {fileID: 681506589}
@@ -316,10 +312,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8067007558656489660, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-      propertyPath: attackPos
-      value: 
-      objectReference: {fileID: 58182015}
     - target: {fileID: 8326444142028689644, guid: c6dfbe33a8412824399d52555c197906, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -327,44 +319,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8326444142028689644, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 58182014}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6dfbe33a8412824399d52555c197906, type: 3}
---- !u!1 &58182013 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8326444142028689644, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-  m_PrefabInstance: {fileID: 58182012}
-  m_PrefabAsset: {fileID: 0}
---- !u!136 &58182014
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 58182013}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.6
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.79, z: 0}
---- !u!4 &58182015 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1047794884284145573, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-  m_PrefabInstance: {fileID: 58182012}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &173202669
 GameObject:
   m_ObjectHideFlags: 0
@@ -2247,7 +2203,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1472218360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2404,14 +2360,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6120119788215200970, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120119788215200970, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3f929bc2e87f64441ba0a9c7a42516ca, type: 3}
+    - target: {fileID: 6120119788215200970, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.879
+      objectReference: {fileID: 0}
+    - target: {fileID: 6120119788215200970, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
+      propertyPath: m_FillMethod
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7312164917399195328, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
       propertyPath: m_Name
       value: Enemy-Knight
       objectReference: {fileID: 0}
-    - target: {fileID: 8634894172141866125, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
