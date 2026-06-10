@@ -18,6 +18,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     [Networked]
     private int CurrentAttackIndex { get; set; }
 
+    private PlayerCharacter _playerCharacter;
+
     private Animator _animator;
 
     private int _comboIndex;
@@ -46,6 +48,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     private void Awake()
     {
         _animator = GetComponent<Animator>();
+
+        _playerCharacter = GetComponent<PlayerCharacter>();
     }
 
     public override void FixedUpdateNetwork()
@@ -66,6 +70,11 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     public void AttackInput()
     {
+        if (_playerCharacter != null && _playerCharacter.IsDead)
+        {
+            return;
+        }
+
         Debug.Log(
             $"AttackInput | Combo:{_comboIndex} State:{HasStateAuthority} Input:{HasInputAuthority}");
 

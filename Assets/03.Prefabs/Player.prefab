@@ -925,6 +925,9 @@ MonoBehaviour:
   _ClassType: 0
   _CurrentHP: 0
   _CurrentMana: 0
+  _Team: 0
+  _IsDead:
+    _value: 0
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0

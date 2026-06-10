@@ -11,6 +11,11 @@ public class RoundHUD : MonoBehaviour
 
     [SerializeField]
     private TMP_Text timerText;
+    [SerializeField]
+    private TMP_Text scoreText;
+    [SerializeField]
+    private TMP_Text roundResultText;
+
 
     private void Awake()
     {
@@ -29,8 +34,64 @@ public class RoundHUD : MonoBehaviour
             return;
 
         UpdateTimer();
+        UpdateScore();
+        UpdateRoundResult();
+    }
+    private void UpdateScore()
+    {
+        RoundManager round =
+            RoundManager.Instance;
+
+        scoreText.text =
+            $"Blue {round.BlueScore} : {round.RedScore} Red\n" +
+            $"Round {round.BlueRoundWin} : {round.RedRoundWin}";
     }
 
+    private void UpdateRoundResult()
+    {
+        RoundManager round =
+            RoundManager.Instance;
+
+        switch (round.RoundResult)
+        {
+            case RoundResultType.None:
+
+                roundResultText.gameObject
+                    .SetActive(false);
+
+                break;
+
+            case RoundResultType.BlueWin:
+
+                roundResultText.gameObject
+                    .SetActive(true);
+
+                roundResultText.text =
+                    "BLUE WIN";
+
+                break;
+
+            case RoundResultType.RedWin:
+
+                roundResultText.gameObject
+                    .SetActive(true);
+
+                roundResultText.text =
+                    "RED WIN";
+
+                break;
+
+            case RoundResultType.Draw:
+
+                roundResultText.gameObject
+                    .SetActive(true);
+
+                roundResultText.text =
+                    "DRAW";
+
+                break;
+        }
+    }
     private void UpdateTimer()
     {
         RoundManager round =

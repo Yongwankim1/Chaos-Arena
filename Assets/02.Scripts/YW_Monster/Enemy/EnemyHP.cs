@@ -27,7 +27,7 @@ public class EnemyHP : MonoBehaviour, IDamageable
         if (IsDead)
         {
             IDeathHandler death = GetComponent<IDeathHandler>();
-            death.HandleDeath();
+            death.HandleDeath(attacker);
         }
     }
 

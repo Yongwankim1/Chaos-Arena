@@ -49,6 +49,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private Animator _animator;
     private NetworkCharacterController _controller;
+    private PlayerCharacter _playerCharacter;
 
     private int _animIDSpeed;
     private int _animIDGrounded;
@@ -81,6 +82,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _animator = GetComponent<Animator>();
         _controller = GetComponent<NetworkCharacterController>();
         _combat = GetComponent<CharacterCombat>();
+        _playerCharacter = GetComponent<PlayerCharacter>();
 
         AssignAnimationIDs();
 
@@ -110,6 +112,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+        if (_playerCharacter != null && _playerCharacter.IsDead)
+        {
+            return;
+        }
+
         if (!GetInput(out NetworkInputData input))
             return;
         _lastInput = input;
@@ -421,10 +428,17 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Attack(NetworkInputData input)
     {
+        if (_playerCharacter != null &&
+            _playerCharacter.IsDead)
+        {
+            return;
+        }
+
         if (!input.Attack)
             return;
+
         Debug.Log(
-       $"Attack Input | State:{HasStateAuthority} Input:{HasInputAuthority}");
+            $"Attack Input | State:{HasStateAuthority} Input:{HasInputAuthority}");
 
         if (HasStateAuthority)
         {
