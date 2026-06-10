@@ -23,7 +23,7 @@ public class PlayerLobbyObject : NetworkBehaviour
       RpcSources.InputAuthority,
       RpcTargets.StateAuthority)]
     public void RPC_SelectCharacter(
-      CharacterClassType classType)
+    CharacterClassType classType)
     {
         SelectedClass = classType;
 

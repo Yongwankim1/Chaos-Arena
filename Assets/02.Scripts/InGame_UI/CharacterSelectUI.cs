@@ -11,7 +11,11 @@ public class CharacterSelectUI : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text selectedText;
-
+    public static CharacterSelectUI Instance
+    {
+        get;
+        private set;
+    }
     public CharacterClassType SelectedClass
     {
         get;
@@ -20,6 +24,8 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void Awake()
     {
+        Instance = this;
+
         assassinButton.onClick.AddListener(OnClickAssassin);
         mageButton.onClick.AddListener(OnClickMage);
         confirmButton.onClick.AddListener(OnClickConfirm);
@@ -66,8 +72,14 @@ public class CharacterSelectUI : MonoBehaviour
             .RPC_SelectCharacter(
                 SelectedClass);
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        PlayerLobbyObject.Local
+            .RPC_SetReady();
+
+        Cursor.lockState =
+            CursorLockMode.Locked;
+
+        Cursor.visible =
+            false;
 
         gameObject.SetActive(false);
     }

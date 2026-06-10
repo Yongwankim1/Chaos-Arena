@@ -13,11 +13,20 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     [SerializeField]
     private NetworkObject playerLobbyPrefab;
 
+    public static GameBootstrap Instance
+    {
+        get;
+        private set;
+    }
+
     private readonly Dictionary<PlayerRef, NetworkObject> _spawnedPlayers = new Dictionary<PlayerRef, NetworkObject>();
     private readonly Dictionary<PlayerRef, CharacterClassType>_selectedCharacters = new Dictionary<PlayerRef, CharacterClassType>();
     private readonly Dictionary<PlayerRef, PlayerLobbyObject> _playerLobbies = new Dictionary<PlayerRef, PlayerLobbyObject>();
+    private readonly Dictionary<PlayerRef, TeamType> _playerTeams = new Dictionary<PlayerRef, TeamType>();
     public override async void Spawned()
     {
+        Instance = this;
+
         Runner.AddCallbacks(this);
 
         await LoadClassDatas();
@@ -72,23 +81,69 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
                 $"Lobby Object Spawned : {player.PlayerId}");
         }
     }
+    public void AssignTeams()
+    {
+        _playerTeams.Clear();
 
+        List<PlayerRef> players =
+            new List<PlayerRef>(
+                Runner.ActivePlayers);
+
+        if (players.Count < 2)
+            return;
+
+        int randomIndex =
+            Random.Range(
+                0,
+                players.Count);
+
+        PlayerRef bluePlayer =
+            players[randomIndex];
+
+        PlayerRef redPlayer =
+            players.Find(
+                p => p != bluePlayer);
+
+        _playerTeams.Add(
+            bluePlayer,
+            TeamType.Blue);
+
+        _playerTeams.Add(
+            redPlayer,
+            TeamType.Red);
+
+        Debug.Log(
+            $"Blue : {bluePlayer.PlayerId}");
+
+        Debug.Log(
+            $"Red : {redPlayer.PlayerId}");
+    }
     private void SpawnPlayer(
-      NetworkRunner runner,
-      PlayerRef player,
-      CharacterClassType classType)
+     NetworkRunner runner,
+     PlayerRef player,
+     CharacterClassType classType)
     {
         if (_spawnedPlayers.ContainsKey(player))
             return;
 
+        if (!_playerTeams.TryGetValue(
+                player,
+                out TeamType team))
+        {
+            Debug.LogError(
+                $"Team Not Assigned : {player.PlayerId}");
+
+            return;
+        }
+
         Vector3 spawnPosition =
-            new Vector3(
-                Random.Range(-3f, 3f),
-                1f,
-                Random.Range(-3f, 3f));
+            SpawnManager.Instance
+                .GetSpawnPosition(
+                    team);
 
         NetworkObject prefab =
-            GetCharacterPrefab(classType);
+            GetCharacterPrefab(
+                classType);
 
         NetworkObject playerObject =
             runner.Spawn(
@@ -97,12 +152,16 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
                 Quaternion.identity,
                 player);
 
-        PlayerCharacter playerCharacter = playerObject.GetComponent<PlayerCharacter>();
+        PlayerCharacter playerCharacter =
+            playerObject.GetComponent<PlayerCharacter>();
 
         if (playerCharacter != null)
         {
             playerCharacter.ClassType =
                 classType;
+
+            playerCharacter.Team =
+                team;
         }
 
         _spawnedPlayers.Add(
@@ -110,7 +169,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             playerObject);
 
         Debug.Log(
-            $"Spawned {playerObject.name} InputAuthority:{player}");
+            $"Spawned {playerObject.name} Team:{team}");
     }
     public void SpawnSelectedCharacter(
      PlayerRef player)
@@ -168,8 +227,8 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             player,
             lobby);
 
-        Debug.Log(
-            $"Lobby Object Spawned : {player.PlayerId}");
+        Debug.Log($"Lobby Object Spawned : {player.PlayerId}");
+         
     }
     public void OnPlayerLeft(
      NetworkRunner runner,
@@ -308,5 +367,53 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         NetworkObject obj,
         PlayerRef player)
     {
+    }
+
+    public void ForceSelectRemainingPlayers()
+    {
+        if (!Runner.IsServer)
+            return;
+
+        foreach (var pair in _playerLobbies)
+        {
+            PlayerRef player =
+                pair.Key;
+
+            PlayerLobbyObject lobby =
+                pair.Value;
+
+            if (lobby.SelectedClass !=
+                CharacterClassType.None)
+            {
+                continue;
+            }
+
+            lobby.SelectedClass =
+                CharacterClassType.Assassin;
+
+            Debug.Log(
+                $"Force Assassin : {player.PlayerId}");
+
+            SpawnSelectedCharacter(
+                player);
+        }
+
+        RPC_CloseCharacterSelectUI();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_CloseCharacterSelectUI()
+    {
+        if (CharacterSelectUI.Instance == null)
+            return;
+
+        CharacterSelectUI.Instance
+            .gameObject.SetActive(false);
+
+        Cursor.lockState =
+            CursorLockMode.Locked;
+
+        Cursor.visible =
+            false;
     }
 }
