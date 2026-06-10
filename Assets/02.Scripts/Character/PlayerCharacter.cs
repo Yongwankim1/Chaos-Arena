@@ -13,6 +13,12 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable
     [Networked]
     public float CurrentMana { get; set; }
 
+    [Networked]
+    public TeamType Team { get; set; }
+
+    [Networked]
+    public NetworkBool IsDead { get; set; }
+
     public float MaxHP =>
         _classData.maxHP;
 
