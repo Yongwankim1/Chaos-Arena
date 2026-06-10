@@ -8,7 +8,7 @@ public class EnemyProjectile : EnemyAttackBase
     private Coroutine fireRoutine;
 
     [SerializeField] LayerMask targetLayer;
-    HashSet<IDamageable> targets;
+    HashSet<IDamageable> targets = new HashSet<IDamageable>();
     IAttacker attacker;
     public override void Init(IAttacker attacker)
     {
