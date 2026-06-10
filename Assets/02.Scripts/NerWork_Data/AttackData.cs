@@ -11,5 +11,14 @@ public class AttackData
 
     public float Radius;
 
+    [Header("Effect")]
+    public GameObject AttackEffect;
+
+    public Vector3 EffectPositionOffset;
+
+    public Vector3 EffectRotationOffset;
+
+    public GameObject HitEffect;
+
     public GameObject ProjectilePrefab;
 }

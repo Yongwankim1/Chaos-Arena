@@ -310,6 +310,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (_landingLockTimer > 0f)
             _landingLockTimer -= Runner.DeltaTime;
 
+        if (_combat != null && _combat.IsAttacking)
+        {
+            return;
+        }
         if (Grounded)
         {
             _fallTimeoutDelta = FallTimeout;
@@ -395,6 +399,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     }
     private void PlayJumpAnimation()
     {
+        Debug.Log("PLAY JUMP ANIMATION");
         _animator.SetBool(_animIDGrounded, false);
         _animator.SetBool(_animIDFreeFall, false);
         _animator.SetTrigger(_animIDJump);
