@@ -18,6 +18,13 @@ public abstract class EnemyAttackBase : MonoBehaviour
             rb.linearVelocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;
         }
-
+    }
+    public virtual void Init(IAttacker attacker)
+    {
+        if (rb != null)
+        {
+            rb.linearVelocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
+        }
     }
 }

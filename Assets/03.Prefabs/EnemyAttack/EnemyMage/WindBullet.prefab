@@ -106,8 +106,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8540ad5bd2d62244dbba67d49442c395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
-  velocity: 10
+  velocity: 30
   rb: {fileID: 0}
+  fireDelay: 0
 --- !u!54 &8012004265648605878
 Rigidbody:
   m_ObjectHideFlags: 0
