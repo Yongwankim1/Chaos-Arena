@@ -312,25 +312,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4555789295170338268, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555789295170338268, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555789295170338268, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.099999905
-      objectReference: {fileID: 0}
-    - target: {fileID: 4555789295170338268, guid: c6dfbe33a8412824399d52555c197906, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8326444142028689644, guid: c6dfbe33a8412824399d52555c197906, type: 3}
       propertyPath: m_Name
-      value: Enemy
+      value: Enemy-Mage
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2379,22 +2363,6 @@ PrefabInstance:
     - target: {fileID: 7312164917399195328, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
       propertyPath: m_Name
       value: Enemy-Knight
-      objectReference: {fileID: 0}
-    - target: {fileID: 7433107891460608791, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: -1.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7433107891460608791, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: -0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7433107891460608791, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -0.099999905
-      objectReference: {fileID: 0}
-    - target: {fileID: 7433107891460608791, guid: dde6ed1985b5a074c85e693d6355b6b1, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

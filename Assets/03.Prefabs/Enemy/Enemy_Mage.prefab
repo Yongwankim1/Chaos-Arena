@@ -462,8 +462,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -0.099999905, y: 0}
+  m_SizeDelta: {x: -1.2, y: -0.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3531679199623507204
 CanvasRenderer:
@@ -2475,8 +2475,8 @@ GameObject:
   - component: {fileID: 1748915281715245426}
   - component: {fileID: 8067007558656489660}
   - component: {fileID: 955614437954965183}
-  - component: {fileID: 5765384124622976039}
   - component: {fileID: 5755696417228312646}
+  - component: {fileID: 4324978485378289211}
   m_Layer: 0
   m_Name: Enemy_Mage
   m_TagString: Untagged
@@ -2523,6 +2523,7 @@ MonoBehaviour:
   - {fileID: 1547812887377927553}
   - {fileID: 1748915281715245426}
   - {fileID: 8067007558656489660}
+  - {fileID: 4324978485378289211}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &807891652878762535
 MonoBehaviour:
@@ -2662,8 +2663,8 @@ MonoBehaviour:
   Animator: {fileID: 3858681002004150255}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 000000006adb0c90a8a9cd3232edce8b7143fd88738e8b49403dae7eb85813eafbf620e97e3d73755d8d70d3
-  TriggerHashes: 00000000a1609f620d286c4098ae2464
+  StateHashes: 000000006adb0c90a8a9cd3232edce8b7143fd88738e8b49403dae7eb85813eafbf620e97e3d73755d8d70d337b935014e73a6a7
+  TriggerHashes: 00000000a1609f620d286c4098ae246437b93501
   TotalWords: 4
 --- !u!95 &3858681002004150255
 Animator:
@@ -2705,6 +2706,7 @@ MonoBehaviour:
   velocityXParam: Velocity X
   velocityZParam: Velocity Z
   movingThreshold: 0.05
+  movingHash: 0
 --- !u!114 &8067007558656489660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2739,29 +2741,6 @@ MonoBehaviour:
   target: {fileID: 0}
   MaxHP: 100
   currentHP: 100
---- !u!136 &5765384124622976039
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8326444142028689644}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.6
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.79, z: 0}
 --- !u!136 &5755696417228312646
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2785,6 +2764,23 @@ CapsuleCollider:
   m_Height: 1.6
   m_Direction: 1
   m_Center: {x: 0, y: 0.79, z: 0}
+--- !u!114 &4324978485378289211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8326444142028689644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14922f09d7073ec499edf8cc132a8717, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyDeath
+  graph: {fileID: 0}
+  agent: {fileID: 0}
+  bodyCollider: {fileID: 0}
+  animator: {fileID: 0}
+  DieParam: Die
 --- !u!1 &8433603383317398258
 GameObject:
   m_ObjectHideFlags: 0

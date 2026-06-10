@@ -12,6 +12,8 @@ public class EnemyAnimationController : NetworkBehaviour
     [SerializeField] private string velocityZParam = "Velocity Z";
     [SerializeField] private float movingThreshold = 0.05f;
 
+    [SerializeField] 
+
     int movingHash;
     int velocityXHash;
     int velocityZHash;

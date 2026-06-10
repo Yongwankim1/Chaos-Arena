@@ -8,6 +8,7 @@ public class EnemySO : ScriptableObject
     public float chaseSpeed;
     public float patrolSpeed;
     public float detectRange;
+    public EnemyAttackType attackType;
     public float attackRange;
     public float attackDamage;
     public float defaultAttackCooldown;
@@ -15,5 +16,4 @@ public class EnemySO : ScriptableObject
     public float StrongAttackMultiplier;
 
     public GameObject[] attackEffects;
-
 }

@@ -14,6 +14,7 @@ public class EnemyHP : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage, IAttacker attacker)
     {
+        if(IsDead) return;
         if (damage <= 0)
         {
             Debug.Log("데미지 0 리턴");
@@ -23,6 +24,11 @@ public class EnemyHP : MonoBehaviour, IDamageable
         currentHP = Mathf.Max(currentHP - damage, 0);
 
         OnHPChange?.Invoke(MaxHP,currentHP);
+        if (IsDead)
+        {
+            IDeathHandler death = GetComponent<IDeathHandler>();
+            death.HandleDeath();
+        }
     }
 
 }

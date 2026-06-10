@@ -17,6 +17,7 @@ MonoBehaviour:
   chaseSpeed: 6
   patrolSpeed: 7
   detectRange: 10
+  attackType: 2
   attackRange: 5
   attackDamage: 10
   defaultAttackCooldown: 1
