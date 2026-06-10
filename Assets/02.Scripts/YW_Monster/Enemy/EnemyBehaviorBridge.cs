@@ -55,7 +55,22 @@ public class EnemyBehaviorBridge : NetworkBehaviour
         if (navMeshAgent != null)
         {
             navMeshAgent.enabled = canRunAi;
+
+            if (canRunAi)
+            {
+                ApplyConfigToAgent();
+            }
         }
+    }
+
+    private void ApplyConfigToAgent()
+    {
+        if (navMeshAgent == null || dataSO == null)
+        {
+            return;
+        }
+
+        navMeshAgent.speed = dataSO.chaseSpeed;
     }
 
     private void TryPopulatePatrolPointsFromScene()

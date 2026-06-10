@@ -5,6 +5,8 @@ public class EnemyAttackRange : EnemyAttack
 {
     public override void OnEffect(EffectType effect)
     {
+        if (Object != null && !Object.HasStateAuthority)
+            return;
         base.OnEffect(effect);
 
         RPC_ProjectileEffect(effect);

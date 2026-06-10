@@ -1,8 +1,9 @@
+using Fusion;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnemyHPBarUI : MonoBehaviour
+public class EnemyHPBarUI : NetworkBehaviour
 {
     [SerializeField] EnemyHP enemyHP;
     [SerializeField] Image hpBar;
@@ -31,8 +32,16 @@ public class EnemyHPBarUI : MonoBehaviour
 
     private void HPBarUpdate(int maxHP, int currentHP)
     {
+        if (Object != null && !Object.HasStateAuthority)
+            return;
         if (hpText == null || hpBar == null) return;
-        float value = (float) currentHP / maxHP;
+
+        RPC_HpBarUpdate(maxHP, currentHP);
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_HpBarUpdate(int maxHP, int currentHP)
+    {
+        float value = (float)currentHP / maxHP;
         hpBar.fillAmount = value;
         hpText.text = $"{currentHP}/{maxHP}";
     }

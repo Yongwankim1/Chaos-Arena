@@ -521,7 +521,8 @@ MonoBehaviour:
   SortKey: 1528395926
   ObjectInterest: 1
   Flags: 262145
-  NestedObjects: []
+  NestedObjects:
+  - {fileID: 5638611905357322249}
   NetworkedBehaviours:
   - {fileID: 5552937212797094538}
   - {fileID: 5563745966908176064}
@@ -793,7 +794,7 @@ MonoBehaviour:
   strongAttackSize: {x: 0.7, y: 4.56, z: 4.59}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   _IsAttack:
     _value: 0
 --- !u!114 &635979929071522260
@@ -1507,6 +1508,7 @@ GameObject:
   - component: {fileID: 1699896014988113308}
   - component: {fileID: 904585070527686456}
   - component: {fileID: 1992459693772140149}
+  - component: {fileID: 5638611905357322249}
   m_Layer: 7
   m_Name: HPBarBackGround
   m_TagString: Untagged
@@ -1588,6 +1590,25 @@ MonoBehaviour:
   enemyHP: {fileID: 1208802260095530819}
   hpBar: {fileID: 3805807063226569120}
   hpText: {fileID: 6680951297061210503}
+--- !u!114 &5638611905357322249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4903515114492143355}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 3319459341
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1992459693772140149}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &4928249702146004903
 GameObject:
   m_ObjectHideFlags: 0
