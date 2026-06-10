@@ -43,7 +43,7 @@ public class RoundHUD : MonoBehaviour
             RoundManager.Instance;
 
         scoreText.text =
-            $"Blue {round.BlueScore} : {round.RedScore} Red\n" +
+            $"블루팀 {round.BlueScore} : {round.RedScore} 레드팀\n" +
             $"Round {round.BlueRoundWin} : {round.RedRoundWin}";
     }
 
@@ -67,7 +67,7 @@ public class RoundHUD : MonoBehaviour
                     .SetActive(true);
 
                 roundResultText.text =
-                    "BLUE WIN";
+                    "블루팀 승리";
 
                 break;
 
@@ -77,7 +77,7 @@ public class RoundHUD : MonoBehaviour
                     .SetActive(true);
 
                 roundResultText.text =
-                    "RED WIN";
+                    "레드팀 승리";
 
                 break;
 
@@ -87,7 +87,7 @@ public class RoundHUD : MonoBehaviour
                     .SetActive(true);
 
                 roundResultText.text =
-                    "DRAW";
+                    "무승부";
 
                 break;
         }
@@ -102,21 +102,21 @@ public class RoundHUD : MonoBehaviour
             case RoundState.Waiting:
 
                 timerText.text =
-                    $"Waiting\n{Mathf.CeilToInt(round.StateRemainTime)}";
+                    $"잠시만 기다려주세요\n{Mathf.CeilToInt(round.StateRemainTime)}";
 
                 break;
 
             case RoundState.CharacterSelect:
 
                 timerText.text =
-                    $"Character Select\n{Mathf.CeilToInt(round.StateRemainTime)}";
+                    $"캐릭터 선택 시간\n{Mathf.CeilToInt(round.StateRemainTime)}";
 
                 break;
 
             case RoundState.Preparation:
 
                 timerText.text =
-                    $"Preparation\n{Mathf.CeilToInt(round.StateRemainTime)}";
+                    $"대기\n{Mathf.CeilToInt(round.StateRemainTime)}";
 
                 break;
 
@@ -138,7 +138,7 @@ public class RoundHUD : MonoBehaviour
             case RoundState.RoundEnd:
 
                 timerText.text =
-                    "Round End";
+                    "라운드 종료";
 
                 break;
         }
