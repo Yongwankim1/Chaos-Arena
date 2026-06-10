@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyHP : MonoBehaviour, IDamageable
@@ -9,15 +10,19 @@ public class EnemyHP : MonoBehaviour, IDamageable
     public int currentHP = 100;
     public bool IsDead => currentHP <= 0;
 
+    public event Action<int,int> OnHPChange;
+
     public void TakeDamage(int damage, IAttacker attacker)
     {
+        if (damage <= 0)
+        {
+            Debug.Log("데미지 0 리턴");
+            return;
+        }
         target = attacker.GetAttacker();
         currentHP = Mathf.Max(currentHP - damage, 0);
-        
+
+        OnHPChange?.Invoke(MaxHP,currentHP);
     }
 
-    private void Update()
-    {
-        transform.rotation = Quaternion.Euler(0f, 90f, 0f);
-    }
 }
