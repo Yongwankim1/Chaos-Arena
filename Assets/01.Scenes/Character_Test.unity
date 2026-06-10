@@ -1692,10 +1692,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf94bef6c22a3d46a5e6d27bb1785a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
-  waitingTime: 5
-  characterSelectTime: 30
-  preparationTime: 10
-  roundTime: 300
+  waitingTime: 3
+  characterSelectTime: 10
+  preparationTime: 5
+  roundTime: 120
   characterSelectUI: {fileID: 1196706178}
   _CurrentState: 0
   _StateRemainTime: 0
@@ -1705,7 +1705,7 @@ MonoBehaviour:
   _RedRoundWin: 0
   blueWall: {fileID: 1388107528}
   redWall: {fileID: 11319688}
-  respawnTime: 10
+  respawnTime: 5
   _RoundMessage: 
   _RoundResult: 0
 --- !u!4 &1120496649
