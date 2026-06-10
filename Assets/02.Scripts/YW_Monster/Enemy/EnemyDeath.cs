@@ -19,7 +19,7 @@ public class EnemyDeath : NetworkBehaviour, IDeathHandler
         if(animator == null) animator = GetComponent<NetworkMecanimAnimator>();
     }
 
-    public void HandleDeath(IAttacker attacker)
+    public void HandleDeath(IAttacker _)
     {
         graph.enabled = false;
         agent.isStopped = true;
