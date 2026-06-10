@@ -78400,6 +78400,10 @@ MonoBehaviour:
   velocity: 35
   rb: {fileID: 8741596089018570699}
   fireDelay: 0.6
+  damage: 10
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &7867090341415652996
 GameObject:
   m_ObjectHideFlags: 0
