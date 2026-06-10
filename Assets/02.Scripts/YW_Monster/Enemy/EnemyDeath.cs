@@ -9,14 +9,14 @@ public class EnemyDeath : NetworkBehaviour, IDeathHandler
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Collider bodyCollider;
 
-    [SerializeField] NetworkMecanimAnimator animator;
+    [SerializeField] Animator animator;
     [SerializeField] string DieParam = "Die";
     void Awake()
     {
         if(agent == null) agent = GetComponent<NavMeshAgent>();
         if(graph == null) graph = GetComponent<BehaviorGraphAgent>();
         if(bodyCollider == null) bodyCollider = GetComponent<Collider>();
-        if(animator == null) animator = GetComponent<NetworkMecanimAnimator>();
+        if(animator == null) animator = GetComponent<Animator>();
     }
 
     public void HandleDeath(IAttacker _)
@@ -29,7 +29,7 @@ public class EnemyDeath : NetworkBehaviour, IDeathHandler
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_Die()
     {
-        animator.SetTrigger(DieParam, false);
+        animator.SetTrigger(DieParam);
         Invoke("SetActiveFalse", 5f);
     }
 

@@ -4156,69 +4156,19 @@ PrefabInstance:
       propertyPath: 'patrolPoints.Array.data[4]'
       value: 
       objectReference: {fileID: 681506585}
+    - target: {fileID: 5638611905357322249, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
+      propertyPath: SortKey
+      value: 1416720398
+      objectReference: {fileID: 0}
     - target: {fileID: 6786589597538713990, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
       propertyPath: SortKey
       value: 3920624279
       objectReference: {fileID: 0}
-    - target: {fileID: 6786589597538713990, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
-      propertyPath: NestedObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6786589597538713990, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
-      propertyPath: 'NestedObjects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 5713919425897862615}
-    - target: {fileID: 6786589597538713990, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
-      propertyPath: NetworkedBehaviours.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8926124842869163457, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
-      propertyPath: targetLayer.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4903515114492143355, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5713919425897862615}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
---- !u!114 &5713919425897862613 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1992459693772140149, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
-  m_PrefabInstance: {fileID: 5713919425897862612}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5713919425897862614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44cd40a988f9fe342b82a58f933620b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
---- !u!1 &5713919425897862614 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4903515114492143355, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
-  m_PrefabInstance: {fileID: 5713919425897862612}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &5713919425897862615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5713919425897862614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 3913022837
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 5713919425897862613}
-  ForceRemoteRenderTimeframe: 0
 --- !u!1001 &6033218379013310963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4227,6 +4177,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3807253502631241914, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
+      propertyPath: SortKey
+      value: 2096538423
+      objectReference: {fileID: 0}
     - target: {fileID: 5356354989984908327, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
       propertyPath: m_Name
       value: Enemy-Mage
@@ -4295,61 +4249,11 @@ PrefabInstance:
       propertyPath: SortKey
       value: 3822346945
       objectReference: {fileID: 0}
-    - target: {fileID: 8937844260294982042, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
-      propertyPath: NestedObjects.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8937844260294982042, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
-      propertyPath: 'NestedObjects.Array.data[0]'
-      value: 
-      objectReference: {fileID: 6033218379013310966}
-    - target: {fileID: 8937844260294982042, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
-      propertyPath: NetworkedBehaviours.Array.size
-      value: 6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8444164486948018278, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 6033218379013310966}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
---- !u!114 &6033218379013310964 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7001940840183482582, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
-  m_PrefabInstance: {fileID: 6033218379013310963}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6033218379013310965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44cd40a988f9fe342b82a58f933620b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'
---- !u!1 &6033218379013310965 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8444164486948018278, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
-  m_PrefabInstance: {fileID: 6033218379013310963}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &6033218379013310966
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6033218379013310965}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
-  SortKey: 109564247
-  ObjectInterest: 1
-  Flags: 262145
-  NestedObjects: []
-  NetworkedBehaviours:
-  - {fileID: 6033218379013310964}
-  ForceRemoteRenderTimeframe: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -4,7 +4,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(EnemyBehaviorBridge))]
 public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
 {
-    [SerializeField] protected NetworkMecanimAnimator netAnimator;
+    [SerializeField] protected Animator animator;
     [SerializeField] protected string attackParam1 = "Attack";
     [SerializeField] protected string attackParam2 = "Attack2";
     [SerializeField] protected EnemyBehaviorBridge bridge;
@@ -21,7 +21,7 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     private void Awake()
     {
         if (attackPos == null) attackPos = transform;
-        if (netAnimator == null) netAnimator = GetComponent<NetworkMecanimAnimator>();
+        if (animator == null) animator = GetComponent<Animator>();
         if(bridge == null) bridge = GetComponent<EnemyBehaviorBridge>();
         if(agent == null) agent = GetComponent<NavMeshAgent>();
         if(enemyHP == null) enemyHP = GetComponent<EnemyHP>();
@@ -37,7 +37,7 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     {
         if (Object != null && !Object.HasStateAuthority)
             return;
-        if (netAnimator == null) return;
+        if (animator == null) return;
         agent.isStopped = false;
         AimAtTarget();
         agent.isStopped = true;
@@ -48,7 +48,7 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_DefaultAttack()
     {
-        netAnimator.SetTrigger(attackParam2, true);
+        animator.SetTrigger(attackParam2);
         Debug.Log("DefaultAttack animation started");
     }
 
@@ -56,7 +56,7 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     {
         if (Object != null && !Object.HasStateAuthority)
             return;
-        if (netAnimator == null) return;
+        if (animator == null) return;
         agent.isStopped = false;
         AimAtTarget();
         agent.isStopped = true;
@@ -67,7 +67,7 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_StrongAttack()
     {
-        netAnimator.SetTrigger(attackParam1, true);
+        animator.SetTrigger(attackParam1);
         Debug.Log("StrongAttack animation started");
     }
 
