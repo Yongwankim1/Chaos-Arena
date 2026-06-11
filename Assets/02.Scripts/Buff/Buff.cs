@@ -1,20 +1,6 @@
 using UnityEngine;
 
-public class Buff : MonoBehaviour, IBuffable
+public class Buff : MonoBehaviour
 {
-    [SerializeField] BuffSO buff;
-    public void AddBuff()
-    {
-
-    }
-
-    public BuffSO GetBuff()
-    {
-        return buff;
-    }
-
-    public void RemoveBuff()
-    {
-
-    }
+    [SerializeField] protected BuffSO buff;
 }
