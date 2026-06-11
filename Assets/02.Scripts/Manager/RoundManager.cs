@@ -53,6 +53,8 @@ public class RoundManager : NetworkBehaviour
     [SerializeField]
     private float respawnTime = 10f;
 
+    [SerializeField]
+    private EnemySpawnManager enemySpawnManager;
     [Networked]
     public string RoundMessage { get; set; }
     [Networked]
@@ -61,12 +63,16 @@ public class RoundManager : NetworkBehaviour
     private void Awake()
     {
         Instance = this;
+
+        if(enemySpawnManager == null) enemySpawnManager = GameObject.Find("#SpawnManager").GetComponent<EnemySpawnManager>();
     }
 
     public override void Spawned()
     {
         if (!HasStateAuthority)
             return;
+
+        enemySpawnManager.Spawn(Runner);
 
         ChangeState(
             RoundState.Waiting,
@@ -295,6 +301,8 @@ public class RoundManager : NetworkBehaviour
         RespawnAllPlayers();
 
         SetSpawnWalls(true);
+
+        enemySpawnManager.ReSpawn(Runner);
 
         ChangeState(
             RoundState.Preparation,

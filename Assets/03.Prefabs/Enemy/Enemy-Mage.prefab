@@ -1785,6 +1785,7 @@ GameObject:
   - component: {fileID: 1979718124564895966}
   - component: {fileID: 623286148000363409}
   - component: {fileID: 4455574213725309745}
+  - component: {fileID: -5480125655876594343}
   m_Layer: 7
   m_Name: Enemy-Mage
   m_TagString: Untagged
@@ -1940,6 +1941,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  proxyPositionLerp: 20
+  proxyRotationLerp: 20
 --- !u!114 &7170404540485164610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2089,6 +2092,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   bridge: {fileID: 8730408137868423852}
   isDebug: 0
+--- !u!54 &-5480125655876594343
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5356354989984908327}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &5483048412821146046
 GameObject:
   m_ObjectHideFlags: 0

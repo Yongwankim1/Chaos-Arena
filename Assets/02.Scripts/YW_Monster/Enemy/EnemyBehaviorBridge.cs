@@ -32,7 +32,10 @@ public class EnemyBehaviorBridge : NetworkBehaviour
 
         TryPopulatePatrolPointsFromScene();
     }
-
+    public void Init(Transform[] patrolPoints)
+    {
+        this.patrolPoints = patrolPoints;
+    }
     public override void Spawned()
     {
         Debug.Log(

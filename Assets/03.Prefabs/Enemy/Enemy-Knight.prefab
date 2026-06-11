@@ -480,6 +480,7 @@ GameObject:
   - component: {fileID: 7657156027105957938}
   - component: {fileID: 8926124842869163457}
   - component: {fileID: 635979929071522260}
+  - component: {fileID: 50484582241091030}
   m_Layer: 7
   m_Name: Enemy-Knight
   m_TagString: Untagged
@@ -635,6 +636,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  proxyPositionLerp: 20
+  proxyRotationLerp: 20
 --- !u!114 &2981165483300229984
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -792,6 +795,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDrawGizmoDebug
   bridge: {fileID: 5563745966908176064}
   isDebug: 1
+--- !u!54 &50484582241091030
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2202604045660070067}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &2212554331636300030
 GameObject:
   m_ObjectHideFlags: 0
