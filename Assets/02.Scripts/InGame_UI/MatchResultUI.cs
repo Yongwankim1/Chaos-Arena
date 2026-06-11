@@ -24,9 +24,13 @@ public class MatchResultUI : MonoBehaviour
 
     public void Show(string message)
     {
-        resultText.text = message;
+        resultText.text =message;
 
         gameObject.SetActive(true);
+
+        Cursor.lockState = CursorLockMode.None;
+
+        Cursor.visible = true;
     }
 
 
