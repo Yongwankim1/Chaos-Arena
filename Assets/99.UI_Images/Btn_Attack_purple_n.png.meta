@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: 70216c59c13522e4ab1799aafd8c720c
+guid: a075bb1753b3f5a459ef72a0c6c18154
 AssetOrigin:
   serializedVersion: 1
   productId: 160490
   packageName: Cyberpunk RPG GUI Pack
   packageVersion: 1.1
-  assetPath: Assets/Cyberpunk RPG GUI Pack/Cyberpunk RPG GUI Resources/SlicedElements/05Hero_Equipment/Btn_Blue_c.png
+  assetPath: Assets/Cyberpunk RPG GUI Pack/Cyberpunk RPG GUI Resources/SlicedElements/03Scene2/Btn_Attack_purple_n.png
   uploadId: 372365
 TextureImporter:
   internalIDToNameTable: []
@@ -50,13 +50,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 35, y: 35, z: 35, w: 35}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -154,7 +154,29 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Btn_Attack_purple_n_0
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 98
+        width: 307
+        height: 273
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55dfad8c4446c54f92713d7cb42d13c
+      internalID: 1276032928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -167,8 +189,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
-    nameFileIdTable: {}
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      Btn_Attack_purple_n_0: 1276032928
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
