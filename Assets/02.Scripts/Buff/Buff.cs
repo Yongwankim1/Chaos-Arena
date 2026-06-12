@@ -47,7 +47,7 @@ public class Buff : NetworkBehaviour
 
         buffs.Add(buff);
 
-        ApplyBuff(buff.Type);
+        ApplyBuff(buff);
         RPC_AddBuffEffect(type);
     }
 
@@ -66,14 +66,20 @@ public class Buff : NetworkBehaviour
         effects.Add(effect);
     }
 
-    private void ApplyBuff(BuffType type)
+    private void ApplyBuff(BuffSO buff)
     {
         // TODO: Apply real stat changes here, such as attack or movement speed.
-        switch (type)
+        switch (buff.Type)
         {
             case BuffType.None: break;
-            case BuffType.Red: break;
-            case BuffType.Blue: break;
+            case BuffType.Red:
+                IRedBuffable redBuff = GetComponent<IRedBuffable>();
+                redBuff.OnRedBuff(buff);
+                break;
+            case BuffType.Blue:
+                IBlueBuffable blueBuff = GetComponent<IBlueBuffable>();
+                blueBuff.OnBlueBuff(buff);
+                break;
         }
 
     }
