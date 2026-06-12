@@ -154,7 +154,11 @@ namespace Fusion {
     }
         public void ForceMove(Vector3 delta)
         {
-            var previousPos = transform.position;
+            var previousPos =
+                transform.position;
+
+            bool wasGrounded =
+                Data.Grounded;
 
             _controller.Move(delta);
 
@@ -166,7 +170,8 @@ namespace Fusion {
                 transform.position;
 
             Data.Grounded =
-                _controller.isGrounded;
+                _controller.isGrounded ||
+                wasGrounded;
         }
     }
 

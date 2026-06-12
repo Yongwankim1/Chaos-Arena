@@ -827,7 +827,7 @@ MonoBehaviour:
   SprintSpeed: 40
   RotationSmoothTime: 0.12
   SpeedChangeRate: 20
-  attackMoveSpeed: 10
+  attackMoveSpeed: 100
   JumpCooldown: 0.25
   FallTimeout: 0.15
   Grounded: 1

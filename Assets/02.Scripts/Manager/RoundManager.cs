@@ -10,6 +10,13 @@ public class RoundManager : NetworkBehaviour
         private set;
     }
 
+    [Header("Round Rule")]
+    [SerializeField]
+    private int killsToWinRound = 3;
+
+    [SerializeField]
+    private int roundsToWinMatch = 3;
+
     [Header("Time")]
     [SerializeField]
     private float waitingTime = 5f;
@@ -60,6 +67,9 @@ public class RoundManager : NetworkBehaviour
     [Networked]
     public RoundResultType RoundResult { get; set; }
 
+    [Networked]
+    private NetworkBool MatchEnded { get; set; }
+    private bool _isRoundEnding;
     private void Awake()
     {
         Instance = this;
@@ -69,6 +79,8 @@ public class RoundManager : NetworkBehaviour
 
     public override void Spawned()
     {
+        MatchEnded = false;
+
         if (!HasStateAuthority)
             return;
 
@@ -193,11 +205,14 @@ public class RoundManager : NetworkBehaviour
 
     private void DrawRound()
     {
-        RoundResult =
-            RoundResultType.Draw;
+        if (_isRoundEnding)
+            return;
 
-        Debug.Log(
-            "Round Draw");
+        _isRoundEnding = true;
+
+        RoundResult = RoundResultType.Draw;
+
+        Debug.Log("Round Draw");
 
         StartNextRound();
     }
@@ -236,7 +251,7 @@ public class RoundManager : NetworkBehaviour
 
     private void CheckRoundEnd()
     {
-        if (BlueScore >= 3)
+        if (BlueScore >= killsToWinRound)
         {
             BlueRoundWin++;
             RoundResult = RoundResultType.BlueWin;
@@ -248,7 +263,7 @@ public class RoundManager : NetworkBehaviour
             return;
         }
 
-        if (RedScore >= 3)
+        if (RedScore >= killsToWinRound)
         {
             RedRoundWin++;
             RoundResult = RoundResultType.RedWin;
@@ -262,20 +277,18 @@ public class RoundManager : NetworkBehaviour
     }
     private void CheckMatchEnd()
     {
-        if (BlueRoundWin >= 3)
+        if (BlueRoundWin >= roundsToWinMatch)
         {
-            Debug.Log(
-                "Blue Match Win");
+            Debug.Log("Blue Match Win");
 
             EndMatch();
 
             return;
         }
 
-        if (RedRoundWin >= 3)
+        if (RedRoundWin >= roundsToWinMatch)
         {
-            Debug.Log(
-                "Red Match Win");
+            Debug.Log("Red Match Win");
 
             EndMatch();
 
@@ -286,11 +299,14 @@ public class RoundManager : NetworkBehaviour
     }
     private void StartNextRound()
     {
+        MatchEnded = false;
         StartCoroutine(NextRoundRoutine());
     }
     private IEnumerator NextRoundRoutine()
     {
         yield return new WaitForSeconds(2f);
+
+        _isRoundEnding = false;
 
         RoundResult =
             RoundResultType.None;
@@ -325,33 +341,34 @@ public class RoundManager : NetworkBehaviour
                 spawnPosition);
         }
     }
+
+    /*
+       
+     */
     private void EndMatch()
     {
-        Debug.Log(
-            "Match End");
+        if (MatchEnded)
+            return;
 
-        BlueScore = 0;
-        RedScore = 0;
+        MatchEnded = true;
 
-        BlueRoundWin = 0;
-        RedRoundWin = 0;
+        string result = BlueRoundWin > RedRoundWin ? "ºí·çÆÀ ½Â¸®" : "·¹µåÆÀ ½Â¸®";
 
-        RespawnAllPlayers();
-
-        SetSpawnWalls(true);
-
-        ChangeState(
-            RoundState.Waiting,
-            waitingTime);
+        RPC_ShowMatchResult(result);
     }
+
+
+    [Rpc(RpcSources.StateAuthority,RpcTargets.All)]
+    private void RPC_ShowMatchResult(string result)
+    {
+        MatchResultUI.Instance.Show(result);
+    }
+
     private IEnumerator RespawnRoutine(PlayerCharacter player)
     {
         yield return new WaitForSeconds(respawnTime);
 
-        Vector3 spawnPosition =
-            SpawnManager.Instance
-                .GetSpawnPosition(
-                    player.Team);
+        Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team);
 
         player.Respawn(spawnPosition);
     }

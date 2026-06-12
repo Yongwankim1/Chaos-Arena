@@ -119,6 +119,11 @@ public class RoomActionButtonUI : MonoBehaviour
         if (!CanStartGame()) return;
 
         Debug.Log("게임 시작");
+
+        RoomSessionData.RoomName = runner.SessionInfo.Name;
+
+        RoomSessionData.IsHost = runner.IsServer;
+
         runner.SessionInfo.IsOpen = false;
         runner.SessionInfo.IsVisible = false;
         runner.SessionInfo.UpdateCustomProperties(new Dictionary<string, SessionProperty>

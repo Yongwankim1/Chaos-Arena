@@ -7,7 +7,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 {
     [Header("Combo")]
     [SerializeField]
-    private float comboInputTime = 0.5f;
+    private float comboInputTime = 0.3f;
 
     [Header("Attack_Data")]
     [SerializeField]
@@ -366,5 +366,28 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     public GameObject GetAttacker()
     {
         return gameObject;
+    }
+
+    public void ResetCombatState()
+    {
+        _comboIndex = 0;
+
+        _waitingNextCombo = false;
+
+        _comboTimer = 0f;
+
+        AttackMoveRemain = 0f;
+
+        IsAttacking = false;
+
+        CurrentAttackIndex = 0;
+
+        _animator.SetBool(
+            IsAttackingHash,
+            false);
+
+        _animator.SetInteger(
+            ComboIndexHash,
+            0);
     }
 }
