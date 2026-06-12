@@ -1,6 +1,7 @@
 ﻿using Fusion;
 using UnityEngine;
 using UnityEngine.AI;
+
 [RequireComponent(typeof(EnemyBehaviorBridge))]
 public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
 {
@@ -13,31 +14,58 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
     [SerializeField] protected EnemyHP enemyHP;
     [SerializeField] protected EnemyAttackType enemyAttackType;
     [SerializeField] protected float damage;
-
+    [SerializeField] private float targetClearDelay = 5f;
 
     protected EnemyAttackBase defaultAttackPrefab;
     protected EnemyAttackBase strongAttackPrefab;
+
+    private float lastAttackTime = -1f;
 
     private void Awake()
     {
         if (attackPos == null) attackPos = transform;
         if (animator == null) animator = GetComponent<Animator>();
-        if(bridge == null) bridge = GetComponent<EnemyBehaviorBridge>();
-        if(agent == null) agent = GetComponent<NavMeshAgent>();
-        if(enemyHP == null) enemyHP = GetComponent<EnemyHP>();
+        if (bridge == null) bridge = GetComponent<EnemyBehaviorBridge>();
+        if (agent == null) agent = GetComponent<NavMeshAgent>();
+        if (enemyHP == null) enemyHP = GetComponent<EnemyHP>();
         defaultAttackPrefab = bridge.GetEffect(EffectType.DefaultAttack).GetComponent<EnemyAttackBase>();
         strongAttackPrefab = bridge.GetEffect(EffectType.StrongAttack).GetComponent<EnemyAttackBase>();
         damage = bridge.Config.attackDamage;
     }
+
+    public override void Render()
+    {
+        if (Object != null && !Object.HasStateAuthority)
+            return;
+
+        if (enemyHP == null || !enemyHP.HasTarget)
+            return;
+
+        if (lastAttackTime < 0f)
+        {
+            lastAttackTime = Time.time;
+            return;
+        }
+
+        if (Time.time - lastAttackTime < targetClearDelay)
+            return;
+
+        enemyHP.ClearTarget();
+        lastAttackTime = -1f;
+    }
+
     void Start()
     {
         if (bridge != null) enemyAttackType = bridge.Config.attackType;
     }
+
     public void DefaultAttack()
     {
         if (Object != null && !Object.HasStateAuthority)
             return;
         if (animator == null) return;
+
+        lastAttackTime = Time.time;
         agent.isStopped = false;
         AimAtTarget();
         agent.isStopped = true;
@@ -57,6 +85,8 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         if (Object != null && !Object.HasStateAuthority)
             return;
         if (animator == null) return;
+
+        lastAttackTime = Time.time;
         agent.isStopped = false;
         AimAtTarget();
         agent.isStopped = true;
@@ -82,7 +112,6 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         if (Object != null && !Object.HasStateAuthority)
             return;
     }
-
 
     public GameObject GetAttacker()
     {
