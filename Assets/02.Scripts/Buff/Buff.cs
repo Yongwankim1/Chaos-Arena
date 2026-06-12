@@ -74,10 +74,12 @@ public class Buff : NetworkBehaviour
             case BuffType.None: break;
             case BuffType.Red:
                 IRedBuffable redBuff = GetComponent<IRedBuffable>();
+                if (redBuff == null) return;
                 redBuff.OnRedBuff(buff);
                 break;
             case BuffType.Blue:
                 IBlueBuffable blueBuff = GetComponent<IBlueBuffable>();
+                if (blueBuff == null) return;
                 blueBuff.OnBlueBuff(buff);
                 break;
         }

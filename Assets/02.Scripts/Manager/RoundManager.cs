@@ -340,6 +340,12 @@ public class RoundManager : NetworkBehaviour
             player.Respawn(
                 spawnPosition);
         }
+
+        Buff[] playerBuffs = FindObjectsByType<Buff>(FindObjectsSortMode.None);
+        foreach(Buff buff in playerBuffs)
+        {
+            buff.Init();
+        }
     }
 
     /*
@@ -369,7 +375,7 @@ public class RoundManager : NetworkBehaviour
         yield return new WaitForSeconds(respawnTime);
 
         Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team);
-
+        player.GetComponent<Buff>().Init();
         player.Respawn(spawnPosition);
     }
 }
