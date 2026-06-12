@@ -1,4 +1,5 @@
 using Fusion;
+using Photon.Realtime;
 using UnityEngine;
 
 public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
@@ -158,7 +159,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
     {
         if (!HasStateAuthority)
             return;
-
+        GetComponent<Buff>().Init();
         Vector3 oldPosition = transform.position;
 
         CurrentHP = MaxHP;

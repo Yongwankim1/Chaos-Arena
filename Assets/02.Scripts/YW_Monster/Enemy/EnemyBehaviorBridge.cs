@@ -32,15 +32,12 @@ public class EnemyBehaviorBridge : NetworkBehaviour
 
         TryPopulatePatrolPointsFromScene();
     }
-
+    public void Init(Transform[] patrolPoints)
+    {
+        this.patrolPoints = patrolPoints;
+    }
     public override void Spawned()
     {
-        Debug.Log(
-        $"Enemy Authority | {name} " +
-        $"RunnerIsServer:{Runner.IsServer} " +
-        $"HasStateAuthority:{Object.HasStateAuthority} " +
-        $"NavMeshAgentEnabled:{navMeshAgent?.enabled}"
-    );
         ApplyAuthorityState();
 
         if (Object == null || Object.HasStateAuthority)
@@ -52,17 +49,6 @@ public class EnemyBehaviorBridge : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (Object != null && Object.HasStateAuthority && Runner.Tick % 60 == 0)
-        {
-            Debug.Log(
-                $"Enemy Move | {name} " +
-                $"agentEnabled:{navMeshAgent.enabled} " +
-                $"graphEnabled:{behaviorGraphAgent.enabled} " +
-                $"isStopped:{navMeshAgent.isStopped} " +
-                $"speed:{navMeshAgent.speed} " +
-                $"velocity:{navMeshAgent.velocity.magnitude}"
-            );
-        }
 
         ApplyAuthorityState();
 
