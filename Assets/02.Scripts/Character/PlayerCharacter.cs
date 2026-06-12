@@ -154,23 +154,25 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
     {
         RoundManager.Instance.OnPlayerDeath(this, attacker);
     }
-    public void Respawn(
-       Vector3 position)
+    public void Respawn(Vector3 position)
     {
         if (!HasStateAuthority)
             return;
 
-        CurrentHP =
-            MaxHP;
+        Vector3 oldPosition = transform.position;
 
-        CurrentMana =
-            MaxMana;
+        CurrentHP = MaxHP;
+        CurrentMana = MaxMana;
+        IsDead = false;
 
-        IsDead =
-            false;
+        CharacterCombat combat = GetComponent<CharacterCombat>();
 
-        NetworkCharacterController controller =
-            GetComponent<NetworkCharacterController>();
+        if (combat != null)
+        {
+            combat.ResetCombatState();
+        }
+
+        NetworkCharacterController controller = GetComponent<NetworkCharacterController>();
 
         if (controller != null)
         {
@@ -178,19 +180,38 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
         }
         else
         {
-            transform.position =
-                position;
+            transform.position = position;
         }
 
-        RPC_ResetCharacter();
+        RPC_ResetCharacter(oldPosition, position);
     }
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_ResetCharacter()
+    private void RPC_ResetCharacter(Vector3 oldPosition, Vector3 newPosition)
     {
-        if (_animator == null)
+        if (_animator != null)
+        {
+            _animator.Rebind();
+            _animator.Update(0f);
+        }
+
+        NetworkThirdPersonController controller3rd = GetComponent<NetworkThirdPersonController>();
+
+        if (controller3rd == null)
             return;
 
-        _animator.Rebind();
-        _animator.Update(0f);
+        if (!controller3rd.HasInputAuthority)
+            return;
+
+        var cam = FindFirstObjectByType<Unity.Cinemachine.CinemachineCamera>();
+
+        if (cam == null)
+            return;
+        Debug.Log( $"Camera Follow : {cam.Target.TrackingTarget.name}");
+
+
+        Vector3 delta = newPosition - oldPosition;
+
+        cam.OnTargetObjectWarped(transform, delta);
     }
 }

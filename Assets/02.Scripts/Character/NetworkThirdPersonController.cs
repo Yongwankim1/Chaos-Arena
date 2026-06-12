@@ -119,14 +119,18 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (!GetInput(out NetworkInputData input))
             return;
+
         _lastInput = input;
 
         GroundedCheck();
         JumpAndGravity(input);
 
-        if (_combat != null && _combat.AttackMoveRemain > 0f)
+        if (_combat != null && _combat.IsAttacking)
         {
-            ApplyAttackDash();
+            if (_combat.AttackMoveRemain > 0f)
+            {
+                ApplyAttackDash();
+            }
         }
         else
         {
@@ -177,8 +181,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (!_wasGrounded && groundedNow)
         {
-            _landingLockTimer = 0.2f;
-
             if (HasStateAuthority)
             {
                 if (_combat == null ||
@@ -424,6 +426,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _animator.SetBool(_animIDGrounded, true);
         _animator.SetBool(_animIDFreeFall, false);
         _animator.CrossFade(_animIDJumpLand, 0f, 0, 0f);
+        Debug.Log("PLAY LAND");
     }
 
     private void Attack(NetworkInputData input)
@@ -462,4 +465,5 @@ public class NetworkThirdPersonController : NetworkBehaviour
     {
         PlayLandAnimation();
     }
-}
+
+   }

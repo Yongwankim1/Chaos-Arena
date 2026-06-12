@@ -65,6 +65,9 @@ public class RoundManager : NetworkBehaviour
     [Networked]
     public RoundResultType RoundResult { get; set; }
 
+    [Networked]
+    private NetworkBool MatchEnded { get; set; }
+    private bool _isRoundEnding;
     private void Awake()
     {
         Instance = this;
@@ -72,6 +75,8 @@ public class RoundManager : NetworkBehaviour
 
     public override void Spawned()
     {
+        MatchEnded = false;
+
         if (!HasStateAuthority)
             return;
 
@@ -194,11 +199,14 @@ public class RoundManager : NetworkBehaviour
 
     private void DrawRound()
     {
-        RoundResult =
-            RoundResultType.Draw;
+        if (_isRoundEnding)
+            return;
 
-        Debug.Log(
-            "Round Draw");
+        _isRoundEnding = true;
+
+        RoundResult = RoundResultType.Draw;
+
+        Debug.Log("Round Draw");
 
         StartNextRound();
     }
@@ -285,11 +293,14 @@ public class RoundManager : NetworkBehaviour
     }
     private void StartNextRound()
     {
+        MatchEnded = false;
         StartCoroutine(NextRoundRoutine());
     }
     private IEnumerator NextRoundRoutine()
     {
         yield return new WaitForSeconds(2f);
+
+        _isRoundEnding = false;
 
         RoundResult =
             RoundResultType.None;
@@ -328,6 +339,11 @@ public class RoundManager : NetworkBehaviour
      */
     private void EndMatch()
     {
+        if (MatchEnded)
+            return;
+
+        MatchEnded = true;
+
         string result = BlueRoundWin > RedRoundWin ? "ºí·çÆÀ ½Â¸®" : "·¹µåÆÀ ½Â¸®";
 
         RPC_ShowMatchResult(result);

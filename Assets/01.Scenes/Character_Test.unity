@@ -1697,7 +1697,7 @@ MonoBehaviour:
   waitingTime: 3
   characterSelectTime: 10
   preparationTime: 5
-  roundTime: 120
+  roundTime: 10
   characterSelectUI: {fileID: 1196706178}
   _CurrentState: 0
   _StateRemainTime: 0
