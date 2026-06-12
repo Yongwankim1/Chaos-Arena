@@ -37,8 +37,13 @@ public partial class SenseTargetAction : Action
         // TODO: 데미지/피격 코드에서 나를 때린 플레이어를 Target.Value에 넣어준다.
         // 이 액션은 더 이상 가까운 플레이어를 먼저 찾지 않고, 피격으로 지정된 Target만 감지한다.
         GameObject target = Self?.Value.GetComponent<EnemyHP>().Target;
+        if (target == null)
+        {
+            ClearTarget();
+            return Status.Success;
+        }
 
-        if (target != null) Target.Value = target;
+        Target.Value = target;
 
         NetworkCharacterController hitAttackerTarget = Target?.Value != null
             ? Target.Value.GetComponent<NetworkCharacterController>()
