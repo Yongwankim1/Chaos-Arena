@@ -2057,6 +2057,7 @@ MonoBehaviour:
   bodyCollider: {fileID: 0}
   animator: {fileID: 0}
   DieParam: Die
+  buffType: 2
 --- !u!114 &623286148000363409
 MonoBehaviour:
   m_ObjectHideFlags: 0
