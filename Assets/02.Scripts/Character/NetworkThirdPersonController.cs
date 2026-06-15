@@ -142,7 +142,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
         }
         else if (_playerCharacter.IsDashing)
         {
-            ApplyClassDash();
+            if (HasStateAuthority)
+            {
+                ApplyClassDash();
+            }
         }
         else
         {
