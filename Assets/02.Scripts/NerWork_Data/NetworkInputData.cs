@@ -11,4 +11,6 @@ public struct NetworkInputData : INetworkInput
     public NetworkBool Sprint;
 
     public NetworkBool Attack;
+
+    public NetworkBool Dash;
 }

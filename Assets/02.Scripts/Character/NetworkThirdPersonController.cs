@@ -50,6 +50,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private Animator _animator;
     private NetworkCharacterController _controller;
     private PlayerCharacter _playerCharacter;
+    private IDash _dash;
 
     private int _animIDSpeed;
     private int _animIDGrounded;
@@ -84,6 +85,15 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _combat = GetComponent<CharacterCombat>();
         _playerCharacter = GetComponent<PlayerCharacter>();
 
+        foreach (var component in GetComponents<MonoBehaviour>())
+        {
+            if (component is IDash dash)
+            {
+                _dash = dash;
+                break;
+            }
+        }
+
         AssignAnimationIDs();
 
         _fallTimeoutDelta = FallTimeout;
@@ -106,8 +116,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
             _cinemachineTargetYaw = transform.eulerAngles.y;
         }
-        Debug.Log(
-    $"Player Spawned | State:{HasStateAuthority} Input:{HasInputAuthority}");
     }
 
     public override void FixedUpdateNetwork()
@@ -132,12 +140,17 @@ public class NetworkThirdPersonController : NetworkBehaviour
                 ApplyAttackDash();
             }
         }
+        else if (_playerCharacter.IsDashing)
+        {
+            ApplyClassDash();
+        }
         else
         {
             Move(input);
         }
 
         Attack(input);
+        Dash(input);
         GroundedCheck();
         CaptureAnimationState();
         UpdateAnimatorParameters();
@@ -323,6 +336,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             return;
         }
+        if (_playerCharacter.IsDashing)
+            return;
         if (Grounded)
         {
             _fallTimeoutDelta = FallTimeout;
@@ -466,4 +481,31 @@ public class NetworkThirdPersonController : NetworkBehaviour
         PlayLandAnimation();
     }
 
-   }
+    private void Dash(NetworkInputData input)
+    {
+        if (!input.Dash)
+            return;
+
+        if (_playerCharacter == null)
+            return;
+
+        if (_playerCharacter.IsDead)
+            return;
+
+        _dash?.Dash();
+    }
+
+    private void ApplyClassDash()
+    {
+        if (_dash == null)
+            return;
+
+        float moveThisTick = _dash.GetMoveThisTick();
+
+        if (moveThisTick <= 0f)
+            return;
+
+        _controller.ForceMove(_dash.DashDirection * moveThisTick);
+    }
+
+}

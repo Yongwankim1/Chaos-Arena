@@ -5,7 +5,8 @@ public class AttackData
 {
     public AttackSpawnType SpawnType;
 
-    public float Damage;
+    [Header("Damage")]
+    public float DamagePercent = 100f;
 
     public float Range;
 

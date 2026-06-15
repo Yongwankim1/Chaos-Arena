@@ -1728,6 +1728,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecf94bef6c22a3d46a5e6d27bb1785a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
+  killsToWinRound: 3
+  roundsToWinMatch: 3
   waitingTime: 3
   characterSelectTime: 10
   preparationTime: 5
@@ -3940,6 +3942,7 @@ MonoBehaviour:
   Jump: 0
   Sprint: 0
   Attack: 0
+  Dash: 0
 --- !u!4 &1971841212
 Transform:
   m_ObjectHideFlags: 0
