@@ -12,6 +12,8 @@ public class CharacterSelectUI : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text selectedText;
     [SerializeField] private GameObject[] inGame_UI;
+    [SerializeField]
+    private TMP_Text timerText;
     public static CharacterSelectUI Instance
     {
         get;
@@ -30,6 +32,25 @@ public class CharacterSelectUI : MonoBehaviour
         assassinButton.onClick.AddListener(OnClickAssassin);
         mageButton.onClick.AddListener(OnClickMage);
         confirmButton.onClick.AddListener(OnClickConfirm);
+    }
+
+    private void Update()
+    {
+        if (RoundManager.Instance == null)
+            return;
+
+        if (!RoundManager.Instance.Object)
+            return;
+
+        if (!RoundManager.Instance.Object.IsValid)
+            return;
+
+        RoundManager round = RoundManager.Instance;
+
+        if (round.CurrentState == RoundState.CharacterSelect)
+        {
+            timerText.text = $"{Mathf.CeilToInt(round.StateRemainTime)}";
+        }
     }
 
     private void Start()

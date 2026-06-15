@@ -112,6 +112,9 @@ public class AssassinDash : NetworkBehaviour, IDash
 
     public float GetMoveThisTick()
     {
+        if (!HasStateAuthority)
+            return 0f;
+
         float speed = dashDistance / dashDuration;
 
         float moveThisTick = speed * Runner.DeltaTime;

@@ -99,44 +99,29 @@ public class RoundHUD : MonoBehaviour
         {
             case RoundState.Waiting:
 
-                timerText.text =
-                    $"잠시만 기다려주세요\n{Mathf.CeilToInt(round.StateRemainTime)}";
-
-                break;
-
-            case RoundState.CharacterSelect:
-
-                timerText.text =
-                    $"캐릭터 선택 시간\n{Mathf.CeilToInt(round.StateRemainTime)}";
+                timerText.text = $"{Mathf.CeilToInt(round.StateRemainTime)}";
 
                 break;
 
             case RoundState.Preparation:
 
-                timerText.text =
-                    $"대기\n{Mathf.CeilToInt(round.StateRemainTime)}";
+                timerText.text = $"{Mathf.CeilToInt(round.StateRemainTime)}";
 
                 break;
 
             case RoundState.Playing:
 
-                int minutes =
-                    Mathf.FloorToInt(
-                        round.StateRemainTime / 60);
+                int minutes = Mathf.FloorToInt(round.StateRemainTime / 60);
 
-                int seconds =
-                    Mathf.FloorToInt(
-                        round.StateRemainTime % 60);
+                int seconds = Mathf.FloorToInt(round.StateRemainTime % 60);
 
-                timerText.text =
-                    $"{minutes:00}:{seconds:00}";
+                timerText.text = $"{minutes:00}:{seconds:00}";
 
                 break;
 
             case RoundState.RoundEnd:
 
-                timerText.text =
-                    "라운드 종료";
+                timerText.text = "라운드 종료";
 
                 break;
         }
