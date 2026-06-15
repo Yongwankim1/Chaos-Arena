@@ -17,7 +17,7 @@ public class RoundHUD : MonoBehaviour
     [SerializeField]
     private TMP_Text[] scoreText;
     [SerializeField]
-    private TMP_Text roundResultTextPanel;
+    private GameObject roundResultTextPanel;
     [SerializeField]
     private TMP_Text roundResultText;
 
@@ -64,12 +64,12 @@ public class RoundHUD : MonoBehaviour
         {
             case RoundResultType.None:
 
-                roundResultTextPanel.gameObject.SetActive(false);
+                roundResultTextPanel.SetActive(false);
                 break;
 
             case RoundResultType.BlueWin:
 
-                roundResultTextPanel.gameObject.SetActive(true);
+                roundResultTextPanel.SetActive(true);
 
                 roundResultText.text ="ºí·çÆÀ ½Â¸®";
 
@@ -77,8 +77,7 @@ public class RoundHUD : MonoBehaviour
 
             case RoundResultType.RedWin:
 
-                roundResultTextPanel.gameObject
-                    .SetActive(true);
+                roundResultTextPanel.SetActive(true);
 
                 roundResultText.text = "·¹µåÆÀ ½Â¸®";
 
@@ -86,7 +85,7 @@ public class RoundHUD : MonoBehaviour
 
             case RoundResultType.Draw:
 
-                roundResultTextPanel.gameObject.SetActive(true);
+                roundResultTextPanel.SetActive(true);
 
                 roundResultText.text = "¹«½ÂºÎ";
 

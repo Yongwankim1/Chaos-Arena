@@ -463,7 +463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &42150623
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1059,7 +1059,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &142033623
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5627,7 +5627,7 @@ MonoBehaviour:
   scoreText:
   - {fileID: 1251564474}
   - {fileID: 1820197097}
-  roundResultTextPanel: {fileID: 0}
+  roundResultTextPanel: {fileID: 381949824}
   roundResultText: {fileID: 1175943353}
 --- !u!1 &1306700360
 GameObject:
