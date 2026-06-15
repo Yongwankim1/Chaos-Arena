@@ -102,11 +102,16 @@ public class CharacterSelectUI : MonoBehaviour
 
         Cursor.visible =
             false;
-        foreach (GameObject ui in inGame_UI) 
+        OnPlayerUI();
+        gameObject.SetActive(false);
+
+    }
+
+    public void OnPlayerUI() 
+    {
+        foreach (GameObject ui in inGame_UI)
         {
             ui.SetActive(true);
         }
-        gameObject.SetActive(false);
-
     }
 }

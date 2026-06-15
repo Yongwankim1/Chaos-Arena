@@ -13,6 +13,8 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     [SerializeField]
     private NetworkObject playerLobbyPrefab;
 
+
+
     public static GameBootstrap Instance
     {
         get;
@@ -390,14 +392,14 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
                 continue;
             }
 
-            lobby.SelectedClass =
-                CharacterClassType.Assassin;
+            lobby.SelectedClass = CharacterClassType.Assassin;
 
             Debug.Log(
                 $"Force Assassin : {player.PlayerId}");
 
-            SpawnSelectedCharacter(
-                player);
+            CharacterSelectUI.Instance.OnPlayerUI();
+
+            SpawnSelectedCharacter(player);
         }
 
         RPC_CloseCharacterSelectUI();
