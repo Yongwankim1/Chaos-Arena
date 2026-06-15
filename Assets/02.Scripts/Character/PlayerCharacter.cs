@@ -19,14 +19,16 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
 
     [Networked]
     public NetworkBool IsDead { get; set; }
+    [Networked]
+    public NetworkBool IsDashing { get; set; }
 
     private IAttacker _lastAttacker;
 
-    public float MaxHP =>
-        _classData.maxHP;
+    public float MaxHP => _classData.maxHP;
 
-    public float MaxMana =>
-        _classData.maxMana;
+    public float MaxMana => _classData.maxMana;
+
+    public float AttackPower => _classData.attackPower;
 
     private static readonly int DieHash =
     Animator.StringToHash("Die");

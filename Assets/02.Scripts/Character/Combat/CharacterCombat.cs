@@ -70,6 +70,9 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     public void AttackInput()
     {
+        if (_playerCharacter.IsDashing)
+            return;
+
         if (_playerCharacter != null && _playerCharacter.IsDead)
         {
             return;
@@ -238,8 +241,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             if (hit.transform.root == transform.root)
                 continue;
 
-            IDamageable damageable =
-                hit.GetComponentInParent<IDamageable>();
+            IDamageable damageable = hit.GetComponentInParent<IDamageable>();
 
             if (damageable == null)
                 continue;
@@ -258,9 +260,10 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                     Quaternion.identity);
             }
 
-            damageable.TakeDamage(
-                Mathf.RoundToInt(data.Damage),
-                this);
+            float multiplier = data.DamagePercent / 100f;
+            int finalDamage = Mathf.RoundToInt(_playerCharacter.AttackPower * multiplier);
+
+            damageable.TakeDamage(Mathf.RoundToInt(finalDamage), this);
         }
     }
     private void OnDrawGizmos()

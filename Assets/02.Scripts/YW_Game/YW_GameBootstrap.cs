@@ -271,6 +271,8 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         data.Jump = InputManager.Instance.ConsumeJump();
         data.Sprint = InputManager.Instance.Sprint;
         data.Attack = InputManager.Instance.ConsumeAttack();
+        data.Dash = InputManager.Instance.ConsumeDash();
+
         input.Set(data);
     }
 

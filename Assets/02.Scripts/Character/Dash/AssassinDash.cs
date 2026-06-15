@@ -1,0 +1,122 @@
+using Fusion;
+using UnityEngine;
+
+public class AssassinDash : NetworkBehaviour, IDash
+{
+    [SerializeField]
+    private float dashDistance = 5f;
+
+    [SerializeField]
+    private float dashDuration = 0.1f;
+
+    [SerializeField]
+    private LayerMask obstacleMask;
+
+    [SerializeField]
+    private GameObject startEffect;
+
+    [SerializeField]
+    private GameObject endEffect;
+
+    [Networked]
+    public float DashRemainDistance { get; set; }
+
+    [Networked]
+    public Vector3 DashDirection { get; set; }
+
+    public bool IsDashing => _player != null && _player.IsDashing;
+
+    private PlayerCharacter _player;
+    private NetworkCharacterController _controller;
+    private CharacterController _cc;
+
+    private void Awake()
+    {
+        _player = GetComponent<PlayerCharacter>();
+        _controller = GetComponent<NetworkCharacterController>();
+        _cc = GetComponent<CharacterController>();
+    }
+
+    public void Dash()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (_player.IsDead)
+            return;
+
+        if (_player.IsDashing)
+            return;
+
+        Vector3 direction = transform.forward;
+
+        float distance = GetAvailableDistance(direction);
+
+        if (distance <= 0.1f)
+            return;
+
+        DashDirection = direction;
+
+        DashRemainDistance = distance;
+
+        _player.IsDashing = true;
+
+        RPC_PlayDashStart(transform.position);
+    }
+
+    private float GetAvailableDistance(Vector3 direction)
+    {
+        Vector3 start = transform.position;
+
+        Vector3 p1 = start + _cc.center + Vector3.up * (-_cc.height * 0.5f + _cc.radius);
+
+        Vector3 p2 = start + _cc.center + Vector3.up * (_cc.height * 0.5f - _cc.radius);
+
+        if (Physics.CapsuleCast(p1, p2, _cc.radius, direction, out RaycastHit hit, dashDistance, obstacleMask))
+        {
+            return Mathf.Max(hit.distance - 0.3f, 0f);
+        }
+
+        return dashDistance;
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayDashStart(Vector3 position)
+    {
+        if (startEffect == null)
+            return;
+
+        Instantiate(startEffect, position, Quaternion.identity);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayDashEnd(Vector3 position)
+    {
+        if (endEffect == null)
+            return;
+
+        Instantiate(endEffect, position, Quaternion.identity);
+    }
+
+    public float GetMoveThisTick()
+    {
+        float speed = dashDistance / dashDuration;
+
+        float moveThisTick = speed * Runner.DeltaTime;
+
+        moveThisTick = Mathf.Min(moveThisTick, DashRemainDistance);
+
+        DashRemainDistance -= moveThisTick;
+
+        if (DashRemainDistance <= 0f)
+        {
+            DashRemainDistance = 0f;
+
+            _player.IsDashing = false;
+
+            RPC_PlayDashEnd(transform.position);
+        }
+
+        return moveThisTick;
+    }
+}

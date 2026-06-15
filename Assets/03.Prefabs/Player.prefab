@@ -673,9 +673,9 @@ GameObject:
   - component: {fileID: 6071844188690936054}
   - component: {fileID: 7883889268887263263}
   - component: {fileID: 2959145431102751377}
-  - component: {fileID: 6070649731673188414}
   - component: {fileID: -1913311418479507481}
   - component: {fileID: 4676333309810074325}
+  - component: {fileID: 4982433808625598701}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -726,6 +726,7 @@ MonoBehaviour:
   - {fileID: 2959145431102751377}
   - {fileID: -1913311418479507481}
   - {fileID: 4676333309810074325}
+  - {fileID: 4982433808625598701}
   ForceRemoteRenderTimeframe: 0
 --- !u!95 &7961633600829976054
 Animator:
@@ -852,7 +853,7 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 5651274045008937097}
   comboAttackData:
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 3031006684049387128, guid: f4ef8c345f8b61f4da40ac1b469b82fb, type: 3}
@@ -861,7 +862,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
@@ -870,7 +871,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
@@ -879,7 +880,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 1149029339946739509, guid: 99994b4d1bcfe2d43bca138323b8704c, type: 3}
@@ -888,7 +889,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 8703879215163434798, guid: 9ce27536803f3ba40b31bed95e7c8166, type: 3}
@@ -897,22 +898,6 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   _AttackMoveRemain: 0
---- !u!114 &6070649731673188414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3337101850504356701}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 824b2a97b9cea9f4b91b9519df480bfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::NetworkStarterAssetsInput
-  Move: {x: 0, y: 0}
-  Look: {x: 0, y: 0}
-  Jump: 0
-  Sprint: 0
 --- !u!114 &-1913311418479507481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,6 +916,8 @@ MonoBehaviour:
   _Team: 0
   _IsDead:
     _value: 0
+  _IsDashing:
+    _value: 0
 --- !u!114 &4676333309810074325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -946,6 +933,27 @@ MonoBehaviour:
   buffs: []
   effects: []
   effectRoot: {fileID: 787504622579005918}
+--- !u!114 &4982433808625598701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3189288ee0f49b244805c21b468af1e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AssassinDash
+  dashDistance: 5
+  dashDuration: 0.1
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  startEffect: {fileID: 0}
+  endEffect: {fileID: 0}
+  _DashRemainDistance: 0
+  _DashDirection: {x: 0, y: 0, z: 0}
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0

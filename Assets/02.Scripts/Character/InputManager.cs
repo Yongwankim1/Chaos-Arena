@@ -12,6 +12,7 @@ public class InputManager : MonoBehaviour
     public bool Sprint;
 
     public bool Attack;
+    public bool Dash;
 
     private void Awake()
     {
@@ -64,6 +65,21 @@ public class InputManager : MonoBehaviour
     {
         Attack = value.isPressed;
     }
+    public void OnDash(InputValue value)
+    {
+        Dash = value.isPressed;
+    }
+
+    public bool ConsumeDash()
+    {
+        if (!Dash)
+            return false;
+
+        Dash = false;
+
+        return true;
+    }
+
     public bool ConsumeAttack()
     {
         if (!Attack)
