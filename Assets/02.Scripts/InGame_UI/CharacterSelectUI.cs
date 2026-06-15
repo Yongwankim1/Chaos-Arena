@@ -11,6 +11,7 @@ public class CharacterSelectUI : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private TMP_Text selectedText;
+    [SerializeField] private GameObject[] inGame_UI;
     public static CharacterSelectUI Instance
     {
         get;
@@ -36,7 +37,7 @@ public class CharacterSelectUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        selectedText.text = "Selected : None";
+        selectedText.text = "선택된 캐릭터가 없습니다";
 
         confirmButton.interactable = false;
     }
@@ -52,7 +53,7 @@ public class CharacterSelectUI : MonoBehaviour
     {
         SelectedClass = CharacterClassType.Assassin;
 
-        selectedText.text = "Selected : Assassin";
+        selectedText.text = "어쎄신 선택";
 
         confirmButton.interactable = true;
     }
@@ -61,7 +62,7 @@ public class CharacterSelectUI : MonoBehaviour
     {
         SelectedClass = CharacterClassType.Mage;
 
-        selectedText.text = "Selected : Mage";
+        selectedText.text = "마법사 선택";
 
         confirmButton.interactable = true;
     }
@@ -80,7 +81,11 @@ public class CharacterSelectUI : MonoBehaviour
 
         Cursor.visible =
             false;
-
+        foreach (GameObject ui in inGame_UI) 
+        {
+            ui.SetActive(true);
+        }
         gameObject.SetActive(false);
+
     }
 }
