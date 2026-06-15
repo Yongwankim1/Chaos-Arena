@@ -18,6 +18,17 @@ public class AssassinDash : NetworkBehaviour, IDash
     [SerializeField]
     private GameObject endEffect;
 
+    [SerializeField]
+    private ParticleSystem dashStartEffect;
+
+    [SerializeField]
+    private ParticleSystem dashSmokeEffect;
+
+    [SerializeField]
+    private ParticleSystem dashEndEffect;
+
+    private SkinnedMeshRenderer[] _meshes;
+
     [Networked]
     public float DashRemainDistance { get; set; }
 
@@ -35,6 +46,7 @@ public class AssassinDash : NetworkBehaviour, IDash
         _player = GetComponent<PlayerCharacter>();
         _controller = GetComponent<NetworkCharacterController>();
         _cc = GetComponent<CharacterController>();
+        _meshes = GetComponentsInChildren<SkinnedMeshRenderer>(true);
     }
 
     public void Dash()
@@ -61,7 +73,9 @@ public class AssassinDash : NetworkBehaviour, IDash
 
         _player.IsDashing = true;
 
-        RPC_PlayDashStart(transform.position);
+        RPC_PlayDashStart();
+
+        RPC_SetCharacterVisible(false);
     }
 
     private float GetAvailableDistance(Vector3 direction)
@@ -81,21 +95,19 @@ public class AssassinDash : NetworkBehaviour, IDash
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_PlayDashStart(Vector3 position)
+    private void RPC_PlayDashStart()
     {
-        if (startEffect == null)
-            return;
+        dashStartEffect?.Play();
 
-        Instantiate(startEffect, position, Quaternion.identity);
+        dashSmokeEffect?.Play();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_PlayDashEnd(Vector3 position)
+    private void RPC_PlayDashEnd()
     {
-        if (endEffect == null)
-            return;
+        dashSmokeEffect?.Stop();
 
-        Instantiate(endEffect, position, Quaternion.identity);
+        dashEndEffect?.Play();
     }
 
     public float GetMoveThisTick()
@@ -114,9 +126,24 @@ public class AssassinDash : NetworkBehaviour, IDash
 
             _player.IsDashing = false;
 
-            RPC_PlayDashEnd(transform.position);
+            RPC_PlayDashEnd();
+
+            RPC_SetCharacterVisible(true);
         }
 
         return moveThisTick;
+    }
+    private void SetCharacterVisible(bool visible)
+    {
+        foreach (SkinnedMeshRenderer mesh in _meshes)
+        {
+            mesh.enabled = visible;
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_SetCharacterVisible(bool visible)
+    {
+        SetCharacterVisible(visible);
     }
 }
