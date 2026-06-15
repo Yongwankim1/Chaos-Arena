@@ -10,8 +10,8 @@ ScriptedImporter:
   script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
 AssetOrigin:
   serializedVersion: 1
-  productId: 245262
-  packageName: Hyper Casual FX Pack Vol.2
-  packageVersion: 1.2
+  productId: 231405
+  packageName: Hyper Casual FX Pack Vol.1
+  packageVersion: 1.4
   assetPath: Assets/VFX_Klaus/Shaders/HCFX_Particle_add.shadergraph
-  uploadId: 753641
+  uploadId: 753645
