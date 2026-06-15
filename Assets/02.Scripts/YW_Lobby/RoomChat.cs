@@ -163,6 +163,8 @@ public class RoomChat : MonoBehaviour, IChatClientListener
         }
 
         Canvas.ForceUpdateCanvases();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent as RectTransform);
     }
 
     private void AddChatText(string message)

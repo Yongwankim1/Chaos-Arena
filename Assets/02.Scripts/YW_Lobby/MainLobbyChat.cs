@@ -147,6 +147,8 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
         scrollRect.verticalNormalizedPosition = 0f;
 
         Canvas.ForceUpdateCanvases();
+
+        LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent as RectTransform);
     }
     public void SendChat()
     {
