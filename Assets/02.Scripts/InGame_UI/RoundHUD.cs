@@ -51,8 +51,6 @@ public class RoundHUD : MonoBehaviour
 
         killText[1].text = round.RedScore.ToString();
         scoreText[1].text = round.RedRoundWin.ToString();
-
-
     }
 
     private void UpdateRoundResult()

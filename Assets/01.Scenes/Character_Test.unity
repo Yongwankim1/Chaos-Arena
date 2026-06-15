@@ -5625,7 +5625,7 @@ MonoBehaviour:
   timerText: {fileID: 1707362639}
   killText:
   - {fileID: 1854853795}
-  - {fileID: 1854853795}
+  - {fileID: 203770012}
   scoreText:
   - {fileID: 1251564474}
   - {fileID: 1820197097}
