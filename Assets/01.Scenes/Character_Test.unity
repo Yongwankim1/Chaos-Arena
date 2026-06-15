@@ -1205,7 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
   assassinPrefab: {fileID: 8547570258107433689, guid: 612460e52582b7f40a072ff1394e9f84, type: 3}
-  magePrefab: {fileID: 8547570258107433689, guid: 3f3c2163381fdbf499bde44644cff3b7, type: 3}
+  magePrefab: {fileID: 8547570258107433689, guid: c16d6a4115fedd2438eb1ab97958ab82, type: 3}
   playerLobbyPrefab: {fileID: 5338568845319760983, guid: 78b6390b71e6b2f4889fe60f033b0fbe, type: 3}
 --- !u!1 &821732275
 GameObject:
