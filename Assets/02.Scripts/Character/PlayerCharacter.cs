@@ -137,7 +137,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
             return;
 
         IsDead = true;
-
+        GetComponent<Buff>().Init();
         RPC_PlayDie();
 
         HandleDeath(_lastAttacker);
@@ -161,7 +161,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
     {
         if (!HasStateAuthority)
             return;
-        GetComponent<Buff>().Init();
+        //GetComponent<Buff>().Init();
         Vector3 oldPosition = transform.position;
 
         CurrentHP = MaxHP;

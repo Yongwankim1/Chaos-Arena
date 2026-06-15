@@ -1048,6 +1048,7 @@ GameObject:
   - component: {fileID: 2959145431102751377}
   - component: {fileID: 6070649731673188414}
   - component: {fileID: -1913311418479507481}
+  - component: {fileID: 2713960371213007680}
   m_Layer: 6
   m_Name: Player 3
   m_TagString: Player
@@ -1068,6 +1069,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3954202986004157000}
   - {fileID: 7184959071715634364}
   - {fileID: 8120004005922247304}
   - {fileID: 5651274045008937097}
@@ -1098,6 +1100,7 @@ MonoBehaviour:
   - {fileID: 7883889268887263263}
   - {fileID: 2959145431102751377}
   - {fileID: -1913311418479507481}
+  - {fileID: 2713960371213007680}
   ForceRemoteRenderTimeframe: 0
 --- !u!95 &7961633600829976054
 Animator:
@@ -1136,7 +1139,7 @@ MonoBehaviour:
   Animator: {fileID: 7961633600829976054}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd91e9c753539b06f107d9c024c5ab0186a44ca4ba663e6518882daa544a5f6bf6327ca3cdf00e626f2afa8626a8b5caa3
+  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd91e9c753539b06f107d9c024c5ab0186327ca3cdf00e626f882daa544a5f6bf6a44ca4ba663e65182afa8626a8b5caa3
   TriggerHashes: 0000000028a981072b12289837b93501
   TotalWords: 4
 --- !u!143 &8382405528265806163
@@ -1305,6 +1308,21 @@ MonoBehaviour:
     _value: 0
   _IsDashing:
     _value: 0
+--- !u!114 &2713960371213007680
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11de8a120282fce4b8be45bfe1b2cf54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Buff
+  buffs: []
+  effects: []
+  effectRoot: {fileID: 3954202986004157000}
 --- !u!1 &3354681238205586625
 GameObject:
   m_ObjectHideFlags: 0
@@ -2002,6 +2020,37 @@ Transform:
   m_Children:
   - {fileID: 8502767981836556989}
   m_Father: {fileID: 1050373435120041699}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7353096360205958488
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3954202986004157000}
+  m_Layer: 6
+  m_Name: BuffPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3954202986004157000
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7353096360205958488}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8856736234490504503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7355487613174732650
 GameObject:
