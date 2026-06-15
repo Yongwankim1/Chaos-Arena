@@ -1109,7 +1109,7 @@ Animator:
   m_GameObject: {fileID: 3337101850504356701}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1841c298173cdad4db8df8602c8f1c8d, type: 3}
-  m_Controller: {fileID: 9100000, guid: 537cff3fb7ebcef4096f3d9aa18a257e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 37ade469e4fa0c649bf90f70ffe74924, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1136,9 +1136,9 @@ MonoBehaviour:
   Animator: {fileID: 7961633600829976054}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 0000000022ff2dfda6dcfb122b1a167c79406955f54ef6a01b2c3ed53270625bf8164659e67a32082c1c160a28a98107e2cfa505
-  TriggerHashes: 00000000c136d6d5
-  TotalWords: 6
+  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd91e9c753539b06f107d9c024c5ab0186a44ca4ba663e6518882daa544a5f6bf6327ca3cdf00e626f2afa8626a8b5caa3
+  TriggerHashes: 0000000028a981072b12289837b93501
+  TotalWords: 4
 --- !u!143 &8382405528265806163
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1224,7 +1224,7 @@ MonoBehaviour:
   attackSpawnPoint: {fileID: 5651274045008937097}
   comboAttackData:
   - SpawnType: 0
-    Damage: 90
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 3031006684049387128, guid: f4ef8c345f8b61f4da40ac1b469b82fb, type: 3}
@@ -1233,7 +1233,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
@@ -1242,7 +1242,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
@@ -1251,7 +1251,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 1149029339946739509, guid: 99994b4d1bcfe2d43bca138323b8704c, type: 3}
@@ -1260,7 +1260,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
-    Damage: 10
+    DamagePercent: 100
     Range: 1
     Radius: 0.6
     AttackEffect: {fileID: 8703879215163434798, guid: 9ce27536803f3ba40b31bed95e7c8166, type: 3}
@@ -1302,6 +1302,8 @@ MonoBehaviour:
   _CurrentMana: 0
   _Team: 0
   _IsDead:
+    _value: 0
+  _IsDashing:
     _value: 0
 --- !u!1 &3354681238205586625
 GameObject:
