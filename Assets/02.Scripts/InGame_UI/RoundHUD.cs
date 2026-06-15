@@ -92,28 +92,29 @@ public class RoundHUD : MonoBehaviour
     }
     private void UpdateTimer()
     {
-        RoundManager round =
-            RoundManager.Instance;
+        RoundManager round = RoundManager.Instance;
+
+        float remainTime = Mathf.Max(0f, round.StateRemainTime);
 
         switch (round.CurrentState)
         {
             case RoundState.Waiting:
 
-                timerText.text = $"{Mathf.CeilToInt(round.StateRemainTime)}";
+                timerText.text = $"{Mathf.CeilToInt(remainTime)}";
 
                 break;
 
             case RoundState.Preparation:
 
-                timerText.text = $"{Mathf.CeilToInt(round.StateRemainTime)}";
+                timerText.text = $"{Mathf.CeilToInt(remainTime)}";
 
                 break;
 
             case RoundState.Playing:
 
-                int minutes = Mathf.FloorToInt(round.StateRemainTime / 60);
+                int minutes = Mathf.FloorToInt(remainTime / 60);
 
-                int seconds = Mathf.FloorToInt(round.StateRemainTime % 60);
+                int seconds = Mathf.FloorToInt(remainTime % 60);
 
                 timerText.text = $"{minutes:00}:{seconds:00}";
 
