@@ -1,13 +1,12 @@
 ﻿using Fusion;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RoomActionButtonUI : MonoBehaviour
 {
     [SerializeField] private Button roomActionButton;
-    [SerializeField] private TMP_Text roomActionButtonText;
+    [SerializeField] private GameObject[] buttonImageUIs = new GameObject[2];
     [SerializeField] private int gameSceneBuildIndex = 1;
     [SerializeField] private bool allowSinglePlay;
 
@@ -34,8 +33,8 @@ public class RoomActionButtonUI : MonoBehaviour
     public void Clear()
     {
         runner = null;
-        roomActionButtonText.text = "";
         roomActionButton.interactable = false;
+        HideButtonImages();
     }
 
     public void Refresh()
@@ -43,12 +42,14 @@ public class RoomActionButtonUI : MonoBehaviour
         if (runner == null)
         {
             roomActionButton.interactable = false;
+            HideButtonImages();
             return;
         }
 
         if (runner.IsServer)
         {
-            roomActionButtonText.text = "시작";
+            //roomActionButtonText.text = "시작";
+            SetButtonImage(true);
             roomActionButton.interactable = CanStartGame();
         }
         else
@@ -69,8 +70,34 @@ public class RoomActionButtonUI : MonoBehaviour
                 }
             }
 
-            roomActionButtonText.text = isReady ? "레디 취소" : "레디";
+
+            //roomActionButtonText.text = isReady ? "레디 취소" : "레디";
+            SetButtonImage(false);
             roomActionButton.interactable = true;
+        }
+    }
+
+    private void SetButtonImage(bool isHost)
+    {
+        if (buttonImageUIs == null || buttonImageUIs.Length < 2)
+            return;
+
+        if (buttonImageUIs[0] != null)
+            buttonImageUIs[0].SetActive(isHost);
+
+        if (buttonImageUIs[1] != null)
+            buttonImageUIs[1].SetActive(!isHost);
+    }
+
+    private void HideButtonImages()
+    {
+        if (buttonImageUIs == null)
+            return;
+
+        foreach (GameObject buttonImageUI in buttonImageUIs)
+        {
+            if (buttonImageUI != null)
+                buttonImageUI.SetActive(false);
         }
     }
 

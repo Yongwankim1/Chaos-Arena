@@ -8,7 +8,8 @@ public class EnemyAttackMelee : EnemyAttack
     [SerializeField] Vector3 defaultAttackSize = new Vector3(5f, 5f, 5f);
     [SerializeField] Vector3 strongAttackSize = new Vector3(5f, 5f, 5f);
     [SerializeField] LayerMask targetLayer;
-
+    [SerializeField] float strongAttackDamageMultiplier = 1.2f;
+    [SerializeField] Transform effectPos;
     [Networked] public NetworkBool IsAttack { get; set; }
     [Networked] private EffectType CurrentAttackEffect { get; set; }
 
@@ -39,7 +40,7 @@ public class EnemyAttackMelee : EnemyAttack
         EnemyAttackBase prefab = GetAttackPrefab(effect);
         if (prefab == null) return;
 
-        EnemyAttackBase attackEffect = Instantiate(prefab, attackPos.position, transform.rotation, attackPos);
+        EnemyAttackBase attackEffect = Instantiate(prefab, effectPos.position, transform.rotation, effectPos);
 
         attackEffect.Init();
     }
@@ -68,6 +69,8 @@ public class EnemyAttackMelee : EnemyAttack
             targetLayer
         );
 
+        int attackDamage = Mathf.RoundToInt(GetAttackDamage(CurrentAttackEffect));
+
         foreach (Collider hit in hits)
         {
             IDamageable damageable = hit.GetComponent<IDamageable>();
@@ -75,7 +78,7 @@ public class EnemyAttackMelee : EnemyAttack
             if (hitTargets.Contains(damageable)) continue;
             Debug.Log(hit.tag);
             hitTargets.Add(damageable);
-            damageable.TakeDamage(Mathf.RoundToInt(damage), this);
+            damageable.TakeDamage(attackDamage, this);
         }
     }
 
@@ -89,18 +92,29 @@ public class EnemyAttackMelee : EnemyAttack
         return effect == EffectType.StrongAttack ? strongAttackPrefab : defaultAttackPrefab;
     }
 
-
+    private float GetAttackDamage(EffectType effect)
+    {
+        return effect == EffectType.StrongAttack
+            ? damage * strongAttackDamageMultiplier
+            : damage;
+    }
 
     private void OnDrawGizmos()
     {
         if (!isDebug || !attackPos) return;
 
-        Gizmos.color = Color.red;
         Gizmos.matrix = Matrix4x4.TRS(attackPos.position, attackPos.rotation, Vector3.one);
-        Gizmos.DrawWireCube(Vector3.zero, defaultAttackSize);
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(Vector3.zero, strongAttackSize);
+        if (Application.isPlaying && CurrentAttackEffect == EffectType.StrongAttack)
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireCube(Vector3.zero, strongAttackSize);
+        }
+        else
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(Vector3.zero, defaultAttackSize);
+        }
 
         Gizmos.matrix = Matrix4x4.identity;
     }
