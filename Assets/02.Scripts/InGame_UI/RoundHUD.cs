@@ -11,8 +11,13 @@ public class RoundHUD : MonoBehaviour
 
     [SerializeField]
     private TMP_Text timerText;
+
     [SerializeField]
-    private TMP_Text scoreText;
+    private TMP_Text[] killText;
+    [SerializeField]
+    private TMP_Text[] scoreText;
+    [SerializeField]
+    private TMP_Text roundResultTextPanel;
     [SerializeField]
     private TMP_Text roundResultText;
 
@@ -39,12 +44,15 @@ public class RoundHUD : MonoBehaviour
     }
     private void UpdateScore()
     {
-        RoundManager round =
-            RoundManager.Instance;
+        RoundManager round = RoundManager.Instance;
 
-        scoreText.text =
-            $"ºí·çÆÀ {round.BlueScore} : {round.RedScore} ·¹µåÆÀ\n" +
-            $"Round {round.BlueRoundWin} : {round.RedRoundWin}";
+        killText[0].text = round.BlueScore.ToString();
+        scoreText[0].text = round.BlueRoundWin.ToString();
+
+        killText[1].text = round.RedScore.ToString();
+        scoreText[1].text = round.RedRoundWin.ToString();
+
+
     }
 
     private void UpdateRoundResult()
@@ -56,38 +64,31 @@ public class RoundHUD : MonoBehaviour
         {
             case RoundResultType.None:
 
-                roundResultText.gameObject
-                    .SetActive(false);
-
+                roundResultTextPanel.gameObject.SetActive(false);
                 break;
 
             case RoundResultType.BlueWin:
 
-                roundResultText.gameObject
-                    .SetActive(true);
+                roundResultTextPanel.gameObject.SetActive(true);
 
-                roundResultText.text =
-                    "ºí·çÆÀ ½Â¸®";
+                roundResultText.text ="ºí·çÆÀ ½Â¸®";
 
                 break;
 
             case RoundResultType.RedWin:
 
-                roundResultText.gameObject
+                roundResultTextPanel.gameObject
                     .SetActive(true);
 
-                roundResultText.text =
-                    "·¹µåÆÀ ½Â¸®";
+                roundResultText.text = "·¹µåÆÀ ½Â¸®";
 
                 break;
 
             case RoundResultType.Draw:
 
-                roundResultText.gameObject
-                    .SetActive(true);
+                roundResultTextPanel.gameObject.SetActive(true);
 
-                roundResultText.text =
-                    "¹«½ÂºÎ";
+                roundResultText.text = "¹«½ÂºÎ";
 
                 break;
         }

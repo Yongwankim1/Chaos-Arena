@@ -27,7 +27,7 @@ public class AssassinDash : NetworkBehaviour, IDash
     [SerializeField]
     private ParticleSystem dashEndEffect;
 
-    private Renderer[] _renderers;
+    private SkinnedMeshRenderer[] _meshes;
 
     [Networked]
     public float DashRemainDistance { get; set; }
@@ -46,7 +46,7 @@ public class AssassinDash : NetworkBehaviour, IDash
         _player = GetComponent<PlayerCharacter>();
         _controller = GetComponent<NetworkCharacterController>();
         _cc = GetComponent<CharacterController>();
-        _renderers = GetComponentsInChildren<Renderer>(true);
+        _meshes = GetComponentsInChildren<SkinnedMeshRenderer>(true);
     }
 
     public void Dash()
@@ -135,9 +135,9 @@ public class AssassinDash : NetworkBehaviour, IDash
     }
     private void SetCharacterVisible(bool visible)
     {
-        foreach (Renderer renderer in _renderers)
+        foreach (SkinnedMeshRenderer mesh in _meshes)
         {
-            renderer.enabled = visible;
+            mesh.enabled = visible;
         }
     }
 
