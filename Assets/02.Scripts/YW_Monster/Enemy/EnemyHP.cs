@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class EnemyHP : MonoBehaviour, IDamageable
+public class EnemyHP : MonoBehaviour, IDamageable, IHasHealth
 {
     [SerializeField] private GameObject target;
     public GameObject Target => target;
@@ -35,5 +35,15 @@ public class EnemyHP : MonoBehaviour, IDamageable
             IDeathHandler death = GetComponent<IDeathHandler>();
             death.HandleDeath(attacker);
         }
+    }
+
+    public void GetHPInfo(out float curHP, out float maxHP)
+    {
+        curHP = currentHP;
+        maxHP = MaxHP;
+    }
+    public GameObject GetDamageableObject()
+    {
+        return gameObject;
     }
 }
