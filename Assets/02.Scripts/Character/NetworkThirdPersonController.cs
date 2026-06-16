@@ -31,6 +31,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     [Header("Ground")]
     public bool Grounded = true;
+    private float _airTime;
 
     [Header("Camera")]
     public Transform PlayerCameraRoot;
@@ -46,6 +47,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private float _targetRotation;
     private float _rotationVelocity;
 
+    [Header("Skill")]
+    private AssassinSkill _skill;
 
     private Animator _animator;
     private NetworkCharacterController _controller;
@@ -84,6 +87,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _controller = GetComponent<NetworkCharacterController>();
         _combat = GetComponent<CharacterCombat>();
         _playerCharacter = GetComponent<PlayerCharacter>();
+        _skill = GetComponent<AssassinSkill>();
 
         foreach (var component in GetComponents<MonoBehaviour>())
         {
@@ -104,8 +108,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (HasInputAuthority)
         {
-            GetComponent<NetworkStarterAssetsInput>()
-                ?.RegisterAsLocal();
+            GetComponent<NetworkStarterAssetsInput>()?.RegisterAsLocal();
 
             var cam = FindObjectOfType<Unity.Cinemachine.CinemachineCamera>();
 
@@ -157,6 +160,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         GroundedCheck();
         CaptureAnimationState();
         UpdateAnimatorParameters();
+        Skill(input);
     }
 
     private void LateUpdate()
@@ -195,16 +199,27 @@ public class NetworkThirdPersonController : NetworkBehaviour
     {
         bool groundedNow = _controller.Grounded;
 
-        if (!_wasGrounded && groundedNow)
+        if (!groundedNow)
         {
-            if (HasStateAuthority)
+            _airTime += Runner.DeltaTime;
+        }
+        else if (!_wasGrounded)
+        {
+            bool shouldPlayLand = _airTime >= 0.15f;
+
+            if (shouldPlayLand)
             {
-                if (_combat == null ||
-                    !_combat.IsAttacking)
+                if (HasStateAuthority)
                 {
-                    RPC_PlayLandAnimation();
+                    if (_combat == null ||
+                        !_combat.IsAttacking)
+                    {
+                        RPC_PlayLandAnimation();
+                    }
                 }
             }
+
+            _airTime = 0f;
         }
 
         Grounded = groundedNow;
@@ -226,14 +241,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _cinemachineTargetPitch =
             Mathf.Clamp(
                 _cinemachineTargetPitch,
-                BottomClamp,
-                TopClamp);
+                BottomClamp, TopClamp);
 
-        PlayerCameraRoot.rotation =
-            Quaternion.Euler(
-                _cinemachineTargetPitch + CameraAngleOverride,
-                _cinemachineTargetYaw,
-                0f);
+        PlayerCameraRoot.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0f);
 
     }
 
@@ -354,6 +364,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
                 if (jumpStarted)
                 {
+                    _airTime = 0f;
+
                     _controller.Grounded = false;
                     Grounded = false;
 
@@ -511,4 +523,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _controller.ForceMove(_dash.DashDirection * moveThisTick);
     }
 
+    private void Skill(NetworkInputData input)
+    {
+        if (!input.SkillQ)
+            return;
+
+        _skill?.UseQ();
+    }
 }

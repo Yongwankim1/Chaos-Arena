@@ -13,4 +13,5 @@ public struct NetworkInputData : INetworkInput
     public NetworkBool Attack;
 
     public NetworkBool Dash;
+    public NetworkBool SkillQ;
 }

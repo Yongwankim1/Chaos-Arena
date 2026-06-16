@@ -10425,6 +10425,7 @@ Transform:
   - {fileID: 1259863167367268298}
   - {fileID: 5043934841064380011}
   - {fileID: 5261906636365301931}
+  - {fileID: 4097294637213216148}
   m_Father: {fileID: 3126455373865613725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &929512849796519932
@@ -25966,6 +25967,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8308923721736762815}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2237995107648484154
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4097294637213216148}
+  m_Layer: 6
+  m_Name: Skill_Spawn_Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4097294637213216148
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2237995107648484154}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.448, y: -0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7639211933839351819}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2348269012090535041
 GameObject:
   m_ObjectHideFlags: 0
@@ -26112,6 +26144,7 @@ GameObject:
   - component: {fileID: -1913311418479507481}
   - component: {fileID: 4676333309810074325}
   - component: {fileID: 4982433808625598701}
+  - component: {fileID: 5141633151236987778}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -26164,6 +26197,7 @@ MonoBehaviour:
   - {fileID: -1913311418479507481}
   - {fileID: 4676333309810074325}
   - {fileID: 4982433808625598701}
+  - {fileID: 5141633151236987778}
   ForceRemoteRenderTimeframe: 0
 --- !u!95 &7961633600829976054
 Animator:
@@ -26202,7 +26236,7 @@ MonoBehaviour:
   Animator: {fileID: 7961633600829976054}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd91e9c753539b06f107d9c024c5ab0186a44ca4ba663e6518882daa544a5f6bf6327ca3cdf00e626f2afa8626a8b5caa3
+  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd91e9c753539b06f107d9c024c5ab0186a44ca4ba663e6518882daa544a5f6bf6327ca3cdf00e626f2afa8626a8b5caa3d4535a92596125bc
   TriggerHashes: 0000000028a981072b12289837b93501
   TotalWords: 4
 --- !u!143 &8382405528265806163
@@ -26384,6 +26418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssassinDash
   dashDistance: 8
   dashDuration: 0.3
+  cooldown: 3
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
@@ -26394,6 +26429,20 @@ MonoBehaviour:
   dashEndEffect: {fileID: 1150315131647595244}
   _DashRemainDistance: 0
   _DashDirection: {x: 0, y: 0, z: 0}
+--- !u!114 &5141633151236987778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95c9895c3d3f4624c96da21021e0af5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AssassinSkill
+  shurikenPrefab: {fileID: 5263598716626752350, guid: cb5d4d7405517cb438a1b643f919ff00, type: 3}
+  shurikenSpawnPoint: {fileID: 4097294637213216148}
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0

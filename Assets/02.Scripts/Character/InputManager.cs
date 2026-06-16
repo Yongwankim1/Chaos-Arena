@@ -13,6 +13,7 @@ public class InputManager : MonoBehaviour
 
     public bool Attack;
     public bool Dash;
+    public bool SkillQ;
 
     private void Awake()
     {
@@ -86,6 +87,19 @@ public class InputManager : MonoBehaviour
             return false;
 
         Attack = false;
+
+        return true;
+    }
+    public void OnSkillQ(InputValue value)
+    {
+        SkillQ = value.isPressed;
+    }
+    public bool ConsumeSkillQ()
+    {
+        if (!SkillQ)
+            return false;
+
+        SkillQ = false;
 
         return true;
     }

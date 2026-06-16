@@ -14,6 +14,15 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
     [Networked]
     public float CurrentMana { get; set; }
 
+    [SerializeField]
+    private float manaRegenDelay = 3f;
+
+    [Networked]
+    private TickTimer ManaRegenDelayTimer { get; set; }
+
+    [SerializeField]
+    private float manaRegenPerSecond = 8f;
+
     [Networked]
     public TeamType Team { get; set; }
 
@@ -46,6 +55,50 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
         Debug.Log(
             $"Spawned : {ClassType}");
     }
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (IsDead)
+            return;
+
+        if (ManaRegenDelayTimer.IsRunning && !ManaRegenDelayTimer.Expired(Runner))
+            return;
+
+        RecoverMana(manaRegenPerSecond * Runner.DeltaTime);
+    }
+    public bool UseMana(float amount)
+    {
+        if (!HasStateAuthority)
+            return false;
+
+        if (CurrentMana < amount)
+            return false;
+
+        CurrentMana -= amount;
+
+        DelayManaRegen();
+
+        return true;
+    }
+
+    public void DelayManaRegen()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        ManaRegenDelayTimer = TickTimer.CreateFromSeconds(Runner, manaRegenDelay);
+    }
+
+    public void RecoverMana(float amount)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        CurrentMana = Mathf.Min(CurrentMana + amount, MaxMana);
+    }
+
     private void LocalInitialize()
     {
         _classData =
@@ -111,20 +164,16 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
                 _classData.sprintSpeed;
         }
     }
-    public void TakeDamage(
-     int damage,
-     IAttacker attacker)
+    public void TakeDamage(int damage, IAttacker attacker)
     {
         if (!HasStateAuthority)
             return;
 
-        _lastAttacker =
-            attacker;
+        DelayManaRegen();
 
-        CurrentHP =
-            Mathf.Max(
-                0,
-                CurrentHP - damage);
+        _lastAttacker = attacker;
+
+        CurrentHP = Mathf.Max(0, CurrentHP - damage);
 
         if (CurrentHP <= 0)
         {

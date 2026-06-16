@@ -10,6 +10,12 @@ public class AssassinDash : NetworkBehaviour, IDash
     private float dashDuration = 0.1f;
 
     [SerializeField]
+    private float cooldown = 3f;
+
+    [Networked]
+    public TickTimer DashCooldown { get; set; }
+
+    [SerializeField]
     private LayerMask obstacleMask;
 
     [SerializeField]
@@ -34,6 +40,8 @@ public class AssassinDash : NetworkBehaviour, IDash
 
     [Networked]
     public Vector3 DashDirection { get; set; }
+
+    public float Cooldown => cooldown;
 
     public bool IsDashing => _player != null && _player.IsDashing;
 
@@ -60,6 +68,9 @@ public class AssassinDash : NetworkBehaviour, IDash
         if (_player.IsDashing)
             return;
 
+        if (DashCooldown.ExpiredOrNotRunning(Runner) == false)
+            return;
+
         Vector3 direction = transform.forward;
 
         float distance = GetAvailableDistance(direction);
@@ -72,6 +83,8 @@ public class AssassinDash : NetworkBehaviour, IDash
         DashRemainDistance = distance;
 
         _player.IsDashing = true;
+
+        DashCooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
         RPC_PlayDashStart();
 
