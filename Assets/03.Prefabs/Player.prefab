@@ -26325,8 +26325,11 @@ MonoBehaviour:
   comboAttackData:
   - SpawnType: 0
     DamagePercent: 100
-    Range: 1
-    Radius: 0.6
+    Range: 2
+    Radius: 1
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 3031006684049387128, guid: f4ef8c345f8b61f4da40ac1b469b82fb, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 0, y: 90, z: 0}
@@ -26334,8 +26337,11 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     DamagePercent: 100
-    Range: 1
-    Radius: 0.6
+    Range: 2
+    Radius: 1
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 45, y: 90, z: 0}
@@ -26343,8 +26349,11 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     DamagePercent: 100
-    Range: 1
-    Radius: 0.6
+    Range: 2
+    Radius: 1
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 0, y: 90, z: 0}
@@ -26352,8 +26361,11 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     DamagePercent: 100
-    Range: 1
-    Radius: 0.6
+    Range: 3
+    Radius: 1.5
+    UsePersistentHitbox: 1
+    HitDuration: 0.6
+    HitInterval: 0.05
     AttackEffect: {fileID: 1149029339946739509, guid: 99994b4d1bcfe2d43bca138323b8704c, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 0, y: 180, z: 0}
@@ -26361,8 +26373,11 @@ MonoBehaviour:
     ProjectilePrefab: {fileID: 0}
   - SpawnType: 0
     DamagePercent: 100
-    Range: 1
-    Radius: 0.6
+    Range: 3
+    Radius: 2.4
+    UsePersistentHitbox: 1
+    HitDuration: 0.6
+    HitInterval: 0.05
     AttackEffect: {fileID: 8703879215163434798, guid: 9ce27536803f3ba40b31bed95e7c8166, type: 3}
     EffectPositionOffset: {x: 0, y: -0.5, z: 0}
     EffectRotationOffset: {x: 0, y: 140, z: 0}
@@ -26384,6 +26399,8 @@ MonoBehaviour:
   _ClassType: 0
   _CurrentHP: 0
   _CurrentMana: 0
+  manaRegenDelay: 3
+  manaRegenPerSecond: 8
   _Team: 0
   _IsDead:
     _value: 0
@@ -26443,6 +26460,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssassinSkill
   shurikenPrefab: {fileID: 5263598716626752350, guid: cb5d4d7405517cb438a1b643f919ff00, type: 3}
   shurikenSpawnPoint: {fileID: 4097294637213216148}
+  manaCost: 20
+  cooldown: 5
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0

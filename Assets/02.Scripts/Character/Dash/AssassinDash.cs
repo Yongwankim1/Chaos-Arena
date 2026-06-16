@@ -35,6 +35,12 @@ public class AssassinDash : NetworkBehaviour, IDash
 
     private SkinnedMeshRenderer[] _meshes;
 
+    [SerializeField]
+    private float dashAttackWindow = 0.5f;
+
+    [Networked]
+    public TickTimer DashAttackTimer { get; set; }
+
     [Networked]
     public float DashRemainDistance { get; set; }
 
@@ -141,6 +147,8 @@ public class AssassinDash : NetworkBehaviour, IDash
             DashRemainDistance = 0f;
 
             _player.IsDashing = false;
+
+            DashAttackTimer = TickTimer.CreateFromSeconds(Runner, dashAttackWindow);
 
             RPC_PlayDashEnd();
 
