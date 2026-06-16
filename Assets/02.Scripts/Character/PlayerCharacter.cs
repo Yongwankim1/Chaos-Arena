@@ -65,6 +65,12 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (!HasStateAuthority)
             return;
 
+        if (!_isInitialized)
+            return;
+
+        if (_classData == null)
+            return;
+
         if (IsDead)
             return;
 
@@ -100,7 +106,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     {
         if (!HasStateAuthority)
             return;
-
+        if (_classData == null)
+            return;
         CurrentMana = Mathf.Min(CurrentMana + amount, MaxMana);
     }
 
