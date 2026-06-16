@@ -5,7 +5,8 @@ public class AssassinStealth : NetworkBehaviour
 {
     [SerializeField] private float duration = 5f;
     [SerializeField] private float cooldown = 15f;
-
+    [SerializeField]
+    private float manaCost = 30f;
     [SerializeField] private Material stealthMaterial;
 
     [SerializeField] private ParticleSystem stealthStartEffect;
@@ -65,7 +66,8 @@ public class AssassinStealth : NetworkBehaviour
 
         if (!CooldownTimer.ExpiredOrNotRunning(Runner))
             return;
-
+        if (!_player.UseMana(manaCost))
+            return;
         IsStealth = true;
 
         StealthTimer = TickTimer.CreateFromSeconds(Runner, duration);
