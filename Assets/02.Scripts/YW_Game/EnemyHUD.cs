@@ -7,13 +7,13 @@ public class EnemyHUD : MonoBehaviour
 {
     [SerializeField] Image enemyHpBar;
     [SerializeField] TMP_Text enemyHpText;
-    private CharacterCombat combat;
+    [SerializeField] private CharacterCombat combat;
     
     public void Init(PlayerCharacter player)
     {
         if (!player.TryGetComponent<CharacterCombat>(out combat)) return;
         // combat에 타겟 HP 변경 이벤트를 만든 뒤 여기서 구독
-
+        combat.OnAttackTargetChanged += TargetHPChange;
     }
 
     private void OnDisable()
@@ -24,6 +24,7 @@ public class EnemyHUD : MonoBehaviour
 
     private void TargetHPChange(GameObject target)
     {
+        Debug.Log("이벤트 호출");
         if(!target.TryGetComponent<IHasHealth>(out var hasHealth))
         {
             return;

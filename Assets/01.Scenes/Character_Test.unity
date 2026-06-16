@@ -6151,7 +6151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1215094932
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6184,8 +6184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ff67060d112954badaa24278265fc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  enemyHpBar: {fileID: 0}
-  enemyHpText: {fileID: 0}
+  enemyHpBar: {fileID: 208223539}
+  enemyHpText: {fileID: 578782037}
 --- !u!1 &1227955515
 GameObject:
   m_ObjectHideFlags: 0
