@@ -12,6 +12,13 @@ public class AttackData
 
     public float Radius;
 
+    [Header("Persistent Hitbox")]
+    public bool UsePersistentHitbox;
+
+    public float HitDuration = 0.3f;
+
+    public float HitInterval = 0.05f;
+
     [Header("Effect")]
     public GameObject AttackEffect;
 

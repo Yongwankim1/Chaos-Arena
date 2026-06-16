@@ -9,9 +9,14 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     [SerializeField]
     private float comboInputTime = 0.3f;
 
+    private float _debugAttackEndTime;
+    private AttackData _debugAttackData;
+
     [Header("Attack_Data")]
     [SerializeField]
     private Transform attackSpawnPoint;
+
+    private Coroutine _persistentHitboxCoroutine;
 
     [SerializeField]
     private AttackData[] comboAttackData;
@@ -70,6 +75,16 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     public void AttackInput()
     {
+        AssassinDash dash = GetComponent<AssassinDash>();
+
+        if (dash != null && !dash.DashAttackTimer.ExpiredOrNotRunning(Runner))
+        {
+            dash.DashAttackTimer = TickTimer.None;
+
+            ForceComboAttack(4);
+
+            return;
+        }
         if (_playerCharacter.IsDashing)
             return;
 
@@ -209,7 +224,14 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         {
             case AttackSpawnType.HitBox:
                 SpawnAttackEffect();
-                SpawnHitBox(data);
+                if (data.UsePersistentHitbox)
+                {
+                    StartPersistentHitBox(data);
+                }
+                else
+                {
+                    SpawnHitBox(data);
+                }
                 break;
 
             case AttackSpawnType.Projectile:
@@ -217,24 +239,42 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                 break;
         }
     }
-    private void SpawnHitBox(AttackData data)
+
+    private void StartPersistentHitBox(AttackData data)
     {
-        Vector3 center =
-            attackSpawnPoint.position +
-            attackSpawnPoint.forward *
-            (data.Range * 0.5f);
+        _debugAttackData = data;
+        _debugAttackEndTime = Time.time + 2f;
 
-        Collider[] hits =
-            Physics.OverlapBox(
-                center,
-                new Vector3(
-                    data.Radius,
-                    1f,
-                    data.Range * 0.5f),
-                attackSpawnPoint.rotation);
+        if (_persistentHitboxCoroutine != null)
+        {
+            StopCoroutine(_persistentHitboxCoroutine);
+        }
 
-        HashSet<IDamageable> damagedTargets =
-            new HashSet<IDamageable>();
+        _persistentHitboxCoroutine = StartCoroutine(PersistentHitBoxRoutine(data));
+    }
+
+    private IEnumerator PersistentHitBoxRoutine(AttackData data)
+    {
+        HashSet<IDamageable> damagedTargets = new HashSet<IDamageable>();
+
+        float elapsed = 0f;
+
+        while (elapsed < data.HitDuration)
+        {
+            PerformHitBox(data, damagedTargets);
+
+            yield return new WaitForSeconds(data.HitInterval);
+
+            elapsed += data.HitInterval;
+        }
+
+        _persistentHitboxCoroutine = null;
+    }
+    private void PerformHitBox(AttackData data, HashSet<IDamageable> damagedTargets)
+    {
+        Vector3 center = attackSpawnPoint.position + attackSpawnPoint.forward * (data.Range * 0.5f);
+
+        Collider[] hits = Physics.OverlapBox(center, new Vector3(data.Radius, 1f, data.Range * 0.5f), attackSpawnPoint.rotation);
 
         foreach (Collider hit in hits)
         {
@@ -253,52 +293,45 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
             if (data.HitEffect != null)
             {
-                Instantiate(
-                    data.HitEffect,
-                    hit.ClosestPoint(
-                        transform.position),
-                    Quaternion.identity);
+                Instantiate(data.HitEffect, hit.ClosestPoint(transform.position), Quaternion.identity);
             }
 
             float multiplier = data.DamagePercent / 100f;
+
             int finalDamage = Mathf.RoundToInt(_playerCharacter.AttackPower * multiplier);
 
-            damageable.TakeDamage(Mathf.RoundToInt(finalDamage), this);
+            damageable.TakeDamage(finalDamage, this);
         }
+    }
+    private void SpawnHitBox(AttackData data)
+    {
+        _debugAttackData = data;
+        _debugAttackEndTime = Time.time + 2f;
+
+        PerformHitBox(data, new HashSet<IDamageable>());
     }
     private void OnDrawGizmos()
     {
         if (attackSpawnPoint == null)
             return;
 
-        if (comboAttackData == null ||
-            comboAttackData.Length == 0)
+        if (_debugAttackData == null)
             return;
 
-        AttackData data = comboAttackData[0];
+        if (Time.time > _debugAttackEndTime)
+            return;
 
-        Vector3 center =
-            attackSpawnPoint.position +
-            attackSpawnPoint.forward *
-            (data.Range * 0.5f);
+        AttackData data = _debugAttackData;
 
-        Vector3 size =
-            new Vector3(
-                data.Radius * 2f,
-                2f,
-                data.Range);
+        Vector3 center = attackSpawnPoint.position + attackSpawnPoint.forward * (data.Range * 0.5f);
+
+        Vector3 size = new Vector3(data.Radius * 2f, 2f, data.Range);
 
         Gizmos.color = Color.red;
 
-        Gizmos.matrix =
-            Matrix4x4.TRS(
-                center,
-                attackSpawnPoint.rotation,
-                Vector3.one);
+        Gizmos.matrix = Matrix4x4.TRS(center, attackSpawnPoint.rotation, Vector3.one);
 
-        Gizmos.DrawWireCube(
-            Vector3.zero,
-            size);
+        Gizmos.DrawWireCube(Vector3.zero, size);
     }
     private void SpawnProjectile(
     AttackData data)
@@ -392,5 +425,14 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _animator.SetInteger(
             ComboIndexHash,
             0);
+    }
+    public void ForceComboAttack(int comboIndex)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        _comboIndex = comboIndex;
+
+        PlayAttack();
     }
 }

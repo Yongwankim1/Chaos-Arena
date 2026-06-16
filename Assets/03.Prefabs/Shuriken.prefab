@@ -19907,6 +19907,7 @@ MonoBehaviour:
   speed: 100
   maxDistance: 50
   rotateSpeed: 2160
+  dropTime: 0.5
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
@@ -19918,7 +19919,7 @@ MonoBehaviour:
   dotRadius: 50
   playerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 192
 --- !u!114 &3935402485857949316
 MonoBehaviour:
   m_ObjectHideFlags: 0
