@@ -6,6 +6,8 @@ public class HUDManager : MonoBehaviour
 
     [SerializeField]
     private PlayerHUD playerHUD;
+    [SerializeField]
+    private EnemyHUD enemyHUD;
 
     private void Awake()
     {
@@ -17,5 +19,6 @@ public class HUDManager : MonoBehaviour
         Debug.Log($"BindPlayer : {player.name}");
 
         playerHUD.Initialize(player);
+        enemyHUD.Init(player);
     }
 }
