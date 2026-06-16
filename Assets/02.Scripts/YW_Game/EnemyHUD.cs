@@ -6,16 +6,21 @@ public class EnemyHUD : MonoBehaviour
 {
     [SerializeField] Image enemyHpBar;
     [SerializeField] TMP_Text enemyHpText;
-    [SerializeField] GameObject player;
-
-    public void Init()
+    private CharacterCombat combat;
+    public void Init(PlayerCharacter player)
     {
-        //TODO::스폰된 자신 프리팹의 공격클래스 받아서 구독
+        combat = player.GetComponent<CharacterCombat>();
+        // combat에 타겟 HP 변경 이벤트를 만든 뒤 여기서 구독
+        // combat.OnTargetHPChanged += TargetHPChange;
     }
 
     private void OnDisable()
     {
         //TODO:: 구독 해제
+        if (combat != null)
+        {
+            // combat.OnTargetHPChanged -= TargetHPChange;
+        }
     }
 
     private void TargetHPChange(GameObject target)
