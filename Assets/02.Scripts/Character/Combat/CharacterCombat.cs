@@ -1,4 +1,5 @@
 using Fusion;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -54,6 +55,10 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     private static readonly int IsAttackingHash =
         Animator.StringToHash("IsAttacking");
+
+    //6.16 KYW
+    public event Action<GameObject> OnAttackTargetChanged;
+
 
     private void Awake()
     {
@@ -314,6 +319,10 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             int finalDamage = Mathf.RoundToInt(_playerCharacter.AttackPower * multiplier);
 
             damageable.TakeDamage(finalDamage, this);
+            GameObject getDamageableObject = damageable.GetDamageableObject();
+
+            if (getDamageableObject == null) continue;
+            OnAttackTargetChanged?.Invoke(getDamageableObject);
         }
     }
     private void SpawnHitBox(AttackData data)

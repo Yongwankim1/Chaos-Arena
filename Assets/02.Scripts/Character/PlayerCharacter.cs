@@ -2,7 +2,7 @@ using Fusion;
 using Photon.Realtime;
 using UnityEngine;
 
-public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
+public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHasHealth
 {
     private ClassData _classData;
     [Networked]
@@ -271,5 +271,15 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
         Vector3 delta = newPosition - oldPosition;
 
         cam.OnTargetObjectWarped(transform, delta);
+    }
+
+    public void GetHPInfo(out float curHP, out float maxHP)
+    {
+        curHP = CurrentHP;
+        maxHP = MaxHP;
+    }
+    public GameObject GetDamageableObject()
+    {
+        return gameObject;
     }
 }
