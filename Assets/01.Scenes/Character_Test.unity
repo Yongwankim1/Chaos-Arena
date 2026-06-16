@@ -6185,6 +6185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   enemyHpBar: {fileID: 0}
   enemyHpText: {fileID: 0}
+  player: {fileID: 0}
 --- !u!1 &1227955515
 GameObject:
   m_ObjectHideFlags: 0
@@ -9351,6 +9352,7 @@ MonoBehaviour:
   mpText: {fileID: 372964227}
   dashSlot: {fileID: 2035916766}
   qSkillSlot: {fileID: 339177595}
+  eSlot: {fileID: 281575480}
 --- !u!1 &1730034100
 GameObject:
   m_ObjectHideFlags: 0
@@ -11002,6 +11004,7 @@ MonoBehaviour:
   Attack: 0
   Dash: 0
   SkillQ: 0
+  SkillE: 0
 --- !u!4 &1971841212
 Transform:
   m_ObjectHideFlags: 0

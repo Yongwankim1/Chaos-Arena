@@ -15,6 +15,10 @@ public class AssassinStealth : NetworkBehaviour
     [Networked] public TickTimer StealthTimer { get; set; }
     [Networked] public TickTimer CooldownTimer { get; set; }
 
+    public TickTimer Cooldown => CooldownTimer;
+
+    public float CooldownDuration => cooldown;
+
     private SkinnedMeshRenderer[] _renderers;
     private Material[] _originalMaterials;
 

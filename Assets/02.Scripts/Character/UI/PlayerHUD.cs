@@ -24,6 +24,8 @@ public class PlayerHUD : MonoBehaviour
     private SkillSlotUI dashSlot;
     [SerializeField]
     private SkillSlotUI qSkillSlot;
+    [SerializeField]
+    private SkillSlotUI eSlot;
     public void Initialize(PlayerCharacter player)
     {
         Debug.Log("HUD Initialize");
@@ -56,6 +58,7 @@ public class PlayerHUD : MonoBehaviour
 
         RefreshDash();
         RefreshSkillQ();
+        RefreshSkillE();
     }
 
     private void RefreshDash()
@@ -79,5 +82,21 @@ public class PlayerHUD : MonoBehaviour
         float remainTime = skill.Cooldown.RemainingTime(skill.Runner) ?? 0f;
 
         qSkillSlot.Refresh(remainTime, skill.CooldownDuration);
+    }
+    private void RefreshSkillE()
+    {
+        AssassinStealth stealth =
+            _player.GetComponent<AssassinStealth>();
+
+        if (stealth == null)
+            return;
+
+        float remainTime =
+            stealth.CooldownTimer.RemainingTime(
+                stealth.Runner) ?? 0f;
+
+        eSlot.Refresh(
+            remainTime,
+            stealth.CooldownDuration);
     }
 }
