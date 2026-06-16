@@ -4740,6 +4740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUDManager
   playerHUD: {fileID: 1713784292}
+  enemyHUD: {fileID: 0}
 --- !u!224 &927240984
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6185,7 +6186,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   enemyHpBar: {fileID: 0}
   enemyHpText: {fileID: 0}
-  player: {fileID: 0}
 --- !u!1 &1227955515
 GameObject:
   m_ObjectHideFlags: 0
@@ -9313,7 +9313,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1713784291
 RectTransform:
   m_ObjectHideFlags: 0
