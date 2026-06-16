@@ -19,6 +19,9 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     private Coroutine _persistentHitboxCoroutine;
 
     [SerializeField]
+    private NetworkThirdPersonController controller;
+
+    [SerializeField]
     private AttackData[] comboAttackData;
     [Networked]
     private int CurrentAttackIndex { get; set; }
@@ -35,6 +38,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     [Networked]
     public float AttackMoveRemain { get; set; }
+
+    private AssassinStealth _stealth;
     public bool IsAttacking
     {
         get;
@@ -55,6 +60,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _animator = GetComponent<Animator>();
 
         _playerCharacter = GetComponent<PlayerCharacter>();
+
+        _stealth = GetComponent<AssassinStealth>();
     }
 
     public override void FixedUpdateNetwork()
@@ -88,6 +95,10 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         if (_playerCharacter.IsDashing)
             return;
 
+
+        if (controller != null && !controller.Grounded)
+            return;
+
         if (_playerCharacter != null && _playerCharacter.IsDead)
         {
             return;
@@ -101,6 +112,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             Debug.Log("AttackInput Return");
             return;
         }
+
+        _stealth?.ExitStealth();
 
         if (_waitingNextCombo)
         {

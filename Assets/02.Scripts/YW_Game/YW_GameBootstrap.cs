@@ -275,6 +275,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         data.Attack = InputManager.Instance.ConsumeAttack();
         data.Dash = InputManager.Instance.ConsumeDash();
         data.SkillQ = InputManager.Instance.ConsumeSkillQ();
+        data.SkillE = InputManager.Instance.ConsumeSkillE();
 
         input.Set(data);
     }

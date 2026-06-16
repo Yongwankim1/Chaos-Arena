@@ -27,7 +27,7 @@ public class AssassinSkill : NetworkBehaviour
     public TickTimer Cooldown { get; set; }
 
     public float CooldownDuration => cooldown;
-
+    private AssassinStealth _stealth;
     public float CooldownNormalized
     {
         get
@@ -46,6 +46,7 @@ public class AssassinSkill : NetworkBehaviour
         _player = GetComponent<PlayerCharacter>();
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
+        _stealth = GetComponent<AssassinStealth>();
     }
 
     public void UseQ()
@@ -61,6 +62,8 @@ public class AssassinSkill : NetworkBehaviour
 
         if (!_player.UseMana(manaCost))
             return;
+
+        _stealth?.ExitStealth();
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 

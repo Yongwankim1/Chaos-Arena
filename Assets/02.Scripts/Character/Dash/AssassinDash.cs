@@ -54,6 +54,7 @@ public class AssassinDash : NetworkBehaviour, IDash
     private PlayerCharacter _player;
     private NetworkCharacterController _controller;
     private CharacterController _cc;
+    private AssassinStealth _stealth;
 
     private void Awake()
     {
@@ -61,6 +62,8 @@ public class AssassinDash : NetworkBehaviour, IDash
         _controller = GetComponent<NetworkCharacterController>();
         _cc = GetComponent<CharacterController>();
         _meshes = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+
+        _stealth = GetComponent<AssassinStealth>();
     }
 
     public void Dash()
@@ -83,6 +86,8 @@ public class AssassinDash : NetworkBehaviour, IDash
 
         if (distance <= 0.1f)
             return;
+
+        _stealth?.ExitStealth();
 
         DashDirection = direction;
 

@@ -68,6 +68,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SkillE",
+                    "type": "PassThrough",
+                    "id": "32a2fa81-aa1c-4399-8911-341a87367e5d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -277,6 +286,17 @@
                     "processors": "",
                     "groups": ";KeyboardMouse",
                     "action": "SkillQ",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b45f210b-9ebe-45cd-abc0-f40bf966024c",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouse",
+                    "action": "SkillE",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

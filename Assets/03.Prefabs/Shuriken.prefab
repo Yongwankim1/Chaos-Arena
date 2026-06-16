@@ -19907,16 +19907,16 @@ MonoBehaviour:
   speed: 100
   maxDistance: 50
   rotateSpeed: 2160
-  dropTime: 0.5
+  dropTime: 0.2
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
   dropAmount: 1.5
   damagePercentPerSecond: 5
   damageInterval: 0.2
-  stopDuration: 3
+  stopDuration: 1
   shrinkDuration: 0.5
-  dotRadius: 50
+  dotRadius: 2
   playerMask:
     serializedVersion: 2
     m_Bits: 192

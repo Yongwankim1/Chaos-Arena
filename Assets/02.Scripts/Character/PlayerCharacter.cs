@@ -41,8 +41,13 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
 
     private static readonly int DieHash =
     Animator.StringToHash("Die");
-
+    private AssassinStealth _stealth;
     private Animator _animator;
+
+    private void Awake()
+    {
+        _stealth = GetComponent<AssassinStealth>();
+    }
     public override void Spawned()
     {
         _animator = GetComponent<Animator>();
@@ -155,8 +160,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
                 _classData.sprintSpeed;
         }
 
-        var cc =
-            GetComponent<NetworkCharacterController>();
+        var cc = GetComponent<NetworkCharacterController>();
 
         if (cc != null)
         {
@@ -168,6 +172,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler
     {
         if (!HasStateAuthority)
             return;
+
+        _stealth?.ExitStealth();
 
         DelayManaRegen();
 

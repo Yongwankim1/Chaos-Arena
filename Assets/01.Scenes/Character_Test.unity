@@ -2089,7 +2089,7 @@ GameObject:
   - component: {fileID: 281575478}
   - component: {fileID: 281575480}
   m_Layer: 5
-  m_Name: SKill_Q
+  m_Name: SKill_E
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2273,8 +2273,9 @@ GameObject:
   - component: {fileID: 339177592}
   - component: {fileID: 339177594}
   - component: {fileID: 339177593}
+  - component: {fileID: 339177595}
   m_Layer: 5
-  m_Name: SKill_E
+  m_Name: SKill_Q
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2342,6 +2343,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339177591}
   m_CullTransparentMesh: 1
+--- !u!114 &339177595
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339177591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e440c68c14dea184fa3cffbf4479d2de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
+  cooldownFill: {fileID: 1454030740}
+  cooldownText: {fileID: 1559450104}
 --- !u!1 &346829497
 GameObject:
   m_ObjectHideFlags: 0
@@ -8920,8 +8935,8 @@ RectTransform:
   m_Children:
   - {fileID: 963041718}
   - {fileID: 2035916763}
-  - {fileID: 281575477}
   - {fileID: 339177592}
+  - {fileID: 281575477}
   - {fileID: 81909325}
   m_Father: {fileID: 1167931809}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9335,7 +9350,7 @@ MonoBehaviour:
   mpFill: {fileID: 1276805873}
   mpText: {fileID: 372964227}
   dashSlot: {fileID: 2035916766}
-  qSkillSlot: {fileID: 281575480}
+  qSkillSlot: {fileID: 339177595}
 --- !u!1 &1730034100
 GameObject:
   m_ObjectHideFlags: 0
