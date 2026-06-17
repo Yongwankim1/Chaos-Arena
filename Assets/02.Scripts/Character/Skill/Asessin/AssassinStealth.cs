@@ -7,7 +7,6 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE
     [SerializeField] private float cooldown = 15f;
     [SerializeField]
     private float manaCost = 30f;
-    [SerializeField] private Material stealthMaterial;
 
     [SerializeField] private ParticleSystem stealthStartEffect;
     [SerializeField] private ParticleSystem stealthEndEffect;
@@ -17,26 +16,24 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE
     [Networked] public TickTimer CooldownTimer { get; set; }
 
     public TickTimer Cooldown => CooldownTimer;
-
+    public bool IsStealthed => IsStealth;
     public float CooldownDuration => cooldown;
 
     private SkinnedMeshRenderer[] _renderers;
     private Material[] _originalMaterials;
 
     private PlayerCharacter _player;
+    private PlayerVisualController _visual;
+    private AssassinUltimate _ultimate;
 
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
 
+        _visual = GetComponent<PlayerVisualController>();
+
         _renderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
-
-        _originalMaterials = new Material[_renderers.Length];
-
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _originalMaterials[i] = _renderers[i].material;
-        }
+        _ultimate = GetComponent<AssassinUltimate>();
     }
 
     public override void FixedUpdateNetwork()
@@ -95,20 +92,16 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE
     {
         stealthStartEffect?.Play();
 
-        if (HasInputAuthority)
-        {
-            for (int i = 0; i < _renderers.Length; i++)
-            {
-                _renderers[i].material = stealthMaterial;
-            }
-        }
-        else
+        _visual?.SetStealth(true);
+
+        if (!HasInputAuthority)
         {
             foreach (var renderer in _renderers)
             {
                 renderer.enabled = false;
             }
         }
+        _ultimate?.RefreshUltimateEffectVisibility();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -116,10 +109,12 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE
     {
         stealthEndEffect?.Play();
 
-        for (int i = 0; i < _renderers.Length; i++)
+        foreach (var renderer in _renderers)
         {
-            _renderers[i].enabled = true;
-            _renderers[i].material = _originalMaterials[i];
+            renderer.enabled = true;
         }
+
+        _visual?.SetStealth(false);
+        _ultimate?.RefreshUltimateEffectVisibility();
     }
 }

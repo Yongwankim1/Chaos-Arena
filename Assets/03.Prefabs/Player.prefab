@@ -51062,6 +51062,7 @@ GameObject:
   - component: {fileID: 5141633151236987778}
   - component: {fileID: 2298280266248970984}
   - component: {fileID: -3727405891717768449}
+  - component: {fileID: 1805322028766392492}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -51307,6 +51308,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 140, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+  _CurrentAttackIndex: 0
   _AttackMoveRemain: 0
 --- !u!114 &-1913311418479507481
 MonoBehaviour:
@@ -51402,7 +51404,6 @@ MonoBehaviour:
   duration: 5
   cooldown: 15
   manaCost: 30
-  stealthMaterial: {fileID: 2100000, guid: 71d9bc16d1c919944862effc0ddad6eb, type: 2}
   stealthStartEffect: {fileID: 8492441887821894247}
   stealthEndEffect: {fileID: 6974015565795703727}
   _IsStealth:
@@ -51422,13 +51423,34 @@ MonoBehaviour:
   duration: 12
   cooldown: 10
   manaCost: 40
-  shadowMaterial: {fileID: 2100000, guid: b4e87a4f67c50584bb1d05fad87dea0e, type: 2}
   startEffect: {fileID: 7233714925186217714}
   endEffect: {fileID: 7233714925186217714}
   shadowSmoke: {fileID: 6994084201913223}
+  combo1ShadowEffect: {fileID: 3031006684049387128, guid: d728ea1cbcbd3324bb4882a077050950, type: 3}
+  combo23ShadowEffect: {fileID: 3031006684049387128, guid: 5caa8c5622ba927468564b484f40dd10, type: 3}
+  combo4ShadowEffect: {fileID: 1149029339946739509, guid: 5c5d0e688bbb18247bd18af2bff8992a, type: 3}
+  combo5ShadowEffect: {fileID: 8703879215163434798, guid: 026faea07af5fb947a0c1e4ced05b47a, type: 3}
+  shadowDelay: 0.2
+  shadowDamageMultiplier: 0.3
   shadowShurikenPrefab: {fileID: 5263598716626752350, guid: cb5d4d7405517cb438a1b643f919ff00, type: 3}
+  shadowAttackEffect: {fileID: 0}
   _IsUltimate:
     _value: 0
+--- !u!114 &1805322028766392492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e783d177b711147b802d29aecf59e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualController
+  normalMaterial: {fileID: 2100000, guid: 97e5db5a0e4821a46b0efc57d7308489, type: 2}
+  ultimateMaterial: {fileID: 2100000, guid: b4e87a4f67c50584bb1d05fad87dea0e, type: 2}
+  stealthMaterial: {fileID: 2100000, guid: 71d9bc16d1c919944862effc0ddad6eb, type: 2}
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0

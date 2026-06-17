@@ -415,6 +415,9 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             return;
 
         CharacterSelectUI.Instance
+            .OnPlayerUI();
+
+        CharacterSelectUI.Instance
             .gameObject.SetActive(false);
 
         Cursor.lockState =

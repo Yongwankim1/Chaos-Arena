@@ -25,7 +25,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     [SerializeField]
     private AttackData[] comboAttackData;
     [Networked]
-    private int CurrentAttackIndex { get; set; }
+    public int CurrentAttackIndex { get; set; }
 
     private PlayerCharacter _playerCharacter;
 
@@ -413,7 +413,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_PlayAttackEffect(
-     int attackIndex)
+    int attackIndex)
     {
         if (attackIndex <= 0)
             return;
@@ -423,9 +423,6 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         AttackData data =
             comboAttackData[attackIndex - 1];
-
-        if (data.AttackEffect == null)
-            return;
 
         Vector3 spawnPosition =
             attackSpawnPoint.position +
@@ -437,9 +434,30 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             Quaternion.Euler(
                 data.EffectRotationOffset);
 
+        GameObject effectPrefab = null;
+
+        // ±Ã±Ø±â ÀÌÆåÆ® ¿ì¼±
+        if (_ultimateModifier != null &&
+            _ultimateModifier.IsUltimateActive)
+        {
+            effectPrefab =
+                _ultimateModifier.GetOverrideEffect(
+                    attackIndex);
+        }
+
+        // ±Ã±Ø±â ÀÌÆåÆ®°¡ ¾øÀ» ¶§¸¸ ±âº» ÀÌÆåÆ®
+        if (effectPrefab == null)
+        {
+            effectPrefab =
+                data.AttackEffect;
+        }
+
+        if (effectPrefab == null)
+            return;
+
         GameObject effect =
             Instantiate(
-                data.AttackEffect,
+                effectPrefab,
                 spawnPosition,
                 spawnRotation);
 
@@ -526,14 +544,37 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             damagedTargets.Add(
                 damageable);
 
-            float finalDamage =
-                _playerCharacter.AttackPower *
-                (data.DamagePercent / 100f) *
-                damageMultiplier;
+            float multiplier =
+            data.DamagePercent / 100f;
+
+            int originalDamage =
+                Mathf.RoundToInt(
+                    _playerCharacter.AttackPower *
+                    multiplier);
+
+            int shadowDamage =
+                Mathf.RoundToInt(
+                    originalDamage *
+                    damageMultiplier);
 
             damageable.TakeDamage(
-                Mathf.RoundToInt(finalDamage),
+                shadowDamage,
                 this);
         }
+    }
+    public void GetAttackEffectTransform(
+    AttackData data,
+    out Vector3 position,
+    out Quaternion rotation)
+    {
+        position =
+            attackSpawnPoint.position +
+            transform.TransformDirection(
+                data.EffectPositionOffset);
+
+        rotation =
+            transform.rotation *
+            Quaternion.Euler(
+                data.EffectRotationOffset);
     }
 }
