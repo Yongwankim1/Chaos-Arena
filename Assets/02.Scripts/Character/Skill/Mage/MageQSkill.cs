@@ -27,10 +27,22 @@ public class MageQSkill : NetworkBehaviour, ISkillQ
     public TickTimer Cooldown { get; set; }
 
     public float CooldownDuration => cooldown;
-    private AssassinStealth _stealth;
 
 
+    [Header("ø¨√‚¿Ã∆Â∆Æ")]
+    [SerializeField] Transform magicSoket;
+    [SerializeField] ParticleSystem orbEffect;
+    [SerializeField] ParticleSystem magicCircle;
 
+
+    [SerializeField] Transform buffPos;
+    [SerializeField] private int orbMoveFrame = 12;
+
+    private ParticleSystem orb;
+    private bool isOrbMoving;
+    private int orbMoveCurrentFrame;
+    private Vector3 orbMoveStartPosition;
+    private Vector3 orbMoveEndPosition;
 
     public float CooldownNormalized
     {
@@ -50,7 +62,11 @@ public class MageQSkill : NetworkBehaviour, ISkillQ
         _player = GetComponent<PlayerCharacter>();
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
-        _stealth = GetComponent<AssassinStealth>();
+    }
+
+    private void Update()
+    {
+        UpdateOrbMove();
     }
 
     public void UseQ()
@@ -67,7 +83,6 @@ public class MageQSkill : NetworkBehaviour, ISkillQ
         if (!_player.UseMana(manaCost))
             return;
 
-        _stealth?.ExitStealth();
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
@@ -86,5 +101,103 @@ public class MageQSkill : NetworkBehaviour, ISkillQ
             return;
 
         Runner.Spawn(lightingPrefab, lightingEffectSpawnPoint.position, Quaternion.LookRotation(transform.forward), Object.InputAuthority, (runner, obj) => { obj.GetComponent<MageLightningProjectile>().Init(GetComponent<IAttacker>()); });
+    }
+
+
+    public void StartMagicCircle()
+    {
+        RPC_OnMagicCircle();
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_OnMagicCircle()
+    {
+        if (magicCircle == null)
+            return;
+        ParticleSystem ps = Instantiate(magicCircle, buffPos.position, Quaternion.identity, buffPos);
+
+        ps.Play();
+
+        Destroy(ps.gameObject, GetParticleLifeTime(ps));
+    }
+    public void GatheringEnergy()
+    {
+        RPC_GateringEnergy();
+    }
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_GateringEnergy()
+    {
+        if (orbEffect == null || magicSoket == null)
+            return;
+
+        if (orb != null)
+        {
+            Destroy(orb.gameObject);
+        }
+
+        isOrbMoving = false;
+        orb = Instantiate(orbEffect, magicSoket.position, Quaternion.identity);
+        orb.Play();
+    }
+
+    public void EnergyMove()
+    {
+        RPC_EnergyMove();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.All)]
+    private void RPC_EnergyMove()
+    {
+        if (orb == null || lightingEffectSpawnPoint == null)
+            return;
+
+        isOrbMoving = true;
+        orbMoveCurrentFrame = 0;
+        orbMoveStartPosition = orb.transform.position;
+        orbMoveEndPosition = lightingEffectSpawnPoint.position;
+    }
+
+    private void UpdateOrbMove()
+    {
+        if (!isOrbMoving)
+            return;
+
+        if (orb == null)
+        {
+            isOrbMoving = false;
+            return;
+        }
+
+        orbMoveCurrentFrame++;
+
+        float t = orbMoveFrame <= 0
+            ? 1f
+            : orbMoveCurrentFrame / (float)orbMoveFrame;
+
+        t = Mathf.Clamp01(t);
+        orb.transform.position = Vector3.Lerp(orbMoveStartPosition, orbMoveEndPosition, t);
+
+        if (t < 1f)
+            return;
+
+        isOrbMoving = false;
+        Destroy(orb.gameObject);
+        orb = null;
+    }
+
+    private float GetParticleLifeTime(ParticleSystem root)
+    {
+        float lifeTime = 0f;
+        ParticleSystem[] particleSystems = root.GetComponentsInChildren<ParticleSystem>();
+
+        foreach (ParticleSystem particleSystem in particleSystems)
+        {
+            ParticleSystem.MainModule main = particleSystem.main;
+            lifeTime = Mathf.Max(
+                lifeTime,
+                main.duration + main.startLifetime.constantMax
+            );
+        }
+
+        return lifeTime;
     }
 }

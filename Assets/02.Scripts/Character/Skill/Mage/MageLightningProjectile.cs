@@ -19,6 +19,7 @@ public class MageLightningProjectile : NetworkBehaviour
     private int lastPlayedExplosionCount;
 
     [Networked] private int ExplosionCount { get; set; }
+    [Networked] private Vector3 ExplosionPosition { get; set; }
 
     public void Init(IAttacker attacker)
     {
@@ -28,11 +29,12 @@ public class MageLightningProjectile : NetworkBehaviour
     public override void Spawned()
     {
         spawnPosition = transform.position;
-        lastPlayedExplosionCount = ExplosionCount;
+        lastPlayedExplosionCount = 0;
 
         if (Object.HasStateAuthority)
         {
             ExplosionCount = 0;
+            ExplosionPosition = transform.position;
             explosionTimer = TickTimer.CreateFromSeconds(Runner, explosionDelay);
 
             Explode();
@@ -69,42 +71,62 @@ public class MageLightningProjectile : NetworkBehaviour
 
         lastPlayedExplosionCount = ExplosionCount;
 
-        if (effect == null)
-            return;
-
-        effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        effect.Play();
+        PlayExplosionEffect(ExplosionPosition);
     }
 
     [ContextMenu("TestBoom")]
     private void TestBoom()
     {
-        if (effect == null)
-            return;
-
-        effect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        effect.Play();
+        PlayExplosionEffect(transform.position);
     }
 
     private void Explode()
     {
         ExplosionCount++;
+        ExplosionPosition = transform.position;
 
-        Collider[] hits = Physics.OverlapSphere(transform.position, explosionRadius, targetMask);
+        Collider[] hits = Physics.OverlapSphere(ExplosionPosition, explosionRadius, targetMask);
 
         foreach (Collider hit in hits)
         {
-
             if (!hit.TryGetComponent(out IDamageable damageable))
             {
                 continue;
             }
-            if(hit.TryGetComponent(out IAttacker hitAttacker))
+
+            if (hit.TryGetComponent(out IAttacker hitAttacker))
             {
-                if (hitAttacker == attacker) continue;
+                if (hitAttacker == attacker)
+                    continue;
             }
+
             damageable.TakeDamage(damage, attacker);
         }
+    }
+
+    private void PlayExplosionEffect(Vector3 position)
+    {
+        if (effect == null)
+            return;
+
+        ParticleSystem fx = Instantiate(effect, position, transform.rotation);
+        fx.Play();
+
+        Destroy(fx.gameObject, GetEffectLifeTime(fx));
+    }
+
+    private float GetEffectLifeTime(ParticleSystem root)
+    {
+        float lifeTime = 0f;
+        ParticleSystem[] particleSystems = root.GetComponentsInChildren<ParticleSystem>();
+
+        foreach (ParticleSystem particleSystem in particleSystems)
+        {
+            ParticleSystem.MainModule main = particleSystem.main;
+            lifeTime = Mathf.Max(lifeTime, main.duration + main.startLifetime.constantMax);
+        }
+
+        return lifeTime;
     }
 
     private void OnDrawGizmos()

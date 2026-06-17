@@ -51,8 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   stepDistance: 2
   maxTravelDistance: 10
-  explosionDelay: 0.7
-  explosionRadius: 3
+  explosionDelay: 0.2
+  explosionRadius: 2.4
   damage: 30
   targetMask:
     serializedVersion: 2
@@ -143,7 +143,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 3
+  m_Radius: 2.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &3261761642470303501
 PrefabInstance:
@@ -159,15 +159,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8129488862618819714, guid: 7a3c0bb15539a284d800d5f143bd1ca5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.34125137
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129488862618819714, guid: 7a3c0bb15539a284d800d5f143bd1ca5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.4248
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129488862618819714, guid: 7a3c0bb15539a284d800d5f143bd1ca5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.45731735
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8129488862618819714, guid: 7a3c0bb15539a284d800d5f143bd1ca5, type: 3}
       propertyPath: m_LocalRotation.w
