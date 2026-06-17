@@ -13,7 +13,11 @@ public class MageLaserAttack : NetworkBehaviour
 
     private IAttacker attacker;
     private TickTimer damageTimer;
-
+    public void Destroy()
+    {
+        Runner.Despawn(Object);
+        Destroy(gameObject);
+    }
     public void Init(IAttacker attacker)
     {
         this.attacker = attacker;
@@ -100,4 +104,5 @@ public class MageLaserAttack : NetworkBehaviour
         Gizmos.DrawLine(point1 + up, point2 + up);
         Gizmos.DrawLine(point1 - up, point2 - up);
     }
+
 }

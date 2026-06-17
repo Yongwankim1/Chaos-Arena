@@ -61,7 +61,6 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         Animator.StringToHash("IsAttacking");
 
     //6.16 KYW
-    public event Action<GameObject, float, float> OnAttackTargetChanged;
 
 
     private void Awake()
