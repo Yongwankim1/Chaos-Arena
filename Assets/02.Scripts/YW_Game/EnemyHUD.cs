@@ -22,21 +22,15 @@ public class EnemyHUD : MonoBehaviour
         if (combat != null) combat.OnAttackTargetChanged -= TargetHPChange;
     }
 
-    private void TargetHPChange(GameObject target)
+    private void TargetHPChange(float curHP, float maxHP)
     {
         Debug.Log("이벤트 호출");
-        if(!target.TryGetComponent<IHasHealth>(out var hasHealth))
-        {
-            return;
-        }
-
-        hasHealth.GetHPInfo(out float curHP, out float maxHP);
 
         if (maxHP <= 0f)
             return;
-        float percent = (curHP / maxHP);
+
+        float percent = curHP / maxHP;
         enemyHpBar.fillAmount = percent;
-        percent *= 100f;
-        enemyHpText.text = $"{percent:F1}%";
+        enemyHpText.text = $"{percent * 100f:F1}%";
     }
 }

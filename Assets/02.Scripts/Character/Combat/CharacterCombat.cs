@@ -57,7 +57,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         Animator.StringToHash("IsAttacking");
 
     //6.16 KYW
-    public event Action<GameObject> OnAttackTargetChanged;
+    public event Action<float, float> OnAttackTargetChanged;
 
 
     private void Awake()
@@ -319,12 +319,26 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             int finalDamage = Mathf.RoundToInt(_playerCharacter.AttackPower * multiplier);
 
             damageable.TakeDamage(finalDamage, this);
-            GameObject getDamageableObject = damageable.GetDamageableObject();
 
-            if (getDamageableObject == null) continue;
-            OnAttackTargetChanged?.Invoke(getDamageableObject);
+            GameObject damageableObject = damageable.GetDamageableObject();
+
+            if (damageableObject == null)
+                continue;
+
+            if (!damageableObject.TryGetComponent<IHasHealth>(out var hasHealth))
+                continue;
+
+            hasHealth.GetHPInfo(out float curHP, out float maxHP);
+            RPC_AttackTargetChanged(curHP, maxHP);
         }
     }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_AttackTargetChanged(float curHP, float maxHP)
+    {
+        OnAttackTargetChanged?.Invoke(curHP, maxHP);
+    }
+
     private void SpawnHitBox(AttackData data)
     {
         _debugAttackData = data;
