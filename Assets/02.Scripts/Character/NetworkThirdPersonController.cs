@@ -48,8 +48,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private float _rotationVelocity;
 
     [Header("Skill")]
-    private AssassinSkill q_Skill;
-    private AssassinStealth _stealth;
+    private ISkillQ _skillQ;
+    private ISkillE _skillE;
+    private ISkillR _skillR;
 
     private Animator _animator;
     private NetworkCharacterController _controller;
@@ -88,8 +89,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _controller = GetComponent<NetworkCharacterController>();
         _combat = GetComponent<CharacterCombat>();
         _playerCharacter = GetComponent<PlayerCharacter>();
-        q_Skill = GetComponent<AssassinSkill>();
-        _stealth = GetComponent<AssassinStealth>();
+
+        _skillQ = GetComponent<ISkillQ>();
+        _skillE = GetComponent<ISkillE>();
+        _skillR = GetComponent<ISkillR>();
 
         foreach (var component in GetComponents<MonoBehaviour>())
         {
@@ -529,12 +532,17 @@ public class NetworkThirdPersonController : NetworkBehaviour
     {
         if (input.SkillQ)
         {
-            q_Skill?.UseQ();
+            _skillQ?.UseQ();
         }
 
         if (input.SkillE)
         {
-            _stealth?.UseE();
+            _skillE?.UseE();
+        }
+
+        if (input.SkillR)
+        {
+            _skillR?.UseR();
         }
     }
 }
