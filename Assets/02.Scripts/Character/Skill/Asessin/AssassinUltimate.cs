@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
+public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, ISkillCooldown
 {
     [Header("Setting")]
     [SerializeField]
@@ -15,6 +15,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
     [SerializeField]
     private float manaCost = 60f;
 
+    public TickTimer Cooldown => CooldownTimer;
 
     [Header("Effect")]
     [SerializeField]

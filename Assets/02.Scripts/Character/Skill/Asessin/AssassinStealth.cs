@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE
+public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkillCooldown
 {
     [SerializeField] private float duration = 5f;
     [SerializeField] private float cooldown = 15f;
