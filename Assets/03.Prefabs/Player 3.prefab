@@ -1049,6 +1049,7 @@ GameObject:
   - component: {fileID: 6070649731673188414}
   - component: {fileID: -1913311418479507481}
   - component: {fileID: 2713960371213007680}
+  - component: {fileID: 2422647518380254871}
   m_Layer: 6
   m_Name: Player 3
   m_TagString: Player
@@ -1066,8 +1067,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.96415, y: 1.62674, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3954202986004157000}
   - {fileID: 7184959071715634364}
@@ -1101,6 +1102,7 @@ MonoBehaviour:
   - {fileID: 2959145431102751377}
   - {fileID: -1913311418479507481}
   - {fileID: 2713960371213007680}
+  - {fileID: 2422647518380254871}
   ForceRemoteRenderTimeframe: 0
 --- !u!95 &7961633600829976054
 Animator:
@@ -1139,7 +1141,7 @@ MonoBehaviour:
   Animator: {fileID: 7961633600829976054}
   ApplyTiming: 2
   SyncSettings: 79
-  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd91e9c753539b06f107d9c024c5ab0186327ca3cdf00e626f882daa544a5f6bf6a44ca4ba663e65182afa8626a8b5caa3
+  StateHashes: 0000000084ca1cc0f9c6230b1c6a54339e2518b671a7e1076b36dbedb1afdc305a6c54cd2afa8626a8b5caa391e9c753a53d369107d9c024330d31e6a44ca4ba90985578327ca3cd06a8520f882daa54bcf95b96
   TriggerHashes: 0000000028a981072b12289837b93501
   TotalWords: 4
 --- !u!143 &8382405528265806163
@@ -1160,13 +1162,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 2
-  m_Radius: 0.5
+  m_Height: 1.8
+  m_Radius: 0.25
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: 0, y: 0.87, z: 0}
 --- !u!114 &6071844188690936054
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1225,11 +1227,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCombat
   comboInputTime: 0.5
   attackSpawnPoint: {fileID: 5651274045008937097}
+  controller: {fileID: 0}
   comboAttackData:
-  - SpawnType: 0
+  - SpawnType: 1
     DamagePercent: 100
     Range: 1
     Radius: 0.6
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 3031006684049387128, guid: f4ef8c345f8b61f4da40ac1b469b82fb, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 0, y: 90, z: 0}
@@ -1239,6 +1245,9 @@ MonoBehaviour:
     DamagePercent: 100
     Range: 1
     Radius: 0.6
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 45, y: 90, z: 0}
@@ -1248,6 +1257,9 @@ MonoBehaviour:
     DamagePercent: 100
     Range: 1
     Radius: 0.6
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 3031006684049387128, guid: f59337c876c98c94dacdcd35507230b9, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 0, y: 90, z: 0}
@@ -1257,6 +1269,9 @@ MonoBehaviour:
     DamagePercent: 100
     Range: 1
     Radius: 0.6
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 1149029339946739509, guid: 99994b4d1bcfe2d43bca138323b8704c, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
     EffectRotationOffset: {x: 0, y: 180, z: 0}
@@ -1266,6 +1281,9 @@ MonoBehaviour:
     DamagePercent: 100
     Range: 1
     Radius: 0.6
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
     AttackEffect: {fileID: 8703879215163434798, guid: 9ce27536803f3ba40b31bed95e7c8166, type: 3}
     EffectPositionOffset: {x: 0, y: -0.5, z: 0}
     EffectRotationOffset: {x: 0, y: 140, z: 0}
@@ -1303,6 +1321,8 @@ MonoBehaviour:
   _ClassType: 0
   _CurrentHP: 0
   _CurrentMana: 0
+  manaRegenDelay: 3
+  manaRegenPerSecond: 8
   _Team: 0
   _IsDead:
     _value: 0
@@ -1323,6 +1343,22 @@ MonoBehaviour:
   buffs: []
   effects: []
   effectRoot: {fileID: 3954202986004157000}
+--- !u!114 &2422647518380254871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c58db8fcb02dc840a6945451eeae8e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MageQSkill
+  shurikenPrefab: {fileID: 0}
+  shurikenSpawnPoint: {fileID: 0}
+  manaCost: 20
+  cooldown: 5
 --- !u!1 &3354681238205586625
 GameObject:
   m_ObjectHideFlags: 0

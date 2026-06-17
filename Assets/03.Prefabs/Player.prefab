@@ -36392,6 +36392,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssassinStealth
   duration: 5
   cooldown: 15
+  manaCost: 30
   stealthMaterial: {fileID: 2100000, guid: 71d9bc16d1c919944862effc0ddad6eb, type: 2}
   stealthStartEffect: {fileID: 8492441887821894247}
   stealthEndEffect: {fileID: 6974015565795703727}
