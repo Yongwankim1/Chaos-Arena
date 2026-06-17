@@ -440,7 +440,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.921325
+      - time: 0.6403972
         functionName: ComboWindowStart
         data: 
         objectReferenceParameter: {instanceID: 0}

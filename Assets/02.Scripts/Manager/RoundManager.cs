@@ -210,11 +210,52 @@ public class RoundManager : NetworkBehaviour
 
         _isRoundEnding = true;
 
-        RoundResult = RoundResultType.Draw;
+        if (BlueScore >= killsToWinRound)
+        {
+            BlueRoundWin++;
 
-        Debug.Log("Round Draw");
+            RoundResult = RoundResultType.BlueWin;
 
-        StartNextRound();
+            CheckMatchEnd();
+
+            return;
+        }
+
+        if (RedScore >= killsToWinRound)
+        {
+            RedRoundWin++;
+
+            RoundResult = RoundResultType.RedWin;
+
+            CheckMatchEnd();
+
+            return;
+        }
+
+        if (BlueScore > RedScore)
+        {
+            BlueRoundWin++;
+
+            RoundResult = RoundResultType.BlueWin;
+
+            Debug.Log("Time Over : Blue Win");
+        }
+        else if (RedScore > BlueScore)
+        {
+            RedRoundWin++;
+
+            RoundResult = RoundResultType.RedWin;
+
+            Debug.Log("Time Over : Red Win");
+        }
+        else
+        {
+            RoundResult = RoundResultType.Draw;
+
+            Debug.Log("Time Over : Draw");
+        }
+
+        CheckMatchEnd();
     }
     public void OnPlayerDeath(
      PlayerCharacter victim,
