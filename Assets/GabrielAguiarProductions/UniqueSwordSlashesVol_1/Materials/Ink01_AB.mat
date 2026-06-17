@@ -92,11 +92,13 @@ Material:
     - _Cull: 2
     - _Dissolve: 0.8
     - _DstBlend: 10
+    - _DstBlendAlpha: 10
     - _Power: 0.17
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SoftParticle: 20
     - _SrcBlend: 5
+    - _SrcBlendAlpha: 1
     - _Surface: 1
     - _ZTest: 4
     - _ZWrite: 0

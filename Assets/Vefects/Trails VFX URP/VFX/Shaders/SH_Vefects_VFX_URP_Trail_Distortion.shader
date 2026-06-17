@@ -510,7 +510,7 @@ Shader "Vefects/SH_Vefects_VFX_URP_Trail_Distortion"
 				float smoothstepResult82 = smoothstep( eros67 , ( eros67 + _ErosionSmoothness ) , tex2D( _IntensityMask, ( panner199 + ( tex2D( _NoiseTexture, ( panner59 + ( randomOffset163 * 0.173 ) ) ).r * ( _Noise01Intensity * noiseMultiply51 ) ) ) ).g);
 				float temp_output_100_0 = saturate( ( saturate( pow( smoothstepResult82 , _IntensityMaskPower ) ) * _IntensityMaskMultiply ) );
 				float2 uv_OpacityMask = input.ase_texcoord4.zw * _OpacityMask_ST.xy + _OpacityMask_ST.zw;
-				float temp_output_159_0 = saturate( ( saturate( pow( tex2D( _OpacityMask, uv_OpacityMask ).g , _OpacityMaskPower ) ) * _OpacityMaskMultiply ) );
+				float temp_output_159_0 = saturate( ( saturate( pow( abs( tex2D( _OpacityMask, uv_OpacityMask ).g ) , _OpacityMaskPower ) ) * _OpacityMaskMultiply ) );
 				float eyeDepth = input.ase_texcoord5.x;
 				float cameraDepthFade187 = (( eyeDepth -_ProjectionParams.y - _CameraDepthFadeOffset ) / _CameraDepthFadeLength);
 				float4 ase_screenPosNorm = ScreenPos / ScreenPos.w;

@@ -1077,6 +1077,7 @@ Transform:
   - {fileID: 8506231665833404568}
   - {fileID: 1999867196983816936}
   - {fileID: 2616914044991208643}
+  - {fileID: 5363686509817726517}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8547570258107433689
@@ -1355,8 +1356,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c58db8fcb02dc840a6945451eeae8e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MageQSkill
-  shurikenPrefab: {fileID: 0}
-  shurikenSpawnPoint: {fileID: 0}
+  lightingPrefab: {fileID: 5065082053846362233, guid: 383e59d4c68ee7b448985a87a8e5b5f5, type: 3}
+  lightingEffectSpawnPoint: {fileID: 5363686509817726517}
   manaCost: 20
   cooldown: 5
 --- !u!1 &3354681238205586625
@@ -1707,6 +1708,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5190296252902433430}
+  m_LocalEulerAnglesHint: {x: -2.1261299, y: -0.000066533416, z: -85.094734}
+--- !u!1 &5243910120582080462
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5363686509817726517}
+  m_Layer: 6
+  m_Name: QSkillSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5363686509817726517
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5243910120582080462}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 1.152}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8856736234490504503}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5264683942705983432
 GameObject:
@@ -1897,7 +1929,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1492401559652504869}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 29.924604, y: 0.9276436, z: 0.3168636}
 --- !u!1 &6236191474058474364
 GameObject:
   m_ObjectHideFlags: 0
@@ -1960,7 +1992,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6960396631318757685}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -2.126114, y: 0.00001698044, z: 85.09478}
 --- !u!1 &6621760120667938291
 GameObject:
   m_ObjectHideFlags: 0
