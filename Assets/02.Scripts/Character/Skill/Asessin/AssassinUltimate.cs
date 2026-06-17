@@ -43,6 +43,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
 
     [SerializeField]
     private float shadowDamageMultiplier = 0.5f;
+    private ParticleSystemRenderer[] _smokeRenderers;
 
     [Header("Q Upgrade")]
     [SerializeField]
@@ -123,6 +124,11 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
         _visual = GetComponent<PlayerVisualController>();
 
         _stealth = GetComponent<AssassinStealth>();
+
+        if (shadowSmoke != null)
+        {
+            _smokeRenderers = shadowSmoke.GetComponentsInChildren<ParticleSystemRenderer>(true);
+        }
     }
 
     public override void Spawned()
@@ -210,9 +216,11 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
         if (visible)
         {
             startEffect?.Play();
-
-            shadowSmoke?.Play();
         }
+
+        shadowSmoke?.Play();
+
+        RefreshUltimateEffectVisibility();
 
         _visual?.SetUltimate(true);
     }
@@ -230,8 +238,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
             endEffect?.Play();
         }
 
-        shadowSmoke?.Stop(true,
-            ParticleSystemStopBehavior.StopEmittingAndClear);
+        shadowSmoke?.Stop();
 
         _visual?.SetUltimate(false);
     }
@@ -420,18 +427,11 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
               _stealth.IsStealth &&
               !HasInputAuthority);
 
-        if (IsUltimate)
+        if (_smokeRenderers != null)
         {
-            if (visible)
+            foreach (var renderer in _smokeRenderers)
             {
-                if (!shadowSmoke.isPlaying)
-                    shadowSmoke.Play();
-            }
-            else
-            {
-                if (shadowSmoke.isPlaying)
-                    shadowSmoke.Stop(true,
-                        ParticleSystemStopBehavior.StopEmittingAndClear);
+                renderer.enabled = visible && IsUltimate;
             }
         }
     }

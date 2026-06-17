@@ -133,8 +133,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
             Debug.Log(
                 $"HUD Bind : {ClassType}");
 
-            HUDManager.Instance
-                ?.BindPlayer(this);
+            HUDManager.Instance?.BindPlayer(this);
         }
     }
     public override void Render()
@@ -188,11 +187,27 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
         CurrentHP = Mathf.Max(0, CurrentHP - damage);
 
+        NotifyEnemyHUD(attacker);
+
         if (CurrentHP <= 0)
         {
             Die();
         }
     }
+
+    private void NotifyEnemyHUD(IAttacker attacker)
+    {
+        if (attacker == null)
+            return;
+
+        CharacterCombat combat = attacker.GetAttacker().GetComponent<CharacterCombat>();
+
+        if (combat == null)
+            return;
+
+        combat.RPC_AttackTargetChanged(Object.Id,CurrentHP,MaxHP);
+    }
+
     private void Die()
     {
         if (IsDead)

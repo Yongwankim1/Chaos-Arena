@@ -1,36 +1,75 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyHUD : MonoBehaviour
 {
-    [SerializeField] Image enemyHpBar;
-    [SerializeField] TMP_Text enemyHpText;
-    [SerializeField] private CharacterCombat combat;
-    
-    public void Init(PlayerCharacter player)
+    [SerializeField] private Image enemyHpBar;
+    [SerializeField] private TMP_Text enemyHpText;
+
+    [SerializeField]
+    private float hideDelay = 10f;
+
+    private float _lastHitTime;
+
+    private GameObject _target;
+
+    private void Awake()
     {
-        if (!player.TryGetComponent<CharacterCombat>(out combat)) return;
-        // combat에 타겟 HP 변경 이벤트를 만든 뒤 여기서 구독
-        combat.OnAttackTargetChanged += TargetHPChange;
+        gameObject.SetActive(false);
     }
 
-    private void OnDisable()
+    private void Update()
     {
-        //TODO:: 구독 해제
-        if (combat != null) combat.OnAttackTargetChanged -= TargetHPChange;
+        if (!gameObject.activeSelf)
+            return;
+
+        if (_target == null)
+        {
+            Hide();
+            return;
+        }
+
+        PlayerCharacter player =
+            _target.GetComponent<PlayerCharacter>();
+
+        if (player != null && player.IsDead)
+        {
+            Hide();
+            return;
+        }
+
+        if (Time.time - _lastHitTime >= hideDelay)
+        {
+            Hide();
+        }
     }
 
-    private void TargetHPChange(float curHP, float maxHP)
+    public void ShowTarget(GameObject target,float curHP,float maxHP)
     {
-        Debug.Log("이벤트 호출");
-
         if (maxHP <= 0f)
             return;
 
+        _target = target;
+
+        _lastHitTime = Time.time;
+
+        if (!gameObject.activeSelf)
+        {
+            gameObject.SetActive(true);
+        }
+
         float percent = curHP / maxHP;
+
         enemyHpBar.fillAmount = percent;
+
         enemyHpText.text = $"{percent * 100f:F1}%";
+    }
+
+    public void Hide()
+    {
+        _target = null;
+
+        gameObject.SetActive(false);
     }
 }
