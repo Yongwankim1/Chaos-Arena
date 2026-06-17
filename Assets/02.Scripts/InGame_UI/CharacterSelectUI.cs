@@ -107,11 +107,17 @@ public class CharacterSelectUI : MonoBehaviour
 
     }
 
-    public void OnPlayerUI() 
+    public void OnPlayerUI()
     {
+        if (inGame_UI == null)
+            return;
+
         foreach (GameObject ui in inGame_UI)
         {
-            ui.SetActive(true);
+            if (ui != null)
+            {
+                ui.SetActive(true);
+            }
         }
     }
 }

@@ -24,6 +24,8 @@ public class NetworkShuriken : NetworkBehaviour
     [SerializeField] private float shrinkDuration = 0.5f;
     [SerializeField] private float dotRadius = 2f;
     [SerializeField] private LayerMask playerMask;
+    [SerializeField]
+    private float firstHitDamagePercent = 110f;
 
 
     [SerializeField]
@@ -122,10 +124,19 @@ public class NetworkShuriken : NetworkBehaviour
         if (_owner != null && other.transform.root == _owner.GetAttacker().transform.root)
             return;
 
-        IDamageable damageable = other.GetComponentInParent<IDamageable>();
+        IDamageable damageable =other.GetComponentInParent<IDamageable>();
 
         if (damageable == null)
             return;
+
+        PlayerCharacter player =_owner.GetAttacker().GetComponent<PlayerCharacter>();
+
+        if (player != null)
+        {
+            int damage = Mathf.RoundToInt(player.AttackPower * (firstHitDamagePercent * 0.01f));
+
+            damageable.TakeDamage(damage,_owner);
+        }
 
         StopShuriken();
     }

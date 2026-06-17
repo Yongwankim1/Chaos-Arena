@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
+public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR
 {
     [Header("Setting")]
     [SerializeField]
@@ -15,9 +15,6 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
     [SerializeField]
     private float manaCost = 60f;
 
-    [Header("Material")]
-    [SerializeField]
-    private Material shadowMaterial;
 
     [Header("Effect")]
     [SerializeField]
@@ -30,7 +27,10 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
     private ParticleSystem shadowSmoke;
 
     [SerializeField]
-    private GameObject combo123ShadowEffect;
+    private GameObject combo1ShadowEffect;
+
+    [SerializeField]
+    private GameObject combo23ShadowEffect;
 
     [SerializeField]
     private GameObject combo4ShadowEffect;
@@ -42,7 +42,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
     private float shadowDelay = 0.3f;
 
     [SerializeField]
-    private float shadowDamageMultiplier = 0.3f;
+    private float shadowDamageMultiplier = 0.5f;
 
     [Header("Q Upgrade")]
     [SerializeField]
@@ -53,6 +53,8 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
 
     private CharacterCombat _combat;
     private PlayerCharacter _player;
+    private PlayerVisualController _visual;
+    private AssassinStealth _stealth;
     public float Duration => duration;
     public float RemainingDuration
     {
@@ -65,8 +67,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
                 Runner) ?? 0f;
         }
     }
-    public bool IsUltimateActive =>
-    IsUltimate;
+    public bool IsUltimateActive => IsUltimate;
 
     public float GetAttackMultiplier(
         int comboIndex)
@@ -82,7 +83,22 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
 
         return 1f;
     }
+    public GameObject GetOverrideEffect(int comboIndex)
+    {
+        if (!IsUltimate)
+            return null;
 
+        switch (comboIndex)
+        {
+            case 4:
+                return combo4ShadowEffect;
+
+            case 5:
+                return combo5ShadowEffect;
+        }
+
+        return null;
+    }
     [Networked]
     public NetworkBool IsUltimate { get; set; }
 
@@ -102,18 +118,13 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
 
     private void Awake()
     {
-        _player =GetComponent<PlayerCharacter>();
-        _renderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
+        _player = GetComponent<PlayerCharacter>();
         _combat = GetComponent<CharacterCombat>();
-        _originMaterials =
-            new Material[_renderers.Length];
+        _visual = GetComponent<PlayerVisualController>();
 
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _originMaterials[i] =
-                _renderers[i].material;
-        }
+        _stealth = GetComponent<AssassinStealth>();
     }
+
     public override void Spawned()
     {
         if (_combat != null)
@@ -141,7 +152,12 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
             EndUltimate();
         }
     }
-
+    private bool CanSeeStealthEffect()
+    {
+        return _stealth == null
+            || !_stealth.IsStealth
+            || Object.HasInputAuthority;
+    }
     public void UseR()
     {
         if (!HasStateAuthority)
@@ -186,27 +202,38 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_StartUltimate()
     {
-        startEffect?.Play();
+        bool visible =
+            !(_stealth != null &&
+              _stealth.IsStealth &&
+              !HasInputAuthority);
 
-        shadowSmoke?.Play();
-
-        for (int i = 0; i < _renderers.Length; i++)
+        if (visible)
         {
-            _renderers[i].material = shadowMaterial;
+            startEffect?.Play();
+
+            shadowSmoke?.Play();
         }
+
+        _visual?.SetUltimate(true);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_EndUltimate()
     {
-        endEffect?.Play();
+        bool visible =
+            !(_stealth != null &&
+              _stealth.IsStealth &&
+              !HasInputAuthority);
 
-        shadowSmoke?.Stop();
-
-        for (int i = 0; i < _renderers.Length; i++)
+        if (visible)
         {
-            _renderers[i].material = _originMaterials[i];
+            endEffect?.Play();
         }
+
+        shadowSmoke?.Stop(true,
+            ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        _visual?.SetUltimate(false);
     }
     private void OnAttack(
     int comboIndex,
@@ -218,27 +245,38 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
         if (!IsUltimate)
             return;
 
-        if (comboIndex == 4)
+        switch (comboIndex)
         {
-            SpawnDashShadowEffect(
-                combo4ShadowEffect);
+            case 1:
+                StartCoroutine(
+     ShadowAttackRoutine(
+         comboIndex,
+         data,
+         combo1ShadowEffect));
+                break;
 
-            return;
+            case 2:
+            case 3:
+                StartCoroutine(
+    ShadowAttackRoutine(
+        comboIndex,
+        data,
+        combo23ShadowEffect));
+                break;
+
+            case 4:
+
+                break;
+
+            case 5:
+
+                break;
         }
-
-        if (comboIndex == 5)
-        {
-            SpawnDashShadowEffect(
-                combo5ShadowEffect);
-
-            return;
-        }
-
-        StartCoroutine(
-            ShadowAttackRoutine(data));
     }
     private IEnumerator ShadowAttackRoutine(
-     AttackData data)
+     int comboIndex,
+     AttackData data,
+     GameObject effectPrefab)
     {
         yield return new WaitForSeconds(
             shadowDelay);
@@ -247,14 +285,21 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
             yield break;
 
         Vector3 spawnPosition =
-            _combat.AttackSpawnPoint.position;
+            _combat.AttackSpawnPoint.position +
+            transform.TransformDirection(
+                data.EffectPositionOffset);
 
-        if (combo123ShadowEffect != null)
+        Quaternion spawnRotation =
+            transform.rotation *
+            Quaternion.Euler(
+                data.EffectRotationOffset);
+
+        if (effectPrefab != null)
         {
-            Instantiate(
-                combo123ShadowEffect,
-                spawnPosition,
-                transform.rotation);
+            RPC_SpawnShadowEffect(
+           comboIndex,
+           spawnPosition,
+           spawnRotation);
         }
 
         PerformShadowHitBox(
@@ -263,27 +308,38 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
     }
 
     private void SpawnDashShadowEffect(
-    GameObject effectPrefab)
+     GameObject effectPrefab,
+     AttackData data)
     {
         if (effectPrefab == null)
             return;
 
+        Vector3 spawnPosition =
+            _combat.AttackSpawnPoint.position +
+            transform.TransformDirection(
+                data.EffectPositionOffset);
+
+        Quaternion spawnRotation =
+            transform.rotation *
+            Quaternion.Euler(
+                data.EffectRotationOffset);
+
         Instantiate(
             effectPrefab,
-            transform.position,
-            transform.rotation);
+            spawnPosition,
+            spawnRotation);
     }
 
     private void PerformShadowHitBox(
-    AttackData data,
-    float damageMultiplier)
+      AttackData data,
+      float damageMultiplier)
     {
         HashSet<IDamageable> damagedTargets =
             new HashSet<IDamageable>();
 
         Vector3 center =
-             _combat.AttackSpawnPoint.position +
-             _combat.AttackSpawnPoint.forward *
+            _combat.AttackSpawnPoint.position +
+            _combat.AttackSpawnPoint.forward *
             (data.Range * 0.5f);
 
         Collider[] hits =
@@ -293,7 +349,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
                     data.Radius,
                     1f,
                     data.Range * 0.5f),
-                 _combat.AttackSpawnPoint.rotation);
+                _combat.AttackSpawnPoint.rotation);
 
         foreach (Collider hit in hits)
         {
@@ -315,13 +371,68 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier , ISkillR
                 damageable);
 
             float damage =
-    _player.AttackPower *
-    (data.DamagePercent / 100f) *
-    damageMultiplier;
+                _player.AttackPower *
+                (data.DamagePercent / 100f) *
+                damageMultiplier;
 
             damageable.TakeDamage(
-     Mathf.RoundToInt(damage),
-     _combat);
+                Mathf.RoundToInt(damage),
+                _combat);
+        }
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_SpawnShadowEffect(
+    int comboIndex,
+    Vector3 position,
+    Quaternion rotation)
+    {
+        GameObject prefab = null;
+
+        switch (comboIndex)
+        {
+            case 1:
+                prefab = combo1ShadowEffect;
+                break;
+
+            case 2:
+            case 3:
+                prefab = combo23ShadowEffect;
+                break;
+        }
+
+        if (prefab == null)
+            return;
+
+        if (!CanSeeStealthEffect())
+            return;
+
+        GameObject effect =
+            Instantiate(
+                prefab,
+                position,
+                rotation);
+
+    }
+    public void RefreshUltimateEffectVisibility()
+    {
+        bool visible =
+            !(_stealth != null &&
+              _stealth.IsStealth &&
+              !HasInputAuthority);
+
+        if (IsUltimate)
+        {
+            if (visible)
+            {
+                if (!shadowSmoke.isPlaying)
+                    shadowSmoke.Play();
+            }
+            else
+            {
+                if (shadowSmoke.isPlaying)
+                    shadowSmoke.Stop(true,
+                        ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
         }
     }
 }
