@@ -80,11 +80,11 @@ public class MageQSkill : NetworkBehaviour
         _animator.SetTrigger(SkillQHash);
     }
 
-    public void SpawnShuriken()
+    public void SpawnExplosion()
     {
         if (!HasStateAuthority)
             return;
 
-        //Runner.Spawn(shurikenPrefab, shurikenSpawnPoint.position, Quaternion.LookRotation(transform.forward), Object.InputAuthority, (runner, obj) => { obj.GetComponent<NetworkShuriken>().Initialize(GetComponent<IAttacker>(), transform.forward); });
+        Runner.Spawn(lightingPrefab, lightingEffectSpawnPoint.position, Quaternion.LookRotation(transform.forward), Object.InputAuthority, (runner, obj) => { obj.GetComponent<MageLightningProjectile>().Init(GetComponent<IAttacker>()); });
     }
 }
