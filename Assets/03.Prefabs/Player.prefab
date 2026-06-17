@@ -51244,7 +51244,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f170e3c99c80f547a289b4bfc601462, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCombat
-  comboInputTime: 0.5
+  comboInputTime: 0.8
   attackSpawnPoint: {fileID: 5651274045008937097}
   controller: {fileID: 7883889268887263263}
   comboAttackData:
