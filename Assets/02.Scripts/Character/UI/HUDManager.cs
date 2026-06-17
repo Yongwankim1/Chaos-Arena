@@ -9,6 +9,8 @@ public class HUDManager : MonoBehaviour
     [SerializeField]
     private EnemyHUD enemyHUD;
 
+    public EnemyHUD EnemyHUD => enemyHUD;
+
     private void Awake()
     {
         Instance = this;
@@ -16,9 +18,6 @@ public class HUDManager : MonoBehaviour
 
     public void BindPlayer(PlayerCharacter player)
     {
-        Debug.Log($"BindPlayer : {player.name}");
-
         playerHUD.Initialize(player);
-        enemyHUD.Init(player);
     }
 }
