@@ -220,7 +220,7 @@ Shader "Vefects/SH_Vefects_URP_VFX_Character_Showoff"
 			#pragma multi_compile_fragment _ _DBUFFER_MRT1 _DBUFFER_MRT2 _DBUFFER_MRT3
 			#pragma multi_compile _ _LIGHT_LAYERS
 			#pragma multi_compile_fragment _ _LIGHT_COOKIES
-			#pragma multi_compile _ _FORWARD_PLUS
+			#pragma multi_compile _ _CLUSTER_LIGHT_LOOP
 
 			#pragma multi_compile _ LIGHTMAP_SHADOW_MIXING
 			#pragma multi_compile _ SHADOWS_SHADOWMASK
@@ -716,10 +716,10 @@ Shader "Vefects/SH_Vefects_URP_VFX_Character_Showoff"
 					#if defined(_ADDITIONAL_LIGHTS)
 						uint meshRenderingLayers = GetMeshRenderingLayer();
 						uint pixelLightCount = GetAdditionalLightsCount();
-						#if USE_FORWARD_PLUS
+						#if USE_CLUSTER_LIGHT_LOOP
 							[loop] for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
 							{
-								FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+							CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
 
 								Light light = GetAdditionalLight(lightIndex, inputData.positionWS, inputData.shadowMask);
 								#ifdef _LIGHT_LAYERS
@@ -765,10 +765,10 @@ Shader "Vefects/SH_Vefects_URP_VFX_Character_Showoff"
 					#if defined(_ADDITIONAL_LIGHTS)
 						uint meshRenderingLayers = GetMeshRenderingLayer();
 						uint pixelLightCount = GetAdditionalLightsCount();
-						#if USE_FORWARD_PLUS
+						#if USE_CLUSTER_LIGHT_LOOP
 							[loop] for (uint lightIndex = 0; lightIndex < min(URP_FP_DIRECTIONAL_LIGHTS_COUNT, MAX_VISIBLE_LIGHTS); lightIndex++)
 							{
-								FORWARD_PLUS_SUBTRACTIVE_LIGHT_CHECK
+							CLUSTER_LIGHT_LOOP_SUBTRACTIVE_LIGHT_CHECK
 
 								Light light = GetAdditionalLight(lightIndex, inputData.positionWS, inputData.shadowMask);
 								#ifdef _LIGHT_LAYERS
@@ -2583,7 +2583,7 @@ Shader "Vefects/SH_Vefects_URP_VFX_Character_Showoff"
 			sampler2D _NoiseEdgesTexture;
 
 
-			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.hlsl"
+			#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/UnityGBuffer.deprecated.hlsl"
 
 			
 			PackedVaryings VertexFunction( Attributes input  )

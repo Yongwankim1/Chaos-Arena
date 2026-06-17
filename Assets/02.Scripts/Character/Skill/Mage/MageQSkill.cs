@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class MageQSkill : NetworkBehaviour
+public class MageQSkill : NetworkBehaviour, ISkillQ
 {
     [SerializeField]
     private NetworkObject lightingPrefab;

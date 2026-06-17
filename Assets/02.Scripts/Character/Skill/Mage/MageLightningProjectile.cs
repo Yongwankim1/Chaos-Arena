@@ -94,10 +94,16 @@ public class MageLightningProjectile : NetworkBehaviour
 
         foreach (Collider hit in hits)
         {
-            if (hit.TryGetComponent(out IDamageable damageable))
+
+            if (!hit.TryGetComponent(out IDamageable damageable))
             {
-                damageable.TakeDamage(damage, attacker);
+                continue;
             }
+            if(hit.TryGetComponent(out IAttacker hitAttacker))
+            {
+                if (hitAttacker == attacker) continue;
+            }
+            damageable.TakeDamage(damage, attacker);
         }
     }
 
