@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class AssassinDash : NetworkBehaviour, IDash
+public class AssassinDash : NetworkBehaviour, IDash, ISkillCooldown
 {
     [SerializeField]
     private float dashDistance = 5f;
@@ -11,6 +11,10 @@ public class AssassinDash : NetworkBehaviour, IDash
 
     [SerializeField]
     private float cooldown = 3f;
+
+    public TickTimer CooldownTimer => DashCooldown;
+
+    public float CooldownDuration => cooldown;
 
     [Networked]
     public TickTimer DashCooldown { get; set; }
@@ -46,8 +50,6 @@ public class AssassinDash : NetworkBehaviour, IDash
 
     [Networked]
     public Vector3 DashDirection { get; set; }
-
-    public float Cooldown => cooldown;
 
     public bool IsDashing => _player != null && _player.IsDashing;
 

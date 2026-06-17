@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class MageESkill : NetworkBehaviour, ISkillE
+public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
 {
     [SerializeField]
     private NetworkObject areaEffectPrefab;
@@ -25,6 +25,8 @@ public class MageESkill : NetworkBehaviour, ISkillE
 
     [Networked]
     public TickTimer Cooldown { get; set; }
+
+    public TickTimer CooldownTimer => Cooldown;
 
     public float CooldownDuration => cooldown;
     public float CooldownNormalized

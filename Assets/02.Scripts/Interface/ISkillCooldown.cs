@@ -2,7 +2,6 @@ using Fusion;
 
 public interface ISkillCooldown
 {
-    TickTimer Cooldown { get; }
-
+    TickTimer CooldownTimer { get; }
     float CooldownDuration { get; }
 }

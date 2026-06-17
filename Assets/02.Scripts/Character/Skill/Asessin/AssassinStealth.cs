@@ -15,7 +15,6 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
     [Networked] public TickTimer StealthTimer { get; set; }
     [Networked] public TickTimer CooldownTimer { get; set; }
 
-    public TickTimer Cooldown => CooldownTimer;
     public bool IsStealthed => IsStealth;
     public float CooldownDuration => cooldown;
 

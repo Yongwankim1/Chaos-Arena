@@ -25,10 +25,13 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
     [SerializeField]
     private float cooldown = 5f;
 
+    public TickTimer CooldownTimer => Cooldown;
+
+    public float CooldownDuration => cooldown;
+
     [Networked]
     public TickTimer Cooldown { get; set; }
 
-    public float CooldownDuration => cooldown;
     private AssassinStealth _stealth;
     public float CooldownNormalized
     {
