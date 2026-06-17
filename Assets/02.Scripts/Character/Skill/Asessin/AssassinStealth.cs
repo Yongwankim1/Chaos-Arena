@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE
+public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkillCooldown
 {
     [SerializeField] private float duration = 5f;
     [SerializeField] private float cooldown = 15f;
@@ -15,7 +15,6 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE
     [Networked] public TickTimer StealthTimer { get; set; }
     [Networked] public TickTimer CooldownTimer { get; set; }
 
-    public TickTimer Cooldown => CooldownTimer;
     public bool IsStealthed => IsStealth;
     public float CooldownDuration => cooldown;
 

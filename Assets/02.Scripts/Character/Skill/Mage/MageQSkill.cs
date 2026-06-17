@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class MageQSkill : NetworkBehaviour, ISkillQ
+public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
 {
     [SerializeField]
     private NetworkObject lightingPrefab;
@@ -25,7 +25,7 @@ public class MageQSkill : NetworkBehaviour, ISkillQ
 
     [Networked]
     public TickTimer Cooldown { get; set; }
-
+    public TickTimer CooldownTimer => Cooldown;
     public float CooldownDuration => cooldown;
 
 

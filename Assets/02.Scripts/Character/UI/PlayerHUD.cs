@@ -58,23 +58,52 @@ public class PlayerHUD : MonoBehaviour
 
         mpText.text = $"{_player.CurrentMana:0} / {_player.MaxMana:0}";
 
-        RefreshDash();
-        RefreshSkillQ();
-        RefreshSkillE();
-        RefreshSkillR();
+        RefreshSkill<IDash>(dashSlot);
+        RefreshSkill<ISkillQ>(qSkillSlot);
+        RefreshSkill<ISkillE>(eSlot);
+        RefreshSkill<ISkillR>(rSlot);
     }
 
-    private void RefreshDash()
+    private void RefreshSkill<T>(SkillSlotUI slot) where T : class
     {
-        AssassinDash dash = _player.GetComponent<AssassinDash>();
+        T skill = _player.GetComponent<T>();
 
-        if (dash == null)
+        if (skill == null)
+        {
+            slot.gameObject.SetActive(false);
+            return;
+        }
+
+        slot.gameObject.SetActive(true);
+
+        ISkillCooldown cooldown = skill as ISkillCooldown;
+
+        if (cooldown == null)
             return;
 
-        float remainTime = dash.DashCooldown.RemainingTime(dash.Runner) ?? 0f;
+        float remain = cooldown.CooldownTimer.RemainingTime(_player.Runner) ?? 0f;
 
-        dashSlot.Refresh(remainTime, dash.Cooldown);
+        slot.Refresh(remain, cooldown.CooldownDuration);
+
+        IActiveSkill active = skill as IActiveSkill;
+
+        if (active != null && active.IsActive)
+        {
+            slot.Refresh(active.RemainingDuration, active.Duration);
+        }
     }
+
+    //private void RefreshDash()
+    //{
+    //    AssassinDash dash = _player.GetComponent<AssassinDash>();
+
+    //    if (dash == null)
+    //        return;
+
+    //    float remainTime = dash.DashCooldown.RemainingTime(dash.Runner) ?? 0f;
+
+    //    dashSlot.Refresh(remainTime, dash.Cooldown);
+    //}
     private void RefreshSkillQ()
     {
         AssassinSkill skill = _player.GetComponent<AssassinSkill>();
