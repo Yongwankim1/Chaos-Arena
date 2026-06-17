@@ -4,7 +4,9 @@ using UnityEngine;
 public class AssassinSkill : NetworkBehaviour
 {
     [SerializeField]
-    private NetworkObject shurikenPrefab;
+    private NetworkObject normalShurikenPrefab;
+
+    private AssassinUltimate _ultimate;
 
     [SerializeField]
     private Transform shurikenSpawnPoint;
@@ -47,6 +49,7 @@ public class AssassinSkill : NetworkBehaviour
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
         _stealth = GetComponent<AssassinStealth>();
+        _ultimate = GetComponent<AssassinUltimate>();
     }
 
     public void UseQ()
@@ -81,6 +84,28 @@ public class AssassinSkill : NetworkBehaviour
         if (!HasStateAuthority)
             return;
 
-        Runner.Spawn(shurikenPrefab, shurikenSpawnPoint.position, Quaternion.LookRotation(transform.forward), Object.InputAuthority, (runner, obj) => { obj.GetComponent<NetworkShuriken>().Initialize(GetComponent<IAttacker>(), transform.forward); });
+        NetworkObject prefab =
+            normalShurikenPrefab;
+
+        if (_ultimate != null &&
+            _ultimate.IsUltimate &&
+            _ultimate.ShadowShurikenPrefab != null)
+        {
+            prefab =
+                _ultimate.ShadowShurikenPrefab;
+        }
+
+        Runner.Spawn(
+            prefab,
+            shurikenSpawnPoint.position,
+            Quaternion.LookRotation(transform.forward),
+            Object.InputAuthority,
+            (runner, obj) =>
+            {
+                obj.GetComponent<NetworkShuriken>()
+                    .Initialize(
+                        GetComponent<IAttacker>(),
+                        transform.forward);
+            });
     }
 }

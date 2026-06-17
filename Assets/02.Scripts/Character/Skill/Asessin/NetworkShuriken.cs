@@ -25,6 +25,10 @@ public class NetworkShuriken : NetworkBehaviour
     [SerializeField] private float dotRadius = 2f;
     [SerializeField] private LayerMask playerMask;
 
+
+    [SerializeField]
+    private ParticleSystem stopEffect;
+
     [Networked] private Vector3 Direction { get; set; }
     [Networked] private Vector3 StartPosition { get; set; }
     [Networked] private float TraveledDistance { get; set; }
@@ -132,6 +136,11 @@ public class NetworkShuriken : NetworkBehaviour
             return;
 
         IsStopped = true;
+
+        if (stopEffect != null)
+        {
+            stopEffect.Play();
+        }
 
         StopTimer = TickTimer.CreateFromSeconds(Runner, stopDuration);
 
