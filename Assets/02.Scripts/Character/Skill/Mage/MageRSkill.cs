@@ -1,7 +1,8 @@
 using Fusion;
 using UnityEngine;
 
-public class MageRSkill : NetworkBehaviour
+public class MageRSkill : NetworkBehaviour, ISkillR
+
 {
     [SerializeField]
     private NetworkObject Prefab;
@@ -16,6 +17,8 @@ public class MageRSkill : NetworkBehaviour
     private PlayerCharacter _player;
 
     private CharacterCombat _combat;
+
+    private NetworkObject spawnedLaser;
 
     [SerializeField]
     private float manaCost = 20f;
@@ -45,7 +48,7 @@ public class MageRSkill : NetworkBehaviour
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
     }
-    public void UseE()
+    public void UseR()
     {
         if (!HasStateAuthority)
             return;
@@ -62,25 +65,38 @@ public class MageRSkill : NetworkBehaviour
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
-        RPC_PlaySkillE();
+        RPC_PlaySkillR();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_PlaySkillE()
+    private void RPC_PlaySkillR()
     {
         _animator.SetTrigger(SkillRHash);
     }
 
 
-    public void SpawnAreaEffect()
+    public void SpawnLaserEffect()
     {
         if (!HasStateAuthority)
             return;
 
-        Runner.Spawn(Prefab, spawnPoint.position,
+        spawnedLaser = Runner.Spawn(Prefab, spawnPoint.position,
             Quaternion.LookRotation(transform.forward), Object.InputAuthority,
             (runner, obj) => {
-                obj.GetComponent<AreaAttack>().Init(GetComponent<IAttacker>());
+                obj.transform.SetParent(spawnPoint,true);
+                obj.GetComponent<MageLaserAttack>().Init(GetComponent<IAttacker>());
             });
+    }
+
+    public void EndLaserEffect()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (spawnedLaser == null)
+            return;
+
+        Runner.Despawn(spawnedLaser);
+        spawnedLaser = null;
     }
 }

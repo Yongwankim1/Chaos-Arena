@@ -34168,8 +34168,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4413898418451250}
-  - component: {fileID: 114431936531941674}
   - component: {fileID: 3119465433966623882}
+  - component: {fileID: 5408217184710986422}
+  - component: {fileID: 8220979608933926165}
   m_Layer: 0
   m_Name: MageREffect
   m_TagString: Untagged
@@ -34197,55 +34198,6 @@ Transform:
   - {fileID: 4085203338390226}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114431936531941674
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1917350642301494}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a4618906ae6ee94e864023d169209d3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  layersToCollide:
-    serializedVersion: 2
-    m_Bits: 1
-  changeColor: 0
-  newMaxColor: {r: 0, g: 0, b: 0, a: 1}
-  newMinColor: {r: 0, g: 0, b: 0, a: 1}
-  lineRenderers:
-  - {fileID: 120079071264398406}
-  - {fileID: 120715582064723712}
-  firePoint: {fileID: 0}
-  endPoint: {fileID: 0}
-  bounces: 0
-  size: 1
-  maximumLength: 60
-  overgrow: 1.2
-  overgrowSpeed: 0.4
-  shrinkSpeed: 0.3
-  disableDelay: 0.4
-  startVFX: {fileID: 1509780674279102}
-  useStart: 1
-  reflectStart: 0
-  middleVFX: {fileID: 1903045789940536}
-  useMiddle: 1
-  reflectMiddle: 0
-  endVFX: {fileID: 0}
-  useEnd: 1
-  useEndAlways: 1
-  reflectEnd: 1
-  trailVFX: {fileID: 1000721576499052}
-  useTrail: 1
-  reflectTrail: 1
-  trailInterval: 0
-  generateColliders: 0
-  isColliderTrigger: 0
-  collidersRadius: 0
-  layerName: Default
-  layerOrderTo: 0
 --- !u!114 &3119465433966623882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34259,8 +34211,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   lines:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 120079071264398406}
+  - {fileID: 120715582064723712}
+  isDebug: 0
+  attackDistance: 20
+  radius: 0.5
+--- !u!114 &5408217184710986422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917350642301494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 1045299541
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 3119465433966623882}
+  - {fileID: 8220979608933926165}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &8220979608933926165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917350642301494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &211854844714919120
 GameObject:
   m_ObjectHideFlags: 0
