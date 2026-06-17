@@ -40,7 +40,11 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     [Networked]
     public float AttackMoveRemain { get; set; }
 
-    private AssassinStealth _stealth;
+    private IStealthHandler _stealth;
+
+    public event Action<int, AttackData> OnAttackSpawned;
+    public Transform AttackSpawnPoint => attackSpawnPoint;
+    private IUltimateModifier _ultimateModifier;
     public bool IsAttacking
     {
         get;
@@ -66,7 +70,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         _playerCharacter = GetComponent<PlayerCharacter>();
 
-        _stealth = GetComponent<AssassinStealth>();
+        _stealth = GetComponent<IStealthHandler>();
+        _ultimateModifier = GetComponent<IUltimateModifier>();
     }
 
     public override void FixedUpdateNetwork()
@@ -256,6 +261,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                 SpawnProjectile(data);
                 break;
         }
+        OnAttackSpawned?.Invoke(CurrentAttackIndex,data);
     }
 
     private void StartPersistentHitBox(AttackData data)
@@ -316,7 +322,16 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
             float multiplier = data.DamagePercent / 100f;
 
-            int finalDamage = Mathf.RoundToInt(_playerCharacter.AttackPower * multiplier);
+            multiplier *=
+                _ultimateModifier
+                ?.GetAttackMultiplier(
+                    CurrentAttackIndex)
+                ?? 1f;
+
+            int finalDamage =
+                Mathf.RoundToInt(
+                    _playerCharacter.AttackPower *
+                    multiplier);
 
             damageable.TakeDamage(finalDamage, this);
 
@@ -470,5 +485,55 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _comboIndex = comboIndex;
 
         PlayAttack();
+    }
+    public void SpawnShadowAttack(
+    AttackData data,
+    float damageMultiplier)
+    {
+        Vector3 center =
+            attackSpawnPoint.position +
+            attackSpawnPoint.forward *
+            (data.Range * 0.5f);
+
+        Collider[] hits =
+            Physics.OverlapBox(
+                center,
+                new Vector3(
+                    data.Radius,
+                    1f,
+                    data.Range * 0.5f),
+                attackSpawnPoint.rotation);
+
+        HashSet<IDamageable> damagedTargets =
+            new HashSet<IDamageable>();
+
+        foreach (Collider hit in hits)
+        {
+            if (hit.transform.root ==
+                transform.root)
+                continue;
+
+            IDamageable damageable =
+                hit.GetComponentInParent<IDamageable>();
+
+            if (damageable == null)
+                continue;
+
+            if (damagedTargets.Contains(
+                damageable))
+                continue;
+
+            damagedTargets.Add(
+                damageable);
+
+            float finalDamage =
+                _playerCharacter.AttackPower *
+                (data.DamagePercent / 100f) *
+                damageMultiplier;
+
+            damageable.TakeDamage(
+                Mathf.RoundToInt(finalDamage),
+                this);
+        }
     }
 }

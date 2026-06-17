@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class AssassinSkill : NetworkBehaviour
+public class AssassinSkill : NetworkBehaviour , ISkillQ
 {
     [SerializeField]
     private NetworkObject normalShurikenPrefab;
