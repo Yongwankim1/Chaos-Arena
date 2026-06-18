@@ -18,4 +18,4 @@ MonoBehaviour:
   maxMana: 100
   walkSpeed: 5
   sprintSpeed: 10
-  attackPower: 30
+  attackPower: 5
