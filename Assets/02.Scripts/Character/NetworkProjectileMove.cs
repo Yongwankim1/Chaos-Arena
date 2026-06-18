@@ -16,12 +16,13 @@ public class NetworkProjectileMove : NetworkBehaviour
 
     private IAttacker attacker;
 
-    public void Init(IAttacker attacker, Vector3 direction)
+    public void Init(IAttacker attacker, Vector3 direction, float damage)
     {
         this.attacker = attacker;
         Direction = direction.normalized;
         StartPosition = transform.position;
         transform.forward = Direction;
+        this.damage = (int) damage;
     }
 
     public override void Spawned()

@@ -36179,18 +36179,18 @@ MonoBehaviour:
     CameraShake: 0.3
     Knockback: 0.2
   - SpawnType: 0
-    DamagePercent: 100
-    Range: 12
+    DamagePercent: 2
+    Range: 11
     Radius: 2
     UsePersistentHitbox: 0
     HitDuration: 0.3
     HitInterval: 0.05
     AttackEffect: {fileID: 1502253778071064, guid: 4b5a5a13ac151f14796ef0c980c89e34, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
-    EffectRotationOffset: {x: 0, y: 180, z: 0}
+    EffectRotationOffset: {x: 0, y: 0, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
-    SpawnOnGround: 0
+    SpawnOnGround: 1
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 0.2

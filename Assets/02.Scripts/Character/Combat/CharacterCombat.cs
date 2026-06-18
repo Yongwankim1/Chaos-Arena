@@ -434,7 +434,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
                 if (projectile != null)
                 {
-                    projectile.Init(this, direction);
+                    projectile.Init(this, direction, _playerCharacter.AttackPower * data.DamagePercent);
                 }
             });
     }

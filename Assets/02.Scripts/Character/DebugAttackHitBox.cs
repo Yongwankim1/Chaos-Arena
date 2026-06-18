@@ -10,7 +10,7 @@ public class DebugAttackHitBox : MonoBehaviour
     private void OnDrawGizmos()
     {
         if (attackPos == null) return;
-
+        if (!isDebug) return;
         Vector3 center = attackPos.position + attackPos.forward * Range * 0.5f;
 
         Vector3 halfExtents = new Vector3(Radius, 1f, Range * 0.5f);
