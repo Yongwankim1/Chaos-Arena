@@ -133,9 +133,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (_playerCharacter != null && _playerCharacter.IsDead)
-        {
             return;
-        }
 
         if (!GetInput(out NetworkInputData input))
             return;
@@ -156,10 +154,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         }
         else if (_playerCharacter.IsDashing)
         {
-            if (HasStateAuthority)
-            {
-                ApplyClassDash();
-            }
+            ApplyClassDash();
         }
         else
         {
@@ -260,6 +255,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Move(NetworkInputData input)
     {
+        if (_playerCharacter != null && _playerCharacter.IsDashing)
+            return;
+
         if (_actionLock != null && !_actionLock.CanMove)
             return;
 
@@ -484,9 +482,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (!input.Attack)
             return;
 
-        Debug.Log(
-            $"Attack Input | State:{HasStateAuthority} Input:{HasInputAuthority}");
-
         if (HasStateAuthority)
         {
             _combat?.AttackInput();
@@ -512,6 +507,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Dash(NetworkInputData input)
     {
+
         if (!input.Dash)
             return;
 
@@ -523,7 +519,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (_playerCharacter.IsDead)
             return;
-
+        Debug.Log($"Dash Called {Runner.Tick}");
         _dash?.Dash();
     }
 
@@ -536,6 +532,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (moveThisTick <= 0f)
             return;
+
+        Debug.Log($"Dash Move State:{HasStateAuthority} Input:{HasInputAuthority}");
 
         _controller.ForceMove(_dash.DashDirection * moveThisTick);
     }

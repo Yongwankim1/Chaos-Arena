@@ -75,7 +75,6 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
 
         _actionLock?.Lock(ActionLockType.Attack);
         _actionLock?.Lock(ActionLockType.Dash);
-        _actionLock?.Lock(ActionLockType.Move);
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
@@ -117,6 +116,5 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
 
         _actionLock?.Unlock(ActionLockType.Attack);
         _actionLock?.Unlock(ActionLockType.Dash);
-        _actionLock?.Unlock(ActionLockType.Move);
     }
 }

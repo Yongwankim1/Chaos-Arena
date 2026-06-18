@@ -138,7 +138,7 @@ public class AssassinDash : NetworkBehaviour, IDash, ISkillCooldown
 
     public float GetMoveThisTick()
     {
-        if (!HasStateAuthority)
+        if (!HasStateAuthority && !HasInputAuthority)
             return 0f;
 
         float speed = dashDistance / dashDuration;
@@ -147,19 +147,22 @@ public class AssassinDash : NetworkBehaviour, IDash, ISkillCooldown
 
         moveThisTick = Mathf.Min(moveThisTick, DashRemainDistance);
 
-        DashRemainDistance -= moveThisTick;
-
-        if (DashRemainDistance <= 0f)
+        if (HasStateAuthority)
         {
-            DashRemainDistance = 0f;
+            DashRemainDistance -= moveThisTick;
 
-            _player.IsDashing = false;
+            if (DashRemainDistance <= 0f)
+            {
+                DashRemainDistance = 0f;
 
-            DashAttackTimer = TickTimer.CreateFromSeconds(Runner, dashAttackWindow);
+                _player.IsDashing = false;
 
-            RPC_PlayDashEnd();
+                DashAttackTimer = TickTimer.CreateFromSeconds(Runner, dashAttackWindow);
 
-            RPC_SetCharacterVisible(true);
+                RPC_PlayDashEnd();
+
+                RPC_SetCharacterVisible(true);
+            }
         }
 
         return moveThisTick;

@@ -85,4 +85,14 @@ public class Buff : NetworkBehaviour
         }
 
     }
+    public void SetEffectVisible(bool visible)
+    {
+        foreach (GameObject effect in effects)
+        {
+            if (effect == null)
+                continue;
+
+            effect.SetActive(visible);
+        }
+    }
 }

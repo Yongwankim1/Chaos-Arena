@@ -24,13 +24,14 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
     private PlayerCharacter _player;
     private PlayerVisualController _visual;
     private AssassinUltimate _ultimate;
+    private Buff _buff;
 
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
 
         _visual = GetComponent<PlayerVisualController>();
-
+        _buff = GetComponent<Buff>();
         _renderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
         _ultimate = GetComponent<AssassinUltimate>();
     }
@@ -99,7 +100,10 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
             {
                 renderer.enabled = false;
             }
+
+            _buff?.SetEffectVisible(false);
         }
+
         _ultimate?.RefreshUltimateEffectVisibility();
     }
 
@@ -113,7 +117,15 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
             renderer.enabled = true;
         }
 
+        if (!HasInputAuthority)
+        {
+            _buff?.SetEffectVisible(true);
+        }
+
         _visual?.SetStealth(false);
+
         _ultimate?.RefreshUltimateEffectVisibility();
     }
+ 
+
 }
