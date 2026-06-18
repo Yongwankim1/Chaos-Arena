@@ -17,6 +17,12 @@ public class RoundManager : NetworkBehaviour
     [SerializeField]
     private int roundsToWinMatch = 3;
 
+    [SerializeField]
+    private int maxRoundCount = 5;
+
+    [Networked]
+    public int CurrentRound { get; set; }
+
     [Header("Time")]
     [SerializeField]
     private float waitingTime = 5f;
@@ -70,6 +76,8 @@ public class RoundManager : NetworkBehaviour
     [Networked]
     private NetworkBool MatchEnded { get; set; }
     private bool _isRoundEnding;
+
+
     private void Awake()
     {
         Instance = this;
@@ -83,6 +91,8 @@ public class RoundManager : NetworkBehaviour
 
         if (!HasStateAuthority)
             return;
+
+        CurrentRound = 1;
 
         enemySpawnManager.Spawn(Runner);
 
@@ -342,6 +352,15 @@ public class RoundManager : NetworkBehaviour
             return;
         }
 
+        if (CurrentRound >= maxRoundCount)
+        {
+            Debug.Log("Max Round Reached");
+
+            EndMatch();
+
+            return;
+        }
+
         StartNextRound();
     }
     private void StartNextRound()
@@ -352,7 +371,7 @@ public class RoundManager : NetworkBehaviour
     private IEnumerator NextRoundRoutine()
     {
         yield return new WaitForSeconds(2f);
-
+        CurrentRound++;
         _isRoundEnding = false;
 
         RoundResult =
@@ -399,7 +418,20 @@ public class RoundManager : NetworkBehaviour
 
         MatchEnded = true;
 
-        string result = BlueRoundWin > RedRoundWin ? "ºí·çÆÀ ½Â¸®" : "·¹µåÆÀ ½Â¸®";
+        string result;
+
+        if (BlueRoundWin > RedRoundWin)
+        {
+            result = "ºí·çÆÀ ½Â¸®";
+        }
+        else if (RedRoundWin > BlueRoundWin)
+        {
+            result = "·¹µåÆÀ ½Â¸®";
+        }
+        else
+        {
+            result = "¹«½ÂºÎ";
+        }
 
         RPC_ShowMatchResult(result);
     }
