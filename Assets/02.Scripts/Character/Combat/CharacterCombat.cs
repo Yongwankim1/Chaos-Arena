@@ -417,14 +417,35 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         Gizmos.DrawWireCube(Vector3.zero, size);
     }
-    private void SpawnProjectile(
-    AttackData data)
+    private void SpawnProjectile(AttackData data)
     {
+        if (data.ProjectilePrefab == null)
+            return;
+
+        NetworkObject projectilePrefab =
+            data.ProjectilePrefab.GetComponent<NetworkObject>();
+
+        if (projectilePrefab == null)
+            return;
+
+        Vector3 direction = attackSpawnPoint.forward;
+        Quaternion rotation = Quaternion.LookRotation(direction);
+
         Runner.Spawn(
-            data.ProjectilePrefab.GetComponent<NetworkObject>(),
+            projectilePrefab,
             attackSpawnPoint.position,
-            transform.rotation,
-            Object.InputAuthority);
+            rotation,
+            Object.InputAuthority,
+            (runner, obj) =>
+            {
+                NetworkProjectileMove projectile =
+                    obj.GetComponent<NetworkProjectileMove>();
+
+                if (projectile != null)
+                {
+                    projectile.Init(this, direction);
+                }
+            });
     }
 
     public void MoveForwardAttack(float distance)

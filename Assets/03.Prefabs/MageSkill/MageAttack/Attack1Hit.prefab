@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 198081554469749692}
   - component: {fileID: 199278747524989812}
   m_Layer: 0
-  m_Name: vfx_Hit_ArrowPoisoned
+  m_Name: Attack1Hit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
