@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4088981297732250}
-  - component: {fileID: 114992222562945108}
   - component: {fileID: 65743681667505658}
   - component: {fileID: 54877200406045304}
+  - component: {fileID: 147962483604341475}
+  - component: {fileID: -924634278439870118}
   m_Layer: 0
   m_Name: vfx_Projectile_ArrowPoisoned
   m_TagString: Untagged
@@ -35,33 +36,6 @@ Transform:
   - {fileID: 4217547206751732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114992222562945108
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1260705795423738}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12ba759cd568c0e47a7018ab70867a0d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  alignWithNormals: 1
-  rotate: 0
-  rotateAmount: 45
-  bounce: 0
-  bounceForce: 10
-  speed: 35
-  accuracy: 95
-  fireRate: 4
-  buildUpTime: 0
-  muzzlePrefab: {fileID: 1357030889595668, guid: 73f7f754e5d0b89409c9debabd4c48c6, type: 3}
-  offsetHit: {x: 0, y: 0, z: 0}
-  hitPrefab: {fileID: 1266152770621770, guid: 9a723d60088206e4a86eb5411a8d5df3, type: 3}
-  trails:
-  - {fileID: 1726877120892846}
-  - {fileID: 1672229105990886}
 --- !u!65 &65743681667505658
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -77,7 +51,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -106,10 +80,49 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 0
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &147962483604341475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260705795423738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d295ec304dfab64caa7d6f2b9d29eb0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  speed: 30
+  maxDistance: 30
+  radius: 0.2
+  damage: 5
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 192
+  hitEffectPrefab: {fileID: 1266152770621770, guid: d0c7e4a2b2bd0824f8f1c83aeaf6f6a5, type: 3}
+--- !u!114 &-924634278439870118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1260705795423738}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 3243315383
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 147962483604341475}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &1520093347119720
 GameObject:
   m_ObjectHideFlags: 0

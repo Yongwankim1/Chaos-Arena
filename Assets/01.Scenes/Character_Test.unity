@@ -8326,7 +8326,6 @@ MonoBehaviour:
   enemyKnightPrefab: {fileID: 2202604045660070067, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
   mageSpawnPos: {fileID: 1979395798}
   knightSpawnPos: {fileID: 1024176543}
-  navMeshSearchRadius: 5
   magePatrols:
   - {fileID: 6121909268005820262}
   - {fileID: 6121909268005820261}
@@ -11213,7 +11212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1713784291
 RectTransform:
   m_ObjectHideFlags: 0

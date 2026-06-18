@@ -101012,12 +101012,6 @@ MonoBehaviour:
   enemyKnightPrefab: {fileID: 2202604045660070067, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
   mageSpawnPos: {fileID: 857005880}
   knightSpawnPos: {fileID: 509885964}
-  navMeshSearchRadius: 5
-  spawnRayHeight: 10
-  spawnRayDistance: 30
-  groundMask:
-    serializedVersion: 2
-    m_Bits: 256
   magePatrols:
   - {fileID: 1758636980}
   - {fileID: 1758636979}
