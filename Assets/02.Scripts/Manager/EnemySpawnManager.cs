@@ -1,4 +1,5 @@
 using Fusion;
+using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,8 +11,6 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField] Transform mageSpawnPos;
     [SerializeField] Transform knightSpawnPos;
 
-    [SerializeField] private float navMeshSearchRadius = 5f;
-
     private NetworkObject mage;
     private NetworkObject knight;
 
@@ -19,11 +18,6 @@ public class EnemySpawnManager : MonoBehaviour
     [SerializeField] Transform[] knightPatrols = new Transform[5];
     private Vector3 GetSpawnPositionOnNavMesh(Vector3 origin)
     {
-        if (NavMesh.SamplePosition(origin, out NavMeshHit hit, navMeshSearchRadius, NavMesh.AllAreas))
-        {
-            return hit.position;
-        }
-
         return origin;
     }
     public void Spawn(NetworkRunner runner)
@@ -45,10 +39,37 @@ public class EnemySpawnManager : MonoBehaviour
         mage = runner.Spawn(magePrefab, magePosition, Quaternion.identity);
         knight = runner.Spawn(knightPrefab, knightPosition, Quaternion.identity);
 
-        mage.GetComponent<EnemyBehaviorBridge>().Init(magePatrols);
-        knight.GetComponent<EnemyBehaviorBridge>().Init(knightPatrols);
+        SetupSpawnedEnemy(mage, magePosition, magePatrols);
+        SetupSpawnedEnemy(knight, knightPosition, knightPatrols);
     }
+    private void SetupSpawnedEnemy(NetworkObject enemy, Vector3 spawnPosition, Transform[] patrols)
+    {
+        BehaviorGraphAgent behavior = enemy.GetComponent<BehaviorGraphAgent>();
+        NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
 
+        if (behavior != null)
+        {
+            behavior.enabled = false;
+        }
+
+        if (agent != null)
+        {
+            agent.Warp(spawnPosition);
+
+            if (!agent.isOnNavMesh)
+            {
+                Debug.LogError($"Enemy spawned off NavMesh: {enemy.name}, position: {spawnPosition}");
+                return;
+            }
+        }
+
+        enemy.GetComponent<EnemyBehaviorBridge>().Init(patrols);
+
+        if (behavior != null)
+        {
+            behavior.enabled = true;
+        }
+    }
     public void ReSpawn(NetworkRunner runner)
     {
         if (enemyMagePrefab == null) return;

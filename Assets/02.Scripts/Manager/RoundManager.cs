@@ -52,10 +52,10 @@ public class RoundManager : NetworkBehaviour
     public int RedRoundWin { get; set; }
 
     [SerializeField]
-    private GameObject blueWall;
+    private GameObject[] blueWalls = new GameObject[3];
 
     [SerializeField]
-    private GameObject redWall;
+    private GameObject[] redWalls = new GameObject[3];
 
     [SerializeField]
     private float respawnTime = 10f;
@@ -189,14 +189,20 @@ public class RoundManager : NetworkBehaviour
     private void RPC_SetWalls(
     bool active)
     {
-        if (blueWall != null)
+        if (blueWalls != null || blueWalls.Length > 0)
         {
-            blueWall.SetActive(active);
+            foreach (GameObject blueWall in blueWalls)
+            {
+                blueWall.SetActive(active);
+            }
         }
 
-        if (redWall != null)
+        if (redWalls != null || redWalls.Length > 0)
         {
-            redWall.SetActive(active);
+            foreach(GameObject redWall in redWalls)
+            {
+                redWall.SetActive(active);
+            }
         }
 
         Debug.Log(

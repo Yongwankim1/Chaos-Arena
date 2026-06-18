@@ -44,7 +44,6 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     }
 
     public TickTimer CooldownTimer => Cooldown;
-    [SerializeField] private NetworkObject laser;
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
@@ -101,18 +100,22 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
             spawnedLaser = null;
         }
 
-        laser = Runner.Spawn(Prefab, spawnPoint.position,
+        spawnedLaser = Runner.Spawn(Prefab, spawnPoint.position,
             spawnPoint.rotation, Object.InputAuthority,
             (runner, obj) => {
                 obj.GetComponent<MageLaserAttack>().Init(GetComponent<IAttacker>());
-                obj.transform.SetParent(spawnPoint, true);
             });
     }
 
     public void EndLaserEffect()
     {
-        Debug.Log("¤¡");
-        laser.GetComponent<MageLaserAttack>().Destroy();
-        laser = null;
+        if (!HasStateAuthority)
+            return;
+
+        if (spawnedLaser == null)
+            return;
+
+        spawnedLaser.GetComponent<MageLaserAttack>().Destroy();
+        spawnedLaser = null;
     }
 }
