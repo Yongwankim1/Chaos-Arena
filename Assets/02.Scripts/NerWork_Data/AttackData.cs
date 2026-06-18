@@ -30,6 +30,8 @@ public class AttackData
 
     public GameObject ProjectilePrefab;
 
+    public bool SpawnOnGround;
+
     [Header("Hit Feedback")]
     public float HitStop = 0.03f;
     public float CameraShake = 0.3f;

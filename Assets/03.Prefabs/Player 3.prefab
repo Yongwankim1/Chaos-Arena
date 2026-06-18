@@ -1087,6 +1087,7 @@ GameObject:
   - component: {fileID: 2540581439080627284}
   - component: {fileID: 5658246430456117541}
   - component: {fileID: 2305811084184968244}
+  - component: {fileID: 1851787759654182189}
   m_Layer: 6
   m_Name: Player 3
   m_TagString: Player
@@ -1285,6 +1286,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 1260705795423738, guid: 8808ed7480c29634f8409e26539079e7, type: 3}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 0.2
@@ -1300,6 +1302,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 45, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 1472821224207268, guid: 484568a293ba29d469fca837f2e4d1e3, type: 3}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 0.2
@@ -1315,21 +1318,23 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 90, z: 0}
     HitEffect: {fileID: 0}
     ProjectilePrefab: {fileID: 250938638778421266, guid: 8980df0f4b81b0a45ba90e71969de3b7, type: 3}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 0.2
   - SpawnType: 0
     DamagePercent: 100
-    Range: 1
-    Radius: 0.6
+    Range: 11.3
+    Radius: 2.13
     UsePersistentHitbox: 0
     HitDuration: 0.3
     HitInterval: 0.05
-    AttackEffect: {fileID: 1149029339946739509, guid: 99994b4d1bcfe2d43bca138323b8704c, type: 3}
+    AttackEffect: {fileID: 1502253778071064, guid: 4b5a5a13ac151f14796ef0c980c89e34, type: 3}
     EffectPositionOffset: {x: 0, y: 0, z: 0}
-    EffectRotationOffset: {x: 0, y: 180, z: 0}
+    EffectRotationOffset: {x: 0, y: 0, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 1
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 0.2
@@ -1345,6 +1350,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 140, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 0.2
@@ -1492,6 +1498,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1222c3039a4892544bd7acf25ff54031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterActionLock
+--- !u!114 &1851787759654182189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 95970629c031f464c98936e1bcddbf00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  attackPos: {fileID: 5651274045008937097}
+  Range: 11.3
+  Radius: 2.13
+  isDebug: 1
 --- !u!1 &3354681238205586625
 GameObject:
   m_ObjectHideFlags: 0
@@ -1929,7 +1951,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5190296252902433430}
-  m_LocalEulerAnglesHint: {x: -2.1260839, y: 0.000004805784, z: -85.09476}
+  m_LocalEulerAnglesHint: {x: -2.1261477, y: 0.000015698888, z: -85.09478}
 --- !u!1 &5241281504712627114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2212,7 +2234,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1492401559652504869}
-  m_LocalEulerAnglesHint: {x: -3.8845353, y: 5.0636153, z: -2.4020424}
+  m_LocalEulerAnglesHint: {x: -0.81924343, y: 5.101107, z: -3.170052}
 --- !u!1 &6236191474058474364
 GameObject:
   m_ObjectHideFlags: 0
@@ -2276,7 +2298,7 @@ Transform:
   m_Children:
   - {fileID: 8426759346962712999}
   m_Father: {fileID: 6960396631318757685}
-  m_LocalEulerAnglesHint: {x: -2.1261463, y: 0.0000028834706, z: 85.094765}
+  m_LocalEulerAnglesHint: {x: -2.126179, y: 0.000010252295, z: 85.09472}
 --- !u!1 &6621760120667938291
 GameObject:
   m_ObjectHideFlags: 0
