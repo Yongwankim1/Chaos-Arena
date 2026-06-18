@@ -19910,7 +19910,7 @@ MonoBehaviour:
   dropTime: 0.2
   obstacleMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   dropAmount: 1.5
   damagePercentPerSecond: 5
   damageInterval: 0.2

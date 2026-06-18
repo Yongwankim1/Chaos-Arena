@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterCombat
   comboInputTime: 0.5
   attackSpawnPoint: {fileID: 5651274045008937097}
-  controller: {fileID: 0}
+  controller: {fileID: 7883889268887263263}
   comboAttackData:
   - SpawnType: 1
     DamagePercent: 100

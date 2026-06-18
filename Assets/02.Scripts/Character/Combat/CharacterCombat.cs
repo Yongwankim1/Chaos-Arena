@@ -119,12 +119,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             return;
         }
 
-        Debug.Log(
-            $"AttackInput | Combo:{_comboIndex} State:{HasStateAuthority} Input:{HasInputAuthority}");
-
         if (!HasStateAuthority)
         {
-            Debug.Log("AttackInput Return");
             return;
         }
 
@@ -137,8 +133,6 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             if (_comboIndex > comboAttackData.Length)
                 _comboIndex = 1;
 
-            Debug.Log(
-                $"Next Combo : {_comboIndex}");
 
             _waitingNextCombo = false;
             _comboTimer = 0f;
@@ -151,9 +145,6 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         if (_comboIndex == 0)
         {
             _comboIndex = 1;
-
-            Debug.Log(
-                $"Start Combo : {_comboIndex}");
 
             PlayAttack();
         }
@@ -696,7 +687,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _comboIndex = 0;
         _waitingNextCombo = false;
         _comboTimer = 0f;
-
+        CurrentAttackIndex = 0;
         AttackMoveRemain = 0f;
 
         RPC_SetAttackState(false);

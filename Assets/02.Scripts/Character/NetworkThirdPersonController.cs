@@ -540,11 +540,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Skill(NetworkInputData input)
     {
-        if ((input.SkillQ || input.SkillE || input.SkillR) && HasStateAuthority)
-        {
-            _combat?.CancelCombo();
-        }
-
         if (input.SkillQ)
         {
             _skillQ?.UseQ();

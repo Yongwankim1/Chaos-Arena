@@ -71,6 +71,8 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
         if (!_player.UseMana(manaCost))
             return;
 
+        _combat?.CancelCombo(); // 캔슬 필요한거
+
         _stealth?.ExitStealth();
 
         _actionLock?.Lock(ActionLockType.Attack);
