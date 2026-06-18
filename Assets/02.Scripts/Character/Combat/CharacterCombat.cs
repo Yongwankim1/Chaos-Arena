@@ -682,4 +682,27 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             targetHitStop.Play(hitStop);
         }
     }
+    public void CancelCombo()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (_persistentHitboxCoroutine != null)
+        {
+            StopCoroutine(_persistentHitboxCoroutine);
+            _persistentHitboxCoroutine = null;
+        }
+
+        _comboIndex = 0;
+        _waitingNextCombo = false;
+        _comboTimer = 0f;
+
+        AttackMoveRemain = 0f;
+
+        RPC_SetAttackState(false);
+
+        _animator.SetInteger(ComboIndexHash, 0);
+
+        _actionLock?.Unlock(ActionLockType.Move);
+    }
 }
