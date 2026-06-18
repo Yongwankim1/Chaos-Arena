@@ -51262,7 +51262,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
-    HitStop: 0.3
+    HitStop: 0.03
     CameraShake: 0.3
     Knockback: 10
   - SpawnType: 0
@@ -51323,7 +51323,7 @@ MonoBehaviour:
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
     HitStop: 0.03
-    CameraShake: 0.8
+    CameraShake: 0.3
     Knockback: 10
   _CurrentAttackIndex: 0
   _AttackMoveRemain: 0

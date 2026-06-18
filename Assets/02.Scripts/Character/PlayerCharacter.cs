@@ -110,6 +110,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (_classData == null)
             return;
         CurrentMana = Mathf.Min(CurrentMana + amount, MaxMana);
+
     }
 
     private void LocalInitialize()

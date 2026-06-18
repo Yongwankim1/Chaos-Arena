@@ -341,7 +341,38 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                     multiplier);
 
             damageable.TakeDamage(finalDamage, this);
-            HitFeedbackSystem.Apply(this, damageable, data);
+
+            GameObject targetObject =
+                damageable.GetDamageableObject();
+
+            if (data.Knockback > 0f)
+            {
+                NetworkThirdPersonController controller =
+                    targetObject.GetComponent<NetworkThirdPersonController>();
+
+                if (controller != null)
+                {
+                    Vector3 dir =
+                        (targetObject.transform.position -
+                         transform.position).normalized;
+
+                    dir.y = 0f;
+
+                    controller.AddKnockback(
+                        dir * data.Knockback);
+                }
+            }
+
+            NetworkObject targetObj =
+                targetObject.GetComponent<NetworkObject>();
+
+            if (targetObj != null)
+            {
+                RPC_HitFeedback(
+                    targetObj.Id,
+                    data.HitStop,
+                    data.CameraShake);
+            }
         }
     }
 
@@ -553,10 +584,39 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                     originalDamage *
                     damageMultiplier);
 
-            damageable.TakeDamage(
-                shadowDamage,
-                this);
-            HitFeedbackSystem.Apply(this, damageable, data);
+            damageable.TakeDamage(shadowDamage, this);
+
+            GameObject targetObject =
+                damageable.GetDamageableObject();
+
+            if (data.Knockback > 0f)
+            {
+                NetworkThirdPersonController controller =
+                    targetObject.GetComponent<NetworkThirdPersonController>();
+
+                if (controller != null)
+                {
+                    Vector3 dir =
+                        (targetObject.transform.position -
+                         transform.position).normalized;
+
+                    dir.y = 0f;
+
+                    controller.AddKnockback(
+                        dir * data.Knockback);
+                }
+            }
+
+            NetworkObject targetObj =
+                targetObject.GetComponent<NetworkObject>();
+
+            if (targetObj != null)
+            {
+                RPC_HitFeedback(
+                    targetObj.Id,
+                    data.HitStop,
+                    data.CameraShake);
+            }
         }
     }
     public void GetAttackEffectTransform(
@@ -573,5 +633,32 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             transform.rotation *
             Quaternion.Euler(
                 data.EffectRotationOffset);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_HitFeedback(NetworkId targetId, float hitStop, float cameraShake)
+    {
+        NetworkObject targetObj = Runner.FindObject(targetId);
+
+        if (targetObj == null)
+            return;
+
+        PlayerCharacter attackerPlayer = GetComponent<PlayerCharacter>();
+
+        if (attackerPlayer != null && attackerPlayer.HasInputAuthority)
+        {
+            CameraShakeManager.Instance?.Shake(cameraShake);
+        }
+
+        PlayerCharacter targetPlayer = targetObj.GetComponent<PlayerCharacter>();
+
+        HitStopController targetHitStop = targetObj.GetComponent<HitStopController>();
+
+        if (targetHitStop != null &&
+            targetPlayer != null &&
+            targetPlayer.HasInputAuthority)
+        {
+            targetHitStop.Play(hitStop);
+        }
     }
 }

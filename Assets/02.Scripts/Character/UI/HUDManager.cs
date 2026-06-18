@@ -10,7 +10,7 @@ public class HUDManager : MonoBehaviour
     private EnemyHUD enemyHUD;
 
     public EnemyHUD EnemyHUD => enemyHUD;
-
+    public PlayerHUD PlayerHUD => playerHUD;
     private void Awake()
     {
         Instance = this;
