@@ -457,8 +457,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_PlayAttackEffect(
-    int attackIndex)
+    private void RPC_PlayAttackEffect(int attackIndex)
     {
         if (attackIndex <= 0)
             return;
@@ -479,6 +478,25 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             Quaternion.Euler(
                 data.EffectRotationOffset);
 
+        if (data.SpawnOnGround)
+        {
+            Ray ray = new Ray(
+                attackSpawnPoint.position,
+                Vector3.down);
+
+            if (Physics.Raycast(
+                ray,
+                out RaycastHit hit,
+                100f,
+                Physics.DefaultRaycastLayers,
+                QueryTriggerInteraction.Ignore))
+            {
+                spawnPosition =
+                    hit.point +
+                    data.EffectPositionOffset;
+            }
+        }
+
         GameObject effectPrefab = null;
 
         // ±Ã±Ø±â ÀÌÆåÆ® ¿ì¼±
@@ -490,7 +508,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                     attackIndex);
         }
 
-        // ±Ã±Ø±â ÀÌÆåÆ®°¡ ¾øÀ» ¶§¸¸ ±âº» ÀÌÆåÆ®
+        // ±âº» ÀÌÆåÆ®
         if (effectPrefab == null)
         {
             effectPrefab =
@@ -506,9 +524,13 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                 spawnPosition,
                 spawnRotation);
 
-        effect.transform.SetParent(
-            transform,
-            true);
+        // ÀåÆÇÀº ºÎ¸ð ¾È ºÙÀÓ
+        if (!data.SpawnOnGround)
+        {
+            effect.transform.SetParent(
+                transform,
+                true);
+        }
     }
     public void DefaultAttack()
     {
