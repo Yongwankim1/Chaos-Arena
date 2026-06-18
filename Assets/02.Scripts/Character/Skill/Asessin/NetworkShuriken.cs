@@ -27,6 +27,8 @@ public class NetworkShuriken : NetworkBehaviour
     [SerializeField]
     private float firstHitDamagePercent = 110f;
 
+    [SerializeField]
+    private AttackData firstHitAttackData;
 
     [SerializeField]
     private ParticleSystem stopEffect;
@@ -135,7 +137,12 @@ public class NetworkShuriken : NetworkBehaviour
         {
             int damage = Mathf.RoundToInt(player.AttackPower * (firstHitDamagePercent * 0.01f));
 
-            damageable.TakeDamage(damage,_owner);
+            damageable.TakeDamage(damage, _owner);
+
+            if (firstHitAttackData != null)
+            {
+                HitFeedbackSystem.Apply(_owner, damageable, firstHitAttackData);
+            }
         }
 
         StopShuriken();

@@ -28,6 +28,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     private int _animIDAttack;
     private CharacterCombat _combat;
     private int _comboStep;
+    private Vector3 _knockbackVelocity;
 
     [Header("Ground")]
     public bool Grounded = true;
@@ -69,6 +70,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
     float lookMultiplier = 1.2f;
     private NetworkInputData _lastInput;
 
+    private CharacterActionLock _actionLock;
+
     [Networked]
     private float AnimatedSpeed { get; set; }
 
@@ -89,6 +92,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _controller = GetComponent<NetworkCharacterController>();
         _combat = GetComponent<CharacterCombat>();
         _playerCharacter = GetComponent<PlayerCharacter>();
+        _actionLock = GetComponent<CharacterActionLock>();
 
         _skillQ = GetComponent<ISkillQ>();
         _skillE = GetComponent<ISkillE>();
@@ -140,6 +144,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         GroundedCheck();
         JumpAndGravity(input);
+
+        ApplyKnockback();
 
         if (_combat != null && _combat.IsAttacking)
         {
@@ -254,6 +260,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Move(NetworkInputData input)
     {
+        if (_actionLock != null && !_actionLock.CanMove)
+            return;
+
         float targetSpeed =
             input.Sprint
                 ? SprintSpeed
@@ -506,6 +515,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (!input.Dash)
             return;
 
+        if (_actionLock != null && !_actionLock.CanDash)
+            return;
+
         if (_playerCharacter == null)
             return;
 
@@ -544,5 +556,28 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             _skillR?.UseR();
         }
+    }
+
+    public void AddKnockback(Vector3 force)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (_playerCharacter.IsDead)
+            return;
+
+        if (_playerCharacter.IsDashing)
+            return;
+
+        _knockbackVelocity += force;
+    }
+    private void ApplyKnockback()
+    {
+        if (_knockbackVelocity.sqrMagnitude < 0.001f)
+            return;
+
+        _controller.ForceMove(_knockbackVelocity * Runner.DeltaTime);
+
+        _knockbackVelocity = Vector3.Lerp(_knockbackVelocity, Vector3.zero, 12f * Runner.DeltaTime);
     }
 }

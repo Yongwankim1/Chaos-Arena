@@ -15,6 +15,9 @@ public class EnemyAttackMelee : EnemyAttack
 
     private readonly HashSet<IDamageable> hitTargets = new();
 
+    [SerializeField]
+    private AttackData attackFeedbackData;
+
     public override void OnEffect(EffectType effect)
     {
         if (Object != null && !Object.HasStateAuthority)
@@ -79,6 +82,7 @@ public class EnemyAttackMelee : EnemyAttack
             Debug.Log(hit.tag);
             hitTargets.Add(damageable);
             damageable.TakeDamage(attackDamage, this);
+            HitFeedbackSystem.Apply(this, damageable, attackFeedbackData);
         }
     }
 

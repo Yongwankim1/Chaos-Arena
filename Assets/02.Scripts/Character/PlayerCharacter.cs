@@ -43,10 +43,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     Animator.StringToHash("Die");
     private AssassinStealth _stealth;
     private Animator _animator;
-
+    private CharacterActionLock _actionLock;
     private void Awake()
     {
         _stealth = GetComponent<AssassinStealth>();
+        _actionLock = GetComponent<CharacterActionLock>();
     }
     public override void Spawned()
     {
@@ -213,8 +214,12 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (IsDead)
             return;
 
+        _actionLock?.ClearAll();
+
         IsDead = true;
+
         GetComponent<Buff>().Init();
+
         RPC_PlayDie();
 
         HandleDeath(_lastAttacker);

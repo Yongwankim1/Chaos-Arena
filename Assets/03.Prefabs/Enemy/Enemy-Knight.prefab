@@ -816,6 +816,22 @@ MonoBehaviour:
   effectPos: {fileID: 7605034933310914915}
   _IsAttack:
     _value: 0
+  attackFeedbackData:
+    SpawnType: 0
+    DamagePercent: 100
+    Range: 0
+    Radius: 0
+    UsePersistentHitbox: 0
+    HitDuration: 0.3
+    HitInterval: 0.05
+    AttackEffect: {fileID: 0}
+    EffectPositionOffset: {x: 0, y: 0, z: 0}
+    EffectRotationOffset: {x: 0, y: 0, z: 0}
+    HitEffect: {fileID: 0}
+    ProjectilePrefab: {fileID: 0}
+    HitStop: 0.03
+    CameraShake: 0.3
+    Knockback: 2
 --- !u!114 &635979929071522260
 MonoBehaviour:
   m_ObjectHideFlags: 0

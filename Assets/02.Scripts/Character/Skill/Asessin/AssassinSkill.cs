@@ -33,6 +33,7 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
     public TickTimer Cooldown { get; set; }
 
     private AssassinStealth _stealth;
+    private CharacterActionLock _actionLock;
     public float CooldownNormalized
     {
         get
@@ -53,6 +54,7 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
         _animator = GetComponent<Animator>();
         _stealth = GetComponent<AssassinStealth>();
         _ultimate = GetComponent<AssassinUltimate>();
+        _actionLock = GetComponent<CharacterActionLock>();
     }
 
     public void UseQ()
@@ -71,6 +73,10 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
 
         _stealth?.ExitStealth();
 
+        _actionLock?.Lock(ActionLockType.Attack);
+        _actionLock?.Lock(ActionLockType.Dash);
+        _actionLock?.Lock(ActionLockType.Move);
+
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
         RPC_PlaySkillQ();
@@ -87,15 +93,13 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
         if (!HasStateAuthority)
             return;
 
-        NetworkObject prefab =
-            normalShurikenPrefab;
+        NetworkObject prefab = normalShurikenPrefab;
 
         if (_ultimate != null &&
             _ultimate.IsUltimate &&
             _ultimate.ShadowShurikenPrefab != null)
         {
-            prefab =
-                _ultimate.ShadowShurikenPrefab;
+            prefab = _ultimate.ShadowShurikenPrefab;
         }
 
         Runner.Spawn(
@@ -110,5 +114,9 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
                         GetComponent<IAttacker>(),
                         transform.forward);
             });
+
+        _actionLock?.Unlock(ActionLockType.Attack);
+        _actionLock?.Unlock(ActionLockType.Dash);
+        _actionLock?.Unlock(ActionLockType.Move);
     }
 }

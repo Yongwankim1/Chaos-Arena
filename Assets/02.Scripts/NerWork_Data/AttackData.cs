@@ -29,4 +29,9 @@ public class AttackData
     public GameObject HitEffect;
 
     public GameObject ProjectilePrefab;
+
+    [Header("Hit Feedback")]
+    public float HitStop = 0.03f;
+    public float CameraShake = 0.3f;
+    public float Knockback = 0.2f;
 }

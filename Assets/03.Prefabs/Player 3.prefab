@@ -1086,6 +1086,8 @@ GameObject:
   - component: {fileID: 7606052776163344003}
   - component: {fileID: 4224522145964956446}
   - component: {fileID: 2540581439080627284}
+  - component: {fileID: 5658246430456117541}
+  - component: {fileID: 2305811084184968244}
   m_Layer: 6
   m_Name: Player 3
   m_TagString: Player
@@ -1282,6 +1284,9 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    HitStop: 0.03
+    CameraShake: 0.3
+    Knockback: 0.2
   - SpawnType: 0
     DamagePercent: 100
     Range: 1
@@ -1294,6 +1299,9 @@ MonoBehaviour:
     EffectRotationOffset: {x: 45, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    HitStop: 0.03
+    CameraShake: 0.3
+    Knockback: 0.2
   - SpawnType: 0
     DamagePercent: 100
     Range: 1
@@ -1306,6 +1314,9 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    HitStop: 0.03
+    CameraShake: 0.3
+    Knockback: 0.2
   - SpawnType: 0
     DamagePercent: 100
     Range: 1
@@ -1318,6 +1329,9 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 180, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    HitStop: 0.03
+    CameraShake: 0.3
+    Knockback: 0.2
   - SpawnType: 0
     DamagePercent: 100
     Range: 1
@@ -1330,6 +1344,9 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 140, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    HitStop: 0.03
+    CameraShake: 0.3
+    Knockback: 0.2
   _CurrentAttackIndex: 0
   _AttackMoveRemain: 0
 --- !u!114 &6070649731673188414
@@ -1450,6 +1467,30 @@ MonoBehaviour:
   spawnPoint: {fileID: 1538015521171091897}
   manaCost: 20
   cooldown: 5
+--- !u!114 &5658246430456117541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5426cd88dd0319d48a670a90e736e043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStopController
+--- !u!114 &2305811084184968244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1222c3039a4892544bd7acf25ff54031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterActionLock
 --- !u!1 &3354681238205586625
 GameObject:
   m_ObjectHideFlags: 0
