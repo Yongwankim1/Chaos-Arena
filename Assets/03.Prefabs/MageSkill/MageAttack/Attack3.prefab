@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4418571605821747855}
   - component: {fileID: 8021425855455249378}
   - component: {fileID: 4662075089276806020}
+  - component: {fileID: 8940906746295877555}
   m_Layer: 0
   m_Name: Attack3
   m_TagString: Untagged
@@ -53,6 +54,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 8021425855455249378}
+  - {fileID: 8940906746295877555}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &8021425855455249378
 MonoBehaviour:
@@ -103,6 +105,23 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &8940906746295877555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 250938638778421266}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkTransform
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &633674515961687544
 GameObject:
   m_ObjectHideFlags: 0
