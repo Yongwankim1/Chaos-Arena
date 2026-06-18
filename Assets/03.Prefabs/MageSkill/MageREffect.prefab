@@ -34216,6 +34216,11 @@ MonoBehaviour:
   isDebug: 0
   attackDistance: 20
   radius: 0.5
+  damage: 10
+  damageInterval: 0.25
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!114 &5408217184710986422
 MonoBehaviour:
   m_ObjectHideFlags: 0

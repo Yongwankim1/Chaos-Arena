@@ -1,7 +1,7 @@
 using Fusion;
 using UnityEngine;
 
-public class MageRSkill : NetworkBehaviour, ISkillR
+public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
 
 {
     [SerializeField]
@@ -42,12 +42,27 @@ public class MageRSkill : NetworkBehaviour, ISkillR
             return remain / cooldown;
         }
     }
+
+    public TickTimer CooldownTimer => Cooldown;
+    [SerializeField] private NetworkObject laser;
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
     }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (spawnedLaser == null || spawnPoint == null)
+            return;
+
+        spawnedLaser.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+    }
+
     public void UseR()
     {
         if (!HasStateAuthority)
@@ -80,23 +95,24 @@ public class MageRSkill : NetworkBehaviour, ISkillR
         if (!HasStateAuthority)
             return;
 
-        spawnedLaser = Runner.Spawn(Prefab, spawnPoint.position,
-            Quaternion.LookRotation(transform.forward), Object.InputAuthority,
+        if (spawnedLaser != null)
+        {
+            Runner.Despawn(spawnedLaser);
+            spawnedLaser = null;
+        }
+
+        laser = Runner.Spawn(Prefab, spawnPoint.position,
+            spawnPoint.rotation, Object.InputAuthority,
             (runner, obj) => {
-                obj.transform.SetParent(spawnPoint,true);
                 obj.GetComponent<MageLaserAttack>().Init(GetComponent<IAttacker>());
+                obj.transform.SetParent(spawnPoint, true);
             });
     }
 
     public void EndLaserEffect()
     {
-        if (!HasStateAuthority)
-            return;
-
-        if (spawnedLaser == null)
-            return;
-
-        Runner.Despawn(spawnedLaser);
-        spawnedLaser = null;
+        Debug.Log("¤¡");
+        laser.GetComponent<MageLaserAttack>().Destroy();
+        laser = null;
     }
 }

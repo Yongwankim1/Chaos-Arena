@@ -63,7 +63,6 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     private CharacterActionLock _actionLock;
 
     //6.16 KYW
-    public event Action<GameObject, float, float> OnAttackTargetChanged;
 
 
     private void Awake()
