@@ -133,9 +133,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (_playerCharacter != null && _playerCharacter.IsDead)
-        {
             return;
-        }
 
         if (!GetInput(out NetworkInputData input))
             return;
@@ -156,10 +154,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
         }
         else if (_playerCharacter.IsDashing)
         {
-            if (HasStateAuthority)
-            {
-                ApplyClassDash();
-            }
+            ApplyClassDash();
         }
         else
         {
@@ -486,9 +481,6 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (!input.Attack)
             return;
-
-        Debug.Log(
-            $"Attack Input | State:{HasStateAuthority} Input:{HasInputAuthority}");
 
         if (HasStateAuthority)
         {
