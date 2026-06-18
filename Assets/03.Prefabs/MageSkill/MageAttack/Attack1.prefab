@@ -99,12 +99,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   speed: 30
   maxDistance: 30
-  radius: 0.2
+  radius: 0.14
   damage: 5
   hitMask:
     serializedVersion: 2
     m_Bits: 704
   hitEffectPrefab: {fileID: 1266152770621770, guid: d0c7e4a2b2bd0824f8f1c83aeaf6f6a5, type: 3}
+  isDebug: 1
 --- !u!114 &-924634278439870118
 MonoBehaviour:
   m_ObjectHideFlags: 0

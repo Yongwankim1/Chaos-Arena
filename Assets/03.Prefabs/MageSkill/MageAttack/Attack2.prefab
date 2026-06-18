@@ -5033,7 +5033,6 @@ GameObject:
   - component: {fileID: 199532173621882990}
   - component: {fileID: 198000596247834210}
   - component: {fileID: 54636368604858164}
-  - component: {fileID: 136786107141124882}
   - component: {fileID: 4434515255532212768}
   - component: {fileID: 7989185138333621727}
   - component: {fileID: 4992233019596395294}
@@ -9925,29 +9924,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
---- !u!136 &136786107141124882
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1472821224207268}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.12
-  m_Height: 2.89
-  m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4434515255532212768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9962,12 +9938,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NetworkProjectileMove
   speed: 30
   maxDistance: 30
+  height: 2.67
   radius: 0.2
   damage: 5
   hitMask:
     serializedVersion: 2
     m_Bits: 704
   hitEffectPrefab: {fileID: 1037125457430904, guid: ddde171adcc3acb4e9b5f505af26cc6f, type: 3}
+  isDebug: 1
 --- !u!114 &7989185138333621727
 MonoBehaviour:
   m_ObjectHideFlags: 0
