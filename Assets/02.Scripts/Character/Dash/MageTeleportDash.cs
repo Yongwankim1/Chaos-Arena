@@ -10,6 +10,10 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
     [SerializeField] private ParticleSystem teleportStartEffect;
     [SerializeField] private ParticleSystem teleportEndEffect;
 
+    [SerializeField] private float teleportLockTime = 0.3f;
+
+    private CharacterActionLock _actionLock;
+
     [Networked]
     public TickTimer DashCooldown { get; set; }
 
@@ -34,6 +38,7 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
         _player = GetComponent<PlayerCharacter>();
         _cc = GetComponent<CharacterController>();
         _controller = GetComponent<NetworkCharacterController>();
+        _actionLock = GetComponent<CharacterActionLock>();
     }
     public void Dash()
     {
@@ -53,7 +58,11 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
 
         DashCooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
-        RPC_PlayTeleportStart(oldPosition);
+        _actionLock?.Lock(ActionLockType.Move);
+        _actionLock?.Lock(ActionLockType.Attack);
+        _actionLock?.Lock(ActionLockType.Dash);
+
+        RPC_PlayTeleportStart();
 
         _player.IsDashing = true;
 
@@ -61,9 +70,19 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
 
         _player.IsDashing = false;
 
-        RPC_PlayTeleportEnd(targetPosition);
+        RPC_PlayTeleportEnd();
 
         RPC_WarpCamera(oldPosition, targetPosition);
+
+        Runner.StartCoroutine(UnlockRoutine());
+    }
+    private System.Collections.IEnumerator UnlockRoutine()
+    {
+        yield return new WaitForSeconds(teleportLockTime);
+
+        _actionLock?.Unlock(ActionLockType.Move);
+        _actionLock?.Unlock(ActionLockType.Attack);
+        _actionLock?.Unlock(ActionLockType.Dash);
     }
     private Vector3 GetTeleportPosition()
     {
@@ -89,31 +108,24 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
 
         return start + direction * teleportDistance;
     }
-
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_PlayTeleportStart(Vector3 position)
+    private void RPC_PlayTeleportStart()
     {
         if (teleportStartEffect == null)
             return;
 
-        Instantiate(
-            teleportStartEffect,
-            position,
-            Quaternion.identity)
-            .Play();
+        teleportStartEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        teleportStartEffect.Play();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_PlayTeleportEnd(Vector3 position)
+    private void RPC_PlayTeleportEnd()
     {
         if (teleportEndEffect == null)
             return;
 
-        Instantiate(
-            teleportEndEffect,
-            position,
-            Quaternion.identity)
-            .Play();
+        teleportEndEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        teleportEndEffect.Play();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
