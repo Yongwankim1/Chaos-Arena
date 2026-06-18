@@ -9532,7 +9532,7 @@ MonoBehaviour:
   - {fileID: 1497136273}
   - {fileID: 1899327762}
   gameSceneBuildIndex: 1
-  allowSinglePlay: 1
+  allowSinglePlay: 0
 --- !u!114 &1336126759
 MonoBehaviour:
   m_ObjectHideFlags: 0

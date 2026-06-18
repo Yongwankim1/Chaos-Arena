@@ -75080,10 +75080,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::RoundManager
   killsToWinRound: 3
   roundsToWinMatch: 3
+  maxRoundCount: 5
+  _CurrentRound: 0
   waitingTime: 3
   characterSelectTime: 10
   preparationTime: 5
-  roundTime: 5
+  roundTime: 300
   characterSelectUI: {fileID: 1180696826}
   _CurrentState: 0
   _StateRemainTime: 0
