@@ -60,6 +60,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     private static readonly int IsAttackingHash =
         Animator.StringToHash("IsAttacking");
 
+    private CharacterActionLock _actionLock;
+
     //6.16 KYW
 
 
@@ -71,6 +73,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         _stealth = GetComponent<IStealthHandler>();
         _ultimateModifier = GetComponent<IUltimateModifier>();
+        _actionLock = GetComponent<CharacterActionLock>();
     }
 
     public override void FixedUpdateNetwork()
@@ -91,6 +94,9 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     public void AttackInput()
     {
+        if (_actionLock != null && !_actionLock.CanAttack)
+            return;
+
         AssassinDash dash = GetComponent<AssassinDash>();
 
         if (dash != null && !dash.DashAttackTimer.ExpiredOrNotRunning(Runner))
@@ -167,6 +173,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             animator.SetBool("Grounded", true);
         }
 
+        _actionLock?.Lock(ActionLockType.Move);
+
         RPC_SetAttackState(true);
         RPC_PlayAttack(_comboIndex);
     }
@@ -206,6 +214,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         RPC_SetAttackState(false);
 
+        _actionLock?.Unlock(ActionLockType.Move);
+
         _waitingNextCombo = true;
 
         _comboTimer = comboInputTime;
@@ -215,15 +225,13 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     {
         RPC_SetAttackState(false);
 
+        _actionLock?.Unlock(ActionLockType.Move);
+
         _comboIndex = 0;
-
         _waitingNextCombo = false;
-
         _comboTimer = 0f;
 
-        _animator.SetInteger(
-            ComboIndexHash,
-            0);
+        _animator.SetInteger(ComboIndexHash, 0);
     }
 
     public void SpawnAttack()
@@ -333,6 +341,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                     multiplier);
 
             damageable.TakeDamage(finalDamage, this);
+            HitFeedbackSystem.Apply(this, damageable, data);
         }
     }
 
@@ -468,25 +477,19 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
     public void ResetCombatState()
     {
+        _actionLock?.ClearAll();
+
         _comboIndex = 0;
-
         _waitingNextCombo = false;
-
         _comboTimer = 0f;
 
         AttackMoveRemain = 0f;
 
         IsAttacking = false;
-
         CurrentAttackIndex = 0;
 
-        _animator.SetBool(
-            IsAttackingHash,
-            false);
-
-        _animator.SetInteger(
-            ComboIndexHash,
-            0);
+        _animator.SetBool(IsAttackingHash, false);
+        _animator.SetInteger(ComboIndexHash, 0);
     }
     public void ForceComboAttack(int comboIndex)
     {
@@ -553,6 +556,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             damageable.TakeDamage(
                 shadowDamage,
                 this);
+            HitFeedbackSystem.Apply(this, damageable, data);
         }
     }
     public void GetAttackEffectTransform(

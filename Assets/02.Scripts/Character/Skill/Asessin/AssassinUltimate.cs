@@ -386,6 +386,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
             damageable.TakeDamage(
                 Mathf.RoundToInt(damage),
                 _combat);
+            HitFeedbackSystem.Apply(_combat, damageable, data);
         }
     }
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
