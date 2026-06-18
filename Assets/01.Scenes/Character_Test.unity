@@ -6619,8 +6619,10 @@ MonoBehaviour:
   _RedScore: 0
   _BlueRoundWin: 0
   _RedRoundWin: 0
-  blueWall: {fileID: 1388107528}
-  redWall: {fileID: 11319688}
+  blueWalls:
+  - {fileID: 1388107528}
+  redWalls:
+  - {fileID: 11319688}
   respawnTime: 5
   enemySpawnManager: {fileID: 1327593436}
   _RoundMessage: 
@@ -7483,7 +7485,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   enemyHpBar: {fileID: 208223539}
   enemyHpText: {fileID: 578782037}
-  combat: {fileID: 0}
+  hideDelay: 10
 --- !u!1 &1227955515
 GameObject:
   m_ObjectHideFlags: 0
@@ -14839,9 +14841,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1436750570}
+  - {fileID: 1992703695}
   - {fileID: 173202671}
   - {fileID: 690545300}
-  - {fileID: 1992703695}
   - {fileID: 1956733377}
   - {fileID: 815552954}
   - {fileID: 1971841212}
