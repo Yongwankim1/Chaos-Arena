@@ -5,35 +5,51 @@ using UnityEngine.UI;
 public class PlayerHUD : MonoBehaviour
 {
     [Header("HP")]
-    [SerializeField]
-    private Image hpFill;
-
-    [SerializeField]
-    private TMP_Text hpText;
+    [SerializeField] private Image hpFill;
+    [SerializeField] private Image hpDelayFill;
+    [SerializeField] private TMP_Text hpText;
 
     [Header("MP")]
-    [SerializeField]
-    private Image mpFill;
+    [SerializeField] private Image mpFill;
+    [SerializeField] private Image mpDelayFill;
+    [SerializeField] private TMP_Text mpText;
 
-    [SerializeField]
-    private TMP_Text mpText;
+    [Header("Delay")]
+    [SerializeField] private float hpDelaySpeed = 1.5f;
+    [SerializeField] private float mpDelaySpeed = 1.5f;
+
+    private float _targetHpFill;
+    private float _targetMpFill;
+
+    private bool _needHpAnimation;
+    private bool _needMpAnimation;
 
     private PlayerCharacter _player;
 
-    [SerializeField]
-    private SkillSlotUI dashSlot;
-    [SerializeField]
-    private SkillSlotUI qSkillSlot;
-    [SerializeField]
-    private SkillSlotUI eSlot;
-    [SerializeField]
-    private SkillSlotUI rSlot;
+    [SerializeField] private SkillSlotUI dashSlot;
+    [SerializeField] private SkillSlotUI qSkillSlot;
+    [SerializeField] private SkillSlotUI eSlot;
+    [SerializeField] private SkillSlotUI rSlot;
+
+    private float _lastHP = -9999;
+    private float _lastMP = -9999;
+
+    private IDash _dash;
+    private ISkillQ _skillQ;
+    private ISkillE _skillE;
+    private ISkillR _skillR;
+
     public void Initialize(PlayerCharacter player)
     {
         Debug.Log("HUD Initialize");
+
         _player = player;
 
-        Refresh();
+        _dash = player.GetComponent<IDash>();
+        _skillQ = player.GetComponent<ISkillQ>();
+        _skillE = player.GetComponent<ISkillE>();
+        _skillR = player.GetComponent<ISkillR>();
+
     }
 
     private void Update()
@@ -41,16 +57,56 @@ public class PlayerHUD : MonoBehaviour
         if (_player == null)
             return;
 
-        Refresh();
+        if (_player.MaxHP <= 0)
+            return;
+
+        if (_player.MaxMana <= 0)
+            return;
+
+        if (!Mathf.Approximately(_lastHP, _player.CurrentHP))
+        {
+            _lastHP = _player.CurrentHP;
+            RefreshHP();
+        }
+
+        if (!Mathf.Approximately(_lastMP, _player.CurrentMana))
+        {
+            _lastMP = _player.CurrentMana;
+            RefreshMP();
+        }
+
+        RefreshSkills();
+
+        UpdateDelayedBars();
     }
 
-    private void Refresh()
+    public void RefreshHP()
     {
+        if (_player.MaxHP <= 0)
+            return;
+
         float hpPercent = _player.CurrentHP / _player.MaxHP;
 
         hpFill.fillAmount = hpPercent;
 
         hpText.text = $"{_player.CurrentHP:0} / {_player.MaxHP:0}";
+
+        if (hpPercent < hpDelayFill.fillAmount)
+        {
+            _targetHpFill = hpPercent;
+            _needHpAnimation = true;
+        }
+        else
+        {
+            hpDelayFill.fillAmount = hpPercent;
+            _targetHpFill = hpPercent;
+        }
+    }
+
+    public void RefreshMP()
+    {
+        if (_player.MaxMana <= 0)
+            return;
 
         float mpPercent = _player.CurrentMana / _player.MaxMana;
 
@@ -58,16 +114,59 @@ public class PlayerHUD : MonoBehaviour
 
         mpText.text = $"{_player.CurrentMana:0} / {_player.MaxMana:0}";
 
-        RefreshSkill<IDash>(dashSlot);
-        RefreshSkill<ISkillQ>(qSkillSlot);
-        RefreshSkill<ISkillE>(eSlot);
-        RefreshSkill<ISkillR>(rSlot);
+        if (mpPercent < mpDelayFill.fillAmount)
+        {
+            _targetMpFill = mpPercent;
+            _needMpAnimation = true;
+        }
+        else
+        {
+            mpDelayFill.fillAmount = mpPercent;
+            _targetMpFill = mpPercent;
+        }
     }
 
-    private void RefreshSkill<T>(SkillSlotUI slot) where T : class
+    private void UpdateDelayedBars()
     {
-        T skill = _player.GetComponent<T>();
+        if (_needHpAnimation)
+        {
+            hpDelayFill.fillAmount = Mathf.MoveTowards(
+                hpDelayFill.fillAmount,
+                _targetHpFill,
+                hpDelaySpeed * Time.deltaTime);
 
+            if (Mathf.Abs(hpDelayFill.fillAmount - _targetHpFill) < 0.001f)
+            {
+                hpDelayFill.fillAmount = _targetHpFill;
+                _needHpAnimation = false;
+            }
+        }
+
+        if (_needMpAnimation)
+        {
+            mpDelayFill.fillAmount = Mathf.MoveTowards(
+                mpDelayFill.fillAmount,
+                _targetMpFill,
+                mpDelaySpeed * Time.deltaTime);
+
+            if (Mathf.Abs(mpDelayFill.fillAmount - _targetMpFill) < 0.001f)
+            {
+                mpDelayFill.fillAmount = _targetMpFill;
+                _needMpAnimation = false;
+            }
+        }
+    }
+
+    private void RefreshSkills()
+    {
+        RefreshSkill(_dash, dashSlot);
+        RefreshSkill(_skillQ, qSkillSlot);
+        RefreshSkill(_skillE, eSlot);
+        RefreshSkill(_skillR, rSlot);
+    }
+
+    private void RefreshSkill(object skill, SkillSlotUI slot)
+    {
         if (skill == null)
         {
             slot.gameObject.SetActive(false);
@@ -90,71 +189,6 @@ public class PlayerHUD : MonoBehaviour
         if (active != null && active.IsActive)
         {
             slot.Refresh(active.RemainingDuration, active.Duration);
-        }
-    }
-
-    //private void RefreshDash()
-    //{
-    //    AssassinDash dash = _player.GetComponent<AssassinDash>();
-
-    //    if (dash == null)
-    //        return;
-
-    //    float remainTime = dash.DashCooldown.RemainingTime(dash.Runner) ?? 0f;
-
-    //    dashSlot.Refresh(remainTime, dash.Cooldown);
-    //}
-    private void RefreshSkillQ()
-    {
-        AssassinSkill skill = _player.GetComponent<AssassinSkill>();
-
-        if (skill == null)
-            return;
-
-        float remainTime = skill.Cooldown.RemainingTime(skill.Runner) ?? 0f;
-
-        qSkillSlot.Refresh(remainTime, skill.CooldownDuration);
-    }
-    private void RefreshSkillE()
-    {
-        AssassinStealth stealth =
-            _player.GetComponent<AssassinStealth>();
-
-        if (stealth == null)
-            return;
-
-        float remainTime =
-            stealth.CooldownTimer.RemainingTime(
-                stealth.Runner) ?? 0f;
-
-        eSlot.Refresh(
-            remainTime,
-            stealth.CooldownDuration);
-    }
-    private void RefreshSkillR()
-    {
-        AssassinUltimate ultimate =
-            _player.GetComponent<AssassinUltimate>();
-
-        if (ultimate == null)
-            return;
-
-        float remainTime =
-            ultimate.CooldownTimer.RemainingTime(
-                ultimate.Runner) ?? 0f;
-
-        rSlot.Refresh(
-            remainTime,
-            ultimate.CooldownDuration);
-
-        if (ultimate.IsUltimate)
-        {
-            float remain =
-                ultimate.RemainingDuration;
-
-            rSlot.Refresh(
-                remain,
-                ultimate.Duration);
         }
     }
 }
