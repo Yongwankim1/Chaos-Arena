@@ -10,8 +10,6 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
     [SerializeField] private ParticleSystem teleportStartEffect;
     [SerializeField] private ParticleSystem teleportEndEffect;
 
-    [SerializeField] private float teleportLockTime = 0.3f;
-
     private CharacterActionLock _actionLock;
 
     [Networked]
@@ -58,10 +56,6 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
 
         DashCooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
-        _actionLock?.Lock(ActionLockType.Move);
-        _actionLock?.Lock(ActionLockType.Attack);
-        _actionLock?.Lock(ActionLockType.Dash);
-
         RPC_PlayTeleportStart();
 
         _player.IsDashing = true;
@@ -74,16 +68,8 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
 
         RPC_WarpCamera(oldPosition, targetPosition);
 
-        Runner.StartCoroutine(UnlockRoutine());
     }
-    private System.Collections.IEnumerator UnlockRoutine()
-    {
-        yield return new WaitForSeconds(teleportLockTime);
-
-        _actionLock?.Unlock(ActionLockType.Move);
-        _actionLock?.Unlock(ActionLockType.Attack);
-        _actionLock?.Unlock(ActionLockType.Dash);
-    }
+ 
     private Vector3 GetTeleportPosition()
     {
         Vector3 start = transform.position;
