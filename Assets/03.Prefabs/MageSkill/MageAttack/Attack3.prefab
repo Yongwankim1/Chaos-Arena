@@ -70,7 +70,7 @@ MonoBehaviour:
   maxDistance: 30
   height: 0
   radius: 0.75
-  damage: 20
+  damage: 10
   hitMask:
     serializedVersion: 2
     m_Bits: 704
