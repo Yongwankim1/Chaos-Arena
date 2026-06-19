@@ -65096,7 +65096,7 @@ MonoBehaviour:
   _CurrentRound: 0
   waitingTime: 3
   characterSelectTime: 10
-  preparationTime: 5
+  preparationTime: 20
   roundTime: 300
   characterSelectUI: {fileID: 1180696826}
   _CurrentState: 0
