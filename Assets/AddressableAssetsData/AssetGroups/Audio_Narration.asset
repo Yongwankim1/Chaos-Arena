@@ -33,9 +33,27 @@ MonoBehaviour:
     m_SerializedLabels:
     - Narration
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 41926e67e24e1d640a315f9a30fe7389
+    m_Address: "Assets/07.Sounds/Narration/\uBB34\uC2B9\uBD80_e.mp3"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Narration
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 422358b5f13c95d42ae1b982cad4234c
     m_Address: "Assets/07.Sounds/Narration/\uCE74\uC624\uC2A4 \uC544\uB808\uB098\uC5D0
       \uC624\uC2E0\uAC83\uC744 \uD658\uC601\uD569\uB2C8\uB2E4.mp3"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Narration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 497c6674a9a5928459e37903b6085521
+    m_Address: "Assets/07.Sounds/Narration/\uB808\uB4DC\uD300 \uC2B9\uB9AC_e.mp3"
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Narration
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 529afcef738ad7c40bfdfe44aac257f7
+    m_Address: "Assets/07.Sounds/Narration/\uBE14\uB8E8\uD300 \uC2B9\uB9AC_e.mp3"
     m_ReadOnly: 0
     m_SerializedLabels:
     - Narration

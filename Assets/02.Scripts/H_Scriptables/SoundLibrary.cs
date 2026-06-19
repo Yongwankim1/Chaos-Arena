@@ -26,6 +26,9 @@ public class NarrationCategory
     public SoundEntry PlayerDeath;
     public SoundEntry BlueWin;
     public SoundEntry RedWin;
+    public SoundEntry Victory;
+    public SoundEntry Defeat;
+    public SoundEntry Draw;
 }
 [Serializable]
 public class BGMCategory
