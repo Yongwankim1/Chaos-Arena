@@ -35942,6 +35942,7 @@ GameObject:
   - component: {fileID: 2305811084184968244}
   - component: {fileID: 8123856350473602538}
   - component: {fileID: 6113256634837091359}
+  - component: {fileID: 8342318973026991513}
   m_Layer: 6
   m_Name: Player 3
   m_TagString: Player
@@ -36361,7 +36362,6 @@ MonoBehaviour:
     m_Bits: 704
   teleportStartEffect: {fileID: 8010000233584324812}
   teleportEndEffect: {fileID: 4205201499910405960}
-  teleportLockTime: 0.3
 --- !u!114 &6113256634837091359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36378,6 +36378,19 @@ MonoBehaviour:
   Range: 12
   Radius: 2
   isDebug: 1
+--- !u!114 &8342318973026991513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2dc9b7febd4b447922a15117e672ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSound
+  library: {fileID: 11400000, guid: 00cf2e3643b76f143ba0967e15fef064, type: 2}
 --- !u!1 &3354681238205586625
 GameObject:
   m_ObjectHideFlags: 0
