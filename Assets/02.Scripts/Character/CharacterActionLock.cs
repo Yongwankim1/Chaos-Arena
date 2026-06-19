@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Fusion;
 using UnityEngine;
 
-public class CharacterActionLock : MonoBehaviour
+public class CharacterActionLock : NetworkBehaviour
 {
-    private Dictionary<ActionLockType, int> _lockCounts = new();
+    private readonly Dictionary<ActionLockType, int> _lockCounts = new();
 
     public bool CanMove => !_lockCounts.ContainsKey(ActionLockType.Move);
     public bool CanAttack => !_lockCounts.ContainsKey(ActionLockType.Attack);
@@ -11,13 +12,67 @@ public class CharacterActionLock : MonoBehaviour
 
     public void Lock(ActionLockType type)
     {
+        if (!HasStateAuthority)
+            return;
+
+        AddLock(type);
+        RPC_AddLock(type);
+    }
+
+    public void Unlock(ActionLockType type)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        RemoveLock(type);
+        RPC_RemoveLock(type);
+    }
+
+    public void ClearAll()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        _lockCounts.Clear();
+        RPC_ClearAll();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_AddLock(ActionLockType type)
+    {
+        if (HasStateAuthority)
+            return;
+
+        AddLock(type);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_RemoveLock(ActionLockType type)
+    {
+        if (HasStateAuthority)
+            return;
+
+        RemoveLock(type);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_ClearAll()
+    {
+        if (HasStateAuthority)
+            return;
+
+        _lockCounts.Clear();
+    }
+
+    private void AddLock(ActionLockType type)
+    {
         if (!_lockCounts.ContainsKey(type))
             _lockCounts[type] = 0;
 
         _lockCounts[type]++;
     }
 
-    public void Unlock(ActionLockType type)
+    private void RemoveLock(ActionLockType type)
     {
         if (!_lockCounts.ContainsKey(type))
             return;
@@ -26,10 +81,5 @@ public class CharacterActionLock : MonoBehaviour
 
         if (_lockCounts[type] <= 0)
             _lockCounts.Remove(type);
-    }
-
-    public void ClearAll()
-    {
-        _lockCounts.Clear();
     }
 }
