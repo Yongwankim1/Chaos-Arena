@@ -42,6 +42,15 @@ public class RoomPlayerData : NetworkBehaviour
         RPC_NotifyRoomPlayerDataChanged();
     }
 
+    public void SetReadyFromState(bool isReady)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        IsReady = isReady;
+        RPC_NotifyRoomPlayerDataChanged();
+    }
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
     public void RPC_RequestExitRoomByHost()
     {

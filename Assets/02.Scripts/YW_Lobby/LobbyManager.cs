@@ -141,6 +141,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 
         properties.Add("hostName", UserDataManager.Instance.UserData.UserName);
         properties.Add("isPlaying", false);
+        properties.Add("mapIndex", 0);
 
         if (!string.IsNullOrWhiteSpace(password))
         {
@@ -383,6 +384,15 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             Quaternion.identity,
             player
         );
+
+        RoomPlayerData roomPlayerData =
+            obj.GetComponent<RoomPlayerData>();
+
+        if (roomPlayerData != null &&
+            player == runner.LocalPlayer)
+        {
+            roomPlayerData.SetReadyFromState(true);
+        }
 
         roomPlayerDataObjects.Add(player, obj);
 
