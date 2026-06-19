@@ -223,7 +223,7 @@ public class RoundManager : NetworkBehaviour
     private void RPC_SetWalls(
     bool active)
     {
-        if (blueWalls != null || blueWalls.Length > 0)
+        if (blueWalls != null && blueWalls.Length > 0)
         {
             foreach (GameObject blueWall in blueWalls)
             {
@@ -231,7 +231,7 @@ public class RoundManager : NetworkBehaviour
             }
         }
 
-        if (redWalls != null || redWalls.Length > 0)
+        if (redWalls != null && redWalls.Length > 0)
         {
             foreach(GameObject redWall in redWalls)
             {
@@ -619,15 +619,19 @@ public class RoundManager : NetworkBehaviour
         if (MatchEnded)
             return;
 
-        if (Runner.ActivePlayers.Count() > 1)
+        if (Runner.ActivePlayers.Count() != 1)
             return;
 
-        PlayerCharacter[] players = FindObjectsByType<PlayerCharacter>(FindObjectsSortMode.None);
+        PlayerRef remainPlayer =
+            Runner.ActivePlayers.First();
 
-        if (players.Length == 0)
+        TeamType winner = GameBootstrap.Instance.GetPlayerTeam(remainPlayer);
+
+        if (winner == TeamType.None)
             return;
 
-        TeamType winner = players[0].Team;
+        BlueRoundWin = 0;
+        RedRoundWin = 0;
 
         if (winner == TeamType.Blue)
         {
