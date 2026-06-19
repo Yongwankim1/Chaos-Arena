@@ -12,6 +12,11 @@ public class EnemyHP : MonoBehaviour, IDamageable, IHasHealth
 
     public event Action<int, int> OnHPChange;
 
+    [Header("Heal")]
+    [SerializeField] private float healPercent = 0.2f; //초당 회복시킬 퍼센트
+    [SerializeField] private float healInterval = 1f;  // 회복 주기(초)
+    public float HealPercent => healPercent;
+    public float HealInterval => healInterval;
     public void ClearTarget()
     {
         target = null;
