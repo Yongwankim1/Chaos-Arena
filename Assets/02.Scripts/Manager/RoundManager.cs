@@ -81,6 +81,7 @@ public class RoundManager : NetworkBehaviour
     [SerializeField]
     private SoundLibrary soundLibrary;
     private bool _roundStartVoicePlayed;
+    private Coroutine _nextRoundRoutine;
 
     private bool isFirstStart = true;
     private void Awake()
@@ -109,6 +110,9 @@ public class RoundManager : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
         if (!HasStateAuthority)
+            return;
+
+        if (MatchEnded)
             return;
 
         StateRemainTime -= Runner.DeltaTime;
@@ -161,8 +165,6 @@ public class RoundManager : NetworkBehaviour
             $"State : {state}");
     }
 
-
-
     private void StartCharacterSelect()
     {
         GameBootstrap.Instance
@@ -182,6 +184,8 @@ public class RoundManager : NetworkBehaviour
     }
     private void StartPreparation()
     {
+        if (MatchEnded)
+            return;
         GameBootstrap.Instance.ForceSelectRemainingPlayers();
 
         SetSpawnWalls(true);
@@ -223,7 +227,7 @@ public class RoundManager : NetworkBehaviour
     private void RPC_SetWalls(
     bool active)
     {
-        if (blueWalls != null || blueWalls.Length > 0)
+        if (blueWalls != null && blueWalls.Length > 0)
         {
             foreach (GameObject blueWall in blueWalls)
             {
@@ -231,7 +235,7 @@ public class RoundManager : NetworkBehaviour
             }
         }
 
-        if (redWalls != null || redWalls.Length > 0)
+        if (redWalls != null && redWalls.Length > 0)
         {
             foreach(GameObject redWall in redWalls)
             {
@@ -396,12 +400,20 @@ public class RoundManager : NetworkBehaviour
     }
     private void StartNextRound()
     {
-        MatchEnded = false;
-        StartCoroutine(NextRoundRoutine());
+        if (_nextRoundRoutine != null)
+        {
+            StopCoroutine(_nextRoundRoutine);
+        }
+
+        _nextRoundRoutine = StartCoroutine(NextRoundRoutine());
     }
     private IEnumerator NextRoundRoutine()
     {
         yield return new WaitForSeconds(2f);
+
+        if (MatchEnded)
+            yield break;
+
         CurrentRound++;
         _isRoundEnding = false;
 
@@ -448,6 +460,12 @@ public class RoundManager : NetworkBehaviour
             return;
 
         MatchEnded = true;
+
+        if (_nextRoundRoutine != null)
+        {
+            StopCoroutine(_nextRoundRoutine);
+            _nextRoundRoutine = null;
+        }
 
         string result;
 
@@ -500,8 +518,7 @@ public class RoundManager : NetworkBehaviour
             yield return new WaitForSeconds(respawnTime);
         }
 
-        Vector3 spawnPosition =
-            SpawnManager.Instance.GetSpawnPosition(player.Team);
+        Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team);
 
         player.Respawn(spawnPosition);
     }
@@ -619,15 +636,19 @@ public class RoundManager : NetworkBehaviour
         if (MatchEnded)
             return;
 
-        if (Runner.ActivePlayers.Count() > 1)
+        if (Runner.ActivePlayers.Count() != 1)
             return;
 
-        PlayerCharacter[] players = FindObjectsByType<PlayerCharacter>(FindObjectsSortMode.None);
+        PlayerRef remainPlayer =
+            Runner.ActivePlayers.First();
 
-        if (players.Length == 0)
+        TeamType winner = GameBootstrap.Instance.GetPlayerTeam(remainPlayer);
+
+        if (winner == TeamType.None)
             return;
 
-        TeamType winner = players[0].Team;
+        BlueRoundWin = 0;
+        RedRoundWin = 0;
 
         if (winner == TeamType.Blue)
         {

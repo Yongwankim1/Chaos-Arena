@@ -424,4 +424,13 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         Cursor.visible =
             false;
     }
+    public TeamType GetPlayerTeam(PlayerRef player)
+    {
+        if (_playerTeams.TryGetValue(player, out TeamType team))
+        {
+            return team;
+        }
+
+        return TeamType.None;
+    }
 }
