@@ -50092,7 +50092,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.53333336
+  - time: 0.46666667
     functionName: GatheringEnergy
     data: 
     objectReferenceParameter: {fileID: 0}

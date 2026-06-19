@@ -155,14 +155,21 @@ public class NetworkShuriken : NetworkBehaviour
 
         IsStopped = true;
 
-        if (stopEffect != null)
-        {
-            stopEffect.Play();
-        }
+        RPC_PlayStopEffect();
 
         StopTimer = TickTimer.CreateFromSeconds(Runner, stopDuration);
 
         DamageTimer = TickTimer.CreateFromSeconds(Runner, damageInterval);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayStopEffect()
+    {
+        if (stopEffect == null)
+            return;
+
+        stopEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        stopEffect.Play();
     }
 
     private void HandleDot()
