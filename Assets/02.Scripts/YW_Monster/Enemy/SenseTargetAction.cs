@@ -46,6 +46,14 @@ public partial class SenseTargetAction : Action
             return Status.Success;
         }
 
+        PlayerCharacter playerCharacter = target.GetComponentInParent<PlayerCharacter>();
+        if (playerCharacter != null && playerCharacter.IsDead)
+        {
+            Self.Value.GetComponent<EnemyHP>()?.ClearTarget();
+            ClearTarget();
+            return Status.Success;
+        }
+
         Target.Value = target;
 
         NetworkCharacterController hitAttackerTarget = Target?.Value != null

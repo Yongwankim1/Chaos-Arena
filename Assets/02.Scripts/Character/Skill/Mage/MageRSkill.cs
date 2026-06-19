@@ -28,7 +28,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
 
     [Networked]
     public TickTimer Cooldown { get; set; }
-
+    private CharacterActionLock _actionLock;
     public float CooldownDuration => cooldown;
     public float CooldownNormalized
     {
@@ -49,6 +49,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         _player = GetComponent<PlayerCharacter>();
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
+        _actionLock = GetComponent<CharacterActionLock>();
     }
 
     public override void FixedUpdateNetwork()
@@ -80,6 +81,9 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
         RPC_PlaySkillR();
+        _actionLock?.Lock(ActionLockType.Move);
+        _actionLock?.Lock(ActionLockType.Attack);
+        _actionLock?.Lock(ActionLockType.Dash);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

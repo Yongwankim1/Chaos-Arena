@@ -1,5 +1,6 @@
-﻿using System;
-using Fusion;
+﻿using Fusion;
+using System;
+using Unity.Behavior;
 using UnityEngine;
 
 public class EnemyHP : NetworkBehaviour, IDamageable, IHasHealth, IHealable
@@ -44,6 +45,7 @@ public class EnemyHP : NetworkBehaviour, IDamageable, IHasHealth, IHealable
         }
 
         target = attacker.GetAttacker();
+        SetBehaviorTarget(target); // 블랙보드 Target/HasTarget만 세팅, Restart 없음
         currentHP = Mathf.Max(currentHP - damage, 0);
 
         OnHPChange?.Invoke(MaxHP, currentHP);
@@ -81,5 +83,13 @@ public class EnemyHP : NetworkBehaviour, IDamageable, IHasHealth, IHealable
 
         int healAmount = Mathf.RoundToInt(MaxHP * percent);
         Heal(healAmount);
+    }
+    private void SetBehaviorTarget(GameObject newTarget)
+    {
+        BehaviorGraphAgent graphAgent = GetComponent<BehaviorGraphAgent>();
+        if (graphAgent == null) return;
+
+        graphAgent.SetVariableValue("Target", newTarget);
+        graphAgent.SetVariableValue("HasTarget", newTarget != null);
     }
 }

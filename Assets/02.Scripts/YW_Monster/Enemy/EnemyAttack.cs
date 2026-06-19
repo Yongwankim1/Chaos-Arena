@@ -71,6 +71,7 @@ public abstract class EnemyAttack : NetworkBehaviour, IEnemyAttacker
         agent.isStopped = true;
         agent.ResetPath();
         RPC_DefaultAttack();
+
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

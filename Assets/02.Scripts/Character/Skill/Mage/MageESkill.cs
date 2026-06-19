@@ -29,6 +29,7 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
     public TickTimer CooldownTimer => Cooldown;
 
     public float CooldownDuration => cooldown;
+    private CharacterActionLock _actionLock;
     public float CooldownNormalized
     {
         get
@@ -46,6 +47,7 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
         _player = GetComponent<PlayerCharacter>();
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
+        _actionLock = GetComponent<CharacterActionLock>();
     }
     public void UseE()
     {
@@ -65,6 +67,9 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
         RPC_PlaySkillE();
+        _actionLock?.Lock(ActionLockType.Move);
+        _actionLock?.Lock(ActionLockType.Attack);
+        _actionLock?.Lock(ActionLockType.Dash);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

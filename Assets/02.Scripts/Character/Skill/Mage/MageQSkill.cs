@@ -43,7 +43,7 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
     private int orbMoveCurrentFrame;
     private Vector3 orbMoveStartPosition;
     private Vector3 orbMoveEndPosition;
-
+    private CharacterActionLock _actionLock;
     public float CooldownNormalized
     {
         get
@@ -62,6 +62,7 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
         _player = GetComponent<PlayerCharacter>();
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
+        _actionLock = GetComponent<CharacterActionLock>();
     }
 
     private void Update()
@@ -87,6 +88,9 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
         RPC_PlaySkillQ();
+        _actionLock?.Lock(ActionLockType.Move);
+        _actionLock?.Lock(ActionLockType.Attack);
+        _actionLock?.Lock(ActionLockType.Dash);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -199,5 +203,12 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
         }
 
         return lifeTime;
+    }
+
+    public void CanMove()
+    {
+        _actionLock?.Unlock(ActionLockType.Move);
+        _actionLock?.Unlock(ActionLockType.Attack);
+        _actionLock?.Unlock(ActionLockType.Dash);
     }
 }
