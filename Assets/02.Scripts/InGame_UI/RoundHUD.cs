@@ -20,7 +20,8 @@ public class RoundHUD : MonoBehaviour
     private GameObject roundResultTextPanel;
     [SerializeField]
     private TMP_Text roundResultText;
-
+    [SerializeField]
+    private TMP_Text roundText;
 
     private void Awake()
     {
@@ -40,8 +41,16 @@ public class RoundHUD : MonoBehaviour
 
         UpdateTimer();
         UpdateScore();
+        UpdateRound();
         UpdateRoundResult();
     }
+    private void UpdateRound()
+    {
+        RoundManager round = RoundManager.Instance;
+
+        roundText.text = $"ROUND {round.CurrentRound}";
+    }
+
     private void UpdateScore()
     {
         RoundManager round = RoundManager.Instance;
@@ -55,8 +64,7 @@ public class RoundHUD : MonoBehaviour
 
     private void UpdateRoundResult()
     {
-        RoundManager round =
-            RoundManager.Instance;
+        RoundManager round = RoundManager.Instance;
 
         switch (round.RoundResult)
         {
@@ -99,6 +107,12 @@ public class RoundHUD : MonoBehaviour
         switch (round.CurrentState)
         {
             case RoundState.Waiting:
+
+                timerText.text = $"{Mathf.CeilToInt(remainTime)}";
+
+                break;
+
+            case RoundState.CharacterSelect:
 
                 timerText.text = $"{Mathf.CeilToInt(remainTime)}";
 

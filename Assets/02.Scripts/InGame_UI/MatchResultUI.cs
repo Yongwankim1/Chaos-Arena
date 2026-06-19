@@ -1,7 +1,5 @@
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using Fusion;
+using UnityEngine;
 
 public class MatchResultUI : MonoBehaviour
 {
@@ -11,36 +9,47 @@ public class MatchResultUI : MonoBehaviour
     private TMP_Text resultText;
 
     [SerializeField]
-    private Button lobbyButton;
+    private TMP_Text countdownText;
+
+    private float _remainTime;
+
+    private bool _counting;
 
     private void Awake()
     {
         Instance = this;
 
         gameObject.SetActive(false);
-
-        lobbyButton.onClick.AddListener(OnClickLobby);
     }
 
-    public void Show(string message)
+    private void Update()
     {
-        resultText.text =message;
+        if (!_counting)
+            return;
+
+        _remainTime -= Time.deltaTime;
+
+        countdownText.text = $"잠시 후 로비로 이동합니다. (<color=#FF4444>{Mathf.CeilToInt(_remainTime)}</color>초)";
+
+        if (_remainTime <= 0f)
+        {
+            _counting = false;
+        }
+    }
+
+    public void Show(string message,float countdown = 5f)
+    {
+        resultText.text = message;
+
+        _remainTime = countdown;
+
+        _counting = true;
 
         gameObject.SetActive(true);
 
-        Cursor.lockState = CursorLockMode.None;
+        Cursor.lockState =
+            CursorLockMode.None;
 
         Cursor.visible = true;
-    }
-
-
-    public void OnClickLobby()
-    {
-        NetworkRunner runner = FindFirstObjectByType<NetworkRunner>();
-
-        if (runner == null)
-            return;
-
-        runner.LoadScene(SceneRef.FromIndex(0));
     }
 }

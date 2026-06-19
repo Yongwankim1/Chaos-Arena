@@ -54,7 +54,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack1:
     Clip:
-      m_AssetGUID: 303682e6b9a79d7459ed98d03911cd8d
+      m_AssetGUID: 
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 

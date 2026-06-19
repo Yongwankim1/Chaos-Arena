@@ -90,18 +90,13 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void OnClickConfirm()
     {
-        PlayerLobbyObject.Local
-            .RPC_SelectCharacter(
-                SelectedClass);
+        PlayerLobbyObject.Local.RPC_SelectCharacter(SelectedClass);
 
-        PlayerLobbyObject.Local
-            .RPC_SetReady();
+        PlayerLobbyObject.Local.RPC_SetReady();
 
-        Cursor.lockState =
-            CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
-        Cursor.visible =
-            false;
+        Cursor.visible = false;
         OnPlayerUI();
         gameObject.SetActive(false);
 
