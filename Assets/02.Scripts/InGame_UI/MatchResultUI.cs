@@ -47,8 +47,7 @@ public class MatchResultUI : MonoBehaviour
 
         gameObject.SetActive(true);
 
-        Cursor.lockState =
-            CursorLockMode.None;
+        Cursor.lockState = CursorLockMode.None;
 
         Cursor.visible = true;
     }
