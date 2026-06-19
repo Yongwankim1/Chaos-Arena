@@ -81,6 +81,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
     [Networked]
     private NetworkBool AnimatedFreeFall { get; set; }
 
+    [Networked]
+    private NetworkBool RotationOnly { get; set; }
+
     private float _localAnimatedSpeed;
     private bool _localAnimatedGrounded = true;
     private bool _localAnimatedFreeFall;
@@ -259,7 +262,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
             return;
 
         if (_actionLock != null && !_actionLock.CanMove)
+        {
+            RotateToYaw(input.Yaw);
             return;
+        }
 
         float targetSpeed =
             input.Sprint
@@ -348,6 +354,33 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _controller.Move(
             moveDirection *
             Runner.DeltaTime);
+    }
+
+    public void SetRotationOnly(bool value)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        RotationOnly = value;
+    }
+
+    private void RotateToYaw(float yaw)
+    {
+        if (!RotationOnly)
+            return;
+
+        float rotation =
+            Mathf.SmoothDampAngle(
+                transform.eulerAngles.y,
+                yaw,
+                ref _rotationVelocity,
+                RotationSmoothTime);
+
+        transform.rotation =
+            Quaternion.Euler(
+                0.0f,
+                rotation,
+                0.0f);
     }
     private void JumpAndGravity(NetworkInputData input)
     {

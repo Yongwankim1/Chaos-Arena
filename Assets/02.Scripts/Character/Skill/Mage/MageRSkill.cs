@@ -83,6 +83,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
         RPC_PlaySkillR();
+        _controller.SetRotationOnly(true);
         _actionLock?.Lock(ActionLockType.Move);
         _actionLock?.Lock(ActionLockType.Attack);
         _actionLock?.Lock(ActionLockType.Dash);
@@ -123,5 +124,16 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
 
         spawnedLaser.GetComponent<MageLaserAttack>().Destroy();
         spawnedLaser = null;
+    }
+
+    public void CanMove()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        _controller.SetRotationOnly(false);
+        _actionLock?.Unlock(ActionLockType.Move);
+        _actionLock?.Unlock(ActionLockType.Attack);
+        _actionLock?.Unlock(ActionLockType.Dash);
     }
 }
