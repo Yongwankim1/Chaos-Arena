@@ -51065,6 +51065,7 @@ GameObject:
   - component: {fileID: 1805322028766392492}
   - component: {fileID: 6831354455597160099}
   - component: {fileID: -1390968454924499996}
+  - component: {fileID: 2944114873863736068}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -51262,6 +51263,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 10
@@ -51277,6 +51279,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 45, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 10
@@ -51292,6 +51295,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 90, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 10
@@ -51307,6 +51311,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 180, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 10
@@ -51322,6 +51327,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 140, z: 0}
     HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 10
@@ -51492,6 +51498,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1222c3039a4892544bd7acf25ff54031, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterActionLock
+--- !u!114 &2944114873863736068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2dc9b7febd4b447922a15117e672ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSound
+  library: {fileID: 11400000, guid: 7fb236516e15f8141acb53230dc6c883, type: 2}
 --- !u!1 &3486834125898397633
 GameObject:
   m_ObjectHideFlags: 0
