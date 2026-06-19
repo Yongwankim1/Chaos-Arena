@@ -557,6 +557,7 @@ MonoBehaviour:
   - {fileID: 5563745966908176064}
   - {fileID: 2981165483300229984}
   - {fileID: 8345423581374555265}
+  - {fileID: 1208802260095530819}
   - {fileID: 7657156027105957938}
   - {fileID: 8926124842869163457}
   - {fileID: 1992459693772140149}
@@ -742,7 +743,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   target: {fileID: 0}
   MaxHP: 100
-  currentHP: 100
+  _currentHP: 0
+  healPercent: 0.2
+  healInterval: 1
 --- !u!136 &3512453633563942082
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -829,6 +832,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 0, z: 0}
     HitEffect: {fileID: 0}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 2

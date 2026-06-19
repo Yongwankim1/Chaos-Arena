@@ -1831,6 +1831,7 @@ MonoBehaviour:
   - {fileID: 8730408137868423852}
   - {fileID: 7170404540485164610}
   - {fileID: 2588323076768750958}
+  - {fileID: 5172735927215811527}
   - {fileID: 1979718124564895966}
   - {fileID: 623286148000363409}
   - {fileID: 7001940840183482582}
@@ -2016,7 +2017,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   target: {fileID: 0}
   MaxHP: 100
-  currentHP: 100
+  _currentHP: 0
+  healPercent: 0.2
+  healInterval: 1
 --- !u!136 &2133992507548175377
 CapsuleCollider:
   m_ObjectHideFlags: 0
