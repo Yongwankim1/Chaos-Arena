@@ -239,8 +239,7 @@ public class RoundManager : NetworkBehaviour
             }
         }
 
-        Debug.Log(
-            $"Wall Active : {active}");
+        Debug.Log($"Wall Active : {active}");
     }
 
     private void DrawRound()
@@ -488,9 +487,22 @@ public class RoundManager : NetworkBehaviour
 
     private IEnumerator RespawnRoutine(PlayerCharacter player)
     {
-        yield return new WaitForSeconds(respawnTime);
+        if (respawnTime >= 6f)
+        {
+            yield return new WaitForSeconds(respawnTime - 6f);
 
-        Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team);
+            RPC_PlayRespawnVoice(player.Object.InputAuthority);
+
+            yield return new WaitForSeconds(6f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(respawnTime);
+        }
+
+        Vector3 spawnPosition =
+            SpawnManager.Instance.GetSpawnPosition(player.Team);
+
         player.Respawn(spawnPosition);
     }
 
@@ -627,5 +639,19 @@ public class RoundManager : NetworkBehaviour
         }
 
         EndMatch();
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayRespawnVoice(PlayerRef targetPlayer)
+    {
+        PlayerCharacter localPlayer = GetLocalPlayer();
+
+        if (localPlayer == null)
+            return;
+
+        if (localPlayer.Object.InputAuthority != targetPlayer)
+            return;
+
+        SoundManager.Instance.PlayVoice(
+            soundLibrary.Narration.FiveSec);
     }
 }
