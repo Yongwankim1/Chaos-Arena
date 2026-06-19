@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 511468210214822616}
   - component: {fileID: 2039345761922891756}
   - component: {fileID: 3316758629991255516}
-  m_Layer: 11
+  m_Layer: 9
   m_Name: Dungeon_Door_Stone
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -4,11 +4,14 @@ using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
 using Unity.Properties;
+using UnityEngine.AI;
 
 [Serializable, GeneratePropertyBag]
 [NodeDescription(name: "SenseTargetAction", story: "[Self] senses [Target] and updates", category: "Action", id: "bb0d18137790d8b35db6177a1555593a")]
 public partial class SenseTargetAction : Action
 {
+    private const float ReachabilitySampleRadius = 2f;
+
     [SerializeReference] public BlackboardVariable<GameObject> Self;
     [SerializeReference] public BlackboardVariable<GameObject> Target;
     [SerializeReference] public BlackboardVariable<bool> CanSeeTarget;
@@ -58,6 +61,12 @@ public partial class SenseTargetAction : Action
         Vector3 selfPosition = Self.Value.transform.position;
         Vector3 targetPosition = hitAttackerTarget.transform.position;
         float distance = Vector3.Distance(selfPosition, targetPosition);
+        NavMeshAgent agent = Self.Value.GetComponent<NavMeshAgent>();
+        if (!NavMeshReachability.CanReach(agent, targetPosition, ReachabilitySampleRadius))
+        {
+            ClearTarget();
+            return Status.Success;
+        }
 
         //if (distance > detectRange)
         //{
