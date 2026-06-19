@@ -65,7 +65,7 @@ MonoBehaviour:
       MaxDistance: 30
     BlueWin:
       Clip:
-        m_AssetGUID: dfbd46992ee71c84a97b1a9399f23bda
+        m_AssetGUID: 529afcef738ad7c40bfdfe44aac257f7
         m_SubObjectName: 
         m_SubObjectType: 
         m_SubObjectGUID: 
@@ -75,7 +75,37 @@ MonoBehaviour:
       MaxDistance: 30
     RedWin:
       Clip:
+        m_AssetGUID: 497c6674a9a5928459e37903b6085521
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      Volume: 1
+      MinDistance: 3
+      MaxDistance: 30
+    Victory:
+      Clip:
         m_AssetGUID: dfbd46992ee71c84a97b1a9399f23bda
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      Volume: 1
+      MinDistance: 3
+      MaxDistance: 30
+    Defeat:
+      Clip:
+        m_AssetGUID: 303682e6b9a79d7459ed98d03911cd8d
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      Volume: 1
+      MinDistance: 3
+      MaxDistance: 30
+    Draw:
+      Clip:
+        m_AssetGUID: 41926e67e24e1d640a315f9a30fe7389
         m_SubObjectName: 
         m_SubObjectType: 
         m_SubObjectGUID: 
@@ -116,268 +146,6 @@ MonoBehaviour:
       MinDistance: 3
       MaxDistance: 30
     Hover:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-  Assassin:
-    FootStep:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Jump:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Land:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Death:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack1:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack2:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack3:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack4:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack5:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Dash:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    SkillQ:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    SkillE:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    SkillR:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-  Mage:
-    FootStep:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Jump:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Land:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Death:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack1:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack2:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack3:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack4:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Attack5:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    Teleport:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    SkillQ:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    SkillE:
-      Clip:
-        m_AssetGUID: 
-        m_SubObjectName: 
-        m_SubObjectType: 
-        m_SubObjectGUID: 
-        m_EditorAssetChanged: 0
-      Volume: 1
-      MinDistance: 3
-      MaxDistance: 30
-    SkillR:
       Clip:
         m_AssetGUID: 
         m_SubObjectName: 

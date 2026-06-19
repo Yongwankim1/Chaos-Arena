@@ -65117,6 +65117,7 @@ MonoBehaviour:
   enemySpawnManager: {fileID: 990051800}
   _RoundMessage: 
   _RoundResult: 0
+  soundLibrary: {fileID: 11400000, guid: 7da6ea0d93dbf804aa36db9d18c37214, type: 2}
 --- !u!4 &749044984
 Transform:
   m_ObjectHideFlags: 0

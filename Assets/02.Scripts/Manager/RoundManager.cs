@@ -31,7 +31,7 @@ public class RoundManager : NetworkBehaviour
     private float characterSelectTime = 30f;
 
     [SerializeField]
-    private float preparationTime = 10f;
+    private float preparationTime = 20f;
 
     [SerializeField]
     private float roundTime = 300f;
@@ -77,7 +77,11 @@ public class RoundManager : NetworkBehaviour
     private NetworkBool MatchEnded { get; set; }
     private bool _isRoundEnding;
 
+    [SerializeField]
+    private SoundLibrary soundLibrary;
+    private bool _roundStartVoicePlayed;
 
+    private bool isFirstStart = true;
     private void Awake()
     {
         Instance = this;
@@ -107,6 +111,17 @@ public class RoundManager : NetworkBehaviour
             return;
 
         StateRemainTime -= Runner.DeltaTime;
+
+        if (CurrentState == RoundState.Preparation)
+        {
+            if (!_roundStartVoicePlayed &&
+                StateRemainTime <= 11f)
+            {
+                _roundStartVoicePlayed = true;
+
+                RPC_PlayRoundStartVoice();
+            }
+        }
 
         if (StateRemainTime > 0f)
             return;
@@ -166,10 +181,18 @@ public class RoundManager : NetworkBehaviour
     }
     private void StartPreparation()
     {
-        GameBootstrap.Instance
-            .ForceSelectRemainingPlayers();
+        GameBootstrap.Instance.ForceSelectRemainingPlayers();
 
         SetSpawnWalls(true);
+
+        if (isFirstStart)
+        {
+            isFirstStart = false;
+
+            RPC_PlayWelcome();
+        }
+
+        _roundStartVoicePlayed = false;
 
         ChangeState(
             RoundState.Preparation,
@@ -254,6 +277,8 @@ public class RoundManager : NetworkBehaviour
 
             RoundResult = RoundResultType.BlueWin;
 
+            RPC_PlayRoundResultVoice(RoundResultType.BlueWin);
+
             Debug.Log("Time Over : Blue Win");
         }
         else if (RedScore > BlueScore)
@@ -262,11 +287,15 @@ public class RoundManager : NetworkBehaviour
 
             RoundResult = RoundResultType.RedWin;
 
+            RPC_PlayRoundResultVoice(RoundResultType.RedWin);
+
             Debug.Log("Time Over : Red Win");
         }
         else
         {
             RoundResult = RoundResultType.Draw;
+
+            RPC_PlayRoundResultVoice(RoundResultType.Draw);
 
             Debug.Log("Time Over : Draw");
         }
@@ -311,9 +340,10 @@ public class RoundManager : NetworkBehaviour
         if (BlueScore >= killsToWinRound)
         {
             BlueRoundWin++;
+
             RoundResult = RoundResultType.BlueWin;
-            Debug.Log(
-                $"Blue Round Win : {BlueRoundWin}");
+
+            RPC_PlayRoundResultVoice(RoundResultType.BlueWin);
 
             CheckMatchEnd();
 
@@ -323,9 +353,10 @@ public class RoundManager : NetworkBehaviour
         if (RedScore >= killsToWinRound)
         {
             RedRoundWin++;
+
             RoundResult = RoundResultType.RedWin;
-            Debug.Log(
-                $"Red Round Win : {RedRoundWin}");
+
+            RPC_PlayRoundResultVoice(RoundResultType.RedWin);
 
             CheckMatchEnd();
 
@@ -420,20 +451,30 @@ public class RoundManager : NetworkBehaviour
 
         string result;
 
+        TeamType winner;
+
         if (BlueRoundWin > RedRoundWin)
         {
             result = "ºí·çÆÀ ½Â¸®";
+
+            winner = TeamType.Blue;
         }
         else if (RedRoundWin > BlueRoundWin)
         {
             result = "·¹µåÆÀ ½Â¸®";
+
+            winner = TeamType.Red;
         }
         else
         {
             result = "¹«½ÂºÎ";
+
+            winner = TeamType.None;
         }
 
         RPC_ShowMatchResult(result);
+
+        RPC_PlayMatchResultVoice(winner);
     }
 
 
@@ -449,5 +490,94 @@ public class RoundManager : NetworkBehaviour
 
         Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team);
         player.Respawn(spawnPosition);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayWelcome()
+    {
+        SoundManager.Instance.PlayVoice(
+            soundLibrary.Narration.Welcome);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayRoundStartVoice()
+    {
+        SoundManager.Instance.PlayVoice(
+            soundLibrary.Narration.RoundStart);
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayRoundResultVoice(
+    RoundResultType result)
+    {
+        switch (result)
+        {
+            case RoundResultType.BlueWin:
+
+                SoundManager.Instance.PlayVoice(
+                    soundLibrary.Narration.BlueWin);
+
+                break;
+
+            case RoundResultType.RedWin:
+
+                SoundManager.Instance.PlayVoice(
+                    soundLibrary.Narration.RedWin);
+
+                break;
+
+            case RoundResultType.Draw:
+
+                SoundManager.Instance.PlayVoice(
+                    soundLibrary.Narration.Draw);
+
+                break;
+        }
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayMatchResultVoice(
+    TeamType winner)
+    {
+        PlayerCharacter localPlayer =
+            GetLocalPlayer();
+
+        if (localPlayer == null)
+            return;
+
+        if (winner == TeamType.None)
+        {
+            SoundManager.Instance.PlayVoice(
+                soundLibrary.Narration.Draw);
+
+            return;
+        }
+
+        bool isWinner =
+            localPlayer.Team == winner;
+
+        if (isWinner)
+        {
+            SoundManager.Instance.PlayVoice(
+                soundLibrary.Narration.Victory);
+        }
+        else
+        {
+            SoundManager.Instance.PlayVoice(
+                soundLibrary.Narration.Defeat);
+        }
+    }
+    private PlayerCharacter GetLocalPlayer()
+    {
+        PlayerCharacter[] players = FindObjectsByType<PlayerCharacter>(FindObjectsSortMode.None);
+
+        foreach (PlayerCharacter player in players)
+        {
+            if (player.Object != null && player.Object.HasInputAuthority)
+            {
+                return player;
+            }
+        }
+
+        return null;
     }
 }
