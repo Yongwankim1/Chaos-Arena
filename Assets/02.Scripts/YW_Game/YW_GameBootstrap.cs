@@ -232,9 +232,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         Debug.Log($"Lobby Object Spawned : {player.PlayerId}");
          
     }
-    public void OnPlayerLeft(
-     NetworkRunner runner,
-     PlayerRef player)
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
         if (!runner.IsServer)
             return;
@@ -249,14 +247,14 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             _playerLobbies.Remove(player);
         }
 
-        if (_spawnedPlayers.TryGetValue(
-                player,
-                out var playerObject))
+        if (_spawnedPlayers.TryGetValue(player, out var playerObject))
         {
             runner.Despawn(playerObject);
 
             _spawnedPlayers.Remove(player);
         }
+
+        RoundManager.Instance?.OnPlayerDisconnected();
     }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {

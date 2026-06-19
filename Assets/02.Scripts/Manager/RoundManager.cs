@@ -1,5 +1,6 @@
 using Fusion;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class RoundManager : NetworkBehaviour
@@ -238,8 +239,7 @@ public class RoundManager : NetworkBehaviour
             }
         }
 
-        Debug.Log(
-            $"Wall Active : {active}");
+        Debug.Log($"Wall Active : {active}");
     }
 
     private void DrawRound()
@@ -474,21 +474,35 @@ public class RoundManager : NetworkBehaviour
 
         RPC_ShowMatchResult(result);
 
+        StartCoroutine(ReturnLobbyRoutine());
+
         RPC_PlayMatchResultVoice(winner);
     }
 
-
-    [Rpc(RpcSources.StateAuthority,RpcTargets.All)]
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_ShowMatchResult(string result)
     {
-        MatchResultUI.Instance.Show(result);
+        MatchResultUI.Instance.Show(result, 5f);
     }
 
     private IEnumerator RespawnRoutine(PlayerCharacter player)
     {
-        yield return new WaitForSeconds(respawnTime);
+        if (respawnTime >= 6f)
+        {
+            yield return new WaitForSeconds(respawnTime - 6f);
 
-        Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team);
+            RPC_PlayRespawnVoice(player.Object.InputAuthority);
+
+            yield return new WaitForSeconds(6f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(respawnTime);
+        }
+
+        Vector3 spawnPosition =
+            SpawnManager.Instance.GetSpawnPosition(player.Team);
+
         player.Respawn(spawnPosition);
     }
 
@@ -579,5 +593,65 @@ public class RoundManager : NetworkBehaviour
         }
 
         return null;
+    }
+    private IEnumerator ReturnLobbyRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+
+        NetworkRunner runner =
+            FindFirstObjectByType<NetworkRunner>();
+
+        if (runner == null)
+            yield break;
+
+        runner.Shutdown();
+
+        UnityEngine.SceneManagement
+            .SceneManager
+            .LoadScene(0);
+    }
+
+    public void OnPlayerDisconnected()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (MatchEnded)
+            return;
+
+        if (Runner.ActivePlayers.Count() > 1)
+            return;
+
+        PlayerCharacter[] players = FindObjectsByType<PlayerCharacter>(FindObjectsSortMode.None);
+
+        if (players.Length == 0)
+            return;
+
+        TeamType winner = players[0].Team;
+
+        if (winner == TeamType.Blue)
+        {
+            BlueRoundWin = roundsToWinMatch;
+        }
+        else
+        {
+            RedRoundWin = roundsToWinMatch;
+        }
+
+        EndMatch();
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayRespawnVoice(PlayerRef targetPlayer)
+    {
+        PlayerCharacter localPlayer = GetLocalPlayer();
+
+        if (localPlayer == null)
+            return;
+
+        if (localPlayer.Object.InputAuthority != targetPlayer)
+            return;
+
+        SoundManager.Instance.PlayVoice(
+            soundLibrary.Narration.FiveSec);
     }
 }
