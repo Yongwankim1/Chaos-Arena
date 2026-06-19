@@ -30,6 +30,7 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
 
     public float CooldownDuration => cooldown;
     private CharacterActionLock _actionLock;
+    private NetworkThirdPersonController _controller;
     public float CooldownNormalized
     {
         get
@@ -48,6 +49,7 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
         _actionLock = GetComponent<CharacterActionLock>();
+        _controller = GetComponent<NetworkThirdPersonController>();
     }
     public void UseE()
     {
@@ -57,12 +59,12 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
         if (_player.IsDead)
             return;
 
+        if (!_controller.Grounded) return;
         if (!Cooldown.ExpiredOrNotRunning(Runner))
             return;
 
         if (!_player.UseMana(manaCost))
             return;
-
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 

@@ -44,6 +44,8 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
     private Vector3 orbMoveStartPosition;
     private Vector3 orbMoveEndPosition;
     private CharacterActionLock _actionLock;
+
+    private NetworkThirdPersonController _controller;
     public float CooldownNormalized
     {
         get
@@ -63,6 +65,7 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
         _actionLock = GetComponent<CharacterActionLock>();
+        _controller = GetComponent<NetworkThirdPersonController>();
     }
 
     private void Update()
@@ -77,13 +80,13 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
 
         if (_player.IsDead)
             return;
+        if (!_controller.Grounded) return;
 
         if (!Cooldown.ExpiredOrNotRunning(Runner))
             return;
 
         if (!_player.UseMana(manaCost))
             return;
-
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 

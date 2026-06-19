@@ -29,6 +29,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     [Networked]
     public TickTimer Cooldown { get; set; }
     private CharacterActionLock _actionLock;
+    private NetworkThirdPersonController _controller;
     public float CooldownDuration => cooldown;
     public float CooldownNormalized
     {
@@ -50,6 +51,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         _combat = GetComponent<CharacterCombat>();
         _animator = GetComponent<Animator>();
         _actionLock = GetComponent<CharacterActionLock>();
+        _controller = GetComponent<NetworkThirdPersonController>();
     }
 
     public override void FixedUpdateNetwork()
@@ -71,12 +73,12 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         if (_player.IsDead)
             return;
 
+        if (!_controller.Grounded) return;
         if (!Cooldown.ExpiredOrNotRunning(Runner))
             return;
 
         if (!_player.UseMana(manaCost))
             return;
-
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
