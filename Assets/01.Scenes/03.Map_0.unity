@@ -4754,6 +4754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 921122590}
   cooldownText: {fileID: 2020266809}
+  icon: {fileID: 2124341881}
 --- !u!114 &57626826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19064,6 +19065,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 902411202}
   cooldownText: {fileID: 1598805181}
+  icon: {fileID: 0}
 --- !u!114 &236429682
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66082,6 +66084,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1656760880}
   cooldownText: {fileID: 221461581}
+  icon: {fileID: 1727182607}
 --- !u!114 &757544898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -126134,6 +126137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1584141943}
   cooldownText: {fileID: 483612327}
+  icon: {fileID: 703046520}
 --- !u!114 &1409505297
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131685,6 +131689,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1271112348}
   cooldownText: {fileID: 2028759091}
+  icon: {fileID: 0}
 --- !u!114 &1471364278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134298,6 +134303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1391854123}
   cooldownText: {fileID: 736528124}
+  icon: {fileID: 1773667819}
 --- !u!114 &1506200395
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -145447,6 +145453,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1049435012}
   cooldownText: {fileID: 1880483737}
+  icon: {fileID: 0}
 --- !u!114 &1629217949
 MonoBehaviour:
   m_ObjectHideFlags: 0

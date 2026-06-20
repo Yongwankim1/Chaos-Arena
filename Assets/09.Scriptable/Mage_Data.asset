@@ -19,3 +19,8 @@ MonoBehaviour:
   walkSpeed: 5
   sprintSpeed: 10
   attackPower: 5
+  SkillIcons:
+    Q: {fileID: -901786281, guid: 88933c4bf39cd564bbb4f1af77fed24e, type: 3}
+    E: {fileID: -1837239060, guid: 88933c4bf39cd564bbb4f1af77fed24e, type: 3}
+    R: {fileID: 1867638528, guid: 88933c4bf39cd564bbb4f1af77fed24e, type: 3}
+    Dash: {fileID: -1155952407, guid: 88933c4bf39cd564bbb4f1af77fed24e, type: 3}

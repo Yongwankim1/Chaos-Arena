@@ -237,12 +237,9 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         if (!runner.IsServer)
             return;
 
-        if (_playerLobbies.TryGetValue(
-                player,
-                out PlayerLobbyObject lobby))
+        if (_playerLobbies.TryGetValue(player, out PlayerLobbyObject lobby))
         {
-            runner.Despawn(
-                lobby.Object);
+            runner.Despawn(lobby.Object);
 
             _playerLobbies.Remove(player);
         }
@@ -354,10 +351,24 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     {
     }
 
-    public void OnShutdown(
-        NetworkRunner runner,
-        ShutdownReason shutdownReason)
+    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
+        if (runner.IsServer)
+        {
+            return;
+        }
+
+        if (shutdownReason == ShutdownReason.Ok)
+        {
+            return;
+        }
+
+        if (RoundManager.Instance == null)
+        {
+            return;
+        }
+
+        RoundManager.Instance.ShowHostDisconnectVictory();
     }
 
     public void OnObjectEnterAOI(
@@ -381,22 +392,16 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
         foreach (var pair in _playerLobbies)
         {
-            PlayerRef player =
-                pair.Key;
+            PlayerRef player = pair.Key;
 
-            PlayerLobbyObject lobby =
-                pair.Value;
+            PlayerLobbyObject lobby = pair.Value;
 
-            if (lobby.SelectedClass !=
-                CharacterClassType.None)
+            if (lobby.SelectedClass != CharacterClassType.None)
             {
                 continue;
             }
 
             lobby.SelectedClass = CharacterClassType.Assassin;
-
-            Debug.Log(
-                $"Force Assassin : {player.PlayerId}");
 
             CharacterSelectUI.Instance.OnPlayerUI();
 
@@ -412,17 +417,13 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         if (CharacterSelectUI.Instance == null)
             return;
 
-        CharacterSelectUI.Instance
-            .OnPlayerUI();
+        CharacterSelectUI.Instance.OnPlayerUI();
 
-        CharacterSelectUI.Instance
-            .gameObject.SetActive(false);
+        CharacterSelectUI.Instance.gameObject.SetActive(false);
 
-        Cursor.lockState =
-            CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;
 
-        Cursor.visible =
-            false;
+        Cursor.visible = false;
     }
     public TeamType GetPlayerTeam(PlayerRef player)
     {

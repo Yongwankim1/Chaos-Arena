@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(
-    fileName = "ClassData",
-    menuName = "Game Data/Class Data")]
+[CreateAssetMenu(fileName = "ClassData", menuName = "Game Data/Class Data")]
 public class ClassData : ScriptableObject
 {
     [Header("기본 정보")]
@@ -19,4 +17,6 @@ public class ClassData : ScriptableObject
 
     public float attackPower;
 
+    [Header("스킬 아이콘")]
+    public SkillIconSet SkillIcons;
 }

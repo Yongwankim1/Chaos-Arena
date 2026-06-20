@@ -83,6 +83,7 @@ public class RoundManager : NetworkBehaviour
     private bool _roundStartVoicePlayed;
     private Coroutine _nextRoundRoutine;
 
+  
     private bool isFirstStart = true;
     private void Awake()
     {
@@ -639,8 +640,7 @@ public class RoundManager : NetworkBehaviour
         if (Runner.ActivePlayers.Count() != 1)
             return;
 
-        PlayerRef remainPlayer =
-            Runner.ActivePlayers.First();
+        PlayerRef remainPlayer = Runner.ActivePlayers.First();
 
         TeamType winner = GameBootstrap.Instance.GetPlayerTeam(remainPlayer);
 
@@ -674,5 +674,28 @@ public class RoundManager : NetworkBehaviour
 
         SoundManager.Instance.PlayVoice(
             soundLibrary.Narration.FiveSec);
+    }
+
+    public void ShowHostDisconnectVictory()
+    {
+        if (MatchEnded)
+        {
+            return;
+        }
+
+        MatchEnded = true;
+
+        if (_nextRoundRoutine != null)
+        {
+            StopCoroutine(_nextRoundRoutine);
+            _nextRoundRoutine = null;
+        }
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        SoundManager.Instance.PlayVoice(soundLibrary.Narration.Victory);
+
+        MatchResultUI.Instance.Show("½Â¸®",5f,true);
     }
 }

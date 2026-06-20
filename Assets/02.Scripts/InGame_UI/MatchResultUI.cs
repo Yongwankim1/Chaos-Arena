@@ -15,6 +15,8 @@ public class MatchResultUI : MonoBehaviour
 
     private bool _counting;
 
+    private bool _forceReturnLobby;
+
     private void Awake()
     {
         Instance = this;
@@ -31,19 +33,26 @@ public class MatchResultUI : MonoBehaviour
 
         countdownText.text = $"잠시 후 로비로 이동합니다. (<color=#FF4444>{Mathf.CeilToInt(_remainTime)}</color>초)";
 
-        if (_remainTime <= 0f)
+        if (_remainTime > 0f)
+            return;
+
+        _counting = false;
+
+        if (_forceReturnLobby)
         {
-            _counting = false;
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
         }
     }
 
-    public void Show(string message,float countdown = 5f)
+    public void Show(string message, float countdown = 5f, bool forceReturnLobby = false)
     {
         resultText.text = message;
 
         _remainTime = countdown;
 
         _counting = true;
+
+        _forceReturnLobby = forceReturnLobby;
 
         gameObject.SetActive(true);
 

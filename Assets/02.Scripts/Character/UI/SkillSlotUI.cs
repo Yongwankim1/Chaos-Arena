@@ -10,6 +10,18 @@ public class SkillSlotUI : MonoBehaviour
     [SerializeField]
     private TMP_Text cooldownText;
 
+    [SerializeField]
+    private Image icon;
+
+    public void SetIcon(Sprite sprite)
+    {
+        icon.sprite = sprite;
+        icon.SetNativeSize();
+        RectTransform rect = icon.rectTransform;
+
+        rect.sizeDelta /= 1.5f;
+    }
+
     public void Refresh(float remainTime, float maxTime)
     {
         if (remainTime <= 0f)

@@ -49,7 +49,7 @@ public class PlayerHUD : MonoBehaviour
         _skillQ = player.GetComponent<ISkillQ>();
         _skillE = player.GetComponent<ISkillE>();
         _skillR = player.GetComponent<ISkillR>();
-
+        SetupSkillIcons();
     }
 
     private void Update()
@@ -190,5 +190,13 @@ public class PlayerHUD : MonoBehaviour
         {
             slot.Refresh(active.RemainingDuration, active.Duration);
         }
+    }
+    private void SetupSkillIcons()
+    { 
+        ClassData data = ClassDataManager.GetData(_player.ClassType); 
+        if (data == null) return;
+        qSkillSlot.SetIcon(data.SkillIcons.Q); 
+        eSlot.SetIcon(data.SkillIcons.E); rSlot.SetIcon(data.SkillIcons.R);
+        dashSlot.SetIcon(data.SkillIcons.Dash);
     }
 }
