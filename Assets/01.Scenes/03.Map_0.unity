@@ -65099,8 +65099,7 @@ MonoBehaviour:
   _CurrentRound: 0
   waitingTime: 3
   characterSelectTime: 10
-  preparationTime: 20
-  roundTime: 10
+  roundRuleData: {fileID: 11400000, guid: 98b0b66f8b7810e4a8dbe781f5b83e3a, type: 2}
   characterSelectUI: {fileID: 1180696826}
   _CurrentState: 0
   _StateRemainTime: 0

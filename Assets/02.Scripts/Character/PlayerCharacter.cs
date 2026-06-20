@@ -247,6 +247,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         //GetComponent<Buff>().Init();
         Vector3 oldPosition = transform.position;
 
+        _actionLock?.ClearAll();
+
         CurrentHP = MaxHP;
         CurrentMana = MaxMana;
         IsDead = false;

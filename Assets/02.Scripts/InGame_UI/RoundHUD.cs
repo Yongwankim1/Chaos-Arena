@@ -66,18 +66,26 @@ public class RoundHUD : MonoBehaviour
     {
         RoundManager round = RoundManager.Instance;
 
+        if (round.IsMatchEnded)
+        {
+            roundResultTextPanel.SetActive(false);
+
+            return;
+        }
+
         switch (round.RoundResult)
         {
             case RoundResultType.None:
 
                 roundResultTextPanel.SetActive(false);
+
                 break;
 
             case RoundResultType.BlueWin:
 
                 roundResultTextPanel.SetActive(true);
 
-                roundResultText.text ="喉风评 铰府";
+                roundResultText.text = "喉风评 铰府";
 
                 break;
 
