@@ -11,7 +11,7 @@ public class RoomActionButtonUI : MonoBehaviour
     [SerializeField] private bool allowSinglePlay;
 
     private NetworkRunner runner;
-
+    [SerializeField] private LobbyMapSelector mapSelector;
     private void OnEnable()
     {
         roomActionButton.onClick.AddListener(OnClickRoomActionButton);
@@ -76,7 +76,6 @@ public class RoomActionButtonUI : MonoBehaviour
             roomActionButton.interactable = true;
         }
     }
-
     private void SetButtonImage(bool isHost)
     {
         if (buttonImageUIs == null || buttonImageUIs.Length < 2)
@@ -157,7 +156,7 @@ public class RoomActionButtonUI : MonoBehaviour
         {
             { "isPlaying", true }
         });
-        runner.LoadScene(SceneRef.FromIndex(gameSceneBuildIndex));
+        runner.LoadScene(SceneRef.FromIndex(mapSelector.GetCreateRoomMapIndex() + 1));
     }
 
     private bool CanStartGame()
