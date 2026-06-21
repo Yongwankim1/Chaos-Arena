@@ -44,6 +44,10 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     private AssassinStealth _stealth;
     private Animator _animator;
     private CharacterActionLock _actionLock;
+
+    private float _lastHP;
+    private DamageVignette _damageVignette;
+
     private void Awake()
     {
         _stealth = GetComponent<AssassinStealth>();
@@ -115,28 +119,23 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
     private void LocalInitialize()
     {
-        _classData =
-            ClassDataManager.GetData(
-                ClassType);
+        _classData =ClassDataManager.GetData(ClassType);
 
         ApplyMovementStat();
 
         if (HasStateAuthority)
         {
-            CurrentHP =
-                _classData.maxHP;
+            CurrentHP = _classData.maxHP;
 
-            CurrentMana =
-                _classData.maxMana;
+            CurrentMana = _classData.maxMana;
         }
 
         if (HasInputAuthority)
         {
-            Debug.Log(
-                $"HUD Bind : {ClassType}");
-
             HUDManager.Instance?.BindPlayer(this);
+            _damageVignette = FindFirstObjectByType<DamageVignette>();
         }
+
     }
     public override void Render()
     {
@@ -188,6 +187,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         _lastAttacker = attacker;
 
         CurrentHP = Mathf.Max(0, CurrentHP - damage);
+
+        RPC_PlayDamageVignette();
 
         NotifyEnemyHUD(attacker);
 
@@ -311,5 +312,21 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     public GameObject GetDamageableObject()
     {
         return gameObject;
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayDamageVignette()
+    {
+        if (!HasInputAuthority)
+        {
+            return;
+        }
+
+        if (_damageVignette == null)
+        {
+            return;
+        }
+
+        _damageVignette.TakeDamage();
     }
 }
