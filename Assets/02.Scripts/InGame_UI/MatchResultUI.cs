@@ -29,7 +29,7 @@ public class MatchResultUI : MonoBehaviour
         if (!_counting)
             return;
 
-        _remainTime -= Time.deltaTime;
+        _remainTime -= Time.unscaledDeltaTime;
 
         countdownText.text = $"잠시 후 로비로 이동합니다. (<color=#FF4444>{Mathf.CeilToInt(_remainTime)}</color>초)";
 
