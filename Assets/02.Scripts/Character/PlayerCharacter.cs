@@ -50,6 +50,16 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     private float _lastHP;
     private DamageVignette _damageVignette;
 
+    [Header("Team")]
+    [SerializeField]
+    private Renderer teamRenderer;
+
+    [SerializeField]
+    private Material blueMaterial;
+
+    [SerializeField]
+    private Material redMaterial;
+
     private void Awake()
     {
         _stealth = GetComponent<AssassinStealth>();
@@ -63,6 +73,9 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         {
             Local = this;
         }
+
+        ApplyTeamMaterial();
+
         Debug.Log(
             $"[Player] ObjectState:{Object.HasStateAuthority} ObjectInput:{Object.HasInputAuthority}");
 
@@ -347,5 +360,19 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         }
 
         _damageVignette.TakeDamage();
+    }
+    private void ApplyTeamMaterial()
+    {
+        if (teamRenderer == null)
+            return;
+
+        if (Team == TeamType.Blue)
+        {
+            teamRenderer.material = blueMaterial;
+        }
+        else if (Team == TeamType.Red)
+        {
+            teamRenderer.material = redMaterial;
+        }
     }
 }
