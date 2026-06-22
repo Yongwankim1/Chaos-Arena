@@ -36288,8 +36288,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MageQSkill
   lightingPrefab: {fileID: 5065082053846362233, guid: 383e59d4c68ee7b448985a87a8e5b5f5, type: 3}
   lightingEffectSpawnPoint: {fileID: 5363686509817726517}
-  manaCost: 20
-  cooldown: 5
+  manaCost: 25
+  cooldown: 6
   magicSoket: {fileID: 5291362499529697245}
   orbEffect: {fileID: 3610291427603083779, guid: 6ed07c446edcd004aabff8dde33ec815, type: 3}
   magicCircle: {fileID: 4646414996598350614, guid: 1c5645e10b021c143b0da4191035173d, type: 3}
@@ -36310,7 +36310,7 @@ MonoBehaviour:
   areaEffectPrefab: {fileID: 6360375772678808678, guid: 1531f37129ffe214cb63eecc47b1b60d, type: 3}
   spawnPoint: {fileID: 408715566528550438}
   manaCost: 20
-  cooldown: 5
+  cooldown: 7
 --- !u!114 &2540581439080627284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36325,8 +36325,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   Prefab: {fileID: 5408217184710986422, guid: 7da0cd57a67766142ac56d843cbfe6db, type: 3}
   spawnPoint: {fileID: 1538015521171091897}
-  manaCost: 20
-  cooldown: 5
+  manaCost: 35
+  cooldown: 10
 --- !u!114 &5658246430456117541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36385,7 +36385,7 @@ MonoBehaviour:
   attackPos: {fileID: 5651274045008937097}
   Range: 12
   Radius: 2
-  isDebug: 1
+  isDebug: 0
 --- !u!114 &8342318973026991513
 MonoBehaviour:
   m_ObjectHideFlags: 0
