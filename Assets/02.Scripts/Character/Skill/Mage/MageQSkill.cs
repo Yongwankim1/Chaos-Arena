@@ -142,7 +142,7 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
         }
 
         isOrbMoving = false;
-        orb = Instantiate(orbEffect, magicSoket.position, Quaternion.identity);
+        orb = Instantiate(orbEffect, magicSoket.position, Quaternion.identity,magicSoket);
         orb.Play();
     }
 
