@@ -39,13 +39,7 @@ public class CharacterSelectUI : MonoBehaviour
         mageButton.onClick.AddListener(OnClickMage);
         confirmButton.onClick.AddListener(OnClickConfirm);
     }
-    private void OnDestroy()
-    {
-        if (Instance == this)
-        {
-            Instance = null;
-        }
-    }
+
     private void Update()
     {
         if (RoundManager.Instance == null)
@@ -103,6 +97,10 @@ public class CharacterSelectUI : MonoBehaviour
         assassinButton.onClick.RemoveListener(OnClickAssassin);
         mageButton.onClick.RemoveListener(OnClickMage);
         confirmButton.onClick.RemoveListener(OnClickConfirm);
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 
     private void OnClickAssassin()
