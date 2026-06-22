@@ -50352,7 +50352,7 @@ MonoBehaviour:
   firstHitDamagePercent: 130
   firstHitAttackData:
     SpawnType: 0
-    DamagePercent: 100
+    DamagePercent: 120
     Range: 0
     Radius: 0
     UsePersistentHitbox: 0
@@ -50363,6 +50363,7 @@ MonoBehaviour:
     EffectRotationOffset: {x: 0, y: 0, z: 0}
     HitEffect: {fileID: 0}
     ProjectilePrefab: {fileID: 0}
+    SpawnOnGround: 0
     HitStop: 0.03
     CameraShake: 0.6
     Knockback: 0.2
