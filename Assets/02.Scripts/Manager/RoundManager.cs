@@ -81,7 +81,6 @@ public class RoundManager : NetworkBehaviour
     private bool _roundStartVoicePlayed;
     private Coroutine _nextRoundRoutine;
     private bool _hostDisconnectVictoryShown;
-    private bool _returningLobbyAfterHostDisconnect;
 
     public bool IsMatchEnded
     {
@@ -751,28 +750,7 @@ public class RoundManager : NetworkBehaviour
 
     private void StartReturnLobbyAfterHostDisconnect()
     {
-        if (_returningLobbyAfterHostDisconnect)
-        {
-            return;
-        }
-
-        _returningLobbyAfterHostDisconnect = true;
-
-        StartCoroutine(ReturnLobbyAfterHostDisconnectRoutine());
-    }
-
-    private IEnumerator ReturnLobbyAfterHostDisconnectRoutine()
-    {
-        yield return new WaitForSecondsRealtime(5f);
-
-        NetworkRunner runner = FindFirstObjectByType<NetworkRunner>();
-
-        if (runner != null)
-        {
-            runner.Shutdown();
-        }
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        LobbyReturnAfterDelay.StartReturn(5f, 0);
     }
     private float GetPreparationTime()
     {

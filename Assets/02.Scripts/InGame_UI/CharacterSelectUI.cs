@@ -182,7 +182,7 @@ public class CharacterSelectUI : MonoBehaviour
         }
     }
 
-    private void RefreshCharacterLock()
+    public void RefreshCharacterLock()
     {
         if (PlayerLobbyObject.Local == null || GameBootstrap.Instance == null)
         {

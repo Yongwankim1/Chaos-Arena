@@ -159,6 +159,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     }
     public override void Render()
     {
+        TryApplyTeamMaterial();
+
         if (_isInitialized)
             return;
 
@@ -168,13 +170,6 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (!ClassDataManager.IsLoaded(
                 ClassType))
             return;
-
-        if (!_teamMaterialApplied && Team != TeamType.None)
-        {
-            _teamMaterialApplied = true;
-
-            ApplyTeamMaterial();
-        }
 
         _isInitialized = true;
 
@@ -368,11 +363,24 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
         _damageVignette.TakeDamage();
     }
-    private void ApplyTeamMaterial()
+    private void TryApplyTeamMaterial()
     {
+        if (_teamMaterialApplied)
+            return;
+
+        if (Team == TeamType.None)
+            return;
+
         if (teamRenderer == null)
             return;
 
+        ApplyTeamMaterial();
+
+        _teamMaterialApplied = true;
+    }
+
+    private void ApplyTeamMaterial()
+    {
         if (Team == TeamType.Blue)
         {
             teamRenderer.material = blueMaterial;
