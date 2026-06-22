@@ -390,4 +390,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
             teamRenderer.material = redMaterial;
         }
     }
+    public void SetTeamMarkVisible(bool visible)
+    {
+        if (teamRenderer == null)
+            return;
+
+        teamRenderer.enabled = visible;
+    }
 }
