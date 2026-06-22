@@ -13,6 +13,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     private Animator _animator;
 
     private static readonly int SkillRHash = Animator.StringToHash("SkillR");
+    private static readonly int CancelHash = Animator.StringToHash("Cancel");
 
     private PlayerCharacter _player;
 
@@ -45,6 +46,8 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     }
 
     public TickTimer CooldownTimer => Cooldown;
+
+    private bool isUsingR;
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
@@ -69,7 +72,11 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     {
         if (!HasStateAuthority)
             return;
-
+        if (isUsingR)
+        {
+            CancelR();
+            return;
+        }
         if (_player.IsDead)
             return;
 
@@ -84,7 +91,6 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
 
         RPC_PlaySkillR();
         _controller.SetRotationOnly(true);
-        _actionLock?.Lock(ActionLockType.Move);
         _actionLock?.Lock(ActionLockType.Attack);
         _actionLock?.Lock(ActionLockType.Dash);
     }
@@ -95,7 +101,16 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         _animator.SetTrigger(SkillRHash);
     }
 
+    private void CancelR()
+    {
+        EndLaserEffect();
+        CanMove();
 
+        isUsingR = false;
+
+        // 필요하면 애니메이터도 R 상태에서 빠져나오게 처리
+        _animator.SetTrigger(CancelHash);
+    }
     public void SpawnLaserEffect()
     {
         if (!HasStateAuthority)
