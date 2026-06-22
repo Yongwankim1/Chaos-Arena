@@ -125,6 +125,13 @@ public class WorldHPBar : MonoBehaviour
         if (_owner == null)
             return;
 
+        if (PlayerCharacter.Local == _owner)
+        {
+            canvas.enabled = false;
+
+            return;
+        }
+
         Vector3 viewport =
             _cam.WorldToViewportPoint(
                 _owner.transform.position);
@@ -149,6 +156,15 @@ public class WorldHPBar : MonoBehaviour
 
         if (PlayerCharacter.Local == null)
             return;
+
+        if (PlayerCharacter.Local == _owner)
+        {
+            canvas.enabled = false;
+
+            _initialized = true;
+
+            return;
+        }
 
         if (PlayerCharacter.Local.Team == TeamType.None)
             return;
