@@ -53,12 +53,15 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private RoomActionButtonUI roomActionButtonUI;
     [SerializeField] private RoomExitButtonUI roomExitButtonUI;
     [SerializeField] private RoomInfoView roomInfoView;
+    [SerializeField] private LobbyMapSelector lobbyMapSelector;
+
     void Awake()
     {
         if(nicknameChecker == null) nicknameChecker = GetComponent<UserNickNameChecker>();
         if (roomUserListUI == null) roomUserListUI = FindFirstObjectByType<RoomUserListUI>(FindObjectsInactive.Include);
         if (roomActionButtonUI == null) roomActionButtonUI = FindFirstObjectByType<RoomActionButtonUI>(FindObjectsInactive.Include);
         if (roomInfoView == null) roomInfoView = FindFirstObjectByType<RoomInfoView>(FindObjectsInactive.Include);
+        if (lobbyMapSelector == null) lobbyMapSelector = FindFirstObjectByType<LobbyMapSelector>(FindObjectsInactive.Include);
         roomCreateBtn.interactable = false;
     }
     void OnEnable()
@@ -138,10 +141,13 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
         }
         Dictionary<string, SessionProperty> properties = new Dictionary<string, SessionProperty>();
+        int selectedMapIndex = lobbyMapSelector != null
+            ? lobbyMapSelector.GetCreateRoomMapIndex()
+            : 0;
 
         properties.Add("hostName", UserDataManager.Instance.UserData.UserName);
         properties.Add("isPlaying", false);
-        properties.Add("mapIndex", 0);
+        properties.Add("mapIndex", selectedMapIndex);
 
         if (!string.IsNullOrWhiteSpace(password))
         {

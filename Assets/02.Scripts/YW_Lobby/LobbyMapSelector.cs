@@ -6,9 +6,11 @@ using TMPro;
 
 public class LobbyMapSelector : NetworkBehaviour
 {
+    [SerializeField] private TMP_Dropdown createRoomPanelDropdown;
     [SerializeField] private TMP_Dropdown mapDropdown;
     [SerializeField] private Image mapImage;
     [SerializeField] private Sprite[] mapSprites;
+    [SerializeField] private Button createRoomYesBtn;
 
     private const string MapIndexPropertyKey = "mapIndex";
 
@@ -18,20 +20,33 @@ public class LobbyMapSelector : NetworkBehaviour
     [Networked, OnChangedRender(nameof(OnMapChanged))]
     private int MapIndex { get; set; }
 
+
     private void OnEnable()
     {
         if (mapDropdown != null)
             mapDropdown.onValueChanged.AddListener(OnDropdownChanged);
 
+        if (createRoomPanelDropdown != null)
+            createRoomPanelDropdown.onValueChanged.AddListener(ApplyMap);
+
+        if (createRoomYesBtn != null)
+            createRoomYesBtn.onClick.AddListener(OnCreateRoomYesClicked);
+
         FindRunnerIfNeeded();
         RefreshInteractable();
-        ApplyMap(GetSessionMapIndex(mapDropdown != null ? mapDropdown.value : 0));
+        ApplyMap(GetSessionMapIndex(GetCreateRoomMapIndex()));
     }
 
     private void OnDisable()
     {
         if (mapDropdown != null)
             mapDropdown.onValueChanged.RemoveListener(OnDropdownChanged);
+
+        if (createRoomPanelDropdown != null)
+            createRoomPanelDropdown.onValueChanged.RemoveListener(ApplyMap);
+
+        if (createRoomYesBtn != null)
+            createRoomYesBtn.onClick.RemoveListener(OnCreateRoomYesClicked);
     }
 
     private void Update()
@@ -49,7 +64,7 @@ public class LobbyMapSelector : NetworkBehaviour
     {
         runner = Runner;
         RefreshInteractable();
-        ApplyMap(MapIndex);
+        ApplyMap(GetSessionMapIndex(MapIndex));
     }
 
     private void OnDropdownChanged(int index)
@@ -85,6 +100,22 @@ public class LobbyMapSelector : NetworkBehaviour
     private void OnMapChanged()
     {
         ApplyMap(MapIndex);
+    }
+
+    public int GetCreateRoomMapIndex()
+    {
+        if (createRoomPanelDropdown != null)
+            return createRoomPanelDropdown.value;
+
+        if (mapDropdown != null)
+            return mapDropdown.value;
+
+        return 0;
+    }
+
+    private void OnCreateRoomYesClicked()
+    {
+        ApplyMap(GetCreateRoomMapIndex());
     }
 
     private void ApplyMap(int index)
