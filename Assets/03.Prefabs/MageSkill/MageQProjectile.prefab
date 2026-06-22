@@ -49,11 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 031381de2f8f33a4392cc460ccef844e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  stepDistance: 2
-  maxTravelDistance: 10
+  stepDistance: 3
+  maxTravelDistance: 15
   explosionDelay: 0.2
   explosionRadius: 2.4
-  damage: 30
+  damage: 20
   targetMask:
     serializedVersion: 2
     m_Bits: 192
