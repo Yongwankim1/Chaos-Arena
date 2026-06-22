@@ -106,6 +106,12 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
                 }
 
                 _buff?.SetEffectVisible(false);
+
+                _player.SetTeamMarkVisible(false);
+            }
+            else
+            {
+                _player.SetTeamMarkVisible(true);
             }
         }
 
@@ -124,9 +130,10 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
 
         _buff?.SetEffectVisible(true);
 
+        _player.SetTeamMarkVisible(true);
+
         _visual?.SetStealth(false);
 
         _ultimate?.RefreshUltimateEffectVisibility();
     }
-
 }
