@@ -54,7 +54,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack1:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 8f69d656b41db0d4e82bab8c0718d471
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -64,7 +64,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack2:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: c4ca9e94c7e548f4281821c384d31ffc
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -74,7 +74,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack3:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: bb46fd77ad24e7b41bfc36319b957d16
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -84,7 +84,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack4:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: d7c1179ae4773c940a13cdda05c147f7
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -94,7 +94,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack5:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 1c96635af742dfe4a802d0e9df5fb72b
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
