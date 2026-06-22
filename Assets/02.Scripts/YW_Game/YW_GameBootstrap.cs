@@ -494,25 +494,86 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
         SpawnManager.Instance.ResetSpawnIndex();
 
-        foreach (var pair in _playerLobbies)
+        foreach (TeamType team in new[] { TeamType.Blue, TeamType.Red })
         {
-            PlayerRef player = pair.Key;
+            List<CharacterClassType> usedClasses =
+                new List<CharacterClassType>();
 
-            PlayerLobbyObject lobby = pair.Value;
-
-            if (lobby.SelectedClass != CharacterClassType.None)
+            foreach (var pair in _playerLobbies)
             {
-                continue;
+                PlayerRef player = pair.Key;
+
+                PlayerLobbyObject lobby = pair.Value;
+
+                if (GetPlayerTeam(player) != team)
+                    continue;
+
+                if (lobby.SelectedClass == CharacterClassType.None)
+                    continue;
+
+                usedClasses.Add(lobby.SelectedClass);
             }
 
-            lobby.SelectedClass = CharacterClassType.Assassin;
+            foreach (var pair in _playerLobbies)
+            {
+                PlayerRef player = pair.Key;
 
-            CharacterSelectUI.Instance.OnPlayerUI();
+                PlayerLobbyObject lobby = pair.Value;
 
-            SpawnSelectedCharacter(player);
+                if (GetPlayerTeam(player) != team)
+                    continue;
+
+                if (lobby.SelectedClass != CharacterClassType.None)
+                    continue;
+
+                CharacterClassType autoClass =
+                    GetAutoCharacter(usedClasses);
+
+                lobby.SelectedClass = autoClass;
+
+                usedClasses.Add(autoClass);
+            }
+        }
+
+        foreach (var pair in _playerLobbies)
+        {
+            SpawnSelectedCharacter(pair.Key);
         }
 
         RPC_CloseCharacterSelectUI();
+    }
+    private CharacterClassType GetAutoCharacter(List<CharacterClassType> usedClasses)
+    {
+        List<CharacterClassType> allClasses =
+            new()
+            {
+            CharacterClassType.Assassin,
+            CharacterClassType.Mage
+            };
+
+        List<CharacterClassType> available =
+            new();
+
+        foreach (CharacterClassType classType in allClasses)
+        {
+            if (!usedClasses.Contains(classType))
+            {
+                available.Add(classType);
+            }
+        }
+
+        if (available.Count > 0)
+        {
+            int index =
+                Random.Range(0, available.Count);
+
+            return available[index];
+        }
+
+        int randomIndex =
+            Random.Range(0, allClasses.Count);
+
+        return allClasses[randomIndex];
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
