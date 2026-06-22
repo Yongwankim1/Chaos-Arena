@@ -25,6 +25,18 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     private readonly Dictionary<PlayerRef, CharacterClassType>_selectedCharacters = new Dictionary<PlayerRef, CharacterClassType>();
     private readonly Dictionary<PlayerRef, PlayerLobbyObject> _playerLobbies = new Dictionary<PlayerRef, PlayerLobbyObject>();
     private readonly Dictionary<PlayerRef, TeamType> _playerTeams = new Dictionary<PlayerRef, TeamType>();
+    private readonly Dictionary<PlayerRef, int> _spawnSlotIndex = new Dictionary<PlayerRef, int>();
+    private readonly List<PlayerRef> _bluePlayers = new();
+    private readonly List<PlayerRef> _redPlayers = new();
+
+    public IReadOnlyDictionary<PlayerRef, PlayerLobbyObject> PlayerLobbies
+    {
+        get
+        {
+            return _playerLobbies;
+        }
+    }
+
     public override async void Spawned()
     {
         Instance = this;
@@ -54,8 +66,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         Debug.Log("ClassData Load Complete");
     }
     // 씬 로딩 완료 후 기존 플레이어 생성
-    public void OnSceneLoadDone(
-     NetworkRunner runner)
+    public void OnSceneLoadDone(NetworkRunner runner)
     {
         if (!runner.IsServer)
             return;
@@ -82,93 +93,160 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             Debug.Log(
                 $"Lobby Object Spawned : {player.PlayerId}");
         }
+       
     }
     public void AssignTeams()
     {
+        _bluePlayers.Clear();
+
+        _redPlayers.Clear();
+
         _playerTeams.Clear();
 
-        List<PlayerRef> players =
-            new List<PlayerRef>(
-                Runner.ActivePlayers);
+        _spawnSlotIndex.Clear();
 
-        if (players.Count < 2)
-            return;
+        List<PlayerRef> randomPlayers =
+            new List<PlayerRef>();
 
-        int randomIndex =
-            Random.Range(
-                0,
-                players.Count);
+        int maxTeamCount =
+            ((int)RoomSessionData.MatchType) / 2;
 
-        PlayerRef bluePlayer =
-            players[randomIndex];
+        foreach (PlayerRef player in Runner.ActivePlayers)
+        {
+            if (!RoomSessionData.TeamSelections.TryGetValue(
+                    player.PlayerId,
+                    out TeamSelectType teamSelect))
+            {
+                teamSelect = TeamSelectType.Random;
+            }
 
-        PlayerRef redPlayer =
-            players.Find(
-                p => p != bluePlayer);
+            switch (teamSelect)
+            {
+                case TeamSelectType.Blue:
 
-        _playerTeams.Add(
-            bluePlayer,
-            TeamType.Blue);
+                    if (_bluePlayers.Count < maxTeamCount)
+                    {
+                        _bluePlayers.Add(player);
+                    }
+                    else
+                    {
+                        randomPlayers.Add(player);
+                    }
 
-        _playerTeams.Add(
-            redPlayer,
-            TeamType.Red);
+                    break;
+
+                case TeamSelectType.Red:
+
+                    if (_redPlayers.Count < maxTeamCount)
+                    {
+                        _redPlayers.Add(player);
+                    }
+                    else
+                    {
+                        randomPlayers.Add(player);
+                    }
+
+                    break;
+
+                default:
+
+                    randomPlayers.Add(player);
+
+                    break;
+            }
+        }
+
+        while (randomPlayers.Count > 0)
+        {
+            PlayerRef player =
+                randomPlayers[0];
+
+            randomPlayers.RemoveAt(0);
+
+            if (_bluePlayers.Count < maxTeamCount)
+            {
+                _bluePlayers.Add(player);
+
+                continue;
+            }
+
+            if (_redPlayers.Count < maxTeamCount)
+            {
+                _redPlayers.Add(player);
+
+                continue;
+            }
+        }
+
+        for (int i = 0; i < _bluePlayers.Count; i++)
+        {
+            PlayerRef player =
+                _bluePlayers[i];
+
+            _playerTeams[player] =
+                TeamType.Blue;
+
+            _spawnSlotIndex[player] =
+                i;
+
+            Debug.Log(
+                $"Blue : {player.PlayerId} Slot : {i}");
+        }
+
+        for (int i = 0; i < _redPlayers.Count; i++)
+        {
+            PlayerRef player =
+                _redPlayers[i];
+
+            _playerTeams[player] =
+                TeamType.Red;
+
+            _spawnSlotIndex[player] =
+                i;
+
+            Debug.Log(
+                $"Red : {player.PlayerId} Slot : {i}");
+        }
 
         Debug.Log(
-            $"Blue : {bluePlayer.PlayerId}");
+            $"Blue Count : {_bluePlayers.Count}");
 
         Debug.Log(
-            $"Red : {redPlayer.PlayerId}");
+            $"Red Count : {_redPlayers.Count}");
+
+        Debug.Log(
+            $"Team Assigned Count : {_playerTeams.Count}");
     }
-    private void SpawnPlayer(
-     NetworkRunner runner,
-     PlayerRef player,
-     CharacterClassType classType)
+    private void SpawnPlayer(NetworkRunner runner, PlayerRef player, CharacterClassType classType)
     {
         if (_spawnedPlayers.ContainsKey(player))
             return;
 
-        if (!_playerTeams.TryGetValue(
-                player,
-                out TeamType team))
+        if (!_playerTeams.TryGetValue(player, out TeamType team))
         {
-            Debug.LogError(
-                $"Team Not Assigned : {player.PlayerId}");
+            Debug.LogError($"Team Not Assigned : {player.PlayerId}");
 
             return;
         }
 
-        Vector3 spawnPosition =
-            SpawnManager.Instance
-                .GetSpawnPosition(
-                    team);
+        int slot = GetSpawnSlot(player);
 
-        NetworkObject prefab =
-            GetCharacterPrefab(
-                classType);
+        Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(team,slot);
 
-        NetworkObject playerObject =
-            runner.Spawn(
-                prefab,
-                spawnPosition,
-                Quaternion.identity,
-                player);
+        NetworkObject prefab =GetCharacterPrefab(classType);
 
-        PlayerCharacter playerCharacter =
-            playerObject.GetComponent<PlayerCharacter>();
+        NetworkObject playerObject = runner.Spawn(prefab,spawnPosition,Quaternion.identity, player);
+
+        PlayerCharacter playerCharacter = playerObject.GetComponent<PlayerCharacter>();
 
         if (playerCharacter != null)
         {
-            playerCharacter.ClassType =
-                classType;
+            playerCharacter.ClassType = classType;
 
-            playerCharacter.Team =
-                team;
+            playerCharacter.Team = team;
         }
 
-        _spawnedPlayers.Add(
-            player,
-            playerObject);
+        _spawnedPlayers.Add(player, playerObject);
 
         Debug.Log(
             $"Spawned {playerObject.name} Team:{team}");
@@ -186,10 +264,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             return;
         }
 
-        SpawnPlayer(
-            Runner,
-            player,
-            lobby.SelectedClass);
+        SpawnPlayer(Runner,player,lobby.SelectedClass);
     }
 
     private NetworkObject GetCharacterPrefab(
@@ -208,9 +283,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         }
     }
 
-    public void OnPlayerJoined(
-      NetworkRunner runner,
-      PlayerRef player)
+    public void OnPlayerJoined(NetworkRunner runner,PlayerRef player)
     {
         if (!runner.IsServer)
             return;
@@ -232,26 +305,28 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         Debug.Log($"Lobby Object Spawned : {player.PlayerId}");
          
     }
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    public void OnPlayerLeft(NetworkRunner runner,PlayerRef player)
     {
         if (!runner.IsServer)
             return;
 
-        if (_playerLobbies.TryGetValue(player, out PlayerLobbyObject lobby))
+        TeamType loserTeam = GetPlayerTeam(player);
+
+        if (_playerLobbies.TryGetValue(player,out PlayerLobbyObject lobby))
         {
             runner.Despawn(lobby.Object);
 
             _playerLobbies.Remove(player);
         }
 
-        if (_spawnedPlayers.TryGetValue(player, out var playerObject))
+        if (_spawnedPlayers.TryGetValue(player,out var playerObject))
         {
             runner.Despawn(playerObject);
 
             _spawnedPlayers.Remove(player);
         }
 
-        RoundManager.Instance?.OnPlayerDisconnected();
+        RoundManager.Instance?.OnPlayerDisconnected(loserTeam);
     }
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
@@ -368,7 +443,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             return;
         }
 
-        RoundManager.Instance.ShowHostDisconnectVictory();
+       RoundManager.Instance.ShowHostDisconnectResult();
     }
 
     public void OnObjectEnterAOI(
@@ -389,6 +464,8 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     {
         if (!Runner.IsServer)
             return;
+
+        SpawnManager.Instance.ResetSpawnIndex();
 
         foreach (var pair in _playerLobbies)
         {
@@ -433,5 +510,63 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         }
 
         return TeamType.None;
+    }
+
+    public int GetSpawnSlot(PlayerRef player)
+    {
+        if (_spawnSlotIndex.TryGetValue(player, out int slot))
+        {
+            return slot;
+        }
+
+        return 0;
+    }
+
+    public bool IsCharacterUsedInTeam(CharacterClassType classType,TeamType team)
+    {
+        foreach (var pair in _playerLobbies)
+        {
+            PlayerRef player = pair.Key;
+
+            PlayerLobbyObject lobby = pair.Value;
+
+            if (lobby.SelectedClass != classType)
+                continue;
+
+            if (GetPlayerTeam(player) != team)
+                continue;
+            Debug.Log($"Check : {player.PlayerId} " +$"Class:{lobby.SelectedClass} " +$"Team:{GetPlayerTeam(player)}");
+            return true;
+        }
+
+        return false;
+    }
+    public bool IsCharacterUsedInTeam(CharacterClassType classType,TeamType team,PlayerRef exceptPlayer)
+    {
+        foreach (var pair in _playerLobbies)
+        {
+            PlayerRef player =pair.Key;
+
+            if (player == exceptPlayer)
+            {
+                continue;
+            }
+
+            PlayerLobbyObject lobby =pair.Value;
+
+            if (lobby.SelectedClass != classType)
+            {
+                continue;
+            }
+
+            if (GetPlayerTeam(player) != team)
+            {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

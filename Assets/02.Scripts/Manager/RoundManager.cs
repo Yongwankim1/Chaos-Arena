@@ -2,6 +2,7 @@ using Fusion;
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using static Unity.Collections.Unicode;
 
 public class RoundManager : NetworkBehaviour
 {
@@ -165,6 +166,11 @@ public class RoundManager : NetworkBehaviour
     private void StartCharacterSelect()
     {
         GameBootstrap.Instance.AssignTeams();
+
+        if (Runner.IsServer)
+        {
+            RoomSessionData.HostTeam =GameBootstrap.Instance.GetPlayerTeam(Runner.LocalPlayer);
+        }
 
         RPC_ShowCharacterSelect();
 
@@ -433,7 +439,9 @@ public class RoundManager : NetworkBehaviour
 
         foreach (PlayerCharacter player in players)
         {
-            Vector3 spawnPosition =SpawnManager.Instance.GetSpawnPosition(player.Team);
+            int slot = GameBootstrap.Instance.GetSpawnSlot(player.Object.InputAuthority);
+
+            Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team,slot);
 
             player.Respawn(spawnPosition);
         }
@@ -504,7 +512,9 @@ public class RoundManager : NetworkBehaviour
             yield return new WaitForSeconds(respawnTime);
         }
 
-        Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team);
+        int slot = GameBootstrap.Instance.GetSpawnSlot(player.Object.InputAuthority);
+
+        Vector3 spawnPosition = SpawnManager.Instance.GetSpawnPosition(player.Team,slot);
 
         player.Respawn(spawnPosition);
     }
@@ -599,7 +609,39 @@ public class RoundManager : NetworkBehaviour
         UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
-    public void OnPlayerDisconnected()
+    //public void OnPlayerDisconnected()
+    //{
+    //    if (!HasStateAuthority)
+    //        return;
+
+    //    if (MatchEnded)
+    //        return;
+
+    //    if (Runner.ActivePlayers.Count() != 1)
+    //        return;
+
+    //    PlayerRef remainPlayer = Runner.ActivePlayers.First();
+
+    //    TeamType winner = GameBootstrap.Instance.GetPlayerTeam(remainPlayer);
+
+    //    if (winner == TeamType.None)
+    //        return;
+
+    //    BlueRoundWin = 0;
+    //    RedRoundWin = 0;
+
+    //    if (winner == TeamType.Blue)
+    //    {
+    //        BlueRoundWin = roundsToWinMatch;
+    //    }
+    //    else
+    //    {
+    //        RedRoundWin = roundsToWinMatch;
+    //    }
+
+    //    EndMatch();
+    //}
+    public void OnPlayerDisconnected(TeamType loserTeam)
     {
         if (!HasStateAuthority)
             return;
@@ -607,26 +649,22 @@ public class RoundManager : NetworkBehaviour
         if (MatchEnded)
             return;
 
-        if (Runner.ActivePlayers.Count() != 1)
+        if (loserTeam == TeamType.None)
             return;
 
-        PlayerRef remainPlayer = Runner.ActivePlayers.First();
+        Debug.Log($"Player Left - {loserTeam} Team Lose");
 
-        TeamType winner = GameBootstrap.Instance.GetPlayerTeam(remainPlayer);
-
-        if (winner == TeamType.None)
-            return;
-
-        BlueRoundWin = 0;
-        RedRoundWin = 0;
-
-        if (winner == TeamType.Blue)
+        if (loserTeam == TeamType.Blue)
         {
-            BlueRoundWin = roundsToWinMatch;
+            BlueRoundWin = 0;
+
+            RedRoundWin = roundsToWinMatch;
         }
         else
         {
-            RedRoundWin = roundsToWinMatch;
+            RedRoundWin = 0;
+
+            BlueRoundWin = roundsToWinMatch;
         }
 
         EndMatch();
@@ -645,9 +683,8 @@ public class RoundManager : NetworkBehaviour
         SoundManager.Instance.PlayVoice(soundLibrary.Narration.FiveSec);
     }
 
-    public void ShowHostDisconnectVictory()
+    public void ShowHostDisconnectResult()
     {
-
         if (_hostDisconnectVictoryShown)
         {
             return;
@@ -665,15 +702,41 @@ public class RoundManager : NetworkBehaviour
         if (_nextRoundRoutine != null)
         {
             StopCoroutine(_nextRoundRoutine);
+
             _nextRoundRoutine = null;
         }
 
         Cursor.lockState = CursorLockMode.None;
+
         Cursor.visible = true;
 
-        SoundManager.Instance.PlayVoice(soundLibrary.Narration.Victory);
+        PlayerCharacter localPlayer = GetLocalPlayer();
 
-        MatchResultUI.Instance.Show("½Â¸®",5f,true);
+        if (localPlayer == null)
+        {
+            return;
+        }
+
+        bool isWinner = localPlayer.Team != RoomSessionData.HostTeam;
+
+        if (isWinner)
+        {
+            SoundManager.Instance.PlayVoice(soundLibrary.Narration.Victory);
+
+            MatchResultUI.Instance.Show(
+                "½Â¸®",
+                5f,
+                true);
+        }
+        else
+        {
+            SoundManager.Instance.PlayVoice(soundLibrary.Narration.Defeat);
+
+            MatchResultUI.Instance.Show(
+                "ÆÐ¹è",
+                5f,
+                true);
+        }
     }
 
     private float GetPreparationTime()

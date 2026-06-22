@@ -308,6 +308,16 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             if (damageable == null)
                 continue;
 
+            PlayerCharacter targetPlayer =damageable.GetDamageableObject().GetComponent<PlayerCharacter>();
+
+            if (targetPlayer != null)
+            {
+                if (targetPlayer.Team ==_playerCharacter.Team)
+                {
+                    continue;
+                }
+            }
+
             if (damagedTargets.Contains(damageable))
                 continue;
 
@@ -565,14 +575,9 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         PlayAttack();
     }
-    public void SpawnShadowAttack(
-    AttackData data,
-    float damageMultiplier)
+    public void SpawnShadowAttack(AttackData data,float damageMultiplier)
     {
-        Vector3 center =
-            attackSpawnPoint.position +
-            attackSpawnPoint.forward *
-            (data.Range * 0.5f);
+        Vector3 center = attackSpawnPoint.position +attackSpawnPoint.forward *(data.Range * 0.5f);
 
         Collider[] hits =
             Physics.OverlapBox(
@@ -597,6 +602,16 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
             if (damageable == null)
                 continue;
+
+            PlayerCharacter targetPlayer = damageable.GetDamageableObject().GetComponent<PlayerCharacter>();
+
+            if (targetPlayer != null)
+            {
+                if (targetPlayer.Team == _playerCharacter.Team)
+                {
+                    continue;
+                }
+            }
 
             if (damagedTargets.Contains(
                 damageable))

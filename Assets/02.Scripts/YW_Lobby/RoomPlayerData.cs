@@ -8,6 +8,9 @@ public class RoomPlayerData : NetworkBehaviour
     [Networked] public NetworkString<_32> NickName { get; set; }
     [Networked] public NetworkBool IsReady { get; set; }
 
+    [Networked]
+    public TeamSelectType TeamSelect { get; set; } //H
+
     public override void Spawned()
     {
         if (!Object.HasInputAuthority)
@@ -21,6 +24,8 @@ public class RoomPlayerData : NetworkBehaviour
         }
 
         RPC_SetNickName(nickName);
+
+        RPC_SetTeam(TeamSelectType.Random);//h
     }
 
     public override void Despawned(NetworkRunner runner, bool hasState)
@@ -68,5 +73,14 @@ public class RoomPlayerData : NetworkBehaviour
     private void RPC_NotifyRoomPlayerDataChanged()
     {
         OnRoomPlayerDataChanged?.Invoke();
+    }
+
+    //h
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void RPC_SetTeam(TeamSelectType team)
+    {
+        TeamSelect = team;
+
+        RPC_NotifyRoomPlayerDataChanged();
     }
 }

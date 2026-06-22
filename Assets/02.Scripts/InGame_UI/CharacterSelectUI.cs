@@ -9,11 +9,17 @@ public class CharacterSelectUI : MonoBehaviour
     [SerializeField] private Button mageButton;
     [SerializeField] private Button confirmButton;
 
+    [SerializeField] private GameObject assassinLockObj;
+
+    [SerializeField] private GameObject mageLockObj;
+
     [Header("UI")]
     [SerializeField] private TMP_Text selectedText;
     [SerializeField] private GameObject[] inGame_UI;
     [SerializeField]
     private TMP_Text timerText;
+
+    private float _lockRefreshTimer;
     public static CharacterSelectUI Instance
     {
         get;
@@ -33,7 +39,7 @@ public class CharacterSelectUI : MonoBehaviour
         mageButton.onClick.AddListener(OnClickMage);
         confirmButton.onClick.AddListener(OnClickConfirm);
     }
-
+   
     private void Update()
     {
         if (RoundManager.Instance == null)
@@ -50,6 +56,15 @@ public class CharacterSelectUI : MonoBehaviour
         if (round.CurrentState == RoundState.CharacterSelect)
         {
             timerText.text = $"{Mathf.CeilToInt(round.StateRemainTime)}";
+        }
+
+        _lockRefreshTimer += Time.deltaTime;
+
+        if (_lockRefreshTimer >= 0.2f)
+        {
+            _lockRefreshTimer = 0f;
+
+            RefreshCharacterLock();
         }
     }
 
@@ -90,6 +105,15 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void OnClickConfirm()
     {
+        TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(PlayerLobbyObject.Local.Object.InputAuthority);
+
+        if (GameBootstrap.Instance.IsCharacterUsedInTeam(SelectedClass,myTeam,PlayerLobbyObject.Local.Object.InputAuthority))
+        {
+            selectedText.text = "같은 팀에서 이미 선택한 캐릭터입니다.";
+
+            return;
+        }
+
         PlayerLobbyObject.Local.RPC_SelectCharacter(SelectedClass);
 
         PlayerLobbyObject.Local.RPC_SetReady();
@@ -97,9 +121,10 @@ public class CharacterSelectUI : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         Cursor.visible = false;
-        OnPlayerUI();
-        gameObject.SetActive(false);
 
+        OnPlayerUI();
+
+        gameObject.SetActive(false);
     }
 
     public void OnPlayerUI()
@@ -114,5 +139,28 @@ public class CharacterSelectUI : MonoBehaviour
                 ui.SetActive(true);
             }
         }
+    }
+
+    private void RefreshCharacterLock()
+    {
+        if (PlayerLobbyObject.Local == null)
+        {
+            return;
+        }
+        Debug.Log("RefreshCharacterLock");
+
+        TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(PlayerLobbyObject.Local.Object.InputAuthority);
+
+        bool assassinUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Assassin,myTeam,PlayerLobbyObject.Local.Object.InputAuthority);
+
+        bool mageUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Mage,myTeam,PlayerLobbyObject.Local.Object.InputAuthority);
+
+        assassinLockObj.SetActive(assassinUsed);
+
+        mageLockObj.SetActive(mageUsed);
+
+        assassinButton.interactable =!assassinUsed;
+
+        mageButton.interactable =!mageUsed;
     }
 }
