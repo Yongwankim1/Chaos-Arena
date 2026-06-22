@@ -48,6 +48,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     public TickTimer CooldownTimer => Cooldown;
 
     private bool isUsingR;
+    private bool cancelRequested;
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
@@ -61,6 +62,14 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     {
         if (!HasStateAuthority)
             return;
+
+        if (_player != null && _player.IsDead)
+        {
+            if (isUsingR || spawnedLaser != null)
+                CancelR(false);
+
+            return;
+        }
 
         if (spawnedLaser == null || spawnPoint == null)
             return;
@@ -88,6 +97,8 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
             return;
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
+        isUsingR = true;
+        cancelRequested = false;
 
         RPC_PlaySkillR();
         _controller.SetRotationOnly(true);
@@ -103,17 +114,36 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
 
     private void CancelR()
     {
+        CancelR(true);
+    }
+
+    private void CancelR(bool playCancelAnimation)
+    {
+        cancelRequested = true;
         EndLaserEffect();
         CanMove();
 
         isUsingR = false;
 
-        // 필요하면 애니메이터도 R 상태에서 빠져나오게 처리
+        if (playCancelAnimation)
+            RPC_PlayCancelR();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayCancelR()
+    {
         _animator.SetTrigger(CancelHash);
     }
+
     public void SpawnLaserEffect()
     {
         if (!HasStateAuthority)
+            return;
+
+        if (Prefab == null || spawnPoint == null)
+            return;
+
+        if (cancelRequested || !isUsingR || (_player != null && _player.IsDead))
             return;
 
         if (spawnedLaser != null)
@@ -137,7 +167,12 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         if (spawnedLaser == null)
             return;
 
-        spawnedLaser.GetComponent<MageLaserAttack>().Destroy();
+        MageLaserAttack laser = spawnedLaser.GetComponent<MageLaserAttack>();
+        if (laser != null)
+            laser.Destroy();
+        else
+            Runner.Despawn(spawnedLaser);
+
         spawnedLaser = null;
     }
 
@@ -150,5 +185,6 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         _actionLock?.Unlock(ActionLockType.Move);
         _actionLock?.Unlock(ActionLockType.Attack);
         _actionLock?.Unlock(ActionLockType.Dash);
+        isUsingR = false;
     }
 }

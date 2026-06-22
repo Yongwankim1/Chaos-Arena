@@ -34213,11 +34213,11 @@ MonoBehaviour:
   lines:
   - {fileID: 120079071264398406}
   - {fileID: 120715582064723712}
-  isDebug: 0
-  attackDistance: 20
+  isDebug: 1
+  attackDistance: 30
   radius: 0.5
-  damage: 7
-  damageInterval: 0.3
+  damage: 3
+  damageInterval: 0.15
   targetMask:
     serializedVersion: 2
     m_Bits: 192
