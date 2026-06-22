@@ -38,7 +38,13 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             return _playerLobbies;
         }
     }
-
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
     public override async void Spawned()
     {
         Instance = this;
@@ -114,8 +120,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         List<PlayerRef> randomPlayers =
             new List<PlayerRef>();
 
-        int maxTeamCount =
-            ((int)RoomSessionData.MatchType) / 2;
+        int maxTeamCount = ((int)RoomSessionData.MatchType) / 2;
 
         foreach (PlayerRef player in Runner.ActivePlayers)
         {

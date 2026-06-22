@@ -39,7 +39,13 @@ public class CharacterSelectUI : MonoBehaviour
         mageButton.onClick.AddListener(OnClickMage);
         confirmButton.onClick.AddListener(OnClickConfirm);
     }
-   
+    private void OnDestroy()
+    {
+        if (Instance == this)
+        {
+            Instance = null;
+        }
+    }
     private void Update()
     {
         if (RoundManager.Instance == null)
@@ -101,15 +107,15 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void OnClickAssassin()
     {
-        TrySelectClass(CharacterClassType.Assassin,"어쎄신 선택");
+        TrySelectClass(CharacterClassType.Assassin, "어쎄신 선택");
     }
 
     private void OnClickMage()
     {
-        TrySelectClass(CharacterClassType.Mage,"마법사 선택");
+        TrySelectClass(CharacterClassType.Mage, "마법사 선택");
     }
 
-    private void TrySelectClass(CharacterClassType classType,string message)
+    private void TrySelectClass(CharacterClassType classType, string message)
     {
         if (IsClassLockedForLocalTeam(classType))
         {
@@ -193,9 +199,9 @@ public class CharacterSelectUI : MonoBehaviour
 
         TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(PlayerLobbyObject.Local.Object.InputAuthority);
 
-        bool assassinUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Assassin,myTeam,PlayerLobbyObject.Local.Object.InputAuthority);
+        bool assassinUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Assassin, myTeam, PlayerLobbyObject.Local.Object.InputAuthority);
 
-        bool mageUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Mage,myTeam,PlayerLobbyObject.Local.Object.InputAuthority);
+        bool mageUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Mage, myTeam, PlayerLobbyObject.Local.Object.InputAuthority);
 
         assassinLockObj.SetActive(assassinUsed);
 
@@ -245,6 +251,6 @@ public class CharacterSelectUI : MonoBehaviour
 
         TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(PlayerLobbyObject.Local.Object.InputAuthority);
 
-        return GameBootstrap.Instance.IsCharacterUsedInTeam(classType,myTeam,PlayerLobbyObject.Local.Object.InputAuthority);
+        return GameBootstrap.Instance.IsCharacterUsedInTeam(classType, myTeam, PlayerLobbyObject.Local.Object.InputAuthority);
     }
 }
