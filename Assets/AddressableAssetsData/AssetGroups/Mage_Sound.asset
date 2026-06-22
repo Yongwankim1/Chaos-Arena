@@ -14,7 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Mage_Sound
   m_GUID: 4a6ddb31337d55544b0cd9459278d96b
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 1c96635af742dfe4a802d0e9df5fb72b
+    m_Address: Assets/07.Sounds/Mage/Attack5.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8f69d656b41db0d4e82bab8c0718d471
+    m_Address: Assets/07.Sounds/Mage/Attack1.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bb46fd77ad24e7b41bfc36319b957d16
+    m_Address: Assets/07.Sounds/Mage/Attack03.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c4ca9e94c7e548f4281821c384d31ffc
+    m_Address: Assets/07.Sounds/Mage/Attack2.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d7c1179ae4773c940a13cdda05c147f7
+    m_Address: Assets/07.Sounds/Mage/Attack4.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1d4e407a6e0885d4bbf0c0e96ae37184, type: 2}
   m_SchemaSet:
