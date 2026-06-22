@@ -1,4 +1,5 @@
 using Fusion;
+using Unity.AppUI.UI;
 using UnityEngine;
 
 public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkillCooldown
@@ -7,7 +8,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
     [SerializeField] private float cooldown = 15f;
     [SerializeField]
     private float manaCost = 30f;
-
+    private WorldHPBar _hpBar;
     [SerializeField] private ParticleSystem stealthStartEffect;
     [SerializeField] private ParticleSystem stealthEndEffect;
 
@@ -34,6 +35,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
         _buff = GetComponent<Buff>();
         _renderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
         _ultimate = GetComponent<AssassinUltimate>();
+        _hpBar = GetComponentInChildren<WorldHPBar>(true);
     }
 
     public override void FixedUpdateNetwork()
@@ -108,6 +110,8 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
                 _buff?.SetEffectVisible(false);
 
                 _player.SetTeamMarkVisible(false);
+
+                _hpBar?.SetVisible(false);
             }
             else
             {
@@ -131,6 +135,8 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
         _buff?.SetEffectVisible(true);
 
         _player.SetTeamMarkVisible(true);
+
+        _hpBar?.SetVisible(true);
 
         _visual?.SetStealth(false);
 
