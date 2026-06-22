@@ -486,8 +486,6 @@ public class RoundManager : NetworkBehaviour
 
         RPC_ShowMatchResult(result);
 
-        StartCoroutine(ReturnLobbyRoutine());
-
         RPC_PlayMatchResultVoice(winner);
     }
 
@@ -495,6 +493,8 @@ public class RoundManager : NetworkBehaviour
     private void RPC_ShowMatchResult(string result)
     {
         MatchResultUI.Instance.Show(result, 5f);
+
+        LobbyReturnAfterDelay.StartReturn(5f, 0);
     }
 
     private IEnumerator RespawnRoutine(PlayerCharacter player)
@@ -594,19 +594,6 @@ public class RoundManager : NetworkBehaviour
         }
 
         return null;
-    }
-    private IEnumerator ReturnLobbyRoutine()
-    {
-        yield return new WaitForSeconds(5f);
-
-        NetworkRunner runner =FindFirstObjectByType<NetworkRunner>();
-
-        if (runner == null)
-            yield break;
-
-        runner.Shutdown();
-
-        UnityEngine.SceneManagement.SceneManager.LoadScene(0);
     }
 
     //public void OnPlayerDisconnected()

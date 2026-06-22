@@ -41,11 +41,20 @@ public class LobbyReturnAfterDelay : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(delay);
 
+        _ = ShutdownAndLoadLobby(sceneIndex);
+    }
+
+    private async System.Threading.Tasks.Task ShutdownAndLoadLobby(int sceneIndex)
+    {
         NetworkRunner runner = FindFirstObjectByType<NetworkRunner>();
 
         if (runner != null)
         {
-            runner.Shutdown();
+            await runner.Shutdown(
+                destroyGameObject: true,
+                shutdownReason: ShutdownReason.Ok,
+                forceShutdownProcedure: true
+            );
         }
 
         SceneManager.LoadScene(sceneIndex);

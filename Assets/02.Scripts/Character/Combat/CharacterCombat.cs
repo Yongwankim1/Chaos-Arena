@@ -10,6 +10,11 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     [SerializeField]
     private float comboInputTime = 0.3f;
 
+    [SerializeField]
+    private float attackStateTimeout = 2f;
+
+    private float _attackStateTimer;
+
     private float _debugAttackEndTime;
     private AttackData _debugAttackData;
 
@@ -89,6 +94,18 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             {
                 ResetCombo();
             }
+
+            return;
+        }
+
+        if (IsAttacking)
+        {
+            _attackStateTimer -= Runner.DeltaTime;
+
+            if (_attackStateTimer <= 0f)
+            {
+                ResetCombo();
+            }
         }
     }
 
@@ -153,6 +170,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
     private void PlayAttack()
     {
         CurrentAttackIndex = _comboIndex;
+        _attackStateTimer = attackStateTimeout;
 
         Animator animator =
             GetComponent<Animator>();
@@ -210,6 +228,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _waitingNextCombo = true;
 
         _comboTimer = comboInputTime;
+        _attackStateTimer = 0f;
     }
 
     private void ResetCombo()
@@ -221,6 +240,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _comboIndex = 0;
         _waitingNextCombo = false;
         _comboTimer = 0f;
+        _attackStateTimer = 0f;
 
         _animator.SetInteger(ComboIndexHash, 0);
     }
@@ -557,6 +577,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _comboIndex = 0;
         _waitingNextCombo = false;
         _comboTimer = 0f;
+        _attackStateTimer = 0f;
 
         AttackMoveRemain = 0f;
 
@@ -724,6 +745,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _comboIndex = 0;
         _waitingNextCombo = false;
         _comboTimer = 0f;
+        _attackStateTimer = 0f;
         CurrentAttackIndex = 0;
         AttackMoveRemain = 0f;
 

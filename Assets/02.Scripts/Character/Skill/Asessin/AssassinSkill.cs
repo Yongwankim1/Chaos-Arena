@@ -25,12 +25,21 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
     [SerializeField]
     private float cooldown = 5f;
 
+    [SerializeField]
+    private float actionLockTimeout = 1.2f;
+
     public TickTimer CooldownTimer => Cooldown;
 
     public float CooldownDuration => cooldown;
 
     [Networked]
     public TickTimer Cooldown { get; set; }
+
+    [Networked]
+    private TickTimer ActionLockTimer { get; set; }
+
+    [Networked]
+    private NetworkBool IsActionLocked { get; set; }
 
     private AssassinStealth _stealth;
     private CharacterActionLock _actionLock;
@@ -57,6 +66,20 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
         _actionLock = GetComponent<CharacterActionLock>();
     }
 
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (!IsActionLocked)
+            return;
+
+        if (!ActionLockTimer.Expired(Runner))
+            return;
+
+        ReleaseActionLock();
+    }
+
     public void UseQ()
     {
         if (!HasStateAuthority)
@@ -77,6 +100,8 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
 
         _actionLock?.Lock(ActionLockType.Attack);
         _actionLock?.Lock(ActionLockType.Dash);
+        IsActionLocked = true;
+        ActionLockTimer = TickTimer.CreateFromSeconds(Runner, actionLockTimeout);
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
 
@@ -103,20 +128,36 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
             prefab = _ultimate.ShadowShurikenPrefab;
         }
 
-        Runner.Spawn(
-            prefab,
-            shurikenSpawnPoint.position,
-            Quaternion.LookRotation(transform.forward),
-            Object.InputAuthority,
-            (runner, obj) =>
-            {
-                obj.GetComponent<NetworkShuriken>()
-                    .Initialize(
-                        GetComponent<IAttacker>(),
-                        transform.forward);
-            });
+        if (prefab != null && shurikenSpawnPoint != null)
+        {
+            Runner.Spawn(
+                prefab,
+                shurikenSpawnPoint.position,
+                Quaternion.LookRotation(transform.forward),
+                Object.InputAuthority,
+                (runner, obj) =>
+                {
+                    obj.GetComponent<NetworkShuriken>()
+                        .Initialize(
+                            GetComponent<IAttacker>(),
+                            transform.forward);
+                });
+        }
+
+        ReleaseActionLock();
+    }
+
+    private void ReleaseActionLock()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (!IsActionLocked)
+            return;
 
         _actionLock?.Unlock(ActionLockType.Attack);
         _actionLock?.Unlock(ActionLockType.Dash);
+        IsActionLocked = false;
+        ActionLockTimer = TickTimer.None;
     }
 }

@@ -40,7 +40,7 @@ public class MatchResultUI : MonoBehaviour
 
         if (_forceReturnLobby)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            LobbyReturnAfterDelay.StartReturn(0f, 0);
         }
     }
 
