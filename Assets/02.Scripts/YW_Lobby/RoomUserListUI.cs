@@ -1,3 +1,4 @@
+using Fusion;
 using UnityEngine;
 
 public class RoomUserListUI : MonoBehaviour
@@ -22,17 +23,37 @@ public class RoomUserListUI : MonoBehaviour
 
         Clear();
 
-        RoomPlayerData[] players =
-            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+        RoomPlayerData[] players = FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
 
         foreach (RoomPlayerData player in players)
         {
-            if (!TryReadPlayerData(player, out string nickName, out bool isReady))
+            if (player == null)
+            {
                 continue;
+            }
 
-            UserInfo userInfo = Instantiate(userInfoPrefab, userInfoParent);
-            userInfo.Init(nickName, isReady);
+            if (player.Object == null)
+            {
+                continue;
+            }
+
+            if (!player.Object.IsValid)
+            {
+                continue;
+            }
+
+            UserInfo userInfo =Instantiate(userInfoPrefab, userInfoParent);
+
+            userInfo.Init(player);
         }
+        //foreach (RoomPlayerData player in players)
+        //{
+        //    if (!TryReadPlayerData(player, out string nickName, out bool isReady))
+        //        continue;
+
+        //    UserInfo userInfo = Instantiate(userInfoPrefab, userInfoParent);
+        //    userInfo.Init(nickName, isReady);
+        //}
     }
 
     public void Clear()
@@ -70,5 +91,85 @@ public class RoomUserListUI : MonoBehaviour
         }
 
         return true;
+    }
+
+    public static int MaxTeamCount
+    {
+        get
+        {
+            LobbyManager lobby = FindFirstObjectByType<LobbyManager>();
+
+            if (lobby == null)
+            {
+                return 1;
+            }
+
+            return lobby.GetMaxTeamCount();
+        }
+    }
+
+    public static int GetBlueCount()
+    {
+
+        int count = 0;
+
+        RoomPlayerData[] players = FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player == null)
+            {
+                continue;
+            }
+
+            if (player.Object == null)
+            {
+                continue;
+            }
+
+            if (!player.Object.IsValid)
+            {
+                continue;
+            }
+
+            if (player.TeamSelect == TeamSelectType.Blue)
+            {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    public static int GetRedCount()
+    {
+        int count = 0;
+
+        RoomPlayerData[] players = FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player == null)
+            {
+                continue;
+            }
+
+            if (player.Object == null)
+            {
+                continue;
+            }
+
+            if (!player.Object.IsValid)
+            {
+                continue;
+            }
+
+            if (player.TeamSelect == TeamSelectType.Red)
+            {
+                count++;
+            }
+        }
+
+        return count;
     }
 }

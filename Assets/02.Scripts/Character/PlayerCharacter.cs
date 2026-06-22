@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHasHealth
 {
+    public static PlayerCharacter Local;
+
     private ClassData _classData;
     [Networked]
     public CharacterClassType ClassType { get; set; }
@@ -56,6 +58,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     public override void Spawned()
     {
         _animator = GetComponent<Animator>();
+
+        if (HasInputAuthority)
+        {
+            Local = this;
+        }
         Debug.Log(
             $"[Player] ObjectState:{Object.HasStateAuthority} ObjectInput:{Object.HasInputAuthority}");
 
@@ -180,13 +187,25 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (!HasStateAuthority)
             return;
 
+        PlayerCharacter attackerPlayer = attacker?.GetAttacker()?.GetComponent<PlayerCharacter>();
+
+        if (attackerPlayer != null)
+        {
+            if (attackerPlayer.Team == Team)
+            {
+                return;
+            }
+        }
+
         _stealth?.ExitStealth();
 
         DelayManaRegen();
 
         _lastAttacker = attacker;
 
-        CurrentHP = Mathf.Max(0, CurrentHP - damage);
+        CurrentHP = Mathf.Max(
+            0,
+            CurrentHP - damage);
 
         RPC_PlayDamageVignette();
 

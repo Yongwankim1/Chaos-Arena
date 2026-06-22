@@ -36,6 +36,8 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private TMP_InputField roomNameIF;
     [SerializeField] private TMP_InputField roomPasswordIF;
 
+    [SerializeField]
+    private TMP_Dropdown matchTypeDropdown;
 
     [Header("Room List")]
     [SerializeField] private Transform roomListParent;
@@ -149,6 +151,10 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         properties.Add("isPlaying", false);
         properties.Add("mapIndex", selectedMapIndex);
 
+        MatchType matchType =(MatchType)(matchTypeDropdown.value == 0 ? 2 :matchTypeDropdown.value == 1 ? 4 : 6); // H
+
+        properties.Add("matchType", matchTypeDropdown.value); // H
+
         if (!string.IsNullOrWhiteSpace(password))
         {
             properties.Add("password", password);
@@ -163,7 +169,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             GameMode = GameMode.Host,
             SessionName = sessionName,
-            PlayerCount = 2,
+            PlayerCount = (int)matchType,
             SessionProperties = properties,
             SceneManager = currentRunner.GetComponent<NetworkSceneManagerDefault>()
         });
@@ -173,6 +179,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             Debug.Log("방 생성 성공: " + sessionName);
 
             EscManager.Instance.ClosePanel();
+            RoomSessionData.MatchType = matchType;
 
             mainLobbyPanel.SetActive(false);
             roomPanel.SetActive(true);
@@ -286,6 +293,18 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
             if (result.Ok)
             {
                 Debug.Log("Joined room: " + selectedSession.Name);
+
+                if (selectedSession.Properties.TryGetValue("matchType", out SessionProperty property))
+                {
+                    int value =(int)property;
+
+                    RoomSessionData.MatchType =
+                        value == 0
+                        ? MatchType.OneVsOne
+                        : value == 1
+                        ? MatchType.TwoVsTwo
+                        : MatchType.ThreeVsThree;
+                }
 
                 mainLobbyPanel.SetActive(false);
                 roomPanel.SetActive(true);
@@ -732,5 +751,36 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         isRecoveringLobby = false;
+    }
+
+    //h
+    public int GetMaxTeamCount()
+    {
+        if (currentRunner == null)
+        {
+            return 1;
+        }
+
+        if (!currentRunner.SessionInfo.Properties.TryGetValue("matchType",out SessionProperty property))
+        {
+            return 1;
+        }
+
+        int matchType =
+            (int)property;
+
+        switch (matchType)
+        {
+            case 0:
+                return 1;
+
+            case 1:
+                return 2;
+
+            case 2:
+                return 3;
+        }
+
+        return 1;
     }
 }

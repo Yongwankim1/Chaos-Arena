@@ -146,6 +146,15 @@ public class RoomActionButtonUI : MonoBehaviour
 
         Debug.Log("게임 시작");
 
+        RoomSessionData.TeamSelections.Clear();
+
+        RoomPlayerData[] players = FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            RoomSessionData.TeamSelections[player.Object.InputAuthority.PlayerId]= player.TeamSelect;
+        }
+
         RoomSessionData.RoomName = runner.SessionInfo.Name;
 
         RoomSessionData.IsHost = runner.IsServer;
@@ -162,9 +171,16 @@ public class RoomActionButtonUI : MonoBehaviour
     private bool CanStartGame()
     {
         if (allowSinglePlay && HasAnyValidPlayer())
+        {
             return true;
+        }
 
-        return AreAllClientsReady();
+        if (!AreAllClientsReady())
+        {
+            return false;
+        }
+
+        return IsTeamBalanced();
     }
 
     private bool HasAnyValidPlayer()
@@ -235,5 +251,54 @@ public class RoomActionButtonUI : MonoBehaviour
         }
 
         return null;
+    }
+    private bool IsTeamBalanced()
+    {
+        int blueCount = 0;
+        int redCount = 0;
+        int randomCount = 0;
+
+        RoomPlayerData[] players =FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player == null)
+            {
+                continue;
+            }
+
+            if (player.Object == null)
+            {
+                continue;
+            }
+
+            if (!player.Object.IsValid)
+            {
+                continue;
+            }
+
+            switch (player.TeamSelect)
+            {
+                case TeamSelectType.Blue:
+                    blueCount++;
+                    break;
+
+                case TeamSelectType.Red:
+                    redCount++;
+                    break;
+
+                default:
+                    randomCount++;
+                    break;
+            }
+        }
+
+        int maxTeamCount =RoomUserListUI.MaxTeamCount;
+
+        int blueNeed =Mathf.Max(0, maxTeamCount - blueCount);
+
+        int redNeed =Mathf.Max(0, maxTeamCount - redCount);
+
+        return randomCount >=blueNeed + redNeed;
     }
 }

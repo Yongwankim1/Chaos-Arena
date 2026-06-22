@@ -94,14 +94,19 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
 
         _visual?.SetStealth(true);
 
-        if (!HasInputAuthority)
-        {
-            foreach (var renderer in _renderers)
-            {
-                renderer.enabled = false;
-            }
+        PlayerCharacter localPlayer = PlayerCharacter.Local;
 
-            _buff?.SetEffectVisible(false);
+        if (localPlayer != null)
+        {
+            if (localPlayer.Team != _player.Team)
+            {
+                foreach (var renderer in _renderers)
+                {
+                    renderer.enabled = false;
+                }
+
+                _buff?.SetEffectVisible(false);
+            }
         }
 
         _ultimate?.RefreshUltimateEffectVisibility();
@@ -117,15 +122,11 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
             renderer.enabled = true;
         }
 
-        if (!HasInputAuthority)
-        {
-            _buff?.SetEffectVisible(true);
-        }
+        _buff?.SetEffectVisible(true);
 
         _visual?.SetStealth(false);
 
         _ultimate?.RefreshUltimateEffectVisibility();
     }
- 
 
 }

@@ -137,6 +137,19 @@ public class NetworkShuriken : NetworkBehaviour
         {
             int damage = Mathf.RoundToInt(player.AttackPower * (firstHitDamagePercent * 0.01f));
 
+
+            PlayerCharacter attackerPlayer = _owner.GetAttacker().GetComponent<PlayerCharacter>();
+
+            PlayerCharacter targetPlayer = damageable.GetDamageableObject().GetComponent<PlayerCharacter>();
+
+            if (attackerPlayer != null && targetPlayer != null)
+            {
+                if (attackerPlayer.Team == targetPlayer.Team)
+                {
+                    return;
+                }
+            }
+
             damageable.TakeDamage(damage, _owner);
 
             if (firstHitAttackData != null)
@@ -190,6 +203,20 @@ public class NetworkShuriken : NetworkBehaviour
 
             if (damageable == null)
                 continue;
+
+            PlayerCharacter attackerPlayer = _owner.GetAttacker().GetComponent<PlayerCharacter>();
+
+            PlayerCharacter targetPlayer = damageable.GetDamageableObject().GetComponent<PlayerCharacter>();
+
+            if (attackerPlayer != null &&targetPlayer != null)
+            {
+                if (attackerPlayer.Team ==targetPlayer.Team)
+                {
+                    continue;
+                }
+            }
+
+          
 
             PlayerCharacter player = _owner.GetAttacker().GetComponent<PlayerCharacter>();
 

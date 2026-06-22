@@ -161,10 +161,18 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
     }
     private bool CanSeeStealthEffect()
     {
-        return _stealth == null
-            || !_stealth.IsStealth
-            || Object.HasInputAuthority;
+        if (_stealth == null)
+            return true;
+
+        if (!_stealth.IsStealth)
+            return true;
+
+        if (PlayerCharacter.Local == null)
+            return false;
+
+        return PlayerCharacter.Local.Team == _player.Team;
     }
+
     public void UseR()
     {
         if (!HasStateAuthority)
@@ -209,10 +217,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_StartUltimate()
     {
-        bool visible =
-            !(_stealth != null &&
-              _stealth.IsStealth &&
-              !HasInputAuthority);
+        bool visible = CanSeeStealthEffect();
 
         if (visible)
         {
@@ -229,10 +234,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_EndUltimate()
     {
-        bool visible =
-            !(_stealth != null &&
-              _stealth.IsStealth &&
-              !HasInputAuthority);
+        bool visible = CanSeeStealthEffect();
 
         if (visible)
         {
@@ -256,19 +258,12 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
         switch (comboIndex)
         {
             case 1:
-                StartCoroutine(
-     ShadowAttackRoutine(
-         comboIndex,
-         data,
-         combo1ShadowEffect));
+                StartCoroutine(ShadowAttackRoutine(comboIndex,data,combo1ShadowEffect));
                 break;
 
             case 2:
             case 3:
-                StartCoroutine(
-    ShadowAttackRoutine(
-        comboIndex,
-        data,
+                StartCoroutine(ShadowAttackRoutine(comboIndex,data,
         combo23ShadowEffect));
                 break;
 
@@ -281,10 +276,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
                 break;
         }
     }
-    private IEnumerator ShadowAttackRoutine(
-     int comboIndex,
-     AttackData data,
-     GameObject effectPrefab)
+    private IEnumerator ShadowAttackRoutine(int comboIndex,AttackData data,GameObject effectPrefab)
     {
         yield return new WaitForSeconds(
             shadowDelay);
@@ -315,27 +307,16 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
             shadowDamageMultiplier);
     }
 
-    private void SpawnDashShadowEffect(
-     GameObject effectPrefab,
-     AttackData data)
+    private void SpawnDashShadowEffect(GameObject effectPrefab,AttackData data)
     {
         if (effectPrefab == null)
             return;
 
-        Vector3 spawnPosition =
-            _combat.AttackSpawnPoint.position +
-            transform.TransformDirection(
-                data.EffectPositionOffset);
+        Vector3 spawnPosition =_combat.AttackSpawnPoint.position +transform.TransformDirection(data.EffectPositionOffset);
 
-        Quaternion spawnRotation =
-            transform.rotation *
-            Quaternion.Euler(
-                data.EffectRotationOffset);
+        Quaternion spawnRotation =transform.rotation *Quaternion.Euler(data.EffectRotationOffset);
 
-        Instantiate(
-            effectPrefab,
-            spawnPosition,
-            spawnRotation);
+        Instantiate(effectPrefab,spawnPosition,spawnRotation);
     }
 
     private void PerformShadowHitBox(
@@ -361,15 +342,23 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
 
         foreach (Collider hit in hits)
         {
-            if (hit.transform.root ==
-                transform.root)
+            if (hit.transform.root == transform.root)
                 continue;
 
-            IDamageable damageable =
-                hit.GetComponentInParent<IDamageable>();
+            IDamageable damageable = hit.GetComponentInParent<IDamageable>();
 
             if (damageable == null)
                 continue;
+
+            PlayerCharacter targetPlayer =damageable.GetDamageableObject().GetComponent<PlayerCharacter>();
+
+            if (targetPlayer != null)
+            {
+                if (targetPlayer.Team == _player.Team)
+                {
+                    continue;
+                }
+            }
 
             if (damagedTargets.Contains(
                 damageable))
@@ -424,10 +413,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
     }
     public void RefreshUltimateEffectVisibility()
     {
-        bool visible =
-            !(_stealth != null &&
-              _stealth.IsStealth &&
-              !HasInputAuthority);
+        bool visible = CanSeeStealthEffect();
 
         if (_smokeRenderers != null)
         {
