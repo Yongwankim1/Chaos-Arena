@@ -114,6 +114,9 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         if (_actionLock != null && !_actionLock.CanAttack)
             return;
 
+        if (_playerCharacter.IsDashing)
+            return;
+
         AssassinDash dash = GetComponent<AssassinDash>();
 
         if (dash != null && !dash.DashAttackTimer.ExpiredOrNotRunning(Runner))

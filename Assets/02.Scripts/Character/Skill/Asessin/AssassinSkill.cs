@@ -88,6 +88,9 @@ public class AssassinSkill : NetworkBehaviour , ISkillQ, ISkillCooldown
         if (_player.IsDead)
             return;
 
+        if (_player.IsDashing)
+            return;
+
         if (!Cooldown.ExpiredOrNotRunning(Runner))
             return;
 

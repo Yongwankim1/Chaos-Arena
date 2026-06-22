@@ -515,6 +515,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (!input.Attack)
             return;
 
+        if (_playerCharacter.IsDashing)
+            return;
+
         if (HasStateAuthority)
         {
             _combat?.AttackInput();
