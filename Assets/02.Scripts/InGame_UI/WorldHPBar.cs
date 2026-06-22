@@ -35,6 +35,8 @@ public class WorldHPBar : MonoBehaviour
 
     private bool _isEnemy;
 
+    private bool _initialized;
+    private bool _forceHidden;
     public void Initialize(
         PlayerCharacter owner,
         bool isEnemy)
@@ -71,14 +73,21 @@ public class WorldHPBar : MonoBehaviour
 
     public void SetVisible(bool visible)
     {
-        if (canvas == null)
-            return;
+        _forceHidden = !visible;
 
-        canvas.enabled = visible;
+        if (canvas != null)
+        {
+            canvas.enabled = visible;
+        }
     }
 
     private void LateUpdate()
     {
+        if (!_initialized)
+        {
+            TryInitialize();
+        }
+
         if (_cam == null)
         {
             _cam = Camera.main;
@@ -97,10 +106,19 @@ public class WorldHPBar : MonoBehaviour
 
     private void UpdateVisible()
     {
+        if (_forceHidden)
+        {
+            canvas.enabled = false;
+
+            return;
+        }
+
         if (_owner == null)
             return;
 
-        Vector3 viewport = _cam.WorldToViewportPoint(_owner.transform.position);
+        Vector3 viewport =
+            _cam.WorldToViewportPoint(
+                _owner.transform.position);
 
         bool visible =
             viewport.z > 0f &&
@@ -110,5 +128,27 @@ public class WorldHPBar : MonoBehaviour
             viewport.y < 1f;
 
         canvas.enabled = visible;
+    }
+
+    private void TryInitialize()
+    {
+        if (_owner == null)
+            return;
+
+        if (PlayerCharacter.Local == null)
+            return;
+
+        if (PlayerCharacter.Local.Team == TeamType.None)
+            return;
+
+        bool isEnemy =
+            PlayerCharacter.Local.Team != _owner.Team;
+
+        hpFill.sprite =
+            isEnemy
+            ? enemyHpSprite
+            : allyHpSprite;
+
+        _initialized = true;
     }
 }

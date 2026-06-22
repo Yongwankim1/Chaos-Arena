@@ -186,6 +186,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     {
         TryApplyTeamMaterial();
 
+        if (worldHPBar != null)
+        {
+            worldHPBar.RefreshHP();
+        }
+
         if (_isInitialized)
             return;
 
@@ -199,11 +204,6 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         _isInitialized = true;
 
         LocalInitialize();
-
-        if (worldHPBar != null)
-        {
-            worldHPBar.RefreshHP();
-        }
     }
     private void ApplyMovementStat()
     {
