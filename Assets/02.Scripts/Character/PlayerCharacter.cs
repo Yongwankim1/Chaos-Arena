@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHasHealth
 {
     public static PlayerCharacter Local;
-
+    NetworkThirdPersonController controller3rd;
     private ClassData _classData;
     [Networked]
     public CharacterClassType ClassType { get; set; }
@@ -61,10 +61,15 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     private Material redMaterial;
 
     private bool _teamMaterialApplied;
+
+    [SerializeField]
+    private WorldHPBar worldHPBar;
+
     private void Awake()
     {
         _stealth = GetComponent<AssassinStealth>();
         _actionLock = GetComponent<CharacterActionLock>();
+        controller3rd = GetComponent<NetworkThirdPersonController>();
     }
     public override void Spawned()
     {
@@ -83,8 +88,28 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
         Debug.Log(
             $"Spawned : {ClassType}");
-    }
 
+        Invoke(nameof(InitializeHPBar), 0.2f);
+    }
+    private void InitializeHPBar()
+    {
+        if (worldHPBar == null)
+            return;
+
+        if (HasInputAuthority)
+        {
+            worldHPBar.gameObject.SetActive(false);
+
+            return;
+        }
+
+        if (PlayerCharacter.Local == null)
+            return;
+
+        bool isEnemy = PlayerCharacter.Local.Team != Team;
+
+        worldHPBar.Initialize(this,isEnemy);
+    }
     public override void FixedUpdateNetwork()
     {
         if (!HasStateAuthority)
@@ -174,6 +199,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         _isInitialized = true;
 
         LocalInitialize();
+
+        if (worldHPBar != null)
+        {
+            worldHPBar.RefreshHP();
+        }
     }
     private void ApplyMovementStat()
     {
@@ -304,6 +334,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         else
         {
             transform.position = position;
+        }
+
+        if (controller3rd != null)
+        {
+            controller3rd.ResetControllerState();
         }
 
         RPC_ResetCharacter(oldPosition, position);

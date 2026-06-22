@@ -611,4 +611,37 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         _knockbackVelocity = Vector3.Lerp(_knockbackVelocity, Vector3.zero, 12f * Runner.DeltaTime);
     }
+
+    public void ResetControllerState()
+    {
+        _knockbackVelocity = Vector3.zero;
+
+        _speed = 0f;
+        _animationBlend = 0f;
+
+        _airTime = 0f;
+
+        _jumpCooldownTimer = 0f;
+
+        _landingLockTimer = 0f;
+
+        _fallTimeoutDelta = FallTimeout;
+
+        Grounded = true;
+
+        _wasGrounded = true;
+
+        if (_animator != null)
+        {
+            _animator.Rebind();
+
+            _animator.Update(0f);
+
+            _animator.SetFloat(_animIDSpeed, 0f);
+
+            _animator.SetBool(_animIDGrounded, true);
+
+            _animator.SetBool(_animIDFreeFall, false);
+        }
+    }
 }
