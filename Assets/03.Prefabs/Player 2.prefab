@@ -1745,6 +1745,11 @@ GameObject:
   - component: {fileID: 2959145431102751377}
   - component: {fileID: 6070649731673188414}
   - component: {fileID: -1913311418479507481}
+  - component: {fileID: 948728341346744035}
+  - component: {fileID: -3265241210591730931}
+  - component: {fileID: 4640926506834941857}
+  - component: {fileID: -7649888400473783977}
+  - component: {fileID: -6624643543514540617}
   m_Layer: 6
   m_Name: Player 2
   m_TagString: Player
@@ -1793,6 +1798,8 @@ MonoBehaviour:
   - {fileID: 7883889268887263263}
   - {fileID: 2959145431102751377}
   - {fileID: -1913311418479507481}
+  - {fileID: 948728341346744035}
+  - {fileID: -7649888400473783977}
   ForceRemoteRenderTimeframe: 0
 --- !u!95 &7961633600829976054
 Animator:
@@ -2039,6 +2046,73 @@ MonoBehaviour:
     _value: 0
   _IsDashing:
     _value: 0
+--- !u!114 &948728341346744035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11de8a120282fce4b8be45bfe1b2cf54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Buff
+  buffs: []
+  effects: []
+  effectRoot: {fileID: 0}
+--- !u!114 &-3265241210591730931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e783d177b711147b802d29aecf59e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerVisualController
+  normalMaterial: {fileID: 0}
+  ultimateMaterial: {fileID: 0}
+  stealthMaterial: {fileID: 0}
+--- !u!114 &4640926506834941857
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5426cd88dd0319d48a670a90e736e043, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HitStopController
+--- !u!114 &-7649888400473783977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1222c3039a4892544bd7acf25ff54031, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterActionLock
+--- !u!114 &-6624643543514540617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3337101850504356701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a2dc9b7febd4b447922a15117e672ab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterSound
+  library: {fileID: 0}
 --- !u!1 &4768141635633946924
 GameObject:
   m_ObjectHideFlags: 0
