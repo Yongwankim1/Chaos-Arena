@@ -60,6 +60,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     [SerializeField]
     private Material redMaterial;
 
+    private bool _teamMaterialApplied;
     private void Awake()
     {
         _stealth = GetComponent<AssassinStealth>();
@@ -74,8 +75,6 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
             Local = this;
         }
 
-        ApplyTeamMaterial();
-
         Debug.Log(
             $"[Player] ObjectState:{Object.HasStateAuthority} ObjectInput:{Object.HasInputAuthority}");
 
@@ -85,6 +84,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         Debug.Log(
             $"Spawned : {ClassType}");
     }
+
     public override void FixedUpdateNetwork()
     {
         if (!HasStateAuthority)
@@ -168,6 +168,13 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (!ClassDataManager.IsLoaded(
                 ClassType))
             return;
+
+        if (!_teamMaterialApplied && Team != TeamType.None)
+        {
+            _teamMaterialApplied = true;
+
+            ApplyTeamMaterial();
+        }
 
         _isInitialized = true;
 
