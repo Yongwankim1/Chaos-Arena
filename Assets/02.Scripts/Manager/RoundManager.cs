@@ -97,7 +97,13 @@ public class RoundManager : NetworkBehaviour
 
         if(enemySpawnManager == null) enemySpawnManager = GameObject.Find("#SpawnManager").GetComponent<EnemySpawnManager>();
     }
-
+    private void OnDestroy()
+{
+    if (Instance == this)
+    {
+        Instance = null;
+    }
+}
     public override void Spawned()
     {
         MatchEnded = false;

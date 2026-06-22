@@ -80,6 +80,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
             Local = this;
         }
 
+        if (worldHPBar != null)
+        {
+            worldHPBar.Initialize(this);
+        }
+
         Debug.Log(
             $"[Player] ObjectState:{Object.HasStateAuthority} ObjectInput:{Object.HasInputAuthority}");
 
@@ -88,27 +93,13 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
         Debug.Log(
             $"Spawned : {ClassType}");
-
-        Invoke(nameof(InitializeHPBar), 0.2f);
     }
-    private void InitializeHPBar()
+    private void OnDestroy()
     {
-        if (worldHPBar == null)
-            return;
-
-        if (HasInputAuthority)
+        if (Local == this)
         {
-            worldHPBar.gameObject.SetActive(false);
-
-            return;
+            Local = null;
         }
-
-        if (PlayerCharacter.Local == null)
-            return;
-
-        bool isEnemy = PlayerCharacter.Local.Team != Team;
-
-        worldHPBar.Initialize(this,isEnemy);
     }
     public override void FixedUpdateNetwork()
     {
@@ -185,11 +176,6 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     public override void Render()
     {
         TryApplyTeamMaterial();
-
-        if (worldHPBar != null)
-        {
-            worldHPBar.RefreshHP();
-        }
 
         if (_isInitialized)
             return;

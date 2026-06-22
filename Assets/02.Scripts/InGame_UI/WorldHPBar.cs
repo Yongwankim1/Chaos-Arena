@@ -37,19 +37,13 @@ public class WorldHPBar : MonoBehaviour
 
     private bool _initialized;
     private bool _forceHidden;
-    public void Initialize(
-        PlayerCharacter owner,
-        bool isEnemy)
+
+    private float _refreshTimer;
+    public void Initialize(PlayerCharacter owner)
     {
         _owner = owner;
 
-        _isEnemy = isEnemy;
-
         _cam = Camera.main;
-
-        hpFill.sprite =isEnemy? enemyHpSprite: allyHpSprite;
-
-        RefreshHP();
     }
 
     public void RefreshHP()
@@ -88,6 +82,18 @@ public class WorldHPBar : MonoBehaviour
             TryInitialize();
         }
 
+        if (!_initialized)
+            return;
+
+        _refreshTimer += Time.deltaTime;
+
+        if (_refreshTimer >= 0.1f)
+        {
+            _refreshTimer = 0f;
+
+            RefreshHP();
+        }
+
         if (_cam == null)
         {
             _cam = Camera.main;
@@ -96,10 +102,13 @@ public class WorldHPBar : MonoBehaviour
                 return;
         }
 
-        transform.forward =_cam.transform.forward;
+        transform.forward = _cam.transform.forward;
 
         delayFill.fillAmount =
-            Mathf.Lerp(delayFill.fillAmount,_targetFill,Time.deltaTime * delaySpeed);
+            Mathf.Lerp(
+                delayFill.fillAmount,
+                _targetFill,
+                Time.deltaTime * delaySpeed);
 
         UpdateVisible();
     }
@@ -132,6 +141,9 @@ public class WorldHPBar : MonoBehaviour
 
     private void TryInitialize()
     {
+        if (_initialized)
+            return;
+
         if (_owner == null)
             return;
 
@@ -141,13 +153,18 @@ public class WorldHPBar : MonoBehaviour
         if (PlayerCharacter.Local.Team == TeamType.None)
             return;
 
-        bool isEnemy =
+        if (_owner.Team == TeamType.None)
+            return;
+
+        _isEnemy =
             PlayerCharacter.Local.Team != _owner.Team;
 
         hpFill.sprite =
-            isEnemy
+            _isEnemy
             ? enemyHpSprite
             : allyHpSprite;
+
+        RefreshHP();
 
         _initialized = true;
     }

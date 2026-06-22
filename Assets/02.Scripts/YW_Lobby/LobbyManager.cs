@@ -65,7 +65,9 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         if (roomInfoView == null) roomInfoView = FindFirstObjectByType<RoomInfoView>(FindObjectsInactive.Include);
         if (lobbyMapSelector == null) lobbyMapSelector = FindFirstObjectByType<LobbyMapSelector>(FindObjectsInactive.Include);
         roomCreateBtn.interactable = false;
+        RoomSessionData.Clear();
     }
+
     void OnEnable()
     {
         if (nicknameChecker != null) nicknameChecker.OnSetNickName += FusionConnect;
