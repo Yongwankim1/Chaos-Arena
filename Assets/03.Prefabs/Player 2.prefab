@@ -2112,7 +2112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a2dc9b7febd4b447922a15117e672ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSound
-  library: {fileID: 0}
+  library: {fileID: 11400000, guid: 7fb236516e15f8141acb53230dc6c883, type: 2}
 --- !u!1 &4768141635633946924
 GameObject:
   m_ObjectHideFlags: 0

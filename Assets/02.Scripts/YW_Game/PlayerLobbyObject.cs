@@ -22,14 +22,39 @@ public class PlayerLobbyObject : NetworkBehaviour
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     public void RPC_SelectCharacter(CharacterClassType classType)
     {
-        TeamType myTeam =GameBootstrap.Instance.GetPlayerTeam(Object.InputAuthority);
+        TrySelectCharacter(classType);
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void RPC_ConfirmCharacter(CharacterClassType classType)
+    {
+        if (!TrySelectCharacter(classType))
+        {
+            RPC_RejectCharacterSelection();
+
+            return;
+        }
+
+        IsReady = true;
+
+        RPC_AcceptCharacterSelection();
+    }
+
+    private bool TrySelectCharacter(CharacterClassType classType)
+    {
+        if (classType == CharacterClassType.None)
+        {
+            return false;
+        }
+
+        TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(Object.InputAuthority);
 
         if (GameBootstrap.Instance.IsCharacterUsedInTeam(
                 classType,
                 myTeam,
                 Object.InputAuthority))
         {
-            return;
+            return false;
         }
 
         SelectedClass = classType;
@@ -41,6 +66,8 @@ public class PlayerLobbyObject : NetworkBehaviour
         GameBootstrap bootstrap =FindFirstObjectByType<GameBootstrap>();
 
         bootstrap.SpawnSelectedCharacter(Object.InputAuthority);
+
+        return true;
     }
 
     [Rpc(RpcSources.InputAuthority,RpcTargets.StateAuthority)]
@@ -53,5 +80,17 @@ public class PlayerLobbyObject : NetworkBehaviour
     private void RPC_NotifyCharacterSelectionChanged()
     {
         OnCharacterSelectionChanged?.Invoke();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_AcceptCharacterSelection()
+    {
+        CharacterSelectUI.Instance?.OnConfirmAccepted();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.InputAuthority)]
+    private void RPC_RejectCharacterSelection()
+    {
+        CharacterSelectUI.Instance?.OnConfirmRejected();
     }
 }

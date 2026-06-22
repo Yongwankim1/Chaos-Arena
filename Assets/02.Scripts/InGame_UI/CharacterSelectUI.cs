@@ -76,6 +76,20 @@ public class CharacterSelectUI : MonoBehaviour
         selectedText.text = "선택된 캐릭터가 없습니다";
 
         confirmButton.interactable = false;
+
+        RefreshCharacterLock();
+    }
+
+    private void OnEnable()
+    {
+        PlayerLobbyObject.OnCharacterSelectionChanged += RefreshCharacterLock;
+
+        RefreshCharacterLock();
+    }
+
+    private void OnDisable()
+    {
+        PlayerLobbyObject.OnCharacterSelectionChanged -= RefreshCharacterLock;
     }
 
     private void OnDestroy()
@@ -87,37 +101,57 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void OnClickAssassin()
     {
-        SelectedClass = CharacterClassType.Assassin;
-
-        selectedText.text = "어쎄신 선택";
-
-        confirmButton.interactable = true;
+        TrySelectClass(CharacterClassType.Assassin,"어쎄신 선택");
     }
 
     private void OnClickMage()
     {
-        SelectedClass = CharacterClassType.Mage;
-
-        selectedText.text = "마법사 선택";
-
-        confirmButton.interactable = true;
+        TrySelectClass(CharacterClassType.Mage,"마법사 선택");
     }
 
-    private void OnClickConfirm()
+    private void TrySelectClass(CharacterClassType classType,string message)
     {
-        TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(PlayerLobbyObject.Local.Object.InputAuthority);
-
-        if (GameBootstrap.Instance.IsCharacterUsedInTeam(SelectedClass,myTeam,PlayerLobbyObject.Local.Object.InputAuthority))
+        if (IsClassLockedForLocalTeam(classType))
         {
-            selectedText.text = "같은 팀에서 이미 선택한 캐릭터입니다.";
+            ClearSelectedClass("같은 팀에서 이미 선택한 캐릭터입니다.");
+
+            RefreshCharacterLock();
 
             return;
         }
 
-        PlayerLobbyObject.Local.RPC_SelectCharacter(SelectedClass);
+        SelectedClass = classType;
 
-        PlayerLobbyObject.Local.RPC_SetReady();
+        selectedText.text = message;
 
+        RefreshConfirmButton();
+    }
+
+    private void OnClickConfirm()
+    {
+        if (SelectedClass == CharacterClassType.None)
+        {
+            RefreshConfirmButton();
+
+            return;
+        }
+
+        if (IsClassLockedForLocalTeam(SelectedClass))
+        {
+            ClearSelectedClass("같은 팀에서 이미 선택한 캐릭터입니다.");
+
+            RefreshCharacterLock();
+
+            return;
+        }
+
+        confirmButton.interactable = false;
+
+        PlayerLobbyObject.Local.RPC_ConfirmCharacter(SelectedClass);
+    }
+
+    public void OnConfirmAccepted()
+    {
         Cursor.lockState = CursorLockMode.Locked;
 
         Cursor.visible = false;
@@ -125,6 +159,13 @@ public class CharacterSelectUI : MonoBehaviour
         OnPlayerUI();
 
         gameObject.SetActive(false);
+    }
+
+    public void OnConfirmRejected()
+    {
+        ClearSelectedClass("같은 팀에서 이미 선택한 캐릭터입니다.");
+
+        RefreshCharacterLock();
     }
 
     public void OnPlayerUI()
@@ -143,11 +184,12 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void RefreshCharacterLock()
     {
-        if (PlayerLobbyObject.Local == null)
+        if (PlayerLobbyObject.Local == null || GameBootstrap.Instance == null)
         {
+            RefreshConfirmButton();
+
             return;
         }
-        Debug.Log("RefreshCharacterLock");
 
         TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(PlayerLobbyObject.Local.Object.InputAuthority);
 
@@ -159,8 +201,50 @@ public class CharacterSelectUI : MonoBehaviour
 
         mageLockObj.SetActive(mageUsed);
 
-        assassinButton.interactable =!assassinUsed;
+        assassinButton.interactable = !assassinUsed;
 
-        mageButton.interactable =!mageUsed;
+        mageButton.interactable = !mageUsed;
+
+        if (SelectedClass == CharacterClassType.Assassin && assassinUsed ||
+            SelectedClass == CharacterClassType.Mage && mageUsed)
+        {
+            ClearSelectedClass("같은 팀에서 이미 선택한 캐릭터입니다.");
+
+            return;
+        }
+
+        RefreshConfirmButton();
+    }
+
+    private void ClearSelectedClass(string message)
+    {
+        SelectedClass = CharacterClassType.None;
+
+        selectedText.text = message;
+
+        RefreshConfirmButton();
+    }
+
+    private void RefreshConfirmButton()
+    {
+        confirmButton.interactable = SelectedClass != CharacterClassType.None &&
+                                     !IsClassLockedForLocalTeam(SelectedClass);
+    }
+
+    private bool IsClassLockedForLocalTeam(CharacterClassType classType)
+    {
+        if (classType == CharacterClassType.None)
+        {
+            return false;
+        }
+
+        if (PlayerLobbyObject.Local == null || GameBootstrap.Instance == null)
+        {
+            return false;
+        }
+
+        TeamType myTeam = GameBootstrap.Instance.GetPlayerTeam(PlayerLobbyObject.Local.Object.InputAuthority);
+
+        return GameBootstrap.Instance.IsCharacterUsedInTeam(classType,myTeam,PlayerLobbyObject.Local.Object.InputAuthority);
     }
 }

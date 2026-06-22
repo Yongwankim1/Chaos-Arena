@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fef08ec68b2874d4696213c8856b32c7, type: 3}
+  m_Name: Brute Sound Library
+  m_EditorClassIdentifier: Assembly-CSharp::AssassinSoundLibrary
+  FootStep:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Jump:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Land:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Death:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Attack1:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Attack2:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Attack3:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Attack4:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Attack5:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  Dash:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  SkillQ:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  SkillE:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
+  SkillR:
+    Clip:
+      m_AssetGUID: 
+      m_SubObjectName: 
+      m_SubObjectType: 
+      m_SubObjectGUID: 
+      m_EditorAssetChanged: 0
+    Volume: 1
+    MinDistance: 3
+    MaxDistance: 30
