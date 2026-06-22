@@ -10,6 +10,7 @@ public class MageLaserAttack : NetworkBehaviour
     [SerializeField] int damage = 10;
     [SerializeField] float damageInterval = 0.25f;
     [SerializeField] LayerMask targetMask;
+    [SerializeField] LayerMask wallMask;
 
     private IAttacker attacker;
     private TickTimer damageTimer;
@@ -31,7 +32,7 @@ public class MageLaserAttack : NetworkBehaviour
     private void UpdateLines()
     {
         Vector3 startPoint = transform.position;
-        Vector3 endPoint = transform.position + transform.forward * attackDistance;
+        Vector3 endPoint = GetLaserEndPoint();
 
         foreach (LineRenderer line in lines)
         {
@@ -60,7 +61,7 @@ public class MageLaserAttack : NetworkBehaviour
     private void DealDamage()
     {
         Vector3 point1 = transform.position;
-        Vector3 point2 = transform.position + transform.forward * attackDistance;
+        Vector3 point2 = GetLaserEndPoint();
 
         Collider[] hits = Physics.OverlapCapsule(
             point1,
@@ -84,12 +85,32 @@ public class MageLaserAttack : NetworkBehaviour
         }
     }
 
+    private Vector3 GetLaserEndPoint()
+    {
+        Vector3 startPoint = transform.position;
+        Vector3 direction = transform.forward;
+
+        if (Physics.SphereCast(
+                startPoint,
+                radius,
+                direction,
+                out RaycastHit hit,
+                attackDistance,
+                wallMask,
+                QueryTriggerInteraction.Ignore))
+        {
+            return hit.point;
+        }
+
+        return startPoint + direction * attackDistance;
+    }
+
     private void OnDrawGizmos()
     {
         if (!isDebug) return;
 
         Vector3 point1 = transform.position;
-        Vector3 point2 = transform.position + transform.forward * attackDistance;
+        Vector3 point2 = GetLaserEndPoint();
 
         Gizmos.color = Color.cyan;
 
