@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,9 +20,17 @@ public class SettingsUI : MonoBehaviour
     [SerializeField]
     private Slider uiSlider;
 
+    [Header("Input")]
+    [SerializeField] private TMP_InputField masterInput;
+    [SerializeField] private TMP_InputField bgmInput;
+    [SerializeField] private TMP_InputField sfxInput;
+    [SerializeField] private TMP_InputField voiceInput;
+    [SerializeField] private TMP_InputField uiInput;
+
+
     [Header("Mouse")]
-    [SerializeField]
-    private Slider sensitivitySlider;
+    [SerializeField] private Slider sensitivitySlider;
+    [SerializeField] private TMP_InputField sensitivityInput;
 
     private void OnEnable()
     {
@@ -41,6 +50,13 @@ public class SettingsUI : MonoBehaviour
         uiSlider.onValueChanged.AddListener(SetUI);
 
         sensitivitySlider.onValueChanged.AddListener(SetSensitivity);
+
+        masterInput.onValueChanged.AddListener(SetMasterInput);
+        bgmInput.onValueChanged.AddListener(SetBGMInput);
+        sfxInput.onValueChanged.AddListener(SetSFXInput);
+        voiceInput.onValueChanged.AddListener(SetVoiceInput);
+        uiInput.onValueChanged.AddListener(SetUIInput);
+        sensitivityInput.onValueChanged.AddListener(SetSensitivityInput);
     }
 
     private void OnDestroy()
@@ -56,32 +72,58 @@ public class SettingsUI : MonoBehaviour
         uiSlider.onValueChanged.RemoveListener(SetUI);
 
         sensitivitySlider.onValueChanged.RemoveListener(SetSensitivity);
+
+        masterInput.onValueChanged.RemoveListener(SetMasterInput);
+        bgmInput.onValueChanged.RemoveListener(SetBGMInput);
+        sfxInput.onValueChanged.RemoveListener(SetSFXInput);
+        voiceInput.onValueChanged.RemoveListener(SetVoiceInput);
+        uiInput.onValueChanged.RemoveListener(SetUIInput);
+        sensitivityInput.onValueChanged.RemoveListener(SetSensitivityInput);
+    }
+    private void LateUpdate()
+    {
+        ClampInput(masterInput);
+        ClampInput(bgmInput);
+        ClampInput(sfxInput);
+        ClampInput(voiceInput);
+        ClampInput(uiInput);
+        ClampInput(sensitivityInput);
     }
 
     private void RefreshUI()
     {
-        masterSlider.SetValueWithoutNotify(
-            SettingsData.MasterVolume);
+        masterSlider.SetValueWithoutNotify(SettingsData.MasterVolume);
+        bgmSlider.SetValueWithoutNotify(SettingsData.BGMVolume);
+        sfxSlider.SetValueWithoutNotify(SettingsData.SFXVolume);
+        voiceSlider.SetValueWithoutNotify(SettingsData.VoiceVolume);
+        uiSlider.SetValueWithoutNotify(SettingsData.UIVolume);
+        sensitivitySlider.SetValueWithoutNotify(SettingsData.MouseSensitivity);
 
-        bgmSlider.SetValueWithoutNotify(
-            SettingsData.BGMVolume);
+        masterInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(SettingsData.MasterVolume * 100f).ToString());
 
-        sfxSlider.SetValueWithoutNotify(
-            SettingsData.SFXVolume);
+        bgmInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(SettingsData.BGMVolume * 100f).ToString());
 
-        voiceSlider.SetValueWithoutNotify(
-            SettingsData.VoiceVolume);
+        sfxInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(SettingsData.SFXVolume * 100f).ToString());
 
-        uiSlider.SetValueWithoutNotify(
-            SettingsData.UIVolume);
+        voiceInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(SettingsData.VoiceVolume * 100f).ToString());
 
-        sensitivitySlider.SetValueWithoutNotify(
-            SettingsData.MouseSensitivity);
+        uiInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(SettingsData.UIVolume * 100f).ToString());
+
+        sensitivityInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(SettingsData.MouseSensitivity * 100f).ToString());
     }
 
     public void SetMaster(float value)
     {
         SettingsData.MasterVolume = value;
+
+        masterInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(value * 100f).ToString());
 
         SettingsData.Save();
 
@@ -92,6 +134,9 @@ public class SettingsUI : MonoBehaviour
     {
         SettingsData.BGMVolume = value;
 
+        bgmInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(value * 100f).ToString());
+
         SettingsData.Save();
 
         RefreshPlayingAudio();
@@ -101,12 +146,18 @@ public class SettingsUI : MonoBehaviour
     {
         SettingsData.SFXVolume = value;
 
+        sfxInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(value * 100f).ToString());
+
         SettingsData.Save();
     }
 
     public void SetVoice(float value)
     {
         SettingsData.VoiceVolume = value;
+
+        voiceInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(value * 100f).ToString());
 
         SettingsData.Save();
 
@@ -117,6 +168,9 @@ public class SettingsUI : MonoBehaviour
     {
         SettingsData.UIVolume = value;
 
+        uiInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(value * 100f).ToString());
+
         SettingsData.Save();
     }
 
@@ -124,9 +178,98 @@ public class SettingsUI : MonoBehaviour
     {
         SettingsData.MouseSensitivity = value;
 
+        sensitivityInput.SetTextWithoutNotify(
+            Mathf.RoundToInt(value * 100f).ToString());
+
         SettingsData.Save();
     }
+    private void SetMasterInput(string value)
+    {
+        UpdateInput(value, masterSlider, v =>
+        {
+            SettingsData.MasterVolume = v;
+            RefreshPlayingAudio();
+        });
+    }
 
+    private void SetBGMInput(string value)
+    {
+        UpdateInput(value, bgmSlider, v =>
+        {
+            SettingsData.BGMVolume = v;
+            RefreshPlayingAudio();
+        });
+    }
+
+    private void SetSFXInput(string value)
+    {
+        UpdateInput(value, sfxSlider, v =>
+        {
+            SettingsData.SFXVolume = v;
+        });
+    }
+
+    private void SetVoiceInput(string value)
+    {
+        UpdateInput(value, voiceSlider, v =>
+        {
+            SettingsData.VoiceVolume = v;
+            RefreshPlayingAudio();
+        });
+    }
+
+    private void SetUIInput(string value)
+    {
+        UpdateInput(value, uiSlider, v =>
+        {
+            SettingsData.UIVolume = v;
+        });
+    }
+
+    private void SetSensitivityInput(string value)
+    {
+        UpdateInput(value, sensitivitySlider, v =>
+        {
+            SettingsData.MouseSensitivity = v;
+        });
+    }
+
+    private void ClampInput(TMP_InputField input)
+    {
+        if (string.IsNullOrEmpty(input.text))
+            return;
+
+        if (!int.TryParse(input.text, out int value))
+            return;
+
+        value = Mathf.Clamp(value, 0, 100);
+
+        if (input.text != value.ToString())
+        {
+            input.SetTextWithoutNotify(value.ToString());
+        }
+    }
+    private void UpdateInput(
+     string text,
+     Slider slider,
+     System.Action<float> onChanged)
+    {
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        if (!int.TryParse(text, out int percent))
+            return;
+
+        percent = Mathf.Clamp(percent, 0, 100);
+
+        float value = percent / 100f;
+
+        slider.SetValueWithoutNotify(value);
+
+        onChanged?.Invoke(value);
+
+        SettingsData.Save();
+    }
     private void RefreshPlayingAudio()
     {
         SoundManager soundManager =
@@ -136,5 +279,14 @@ public class SettingsUI : MonoBehaviour
             return;
 
         soundManager.RefreshVolume();
+    }
+
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }

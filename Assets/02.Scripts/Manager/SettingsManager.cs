@@ -66,10 +66,7 @@ public class SettingsManager : MonoBehaviour
 
         settingsPanel.SetActive(true);
 
-        Cursor.lockState =
-            CursorLockMode.None;
-
-        Cursor.visible = true;
+        RefreshCursor();
 
         if (InputManager.Instance != null)
         {
@@ -84,18 +81,43 @@ public class SettingsManager : MonoBehaviour
 
         settingsPanel.SetActive(false);
 
-        bool inGame = FindFirstObjectByType<PlayerCharacter>() != null;
-
-        if (inGame)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-
-            Cursor.visible = false;
-        }
+        RefreshCursor();
 
         if (InputManager.Instance != null)
         {
             InputManager.Instance.InputBlocked = false;
         }
+    }
+
+    public void RefreshCursor()
+    {
+        // 설정창이 열려있으면 최우선
+        if (IsOpen)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+
+        // 캐릭터 선택창
+        if (CharacterSelectUI.Instance != null &&
+            CharacterSelectUI.Instance.gameObject.activeInHierarchy)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+
+        // 인게임
+        if (FindFirstObjectByType<PlayerCharacter>() != null)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+            return;
+        }
+
+        // 로비
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }
