@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7276749470285950495}
   - component: {fileID: 7276749470285950496}
   m_Layer: 0
-  m_Name: HCFX_Charging_01_Step3_End
+  m_Name: Brute_R_Start_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

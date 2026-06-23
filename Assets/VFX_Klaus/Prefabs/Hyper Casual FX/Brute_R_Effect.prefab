@@ -5033,7 +5033,7 @@ GameObject:
   - component: {fileID: 1705755711278829969}
   - component: {fileID: 1705755711278829982}
   m_Layer: 0
-  m_Name: HCFX_Dust_04
+  m_Name: Brute_R_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

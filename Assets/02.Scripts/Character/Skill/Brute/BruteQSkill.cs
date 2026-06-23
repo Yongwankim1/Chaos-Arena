@@ -1,14 +1,19 @@
 using Fusion;
 using UnityEngine;
-using static Unity.Collections.Unicode;
 
 public class BruteQSkill : NetworkBehaviour, ISkillQ, ISkillCooldown
 {
     [SerializeField] private AttackData attackData;
+    [SerializeField]
+    private Transform attackSpawnPoint;
+
 
     [SerializeField] private float manaCost = 20f;
 
     [SerializeField] private float cooldown = 5f;
+
+    [SerializeField]
+    private ParticleSystem punchEffect;
 
     [Networked]
     public TickTimer Cooldown { get; set; }
@@ -84,9 +89,10 @@ public class BruteQSkill : NetworkBehaviour, ISkillQ, ISkillCooldown
         if (!HasStateAuthority)
             return;
 
-        //_combat.SpawnSkillHitBox(attackData);
-    }
+        _combat.SpawnSkillHitBox(attackData);
 
+        RPC_PlayPunchEffect();
+    }
     // Animation Event
     public void EndSkill()
     {
@@ -96,5 +102,53 @@ public class BruteQSkill : NetworkBehaviour, ISkillQ, ISkillCooldown
         _actionLock.Unlock(ActionLockType.Move);
         _actionLock.Unlock(ActionLockType.Attack);
         _actionLock.Unlock(ActionLockType.Dash);
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (attackSpawnPoint == null)
+            return;
+
+        if (attackData == null)
+            return;
+
+        Vector3 center =
+            attackSpawnPoint.position +
+            attackSpawnPoint.forward *
+            (attackData.Range * 0.5f);
+
+        Vector3 size =
+            new Vector3(
+                attackData.Radius * 2f,
+                2f,
+                attackData.Range);
+
+        Gizmos.color = Color.cyan;
+
+        Matrix4x4 oldMatrix = Gizmos.matrix;
+
+        Gizmos.matrix =
+            Matrix4x4.TRS(
+                center,
+                attackSpawnPoint.rotation,
+                Vector3.one);
+
+        Gizmos.DrawWireCube(
+            Vector3.zero,
+            size);
+
+        Gizmos.matrix = oldMatrix;
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayPunchEffect()
+    {
+        if (punchEffect == null)
+            return;
+
+        punchEffect.Stop(
+            true,
+            ParticleSystemStopBehavior.StopEmittingAndClear);
+
+        punchEffect.Play();
     }
 }

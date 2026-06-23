@@ -781,4 +781,13 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         _actionLock?.Unlock(ActionLockType.Move);
     }
+    public void SpawnSkillHitBox(AttackData data)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        PerformHitBox(
+            data,
+            new HashSet<IDamageable>());
+    }
 }
