@@ -61,6 +61,7 @@ MonoBehaviour:
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
+  - {fileID: 11400000, guid: b8f6fd943444473438ca9a922acf7129, type: 2}
   - {fileID: 11400000, guid: 8daee1f4fffa94540b379848e5bce02f, type: 2}
   - {fileID: 11400000, guid: 79f5d93360d77174eb9e2bc0108c666b, type: 2}
   - {fileID: 11400000, guid: c25c62a9129576745bdcfc649865c06b, type: 2}
@@ -108,6 +109,7 @@ MonoBehaviour:
     - Narration
     - Mage
     - Brute
+    - BackGround
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: b6fd36df1e510004e8f937b55c49bc1a, type: 2}

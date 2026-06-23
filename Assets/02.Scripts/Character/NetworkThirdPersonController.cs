@@ -256,19 +256,38 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (!HasInputAuthority)
             return;
 
-        if (input.Look.sqrMagnitude >= _threshold)
+        if (SettingsManager.Instance != null &&
+            SettingsManager.Instance.IsOpen)
         {
-            _cinemachineTargetYaw += input.Look.x * lookMultiplier;
-            _cinemachineTargetPitch += input.Look.y * lookMultiplier;
+            return;
         }
+
+        if (input.Look.sqrMagnitude < _threshold)
+            return;
+
+        float sensitivity = SettingsData.MouseSensitivity;
+
+        _cinemachineTargetYaw +=
+            input.Look.x *
+            lookMultiplier *
+            sensitivity;
+
+        _cinemachineTargetPitch +=
+            input.Look.y *
+            lookMultiplier *
+            sensitivity;
 
         _cinemachineTargetPitch =
             Mathf.Clamp(
                 _cinemachineTargetPitch,
-                BottomClamp, TopClamp);
+                BottomClamp,
+                TopClamp);
 
-        PlayerCameraRoot.rotation = Quaternion.Euler(_cinemachineTargetPitch + CameraAngleOverride, _cinemachineTargetYaw, 0f);
-
+        PlayerCameraRoot.rotation =
+            Quaternion.Euler(
+                _cinemachineTargetPitch + CameraAngleOverride,
+                _cinemachineTargetYaw,
+                0f);
     }
 
     private void Move(NetworkInputData input)

@@ -12,6 +12,9 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner runnerPrefab;
 
+    [SerializeField]
+    private SoundLibrary soundLibrary;
+
     [Header("Chat")]
     [SerializeField] private MainLobbyChat chat;
     [SerializeField] private RoomChat roomChat;
@@ -67,7 +70,10 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         roomCreateBtn.interactable = false;
         RoomSessionData.Clear();
     }
-
+    private void Start()
+    {
+        SoundManager.Instance?.PlayBGM(soundLibrary.BGM.Lobby);
+    }
     void OnEnable()
     {
         if (nicknameChecker != null) nicknameChecker.OnSetNickName += FusionConnect;
