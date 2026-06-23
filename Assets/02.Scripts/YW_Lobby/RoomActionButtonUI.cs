@@ -1,4 +1,5 @@
 ﻿using Fusion;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,8 +8,10 @@ public class RoomActionButtonUI : MonoBehaviour
 {
     [SerializeField] private Button roomActionButton;
     [SerializeField] private GameObject[] buttonImageUIs = new GameObject[2];
-    [SerializeField] private int gameSceneBuildIndex = 1;
     [SerializeField] private bool allowSinglePlay;
+
+    [SerializeField] private NetFadeInFadeOut fade;
+    [SerializeField] private float fadeDuration = 0.5f;
 
     private NetworkRunner runner;
     [SerializeField] private LobbyMapSelector mapSelector;
@@ -144,30 +147,64 @@ public class RoomActionButtonUI : MonoBehaviour
         if (!runner.IsServer) return;
         if (!CanStartGame()) return;
 
+        StartCoroutine(StartGameRoutine());
+    }
+    private IEnumerator StartGameRoutine()
+    {
+        roomActionButton.interactable = false;
+
+        PlayStartFadeForAll();
+
+
+        yield return new WaitForSecondsRealtime(fadeDuration);
+
+        if (runner == null)
+            yield break;
+
         Debug.Log("게임 시작");
 
         RoomSessionData.TeamSelections.Clear();
 
-        RoomPlayerData[] players = FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
 
         foreach (RoomPlayerData player in players)
         {
-            RoomSessionData.TeamSelections[player.Object.InputAuthority.PlayerId]= player.TeamSelect;
+            RoomSessionData.TeamSelections[player.Object.InputAuthority.PlayerId] =
+                player.TeamSelect;
         }
 
         RoomSessionData.RoomName = runner.SessionInfo.Name;
-
         RoomSessionData.IsHost = runner.IsServer;
 
         runner.SessionInfo.IsOpen = false;
         runner.SessionInfo.IsVisible = false;
         runner.SessionInfo.UpdateCustomProperties(new Dictionary<string, SessionProperty>
-        {
-            { "isPlaying", true }
-        });
+    {
+        { "isPlaying", true }
+    });
+
         runner.LoadScene(SceneRef.FromIndex(mapSelector.GetCreateRoomMapIndex() + 1));
     }
 
+    private void PlayStartFadeForAll()
+    {
+        RoomPlayerData[] players =
+            FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
+
+        foreach (RoomPlayerData player in players)
+        {
+            if (player == null) continue;
+            if (player.Object == null) continue;
+            if (!player.Object.IsValid) continue;
+            if (!player.Object.HasStateAuthority) continue;
+
+            player.RPC_PlayStartFade(fadeDuration);
+            return;
+        }
+
+        fade?.LocalFadeIn(fadeDuration);
+    }
     private bool CanStartGame()
     {
         if (allowSinglePlay && HasAnyValidPlayer())

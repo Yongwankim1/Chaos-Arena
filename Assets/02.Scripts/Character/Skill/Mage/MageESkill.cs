@@ -23,6 +23,9 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
     [SerializeField]
     private float cooldown = 5f;
 
+    [SerializeField]
+    private float damagePercent = 0.2f;
+
     [Networked]
     public TickTimer Cooldown { get; set; }
 
@@ -85,10 +88,10 @@ public class MageESkill : NetworkBehaviour, ISkillE, ISkillCooldown
     {
         if (!HasStateAuthority)
             return;
-
+        float finalDamage = _player.AttackPower * damagePercent;
         Runner.Spawn(areaEffectPrefab, spawnPoint.position, 
             Quaternion.LookRotation(transform.forward), Object.InputAuthority, 
-            (runner, obj) => { obj.GetComponent<AreaAttack>().Init(GetComponent<IAttacker>()); 
+            (runner, obj) => { obj.GetComponent<AreaAttack>().Init(GetComponent<IAttacker>(),(int)finalDamage); 
             });
     }
 }

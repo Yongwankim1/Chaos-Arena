@@ -21,6 +21,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
 
     [Header("UI")]
     [SerializeField] private TMP_InputField inputField;
+    [SerializeField] private GameObject createPlayerPanel;
     [SerializeField] private Transform contentParent;
     [SerializeField] private TMP_Text chatTextPrefab;
     [SerializeField] private ScrollRect scrollRect;
@@ -99,9 +100,36 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     {
         return EventSystem.current.currentSelectedGameObject == inputField.gameObject;
     }
+
+    private bool CanUseChatHotkey()
+    {
+        if (inputField == null || !inputField.isActiveAndEnabled)
+            return false;
+
+        if (createPlayerPanel != null && createPlayerPanel.activeInHierarchy)
+            return false;
+
+        if (EventSystem.current == null)
+            return true;
+
+        GameObject selectedObject =
+            EventSystem.current.currentSelectedGameObject;
+
+        if (selectedObject == null)
+            return true;
+
+        if (selectedObject == inputField.gameObject)
+            return true;
+
+        return selectedObject.GetComponent<TMP_InputField>() == null;
+    }
+
     private void Update()
     {
         chatClient?.Service();
+
+        if (!CanUseChatHotkey())
+            return;
 
         if (Keyboard.current.enterKey.wasPressedThisFrame)
         {

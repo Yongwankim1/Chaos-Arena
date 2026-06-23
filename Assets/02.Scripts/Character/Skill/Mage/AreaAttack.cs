@@ -6,7 +6,7 @@ public class AreaAttack : NetworkBehaviour
     [SerializeField] private ParticleSystem startEffect;
     [SerializeField] private float areaDuration = 5f;
     [SerializeField] private float areaRadius = 3f;
-    [SerializeField] private int damage = 10;
+    private int damage = 10;
     [SerializeField] private float damageInterval = 0.25f;
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private bool isDebug = true;
@@ -15,9 +15,10 @@ public class AreaAttack : NetworkBehaviour
     private TickTimer lifeTimer;
     private TickTimer damageTimer;
 
-    public void Init(IAttacker attacker)
+    public void Init(IAttacker attacker, int damage)
     {
         this.attacker = attacker;
+        this.damage = damage;
     }
 
     public override void Spawned()

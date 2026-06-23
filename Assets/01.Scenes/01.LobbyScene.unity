@@ -1324,6 +1324,113 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &122491270
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 122491274}
+  - component: {fileID: 122491275}
+  - component: {fileID: 122491273}
+  - component: {fileID: 122491272}
+  - component: {fileID: 122491271}
+  m_Layer: 5
+  m_Name: FadeInFadeOut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!225 &122491271
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122491270}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &122491272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122491270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &122491273
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122491270}
+  m_CullTransparentMesh: 1
+--- !u!224 &122491274
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122491270}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 439883538}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &122491275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 122491270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Fusion.Runtime.dll::Fusion.NetworkObject
+  SortKey: 1712186065
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &141292522
 GameObject:
   m_ObjectHideFlags: 0
@@ -4744,6 +4851,7 @@ RectTransform:
   - {fileID: 1040925652}
   - {fileID: 1798125482}
   - {fileID: 82889454}
+  - {fileID: 122491274}
   - {fileID: 2113741118}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5689,8 +5797,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 555424427}
-  - component: {fileID: 555424426}
   - component: {fileID: 555424425}
+  - component: {fileID: 555424426}
+  - component: {fileID: 555424428}
   m_Layer: 0
   m_Name: NetManager
   m_TagString: Untagged
@@ -5716,6 +5825,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 555424426}
+  - {fileID: 555424428}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &555424426
 MonoBehaviour:
@@ -5751,6 +5861,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &555424428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 555424424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a748dbe50b7a84b897c7053301658f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  cg: {fileID: 122491271}
+  defaultFadeDuration: 0.5
+  useUnscaledTime: 1
 --- !u!1 &558746846
 GameObject:
   m_ObjectHideFlags: 0
@@ -10944,8 +11069,9 @@ MonoBehaviour:
   buttonImageUIs:
   - {fileID: 1497136273}
   - {fileID: 1899327762}
-  gameSceneBuildIndex: 1
   allowSinglePlay: 0
+  fade: {fileID: 555424428}
+  fadeDuration: 0.5
   mapSelector: {fileID: 555424426}
 --- !u!114 &1336126759
 MonoBehaviour:
@@ -17405,8 +17531,10 @@ MonoBehaviour:
   nickName: 
   inputField: {fileID: 98687381}
   createPlayerPanel: {fileID: 2113741117}
+  fade: {fileID: 555424428}
   checkBtn: {fileID: 1683841450}
   lobbyPanel: {fileID: 1040925651}
+  fadeOutDuration: 1
 --- !u!114 &2068660858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17425,6 +17553,7 @@ MonoBehaviour:
   appVersion: 1.0
   channelName: MainLobby
   inputField: {fileID: 1403934962}
+  createPlayerPanel: {fileID: 0}
   contentParent: {fileID: 485212583}
   chatTextPrefab: {fileID: 1612120079823692956, guid: 3b895f2c79ab31f42afe28f2007212de, type: 3}
   scrollRect: {fileID: 49057961}

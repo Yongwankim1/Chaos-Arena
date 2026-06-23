@@ -1,5 +1,6 @@
 ﻿using Fusion;
 using System;
+using UnityEngine;
 
 public class RoomPlayerData : NetworkBehaviour
 {
@@ -75,6 +76,19 @@ public class RoomPlayerData : NetworkBehaviour
         OnRoomPlayerDataChanged?.Invoke();
     }
 
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    public void RPC_PlayStartFade(float duration)
+    {
+        NetFadeInFadeOut fade =
+            FindFirstObjectByType<NetFadeInFadeOut>(
+                FindObjectsInactive.Include);
+
+        if (fade == null)
+            return;
+
+        fade.LocalFadeIn(duration);
+    }
     //h
     [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
     public void RPC_SetTeam(TeamSelectType team)
