@@ -30240,7 +30240,7 @@ Transform:
   m_GameObject: {fileID: 1508717002037086508}
   serializedVersion: 2
   m_LocalRotation: {x: 0.00000007450578, y: 0.000000033527602, z: -0.000000036321566, w: 1}
-  m_LocalPosition: {x: 0.11977969, y: 0.9081319, z: 1.1108916}
+  m_LocalPosition: {x: 0, y: 0.9081319, z: 1.1108916}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36201,17 +36201,17 @@ MonoBehaviour:
     Knockback: 0.2
   - SpawnType: 0
     DamagePercent: 100
-    Range: 1
-    Radius: 0.6
+    Range: 4.2
+    Radius: 2
     UsePersistentHitbox: 0
     HitDuration: 0.3
     HitInterval: 0.05
-    AttackEffect: {fileID: 8703879215163434798, guid: 9ce27536803f3ba40b31bed95e7c8166, type: 3}
-    EffectPositionOffset: {x: 0, y: -0.5, z: 0}
-    EffectRotationOffset: {x: 0, y: 140, z: 0}
-    HitEffect: {fileID: 1828921247648683383, guid: fd6dad8dac3d10147981a3ed7a17c048, type: 3}
+    AttackEffect: {fileID: 7781049213900879120, guid: b551f2cc88bd74e45950dc5c51933772, type: 3}
+    EffectPositionOffset: {x: 0, y: 0, z: 2}
+    EffectRotationOffset: {x: 0, y: 0, z: 0}
+    HitEffect: {fileID: 4547275102643459542, guid: 329a3af6d8c9ede4ebb63a199e43eba7, type: 3}
     ProjectilePrefab: {fileID: 0}
-    SpawnOnGround: 0
+    SpawnOnGround: 1
     HitStop: 0.03
     CameraShake: 0.3
     Knockback: 0.2
@@ -36383,9 +36383,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DebugAttackHitBox
   attackPos: {fileID: 5651274045008937097}
-  Range: 12
+  Range: 4.2
   Radius: 2
-  isDebug: 0
+  isDebug: 1
 --- !u!114 &8342318973026991513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57936,7 +57936,7 @@ GameObject:
   m_Layer: 6
   m_Name: AttackSpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1

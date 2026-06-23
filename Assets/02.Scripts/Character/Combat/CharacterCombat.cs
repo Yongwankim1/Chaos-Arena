@@ -500,11 +500,9 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         AttackData data =
             comboAttackData[attackIndex - 1];
-
+        //¼öÁ¤
         Vector3 spawnPosition =
-            attackSpawnPoint.position +
-            transform.TransformDirection(
-                data.EffectPositionOffset);
+            attackSpawnPoint.TransformPoint(data.EffectPositionOffset);
 
         Quaternion spawnRotation =
             transform.rotation *
@@ -513,8 +511,13 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
 
         if (data.SpawnOnGround)
         {
+            Vector3 offset =
+                attackSpawnPoint.TransformDirection(data.EffectPositionOffset);
+
+            offset.y = 0f;
+
             Ray ray = new Ray(
-                attackSpawnPoint.position,
+                attackSpawnPoint.position + offset + Vector3.up * 2f,
                 Vector3.down);
 
             if (Physics.Raycast(
@@ -524,12 +527,10 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                 Physics.DefaultRaycastLayers,
                 QueryTriggerInteraction.Ignore))
             {
-                spawnPosition =
-                    hit.point +
-                    data.EffectPositionOffset;
+                spawnPosition = hit.point;
             }
         }
-
+        //
         GameObject effectPrefab = null;
 
         // ±Ã±Ø±â ÀÌÆåÆ® ¿ì¼±
