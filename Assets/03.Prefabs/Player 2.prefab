@@ -32121,7 +32121,7 @@ MonoBehaviour:
   jumpImpulse: 8
   acceleration: 100
   braking: 100
-  maxSpeed: 10
+  maxSpeed: 12
   rotationSpeed: 7
 --- !u!114 &7883889268887263263
 MonoBehaviour:
@@ -32140,6 +32140,8 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   SpeedChangeRate: 20
   attackMoveSpeed: 10
+  sprintManaDrainPerSecond: 5
+  sprintRecoverThresholdPercent: 0.2
   JumpCooldown: 0.25
   FallTimeout: 0.15
   Grounded: 1

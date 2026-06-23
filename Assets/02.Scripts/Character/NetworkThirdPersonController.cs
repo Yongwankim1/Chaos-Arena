@@ -334,6 +334,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
                 ? SprintSpeed
                 : MoveSpeed;
 
+        if (_controller != null)
+        {
+            _controller.maxSpeed = targetSpeed;
+        }
+
         if (input.Move == Vector2.zero)
             targetSpeed = 0.0f;
 

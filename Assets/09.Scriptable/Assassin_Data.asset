@@ -16,8 +16,8 @@ MonoBehaviour:
   className: Assassin
   maxHP: 100
   maxMana: 100
-  walkSpeed: 2
-  sprintSpeed: 10
+  walkSpeed: 8
+  sprintSpeed: 15
   attackPower: 8
   SkillIcons:
     Q: {fileID: 155281674, guid: 88933c4bf39cd564bbb4f1af77fed24e, type: 3}
