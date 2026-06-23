@@ -122,7 +122,8 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             GetComponent<NetworkStarterAssetsInput>()?.RegisterAsLocal();
 
-            var cam = FindObjectOfType<Unity.Cinemachine.CinemachineCamera>();
+            var cam = FindFirstObjectByType<CinemachineCamera>(
+                FindObjectsInactive.Include);
 
             if (cam != null)
             {
