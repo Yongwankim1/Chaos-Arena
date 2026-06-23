@@ -5,6 +5,9 @@ using UnityEngine.AI;
 
 public class EnemySpawnManager : MonoBehaviour
 {
+    [SerializeField] bool spawnMage = true;
+    [SerializeField] bool spawnKnight = true;
+
     [SerializeField] GameObject enemyMagePrefab;
     [SerializeField] GameObject enemyKnightPrefab;
 
@@ -22,28 +25,38 @@ public class EnemySpawnManager : MonoBehaviour
     }
     public void Spawn(NetworkRunner runner)
     {
-        if (enemyMagePrefab == null) return;
-        if (enemyKnightPrefab == null) return;
         if (runner == null) return;
         if (!runner.IsServer) return;
+        if (!spawnMage && !spawnKnight) return;
 
-        NetworkObject magePrefab = enemyMagePrefab.GetComponent<NetworkObject>();
-        NetworkObject knightPrefab = enemyKnightPrefab.GetComponent<NetworkObject>();
+        if (spawnMage)
+        {
+            mage = SpawnEnemy(runner, enemyMagePrefab, mageSpawnPos, magePatrols);
+        }
 
-        if (magePrefab == null) return;
-        if (knightPrefab == null) return;
+        if (spawnKnight)
+        {
+            knight = SpawnEnemy(runner, enemyKnightPrefab, knightSpawnPos, knightPatrols);
+        }
+    }
+    private NetworkObject SpawnEnemy(NetworkRunner runner, GameObject prefabObject, Transform spawnPos, Transform[] patrols)
+    {
+        if (prefabObject == null) return null;
+        if (spawnPos == null) return null;
 
-        Vector3 magePosition = GetSpawnPositionOnNavMesh(mageSpawnPos.position);
-        Vector3 knightPosition = GetSpawnPositionOnNavMesh(knightSpawnPos.position);
+        NetworkObject prefab = prefabObject.GetComponent<NetworkObject>();
+        if (prefab == null) return null;
 
-        mage = runner.Spawn(magePrefab, magePosition, Quaternion.identity);
-        knight = runner.Spawn(knightPrefab, knightPosition, Quaternion.identity);
+        Vector3 spawnPosition = GetSpawnPositionOnNavMesh(spawnPos.position);
+        NetworkObject enemy = runner.Spawn(prefab, spawnPosition, Quaternion.identity);
 
-        SetupSpawnedEnemy(mage, magePosition, magePatrols);
-        SetupSpawnedEnemy(knight, knightPosition, knightPatrols);
+        SetupSpawnedEnemy(enemy, spawnPosition, patrols);
+        return enemy;
     }
     private void SetupSpawnedEnemy(NetworkObject enemy, Vector3 spawnPosition, Transform[] patrols)
     {
+        if (enemy == null) return;
+
         BehaviorGraphAgent behavior = enemy.GetComponent<BehaviorGraphAgent>();
         NavMeshAgent agent = enemy.GetComponent<NavMeshAgent>();
 
@@ -63,7 +76,11 @@ public class EnemySpawnManager : MonoBehaviour
             }
         }
 
-        enemy.GetComponent<EnemyBehaviorBridge>().Init(patrols);
+        EnemyBehaviorBridge bridge = enemy.GetComponent<EnemyBehaviorBridge>();
+        if (bridge != null)
+        {
+            bridge.Init(patrols);
+        }
 
         if (behavior != null)
         {
@@ -72,8 +89,6 @@ public class EnemySpawnManager : MonoBehaviour
     }
     public void ReSpawn(NetworkRunner runner)
     {
-        if (enemyMagePrefab == null) return;
-        if (enemyKnightPrefab == null) return;
         if (runner == null) return;
         if (!runner.IsServer) return;
 

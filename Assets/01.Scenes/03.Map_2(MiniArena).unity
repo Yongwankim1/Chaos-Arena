@@ -35666,6 +35666,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dbb062be6c4bd9c47ab3982aebbe77e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  spawnMage: 0
+  spawnKnight: 0
   enemyMagePrefab: {fileID: 5356354989984908327, guid: f4ed2f8e1b677ea4883651d08a065253, type: 3}
   enemyKnightPrefab: {fileID: 2202604045660070067, guid: 363113cb9992a264cb6f3318adea84e1, type: 3}
   mageSpawnPos: {fileID: 857005880}
