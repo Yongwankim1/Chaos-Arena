@@ -216,5 +216,6 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
         _actionLock?.Unlock(ActionLockType.Move);
         _actionLock?.Unlock(ActionLockType.Attack);
         _actionLock?.Unlock(ActionLockType.Dash);
+        _actionLock?.Unlock(ActionLockType.Jump);
     }
 }
