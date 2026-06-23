@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e28e33b306f628419e221aa78a7145f, type: 3}
   m_Name: BlueBuffData
   m_EditorClassIdentifier: Assembly-CSharp::BuffSO
-  value: 0.5
+  value: 1
   duration: 180
   type: 2
   effect: {fileID: 8359297705883875518, guid: fd77ee96c53e6bc469bfb2e9142f1c42, type: 3}
-  manaRegenBonusPercent: 0.5
+  manaRegenBonusPercent: 1
   attackBonusPercent: 0
   slowPercent: 0
   slowDuration: 0
