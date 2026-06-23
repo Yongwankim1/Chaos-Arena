@@ -63,6 +63,26 @@ MonoBehaviour:
       Volume: 1
       MinDistance: 3
       MaxDistance: 30
+    TeamKill:
+      Clip:
+        m_AssetGUID: 95e6cf50e70cc56449146c4324bc5744
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      Volume: 1
+      MinDistance: 3
+      MaxDistance: 30
+    TeamDeath:
+      Clip:
+        m_AssetGUID: 4dd5acca9c5efe846b6bffdfdb724230
+        m_SubObjectName: 
+        m_SubObjectType: 
+        m_SubObjectGUID: 
+        m_EditorAssetChanged: 0
+      Volume: 1
+      MinDistance: 3
+      MaxDistance: 30
     BlueWin:
       Clip:
         m_AssetGUID: 529afcef738ad7c40bfdfe44aac257f7
