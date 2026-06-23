@@ -85,6 +85,9 @@ public class Buff : NetworkBehaviour
                 if (blueBuff == null) return;
                 blueBuff.OnBlueBuff(buff,true);
                 break;
+            case BuffType.Defence:
+
+                break;
         }
 
     }
