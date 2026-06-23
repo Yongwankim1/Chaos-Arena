@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Mage
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3eaecf58657fee44d8866a2b5ac79607
+    m_Address: Assets/07.Sounds/Mage/MageLand.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 452c60123aa648c48aa6ed6fce03f690
     m_Address: Assets/07.Sounds/Mage/MageFootStep.wav
     m_ReadOnly: 0
@@ -29,6 +35,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 509fe25d7d94d1e41bf9a635c783a55f
     m_Address: Assets/07.Sounds/Mage/MaqeQExplosion.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 71577fc329d849e4d9dfcd1b97665ce2
+    m_Address: Assets/07.Sounds/Mage/Jump.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - Mage

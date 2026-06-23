@@ -55,6 +55,7 @@ public class BruteDash : NetworkBehaviour, IDash, ISkillCooldown
     private readonly HashSet<PlayerCharacter> _hitPlayers =
         new HashSet<PlayerCharacter>();
 
+    private CharacterSound _sound;
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
@@ -65,6 +66,7 @@ public class BruteDash : NetworkBehaviour, IDash, ISkillCooldown
 
         _controller =
             GetComponent<NetworkThirdPersonController>();
+        _sound = GetComponent<CharacterSound>();
     }
 
     public void Dash()
@@ -235,6 +237,7 @@ public class BruteDash : NetworkBehaviour, IDash, ISkillCooldown
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_PlayDashStart()
     {
+        _sound.PlayDash();
         dashTrailEffect?.Play();
     }
 

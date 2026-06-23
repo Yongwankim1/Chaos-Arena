@@ -24,7 +24,7 @@ MonoBehaviour:
     MaxDistance: 30
   Jump:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 71577fc329d849e4d9dfcd1b97665ce2
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -34,7 +34,7 @@ MonoBehaviour:
     MaxDistance: 30
   Land:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 3eaecf58657fee44d8866a2b5ac79607
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 

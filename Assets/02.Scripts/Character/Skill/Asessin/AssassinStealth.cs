@@ -11,7 +11,6 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
     private WorldHPBar _hpBar;
     [SerializeField] private ParticleSystem stealthStartEffect;
     [SerializeField] private ParticleSystem stealthEndEffect;
-    BruteBuffEffect bruteBuff;
     [Networked] public NetworkBool IsStealth { get; set; }
     [Networked] public TickTimer StealthTimer { get; set; }
     [Networked] public TickTimer CooldownTimer { get; set; }
@@ -26,7 +25,9 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
     private PlayerVisualController _visual;
     private AssassinUltimate _ultimate;
     private Buff _buff;
+    private BruteDefenseBuff _bruteDefenseBuff;
 
+    [SerializeField] CharacterSound _sound;
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
@@ -36,7 +37,8 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
         _renderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
         _ultimate = GetComponent<AssassinUltimate>();
         _hpBar = GetComponentInChildren<WorldHPBar>(true);
-        bruteBuff = GetComponent<BruteBuffEffect>();
+        _bruteDefenseBuff = GetComponent<BruteDefenseBuff>();
+        _sound = GetComponent<CharacterSound>();
     }
 
     public override void FixedUpdateNetwork()
@@ -110,7 +112,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
 
                 _buff?.SetEffectVisible(false);
 
-                bruteBuff?.SetVisible(false);
+                _bruteDefenseBuff?.SetStealthHidden(true);
 
                 _player.SetTeamMarkVisible(false);
 
@@ -121,7 +123,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
                 _player.SetTeamMarkVisible(true);
             }
         }
-
+        _sound.PlaySkillE();
         _ultimate?.RefreshUltimateEffectVisibility();
     }
 
@@ -137,7 +139,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
 
         _buff?.SetEffectVisible(true);
 
-        bruteBuff?.SetVisible(true);
+        _bruteDefenseBuff?.SetStealthHidden(false);
 
         _player.SetTeamMarkVisible(true);
 

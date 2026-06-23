@@ -15,6 +15,12 @@ MonoBehaviour:
   m_GroupName: Assasin_Sound
   m_GUID: 06d0a6b53cf08e340a003c5287a057df
   m_SerializeEntries:
+  - m_GUID: 0b92769269213fa4da14eedcf064e0d5
+    m_Address: Assets/07.Sounds/Assasin/AssasinLand.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Assasin
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 0ca2d3e89aa91884a96e0b072daea944
     m_Address: Assets/07.Sounds/Assasin/AssasinEUse.mp3
     m_ReadOnly: 0
@@ -47,6 +53,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 833a2f7f5f4a14445a96368ad479f2fd
     m_Address: Assets/07.Sounds/Assasin/AssasinAttack2.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Assasin
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b3b6cc090fca4f04cabfa2f115d36cf1
+    m_Address: Assets/07.Sounds/Assasin/Jump.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - Assasin

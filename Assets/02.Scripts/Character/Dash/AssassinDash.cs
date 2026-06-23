@@ -58,6 +58,7 @@ public class AssassinDash : NetworkBehaviour, IDash, ISkillCooldown
     private CharacterController _cc;
     private AssassinStealth _stealth;
 
+    [SerializeField] CharacterSound _sound;
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
@@ -66,6 +67,7 @@ public class AssassinDash : NetworkBehaviour, IDash, ISkillCooldown
         _meshes = GetComponentsInChildren<SkinnedMeshRenderer>(true);
 
         _stealth = GetComponent<AssassinStealth>();
+        _sound = GetComponent<CharacterSound>();
     }
 
     public void Dash()
@@ -126,6 +128,8 @@ public class AssassinDash : NetworkBehaviour, IDash, ISkillCooldown
         dashStartEffect?.Play();
 
         dashSmokeEffect?.Play();
+
+        _sound.PlayDash();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]

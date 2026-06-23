@@ -12,6 +12,10 @@ public class BruteDefenseBuff : NetworkBehaviour
 
     private BruteBuffEffect _effect;
 
+    private bool _effectActive;
+
+    private bool _hiddenByStealth;
+
     private void Awake()
     {
         _player = GetComponent<PlayerCharacter>();
@@ -86,9 +90,23 @@ public class BruteDefenseBuff : NetworkBehaviour
         RPC_SetEffect(false);
     }
 
+    public void SetStealthHidden(bool hidden)
+    {
+        _hiddenByStealth = hidden;
+
+        RefreshEffectVisibility();
+    }
+
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_SetEffect(bool visible)
     {
-        _effect?.SetVisible(visible);
+        _effectActive = visible;
+
+        RefreshEffectVisibility();
+    }
+
+    private void RefreshEffectVisibility()
+    {
+        _effect?.SetVisible(_effectActive && !_hiddenByStealth);
     }
 }

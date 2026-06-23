@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssassinSoundLibrary
   FootStep:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 2d87a0839e4cfc14db4dd54598bbec57
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -24,7 +24,7 @@ MonoBehaviour:
     MaxDistance: 30
   Jump:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: c3c9ba20e3b461a46a1b0a6e59505e1e
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -34,7 +34,7 @@ MonoBehaviour:
     MaxDistance: 30
   Land:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: bc78d24b6381067499340d7a3bb22584
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -54,7 +54,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack1:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 16a32913a8dbfcd42b7daa33f2a2275a
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -64,7 +64,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack2:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 50824076c19f3944f9b3f59a99d1e24c
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -74,7 +74,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack3:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 5adabf32cf7281c408744c8d9ceecd39
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -84,7 +84,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack4:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 001c5ccb626830f4fb9b152f257d65c6
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -94,7 +94,7 @@ MonoBehaviour:
     MaxDistance: 30
   Attack5:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 50824076c19f3944f9b3f59a99d1e24c
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -104,7 +104,7 @@ MonoBehaviour:
     MaxDistance: 30
   Dash:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 64c7f4b1cac285742a51f9840646300b
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -114,7 +114,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillQ:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: adc7d5a8c65b3f941a5aae4f70596c16
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -124,7 +124,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillE:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 0ec9ffb2528db814f8efb2c9b7f7965b
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -134,7 +134,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillR:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: a02813fe857a0e14387cf579c347afaf
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 

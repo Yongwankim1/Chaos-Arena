@@ -57,6 +57,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
     private PlayerCharacter _player;
     private PlayerVisualController _visual;
     private AssassinStealth _stealth;
+    [SerializeField] private CharacterSound _sound;
     public float Duration => duration;
     public float RemainingDuration
     {
@@ -130,6 +131,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
         {
             _smokeRenderers = shadowSmoke.GetComponentsInChildren<ParticleSystemRenderer>(true);
         }
+        _sound = GetComponent<CharacterSound>();
     }
 
     public override void Spawned()
@@ -223,7 +225,7 @@ public class AssassinUltimate : NetworkBehaviour, IUltimateModifier, ISkillR, IS
         {
             startEffect?.Play();
         }
-
+        _sound.PlaySkillR();
         shadowSmoke?.Play();
 
         RefreshUltimateEffectVisibility();
