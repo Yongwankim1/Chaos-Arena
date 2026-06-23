@@ -1492,6 +1492,9 @@ MonoBehaviour:
   nickName: {fileID: 1769546648141155834}
   readyToggle: {fileID: 4313104072645217187}
   teamDropdown: {fileID: 37037896658346185}
+  background: {fileID: 1972604185270159716}
+  myColor: {r: 0.017065525, g: 0, b: 1, a: 1}
+  otherColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &6158523951950929355
 GameObject:
   m_ObjectHideFlags: 0

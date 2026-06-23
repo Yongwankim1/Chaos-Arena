@@ -9,6 +9,15 @@ public class UserInfo : MonoBehaviour
     [SerializeField] private TMP_Dropdown teamDropdown;
     private RoomPlayerData _playerData;
 
+    [SerializeField]
+    private Image background;
+
+    [SerializeField]
+    private Color myColor = Color.green;
+
+    [SerializeField]
+    private Color otherColor = Color.white;
+
     private int _lastBlueCount = -1;
     private int _lastRedCount = -1;
 
@@ -55,11 +64,17 @@ public class UserInfo : MonoBehaviour
 
         teamDropdown.SetValueWithoutNotify((int)playerData.TeamSelect);
 
-        teamDropdown.interactable = playerData.Object.HasInputAuthority;
+        bool isMine = playerData.Object != null && playerData.Object.HasInputAuthority;
+
+        teamDropdown.interactable = isMine;
+
+        if (background != null)
+        {
+            background.color = isMine ? myColor : otherColor;
+        }
 
         RefreshTeamDropdown();
     }
-
     public void SetReady(bool isReady)
     {
         readyToggle.isOn = isReady;

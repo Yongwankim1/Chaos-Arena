@@ -1,11 +1,11 @@
 using Fusion;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomUserListUI : MonoBehaviour
 {
     [SerializeField] private Transform userInfoParent;
     [SerializeField] private UserInfo userInfoPrefab;
-
     private void OnEnable()
     {
         RoomPlayerData.OnRoomPlayerDataChanged += Refresh;
@@ -25,35 +25,45 @@ public class RoomUserListUI : MonoBehaviour
 
         RoomPlayerData[] players = FindObjectsByType<RoomPlayerData>(FindObjectsSortMode.None);
 
+        List<RoomPlayerData> playerList = new List<RoomPlayerData>();
+
         foreach (RoomPlayerData player in players)
         {
             if (player == null)
-            {
                 continue;
-            }
 
             if (player.Object == null)
-            {
                 continue;
-            }
 
             if (!player.Object.IsValid)
-            {
                 continue;
-            }
 
-            UserInfo userInfo =Instantiate(userInfoPrefab, userInfoParent);
+            playerList.Add(player);
+        }
+
+        RoomPlayerData localPlayer =
+            playerList.Find(x =>
+                x != null &&
+                x.Object != null &&
+                x.Object.HasInputAuthority);
+
+        if (localPlayer != null)
+        {
+            playerList.Remove(localPlayer);
+
+            int centerIndex = Mathf.Clamp( playerList.Count / 2, 0, playerList.Count);
+
+            playerList.Insert(centerIndex, localPlayer);
+        }
+
+        foreach (RoomPlayerData player in playerList)
+        {
+            UserInfo userInfo = Instantiate( userInfoPrefab, userInfoParent);
 
             userInfo.Init(player);
         }
-        //foreach (RoomPlayerData player in players)
-        //{
-        //    if (!TryReadPlayerData(player, out string nickName, out bool isReady))
-        //        continue;
 
-        //    UserInfo userInfo = Instantiate(userInfoPrefab, userInfoParent);
-        //    userInfo.Init(nickName, isReady);
-        //}
+        UpdateContentPosition(playerList.Count);
     }
 
     public void Clear()
@@ -171,5 +181,19 @@ public class RoomUserListUI : MonoBehaviour
         }
 
         return count;
+    }
+
+    private void UpdateContentPosition(int playerCount)
+    {
+        RectTransform rect = userInfoParent as RectTransform;
+
+        if (rect == null)
+            return;
+
+        Vector2 pos = rect.anchoredPosition;
+
+        pos.x = playerCount == 6 ? -130f : 0f;
+
+        rect.anchoredPosition = pos;
     }
 }
