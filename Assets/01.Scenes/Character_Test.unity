@@ -2458,6 +2458,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1730034102}
   cooldownText: {fileID: 1329202129}
+  icon: {fileID: 0}
 --- !u!1 &305857718
 GameObject:
   m_ObjectHideFlags: 0
@@ -2781,6 +2782,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1454030740}
   cooldownText: {fileID: 1559450104}
+  icon: {fileID: 0}
 --- !u!1 &346829497
 GameObject:
   m_ObjectHideFlags: 0
@@ -5439,6 +5441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
   assassinPrefab: {fileID: 8547570258107433689, guid: 612460e52582b7f40a072ff1394e9f84, type: 3}
   magePrefab: {fileID: 8547570258107433689, guid: c16d6a4115fedd2438eb1ab97958ab82, type: 3}
+  brutePrefab: {fileID: 0}
   playerLobbyPrefab: {fileID: 5338568845319760983, guid: 78b6390b71e6b2f4889fe60f033b0fbe, type: 3}
 --- !u!1 &816535252
 GameObject:
@@ -5949,6 +5952,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 148019183}
   cooldownText: {fileID: 305857720}
+  icon: {fileID: 0}
 --- !u!114 &859804256
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6325,6 +6329,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 1737654533}
   cooldownText: {fileID: 2003681549}
+  icon: {fileID: 0}
 --- !u!114 &988025601
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7037,8 +7042,7 @@ MonoBehaviour:
   _CurrentRound: 0
   waitingTime: 3
   characterSelectTime: 10
-  preparationTime: 5
-  roundTime: 300
+  roundRuleData: {fileID: 0}
   characterSelectUI: {fileID: 1196706178}
   _CurrentState: 0
   _StateRemainTime: 0
@@ -7054,6 +7058,7 @@ MonoBehaviour:
   enemySpawnManager: {fileID: 1327593436}
   _RoundMessage: 
   _RoundResult: 0
+  soundLibrary: {fileID: 0}
 --- !u!4 &1120496649
 Transform:
   m_ObjectHideFlags: 0
@@ -7975,7 +7980,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSelectUI
   assassinButton: {fileID: 855083936}
   mageButton: {fileID: 106932803}
+  bruteButton: {fileID: 0}
   confirmButton: {fileID: 14102523}
+  assassinLockObj: {fileID: 0}
+  mageLockObj: {fileID: 0}
+  bruteLockObj: {fileID: 0}
   selectedText: {fileID: 481567454}
   inGame_UI:
   - {fileID: 1713784290}
@@ -8162,7 +8171,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MatchResultUI
   resultText: {fileID: 414703361}
-  lobbyButton: {fileID: 1129665913}
+  countdownText: {fileID: 0}
 --- !u!1 &1245307042
 GameObject:
   m_ObjectHideFlags: 0
@@ -8539,6 +8548,7 @@ MonoBehaviour:
   - {fileID: 1820197097}
   roundResultTextPanel: {fileID: 381949824}
   roundResultText: {fileID: 1175943353}
+  roundText: {fileID: 0}
 --- !u!1 &1299198274
 GameObject:
   m_ObjectHideFlags: 0
@@ -11814,7 +11824,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1713784291
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11915,6 +11925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 369152996}
   cooldownText: {fileID: 1127962181}
+  icon: {fileID: 0}
 --- !u!114 &1723506698
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13128,6 +13139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 2143232746}
   cooldownText: {fileID: 811463622}
+  icon: {fileID: 0}
 --- !u!114 &1874287416
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14451,6 +14463,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SkillSlotUI
   cooldownFill: {fileID: 687856075}
   cooldownText: {fileID: 2086809427}
+  icon: {fileID: 0}
 --- !u!1 &2045455928
 GameObject:
   m_ObjectHideFlags: 0

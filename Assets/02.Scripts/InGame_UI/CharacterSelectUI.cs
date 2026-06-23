@@ -7,11 +7,15 @@ public class CharacterSelectUI : MonoBehaviour
     [Header("Buttons")]
     [SerializeField] private Button assassinButton;
     [SerializeField] private Button mageButton;
+    [SerializeField] private Button bruteButton;
+
     [SerializeField] private Button confirmButton;
 
     [SerializeField] private GameObject assassinLockObj;
 
     [SerializeField] private GameObject mageLockObj;
+    [SerializeField]
+    private GameObject bruteLockObj;
 
     [Header("UI")]
     [SerializeField] private TMP_Text selectedText;
@@ -37,6 +41,7 @@ public class CharacterSelectUI : MonoBehaviour
 
         assassinButton.onClick.AddListener(OnClickAssassin);
         mageButton.onClick.AddListener(OnClickMage);
+        bruteButton.onClick.AddListener(OnClickBrute);
         confirmButton.onClick.AddListener(OnClickConfirm);
     }
 
@@ -96,6 +101,7 @@ public class CharacterSelectUI : MonoBehaviour
     {
         assassinButton.onClick.RemoveListener(OnClickAssassin);
         mageButton.onClick.RemoveListener(OnClickMage);
+        bruteButton.onClick.RemoveListener(OnClickBrute);
         confirmButton.onClick.RemoveListener(OnClickConfirm);
         if (Instance == this)
         {
@@ -112,7 +118,10 @@ public class CharacterSelectUI : MonoBehaviour
     {
         TrySelectClass(CharacterClassType.Mage, "마법사 선택");
     }
-
+    private void OnClickBrute()
+    {
+        TrySelectClass(CharacterClassType.Brute,"브루트 선택");
+    }
     private void TrySelectClass(CharacterClassType classType, string message)
     {
         if (IsClassLockedForLocalTeam(classType))
@@ -200,17 +209,23 @@ public class CharacterSelectUI : MonoBehaviour
         bool assassinUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Assassin, myTeam, PlayerLobbyObject.Local.Object.InputAuthority);
 
         bool mageUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Mage, myTeam, PlayerLobbyObject.Local.Object.InputAuthority);
+        bool bruteUsed = GameBootstrap.Instance.IsCharacterUsedInTeam(CharacterClassType.Brute,myTeam,PlayerLobbyObject.Local.Object.InputAuthority);
 
         assassinLockObj.SetActive(assassinUsed);
 
         mageLockObj.SetActive(mageUsed);
 
+        bruteLockObj.SetActive(bruteUsed);
+
         assassinButton.interactable = !assassinUsed;
 
         mageButton.interactable = !mageUsed;
 
-        if (SelectedClass == CharacterClassType.Assassin && assassinUsed ||
-            SelectedClass == CharacterClassType.Mage && mageUsed)
+        bruteButton.interactable = !bruteUsed;
+
+        if ((SelectedClass == CharacterClassType.Assassin && assassinUsed) ||
+            (SelectedClass == CharacterClassType.Mage && mageUsed) ||
+            (SelectedClass == CharacterClassType.Brute && bruteUsed))
         {
             ClearSelectedClass("같은 팀에서 이미 선택한 캐릭터입니다.");
 

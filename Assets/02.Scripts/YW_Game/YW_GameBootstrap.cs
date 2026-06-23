@@ -11,6 +11,8 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
     [SerializeField]
     private NetworkObject magePrefab;
     [SerializeField]
+    private NetworkObject brutePrefab;
+    [SerializeField]
     private NetworkObject playerLobbyPrefab;
 
 
@@ -70,6 +72,14 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         ClassDataManager.AddData(
             CharacterClassType.Mage,
             mage);
+
+        ClassData brute =
+    await ClassDataLoader.LoadClassData(
+        CharacterClassType.Brute);
+
+        ClassDataManager.AddData(
+            CharacterClassType.Brute,
+            brute);
 
         Debug.Log("ClassData Load Complete");
     }
@@ -294,8 +304,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
         SpawnPlayer(Runner,player,lobby.SelectedClass);
     }
 
-    private NetworkObject GetCharacterPrefab(
-    CharacterClassType classType)
+    private NetworkObject GetCharacterPrefab(CharacterClassType classType)
     {
         switch (classType)
         {
@@ -304,6 +313,9 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
             case CharacterClassType.Mage:
                 return magePrefab;
+
+            case CharacterClassType.Brute:
+                return brutePrefab;
 
             default:
                 return assassinPrefab;
@@ -553,7 +565,8 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
             new()
             {
             CharacterClassType.Assassin,
-            CharacterClassType.Mage
+            CharacterClassType.Mage,
+            CharacterClassType.Brute
             };
 
         List<CharacterClassType> available =

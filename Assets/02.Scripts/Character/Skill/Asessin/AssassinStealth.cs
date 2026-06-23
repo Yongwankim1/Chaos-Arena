@@ -11,7 +11,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
     private WorldHPBar _hpBar;
     [SerializeField] private ParticleSystem stealthStartEffect;
     [SerializeField] private ParticleSystem stealthEndEffect;
-
+    BruteBuffEffect bruteBuff;
     [Networked] public NetworkBool IsStealth { get; set; }
     [Networked] public TickTimer StealthTimer { get; set; }
     [Networked] public TickTimer CooldownTimer { get; set; }
@@ -36,6 +36,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
         _renderers = GetComponentsInChildren<SkinnedMeshRenderer>(true);
         _ultimate = GetComponent<AssassinUltimate>();
         _hpBar = GetComponentInChildren<WorldHPBar>(true);
+        bruteBuff = GetComponent<BruteBuffEffect>();
     }
 
     public override void FixedUpdateNetwork()
@@ -109,6 +110,8 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
 
                 _buff?.SetEffectVisible(false);
 
+                bruteBuff?.SetVisible(false);
+
                 _player.SetTeamMarkVisible(false);
 
                 _hpBar?.SetVisible(false);
@@ -133,6 +136,8 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
         }
 
         _buff?.SetEffectVisible(true);
+
+        bruteBuff?.SetVisible(false);
 
         _player.SetTeamMarkVisible(true);
 

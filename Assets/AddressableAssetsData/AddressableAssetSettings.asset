@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b864e9e03c81504478ac28ef73b72155
   m_currentHash:
     serializedVersion: 2
-    Hash: f1d25ea88387236a603474cc1f951b86
+    Hash: 00000000000000000000000000000000
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_CatalogRequestsTimeout: 0
@@ -107,6 +107,7 @@ MonoBehaviour:
     - Character
     - Narration
     - Mage
+    - Brute
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: b6fd36df1e510004e8f937b55c49bc1a, type: 2}
