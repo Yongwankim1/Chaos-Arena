@@ -24,6 +24,7 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     private bool isJoiningRoom;
     private bool isLeavingRoom;
     private bool isRecoveringLobby;
+    private bool isApplicationQuitting;
 
     [Header("Panels")]
     [SerializeField] private GameObject mainLobbyPanel;
@@ -89,6 +90,18 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
         roomCreateBtn.onClick.RemoveAllListeners();
         yesCreateBtn.onClick.RemoveAllListeners();
         closeBtn.onClick.RemoveAllListeners();
+    }
+
+    private void OnApplicationQuit()
+    {
+        isApplicationQuitting = true;
+
+        if (currentRunner == null)
+            return;
+
+        currentRunner.RemoveCallbacks(this);
+        _ = currentRunner.Shutdown();
+        currentRunner = null;
     }
 
     public async void FusionConnect()
@@ -701,6 +714,12 @@ public class LobbyManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason)
     {
         Debug.Log("Runner 종료: " + shutdownReason);
+
+        if (isApplicationQuitting)
+        {
+            roomPlayerDataObjects.Clear();
+            return;
+        }
 
         if (!CanUseLobbyUI())
         {

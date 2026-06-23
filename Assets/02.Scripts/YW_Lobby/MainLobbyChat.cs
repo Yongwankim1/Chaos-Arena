@@ -48,6 +48,17 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     {
         if (nickNameChecker != null) nickNameChecker.OnSetNickName -= Connect;
     }
+
+    private void OnApplicationQuit()
+    {
+        if (chatClient == null)
+            return;
+
+        chatClient.Disconnect();
+        chatClient = null;
+        isSubscribedToMainChannel = false;
+    }
+
     public void Connect()
     {
         if (chatClient != null)

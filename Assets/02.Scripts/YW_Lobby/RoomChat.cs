@@ -25,6 +25,17 @@ public class RoomChat : MonoBehaviour, IChatClientListener
     private bool isSubscribed;
     private bool isSendingAfterImeCommit;
 
+    private void OnApplicationQuit()
+    {
+        if (chatClient == null)
+            return;
+
+        chatClient.Disconnect();
+        chatClient = null;
+        isSubscribed = false;
+        currentChannelName = null;
+    }
+
     private void Update()
     {
         chatClient?.Service();
