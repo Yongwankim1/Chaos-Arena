@@ -14,7 +14,16 @@ public class RoundManager : NetworkBehaviour
 
     [Header("Round Rule")]
     [SerializeField]
-    private int killsToWinRound = 3;
+    private int killsToWin1vs1 = 3;
+
+    [SerializeField]
+    private int killsToWin2vs2 = 5;
+
+    [SerializeField]
+    private int killsToWin3vs3 = 8;
+
+    [Networked]
+    public int CurrentKillTarget { get; set; }
 
     [SerializeField]
     private int roundsToWinMatch = 3;
@@ -114,6 +123,8 @@ public class RoundManager : NetworkBehaviour
             return;
 
         CurrentRound = 1;
+
+        CurrentKillTarget = GetKillTarget();
 
         enemySpawnManager.Spawn(Runner);
 
@@ -349,7 +360,7 @@ public class RoundManager : NetworkBehaviour
 
     private void CheckRoundEnd()
     {
-        if (BlueScore >= killsToWinRound)
+        if (BlueScore >= CurrentKillTarget)
         {
             BlueRoundWin++;
 
@@ -369,7 +380,7 @@ public class RoundManager : NetworkBehaviour
             return;
         }
 
-        if (RedScore >= killsToWinRound)
+        if (RedScore >= CurrentKillTarget)
         {
             RedRoundWin++;
 
@@ -389,6 +400,25 @@ public class RoundManager : NetworkBehaviour
             return;
         }
     }
+
+    private int GetKillTarget()
+    {
+        switch (RoomSessionData.MatchType)
+        {
+            case MatchType.OneVsOne:
+                return killsToWin1vs1;
+
+            case MatchType.TwoVsTwo:
+                return killsToWin2vs2;
+
+            case MatchType.ThreeVsThree:
+                return killsToWin3vs3;
+
+            default:
+                return killsToWin1vs1;
+        }
+    }
+
     private void CheckMatchEnd()
     {
         if (BlueRoundWin >= roundsToWinMatch)
@@ -437,6 +467,7 @@ public class RoundManager : NetworkBehaviour
             yield break;
 
         CurrentRound++;
+        CurrentKillTarget = GetKillTarget();
         _isRoundEnding = false;
 
         RoundResult = RoundResultType.None;
