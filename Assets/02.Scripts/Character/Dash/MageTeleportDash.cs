@@ -25,7 +25,7 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
     public bool IsDashing => false;
 
     public Vector3 DashDirection => Vector3.zero;
-
+    CharacterSound _sound;
     public float GetMoveThisTick()
     {
         return 0f;
@@ -37,6 +37,7 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
         _cc = GetComponent<CharacterController>();
         _controller = GetComponent<NetworkCharacterController>();
         _actionLock = GetComponent<CharacterActionLock>();
+        _sound = GetComponent<CharacterSound>();
     }
     public void Dash()
     {
@@ -99,7 +100,7 @@ public class MageTeleportDash : NetworkBehaviour, ISkillCooldown, IDash
     {
         if (teleportStartEffect == null)
             return;
-
+        _sound.PlayDash();
         teleportStartEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         teleportStartEffect.Play();
     }
