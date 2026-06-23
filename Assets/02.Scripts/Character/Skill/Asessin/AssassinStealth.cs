@@ -137,7 +137,7 @@ public class AssassinStealth : NetworkBehaviour, IStealthHandler, ISkillE, ISkil
 
         _buff?.SetEffectVisible(true);
 
-        bruteBuff?.SetVisible(false);
+        bruteBuff?.SetVisible(true);
 
         _player.SetTeamMarkVisible(true);
 

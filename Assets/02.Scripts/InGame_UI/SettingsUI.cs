@@ -97,7 +97,10 @@ public class SettingsUI : MonoBehaviour
         sfxSlider.SetValueWithoutNotify(SettingsData.SFXVolume);
         voiceSlider.SetValueWithoutNotify(SettingsData.VoiceVolume);
         uiSlider.SetValueWithoutNotify(SettingsData.UIVolume);
-        sensitivitySlider.SetValueWithoutNotify(SettingsData.MouseSensitivity);
+        float sensitivityPercent =Mathf.InverseLerp(0.5f,3f,SettingsData.MouseSensitivity);
+
+        sensitivitySlider.SetValueWithoutNotify(sensitivityPercent);
+
 
         masterInput.SetTextWithoutNotify(
             Mathf.RoundToInt(SettingsData.MasterVolume * 100f).ToString());
@@ -114,8 +117,7 @@ public class SettingsUI : MonoBehaviour
         uiInput.SetTextWithoutNotify(
             Mathf.RoundToInt(SettingsData.UIVolume * 100f).ToString());
 
-        sensitivityInput.SetTextWithoutNotify(
-            Mathf.RoundToInt(SettingsData.MouseSensitivity * 100f).ToString());
+        sensitivityInput.SetTextWithoutNotify(Mathf.RoundToInt(sensitivityPercent * 100f).ToString());
     }
 
     public void SetMaster(float value)
@@ -174,12 +176,17 @@ public class SettingsUI : MonoBehaviour
         SettingsData.Save();
     }
 
-    public void SetSensitivity(float value)
+    public void SetSensitivity(float sliderValue)
     {
-        SettingsData.MouseSensitivity = value;
+        SettingsData.MouseSensitivity =
+            Mathf.Lerp(
+                0.5f,
+                3f,
+                sliderValue);
 
         sensitivityInput.SetTextWithoutNotify(
-            Mathf.RoundToInt(value * 100f).ToString());
+            Mathf.RoundToInt(
+                sliderValue * 100f).ToString());
 
         SettingsData.Save();
     }
@@ -228,10 +235,30 @@ public class SettingsUI : MonoBehaviour
 
     private void SetSensitivityInput(string value)
     {
-        UpdateInput(value, sensitivitySlider, v =>
-        {
-            SettingsData.MouseSensitivity = v;
-        });
+        if (string.IsNullOrEmpty(value))
+            return;
+
+        if (!int.TryParse(value, out int percent))
+            return;
+
+        percent = Mathf.Clamp(percent, 0, 100);
+
+        sensitivityInput.SetTextWithoutNotify(
+            percent.ToString());
+
+        float sliderValue =
+            percent / 100f;
+
+        sensitivitySlider.SetValueWithoutNotify(
+            sliderValue);
+
+        SettingsData.MouseSensitivity =
+            Mathf.Lerp(
+                0.5f,
+                3f,
+                sliderValue);
+
+        SettingsData.Save();
     }
 
     private void ClampInput(TMP_InputField input)

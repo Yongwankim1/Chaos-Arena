@@ -8,7 +8,7 @@ public static class SettingsData
     public static float VoiceVolume = 1f;
     public static float UIVolume = 1f;
 
-    public static float MouseSensitivity = 1f;
+    public static float MouseSensitivity = 1.75f;
 
     public static void Load()
     {
