@@ -4,7 +4,7 @@ using Unity.Behavior;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBehaviorBridge : NetworkBehaviour
+public class EnemyBehaviorBridge : NetworkBehaviour, ISlowable
 {
     [SerializeField] EnemySO dataSO;
     [SerializeField] private Transform[] patrolPoints;
@@ -15,6 +15,8 @@ public class EnemyBehaviorBridge : NetworkBehaviour
     private BehaviorGraphAgent behaviorGraphAgent;
     private bool? lastCanRunAi;
     private bool proxyTransformInitialized;
+    private TickTimer slowTimer;
+    private float slowPercent;
 
     [Networked] private Vector3 NetworkPosition { get; set; }
     [Networked] private Quaternion NetworkRotation { get; set; }
@@ -39,6 +41,7 @@ public class EnemyBehaviorBridge : NetworkBehaviour
     public override void Spawned()
     {
         ApplyAuthorityState();
+        UpdateSlow();
 
         if (Object == null || Object.HasStateAuthority)
         {
@@ -51,6 +54,7 @@ public class EnemyBehaviorBridge : NetworkBehaviour
     {
 
         ApplyAuthorityState();
+        UpdateSlow();
 
         if (Object == null || Object.HasStateAuthority)
         {
@@ -113,7 +117,7 @@ public class EnemyBehaviorBridge : NetworkBehaviour
             return;
         }
 
-        navMeshAgent.speed = dataSO.chaseSpeed;
+        ApplyAgentSpeed();
     }
 
     private void TryPopulatePatrolPointsFromScene()
@@ -123,7 +127,7 @@ public class EnemyBehaviorBridge : NetworkBehaviour
             return;
         }
 
-        // 수동 할당이 비어 있으면 scene의 PatrolPoint 루트를 기준으로 자동 수집한다.
+        // Auto-populate patrol points from the scene when none are assigned.
         GameObject patrolRootObject = GameObject.Find("PatrolPoint");
         if (patrolRootObject == null)
         {
@@ -145,6 +149,40 @@ public class EnemyBehaviorBridge : NetworkBehaviour
         patrolPoints = discoveredPoints;
     }
 
+
+    private void UpdateSlow()
+    {
+        if (Object != null && !Object.HasStateAuthority)
+            return;
+
+        if (!slowTimer.IsRunning || !slowTimer.Expired(Runner))
+            return;
+
+        slowTimer = TickTimer.None;
+        slowPercent = 0f;
+        ApplyAgentSpeed();
+    }
+
+    private void ApplyAgentSpeed()
+    {
+        if (navMeshAgent == null || dataSO == null)
+            return;
+
+        navMeshAgent.speed = dataSO.chaseSpeed * (1f - slowPercent);
+    }
+
+    public void ApplySlow(float percent, float duration)
+    {
+        if (Object != null && !Object.HasStateAuthority)
+            return;
+
+        if (duration <= 0f)
+            return;
+
+        slowPercent = Mathf.Clamp01(percent);
+        slowTimer = TickTimer.CreateFromSeconds(Runner, duration);
+        ApplyAgentSpeed();
+    }
     public Vector3 GetPatrolPosition(int index)
     {
         if (!HasPatrolPoints)

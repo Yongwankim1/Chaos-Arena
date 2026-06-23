@@ -369,6 +369,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             GameObject targetObject =
                 damageable.GetDamageableObject();
 
+            TryApplyRedBuffSlow(targetObject);
+
             if (data.Knockback > 0f)
             {
                 NetworkThirdPersonController controller =
@@ -663,6 +665,8 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             GameObject targetObject =
                 damageable.GetDamageableObject();
 
+            TryApplyRedBuffSlow(targetObject);
+
             if (data.Knockback > 0f)
             {
                 NetworkThirdPersonController controller =
@@ -709,6 +713,24 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                 data.EffectRotationOffset);
     }
 
+    public void TryApplyRedBuffSlow(GameObject targetObject)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (_playerCharacter == null || !_playerCharacter.HasRedBuff)
+            return;
+
+        if (_playerCharacter.RedBuffSlowPercent <= 0f ||
+            _playerCharacter.RedBuffSlowDuration <= 0f)
+            return;
+
+        ISlowable slowable = targetObject.GetComponent<ISlowable>();
+
+        slowable?.ApplySlow(
+            _playerCharacter.RedBuffSlowPercent,
+            _playerCharacter.RedBuffSlowDuration);
+    }
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     public void RPC_HitFeedback(NetworkId targetId, float hitStop, float cameraShake)
     {

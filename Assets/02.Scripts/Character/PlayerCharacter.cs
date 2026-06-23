@@ -2,7 +2,7 @@ using Fusion;
 using Photon.Realtime;
 using UnityEngine;
 
-public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHasHealth
+public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHasHealth, IBlueBuffable, IRedBuffable, ISlowable
 {
     public static PlayerCharacter Local;
     NetworkThirdPersonController controller3rd;
@@ -28,6 +28,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     [SerializeField]
     private float manaRegenPerSecond = 8f;
 
+    private float blueBuffManaRegenBonus;
+
     [Networked]
     public TeamType Team { get; set; }
 
@@ -42,7 +44,13 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
     public float MaxMana => _classData.maxMana;
 
-    public float AttackPower => _classData.attackPower;
+    private float redBuffAttackBonusPercent;
+    private float redBuffSlowPercent;
+    private float redBuffSlowDuration;
+    private bool hasRedBuff;
+
+    public float AttackPower =>
+        _classData.attackPower * (1f + redBuffAttackBonusPercent);
 
     private static readonly int DieHash =
     Animator.StringToHash("Die");
@@ -67,6 +75,11 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
     [SerializeField]
     private WorldHPBar worldHPBar;
+
+
+    private TickTimer slowTimer;
+    private float slowPercent;
+
 
     private void Awake()
     {
@@ -115,13 +128,22 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (_classData == null)
             return;
 
+        if (slowTimer.IsRunning && slowTimer.Expired(Runner))
+        {
+            slowTimer = TickTimer.None;
+            slowPercent = 0f;
+            ApplyMovementStat();
+        }
+
         if (IsDead)
             return;
 
         if (ManaRegenDelayTimer.IsRunning && !ManaRegenDelayTimer.Expired(Runner))
             return;
 
-        RecoverMana(manaRegenPerSecond * Runner.DeltaTime);
+        float totalManaRegenPerSecond = manaRegenPerSecond + blueBuffManaRegenBonus;
+
+        RecoverMana(totalManaRegenPerSecond * Runner.DeltaTime);
     }
     public bool UseMana(float amount)
     {
@@ -199,14 +221,17 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     {
         var controller =
             GetComponent<NetworkThirdPersonController>();
+        float speedMultiplier = 1f - slowPercent;
 
         if (controller != null)
         {
+
+
             controller.MoveSpeed =
-                _classData.walkSpeed;
+                _classData.walkSpeed * speedMultiplier;
 
             controller.SprintSpeed =
-                _classData.sprintSpeed;
+                _classData.sprintSpeed * speedMultiplier;
         }
 
         var cc = GetComponent<NetworkCharacterController>();
@@ -214,7 +239,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (cc != null)
         {
             cc.maxSpeed =
-                _classData.sprintSpeed;
+                _classData.sprintSpeed * speedMultiplier;
         }
     }
     public void TakeDamage(int damage, IAttacker attacker)
@@ -299,10 +324,12 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     {
         if (!HasStateAuthority)
             return;
-        //GetComponent<Buff>().Init();
+
+        GetComponent<Buff>().Init();
         Vector3 oldPosition = transform.position;
 
         _actionLock?.ClearAll();
+        ClearSlow();
 
         CurrentHP = MaxHP;
         CurrentMana = MaxMana;
@@ -421,5 +448,85 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
             return;
 
         teamRenderer.enabled = visible;
+    }
+
+
+    public void OnBlueBuff(BuffSO buff, bool value)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        blueBuffManaRegenBonus = value ? buff.Value : 0f;
+    }
+
+    public void OnBlueBuff(bool value)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        blueBuffManaRegenBonus = value ? blueBuffManaRegenBonus : 0f;
+    }
+
+    public void OnRedBuff(BuffSO buff, bool value)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        hasRedBuff = value;
+
+        if (!value)
+        {
+            redBuffAttackBonusPercent = 0f;
+            redBuffSlowPercent = 0f;
+            redBuffSlowDuration = 0f;
+            return;
+        }
+
+        redBuffAttackBonusPercent =
+            buff.AttackBonusPercent > 0f
+                ? buff.AttackBonusPercent
+                : buff.Value;
+
+        redBuffSlowPercent = buff.SlowPercent;
+        redBuffSlowDuration = buff.SlowDuration;
+    }
+
+    public bool HasRedBuff => hasRedBuff;
+    public float RedBuffSlowPercent => redBuffSlowPercent;
+    public float RedBuffSlowDuration => redBuffSlowDuration;
+
+    public void OnRedBuff(bool value)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        hasRedBuff = value;
+
+        if (!value)
+        {
+            redBuffAttackBonusPercent = 0f;
+            redBuffSlowPercent = 0f;
+            redBuffSlowDuration = 0f;
+        }
+    }
+    public void ApplySlow(float percent, float duration)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (duration <= 0f)
+            return;
+
+        slowPercent = Mathf.Clamp01(percent);
+        slowTimer = TickTimer.CreateFromSeconds(Runner, duration);
+
+        ApplyMovementStat();
+    }
+
+    private void ClearSlow()
+    {
+        slowTimer = TickTimer.None;
+        slowPercent = 0f;
+        ApplyMovementStat();
     }
 }

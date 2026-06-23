@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d295ec304dfab64caa7d6f2b9d29eb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NetworkProjectileMove
-  speed: 30
+  speed: 45
   maxDistance: 30
   height: 0
   radius: 0.75
