@@ -66,10 +66,7 @@ public class SettingsManager : MonoBehaviour
 
         settingsPanel.SetActive(true);
 
-        Cursor.lockState =
-            CursorLockMode.None;
-
-        Cursor.visible = true;
+        RefreshCursor();
 
         if (InputManager.Instance != null)
         {
@@ -84,18 +81,39 @@ public class SettingsManager : MonoBehaviour
 
         settingsPanel.SetActive(false);
 
-        bool inGame = FindFirstObjectByType<PlayerCharacter>() != null;
-
-        if (inGame)
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-
-            Cursor.visible = false;
-        }
+        RefreshCursor();
 
         if (InputManager.Instance != null)
         {
             InputManager.Instance.InputBlocked = false;
         }
+    }
+
+    public void RefreshCursor()
+    {
+        if (IsOpen)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+
+        bool characterSelectOpen = false;
+
+        if (CharacterSelectUI.Instance != null)
+        {
+            characterSelectOpen =
+                CharacterSelectUI.Instance.gameObject.activeInHierarchy;
+        }
+
+        if (characterSelectOpen)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            return;
+        }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

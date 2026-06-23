@@ -75,8 +75,7 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        SettingsManager.Instance?.RefreshCursor();
 
         selectedText.text = "선택된 캐릭터가 없습니다";
 
@@ -165,13 +164,11 @@ public class CharacterSelectUI : MonoBehaviour
 
     public void OnConfirmAccepted()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-
-        Cursor.visible = false;
-
         OnPlayerUI();
 
         gameObject.SetActive(false);
+
+        SettingsManager.Instance?.RefreshCursor();
     }
 
     public void OnConfirmRejected()

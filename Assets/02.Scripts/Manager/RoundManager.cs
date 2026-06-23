@@ -189,6 +189,8 @@ public class RoundManager : NetworkBehaviour
     private void RPC_ShowCharacterSelect()
     {
         characterSelectUI.gameObject.SetActive(true);
+
+        SettingsManager.Instance?.RefreshCursor();
     }
     private void StartPreparation()
     {
@@ -710,9 +712,7 @@ public class RoundManager : NetworkBehaviour
             _nextRoundRoutine = null;
         }
 
-        Cursor.lockState = CursorLockMode.None;
-
-        Cursor.visible = true;
+        SettingsManager.Instance?.RefreshCursor();
 
         PlayerCharacter localPlayer = GetLocalPlayer();
 
