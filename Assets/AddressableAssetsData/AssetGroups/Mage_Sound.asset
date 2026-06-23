@@ -21,14 +21,44 @@ MonoBehaviour:
     m_SerializedLabels:
     - Mage
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 452c60123aa648c48aa6ed6fce03f690
+    m_Address: Assets/07.Sounds/Mage/MageFootStep.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 509fe25d7d94d1e41bf9a635c783a55f
+    m_Address: Assets/07.Sounds/Mage/MaqeQExplosion.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 8f69d656b41db0d4e82bab8c0718d471
     m_Address: Assets/07.Sounds/Mage/Attack1.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - Mage
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a6c2282a7c384a5479729505d6e9a81d
+    m_Address: Assets/07.Sounds/Mage/MageTeleport.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: adf099c45a144394099634051b4b3373
+    m_Address: Assets/07.Sounds/Mage/MageQUse.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: bb46fd77ad24e7b41bfc36319b957d16
     m_Address: Assets/07.Sounds/Mage/Attack03.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bcac492c8f3b4ee4cb234cd7fa8f3d02
+    m_Address: Assets/07.Sounds/Mage/MageRUse 1.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - Mage
@@ -41,6 +71,12 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d7c1179ae4773c940a13cdda05c147f7
     m_Address: Assets/07.Sounds/Mage/Attack4.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Mage
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db081a9b8a8d10847a528448bd43288e
+    m_Address: Assets/07.Sounds/Mage/MageEUse.mp3
     m_ReadOnly: 0
     m_SerializedLabels:
     - Mage

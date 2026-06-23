@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MageSoundLibrary
   FootStep:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 452c60123aa648c48aa6ed6fce03f690
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -104,7 +104,7 @@ MonoBehaviour:
     MaxDistance: 30
   Dash:
     Clip:
-      m_AssetGUID: bb80eaeba758f34418630f02d69d87cd
+      m_AssetGUID: a6c2282a7c384a5479729505d6e9a81d
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -114,7 +114,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillQ:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: adf099c45a144394099634051b4b3373
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -124,7 +124,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillE:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: db081a9b8a8d10847a528448bd43288e
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -134,7 +134,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillR:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: bcac492c8f3b4ee4cb234cd7fa8f3d02
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
