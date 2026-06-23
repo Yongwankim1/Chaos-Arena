@@ -82962,6 +82962,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7353307786007257012, guid: 4be1fa851cd976141a1af282a59cdbde, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8134810250565536686, guid: 4be1fa851cd976141a1af282a59cdbde, type: 3}
       propertyPath: m_Name
       value: World_HP_Bar
