@@ -98,13 +98,9 @@ public class SettingsManager : MonoBehaviour
             return;
         }
 
-        bool characterSelectOpen = false;
-
-        if (CharacterSelectUI.Instance != null)
-        {
-            characterSelectOpen =
-                CharacterSelectUI.Instance.gameObject.activeInHierarchy;
-        }
+        bool characterSelectOpen =
+            CharacterSelectUI.Instance != null &&
+            CharacterSelectUI.Instance.gameObject.activeInHierarchy;
 
         if (characterSelectOpen)
         {
@@ -113,7 +109,18 @@ public class SettingsManager : MonoBehaviour
             return;
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        bool inGame = FindFirstObjectByType<PlayerCharacter>() != null;
+
+        if (inGame)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            // 로비는 무조건 마우스 보이기
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }
