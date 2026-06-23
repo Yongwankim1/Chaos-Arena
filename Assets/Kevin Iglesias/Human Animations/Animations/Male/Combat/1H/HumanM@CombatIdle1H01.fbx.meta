@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 56fd86b76fc74d24d83522069f5deb9b
+guid: d4532f1415d75034a8a42ade4be07f5c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: HumanM@Idle01
-      takeName: HumanM@Idle01
-      internalID: -2576967968662016515
+      name: HumanM@CombatIdle1H01
+      takeName: Untitled
+      internalID: 3094330708855449807
       firstFrame: 0
-      lastFrame: 81
+      lastFrame: 40
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -971,5 +971,5 @@ AssetOrigin:
   productId: 165785
   packageName: Human Melee Animations FREE
   packageVersion: 2.0.2
-  assetPath: Assets/Kevin Iglesias/Human Animations/Animations/Male/Idles/HumanM@Idle01.fbx
+  assetPath: Assets/Kevin Iglesias/Human Animations/Animations/Male/Combat/1H/HumanM@CombatIdle1H01.fbx
   uploadId: 937352
