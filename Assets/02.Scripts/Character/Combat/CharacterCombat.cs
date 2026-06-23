@@ -565,6 +565,10 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
                 spawnPosition,
                 spawnRotation);
 
+        Destroy(
+            effect,
+            1f);
+
         // 장판은 부모 안 붙임
         if (!data.SpawnOnGround)
         {
