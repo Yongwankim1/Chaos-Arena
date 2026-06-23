@@ -68,6 +68,12 @@ public class AreaAttack : NetworkBehaviour
             }
 
             damageable.TakeDamage(damage, attacker);
+
+            CharacterCombat combat =
+                attacker?.GetAttacker()?.GetComponent<CharacterCombat>();
+
+            combat?.TryApplyRedBuffSlow(
+                damageable.GetDamageableObject());
         }
     }
 

@@ -25,7 +25,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     [SerializeField]
     private float manaRegenPerSecond = 8f;
 
-    private float blueBuffManaRegenBonus;
+    private float blueBuffManaRegenBonusPercent;
 
     [Networked]
     public TeamType Team { get; set; }
@@ -138,7 +138,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (ManaRegenDelayTimer.IsRunning && !ManaRegenDelayTimer.Expired(Runner))
             return;
 
-        float totalManaRegenPerSecond = manaRegenPerSecond + blueBuffManaRegenBonus;
+        float totalManaRegenPerSecond =
+            manaRegenPerSecond * (1f + blueBuffManaRegenBonusPercent);
 
         RecoverMana(totalManaRegenPerSecond * Runner.DeltaTime);
     }
@@ -452,7 +453,12 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (!HasStateAuthority)
             return;
 
-        blueBuffManaRegenBonus = value ? buff.Value : 0f;
+        blueBuffManaRegenBonusPercent =
+            value
+                ? buff.ManaRegenBonusPercent > 0f
+                    ? buff.ManaRegenBonusPercent
+                    : buff.Value
+                : 0f;
     }
 
     public void OnBlueBuff(bool value)
@@ -460,7 +466,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (!HasStateAuthority)
             return;
 
-        blueBuffManaRegenBonus = value ? blueBuffManaRegenBonus : 0f;
+        blueBuffManaRegenBonusPercent = value ? blueBuffManaRegenBonusPercent : 0f;
     }
 
     public void OnRedBuff(BuffSO buff, bool value)

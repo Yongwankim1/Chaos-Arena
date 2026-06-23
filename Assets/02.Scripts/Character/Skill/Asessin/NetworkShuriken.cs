@@ -151,6 +151,7 @@ public class NetworkShuriken : NetworkBehaviour
             }
 
             damageable.TakeDamage(damage, _owner);
+            ApplyRedBuffSlow(damageable);
 
             if (firstHitAttackData != null)
             {
@@ -228,7 +229,17 @@ public class NetworkShuriken : NetworkBehaviour
             int damage = Mathf.Max(1, Mathf.RoundToInt(damageFloat));
 
             damageable.TakeDamage(damage, _owner);
+            ApplyRedBuffSlow(damageable);
         }
+    }
+
+    private void ApplyRedBuffSlow(IDamageable damageable)
+    {
+        CharacterCombat combat =
+            _owner?.GetAttacker()?.GetComponent<CharacterCombat>();
+
+        combat?.TryApplyRedBuffSlow(
+            damageable.GetDamageableObject());
     }
 
     private void HandleDisappear()
