@@ -36245,7 +36245,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6e6257b386d20489f98dc1cddd9f9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
-  _ClassType: 0
+  _ClassType: 2
   _CurrentHP: 0
   _CurrentMana: 0
   manaRegenDelay: 3

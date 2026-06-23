@@ -1,4 +1,4 @@
-﻿using Fusion;
+using Fusion;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +19,10 @@ public class Buff : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_Init()
     {
-        buffs.Clear();
+        foreach (BuffSO buff in buffs)
+        {
+            RemoveBuff(buff);
+        }
 
         for (int i = 0; i < effects.Count; i++)
         {
@@ -30,9 +33,9 @@ public class Buff : NetworkBehaviour
             effects[i] = null;
         }
 
+        buffs.Clear();
         effects.Clear();
     }
-
     public void AddBuff(BuffType type)
     {
         if (Object == null || !Object.HasStateAuthority)
@@ -75,15 +78,28 @@ public class Buff : NetworkBehaviour
             case BuffType.Red:
                 IRedBuffable redBuff = GetComponent<IRedBuffable>();
                 if (redBuff == null) return;
-                redBuff.OnRedBuff(buff);
+                redBuff.OnRedBuff(buff,true);
                 break;
             case BuffType.Blue:
                 IBlueBuffable blueBuff = GetComponent<IBlueBuffable>();
                 if (blueBuff == null) return;
-                blueBuff.OnBlueBuff(buff);
+                blueBuff.OnBlueBuff(buff,true);
                 break;
         }
 
+    }
+    private void RemoveBuff(BuffSO buff)
+    {
+        switch (buff.Type)
+        {
+            case BuffType.Blue:
+                GetComponent<IBlueBuffable>()?.OnBlueBuff(buff, false);
+                break;
+
+            case BuffType.Red:
+                GetComponent<IRedBuffable>()?.OnRedBuff(buff, false);
+                break;
+        }
     }
     public void SetEffectVisible(bool visible)
     {

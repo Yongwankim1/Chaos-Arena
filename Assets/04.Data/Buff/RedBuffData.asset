@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e28e33b306f628419e221aa78a7145f, type: 3}
   m_Name: RedBuffData
   m_EditorClassIdentifier: Assembly-CSharp::BuffSO
-  value: 0
+  value: 0.2
   duration: 0
   type: 1
   effect: {fileID: 3546323823116515695, guid: f52044d0860073a46892532200e55476, type: 3}
+  attackBonusPercent: 0.2
+  slowPercent: 0.3
+  slowDuration: 2

@@ -71,6 +71,12 @@ public class NetworkProjectileMove : NetworkBehaviour
         if (damageable != null)
         {
             damageable.TakeDamage(damage, attacker);
+
+            CharacterCombat combat =
+                attacker?.GetAttacker()?.GetComponent<CharacterCombat>();
+
+            combat?.TryApplyRedBuffSlow(
+                damageable.GetDamageableObject());
         }
 
         RPC_PlayHitEffect(transform.position, transform.rotation);

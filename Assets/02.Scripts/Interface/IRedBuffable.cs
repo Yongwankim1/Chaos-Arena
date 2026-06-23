@@ -1,4 +1,5 @@
 public interface IRedBuffable
 {
-    void OnRedBuff(BuffSO buff);
+    void OnRedBuff(BuffSO buff, bool value);
+    void OnRedBuff(bool value);
 }
