@@ -1,5 +1,4 @@
 using Fusion;
-using static Unity.Collections.Unicode;
 
 public class BruteDefenseBuff : NetworkBehaviour
 {
@@ -18,6 +17,35 @@ public class BruteDefenseBuff : NetworkBehaviour
         _player = GetComponent<PlayerCharacter>();
 
         _effect = GetComponent<BruteBuffEffect>();
+    }
+
+    public void RequestApply(
+        float reduction,
+        float duration)
+    {
+        if (Object != null &&
+            !Object.HasStateAuthority)
+        {
+            RPC_RequestApply(
+                reduction,
+                duration);
+
+            return;
+        }
+
+        Apply(
+            reduction,
+            duration);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestApply(
+        float reduction,
+        float duration)
+    {
+        Apply(
+            reduction,
+            duration);
     }
 
     public void Apply(

@@ -403,10 +403,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             return;
         }
-        if (_actionLock != null && !_actionLock.CanJump)
-        {
-            return;
-        }
+        bool canJump =
+            _actionLock == null ||
+            _actionLock.CanJump;
         if (_jumpCooldownTimer > 0f)
             _jumpCooldownTimer -= Runner.DeltaTime;
 
@@ -423,7 +422,10 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             _fallTimeoutDelta = FallTimeout;
 
-            if (input.Jump && _jumpCooldownTimer <= 0f && _landingLockTimer <= 0f)
+            if (canJump &&
+                input.Jump &&
+                _jumpCooldownTimer <= 0f &&
+                _landingLockTimer <= 0f)
             {
                 float previousVerticalVelocity = _controller.Velocity.y;
                 _controller.Jump();

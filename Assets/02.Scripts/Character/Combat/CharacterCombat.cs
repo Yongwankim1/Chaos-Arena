@@ -79,6 +79,11 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
         _stealth = GetComponent<IStealthHandler>();
         _ultimateModifier = GetComponent<IUltimateModifier>();
         _actionLock = GetComponent<CharacterActionLock>();
+
+        if (controller == null)
+        {
+            controller = GetComponent<NetworkThirdPersonController>();
+        }
     }
 
     public override void FixedUpdateNetwork()
@@ -131,7 +136,7 @@ public class CharacterCombat : NetworkBehaviour, IAttacker
             return;
 
 
-        if (controller != null && !controller.Grounded)
+        if (controller == null || !controller.Grounded)
             return;
 
         if (_playerCharacter != null && _playerCharacter.IsDead)
