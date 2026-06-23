@@ -13,6 +13,13 @@ public class NetworkThirdPersonController : NetworkBehaviour
     [SerializeField]
     private float attackMoveSpeed = 100f;
 
+    [Header("Sprint Mana")]
+    [SerializeField]
+    private float sprintManaDrainPerSecond = 5f;
+
+    [SerializeField]
+    private float sprintRecoverThresholdPercent = 0.2f;
+
     [Header("Jump")]
     public float JumpCooldown = 0.25f;
     public float FallTimeout = 0.02f;
@@ -84,6 +91,9 @@ public class NetworkThirdPersonController : NetworkBehaviour
     [Networked]
     private NetworkBool RotationOnly { get; set; }
 
+    [Networked]
+    private NetworkBool SprintLocked { get; set; }
+
     private float _localAnimatedSpeed;
     private bool _localAnimatedGrounded = true;
     private bool _localAnimatedFreeFall;
@@ -131,6 +141,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
             }
 
             _cinemachineTargetYaw = transform.eulerAngles.y;
+        }
+
+        if (HasStateAuthority)
+        {
+            SprintLocked = false;
         }
     }
 
@@ -296,12 +311,26 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (_actionLock != null && !_actionLock.CanMove)
         {
+            UpdateSprintMana(false);
+
             RotateToYaw(input.Yaw);
             return;
         }
 
+        bool wantsSprint =
+            input.Sprint &&
+            input.Move != Vector2.zero;
+
+        bool canSprint =
+            wantsSprint &&
+            !SprintLocked &&
+            _playerCharacter != null &&
+            _playerCharacter.CurrentMana > 0f;
+
+        UpdateSprintMana(canSprint);
+
         float targetSpeed =
-            input.Sprint
+            canSprint
                 ? SprintSpeed
                 : MoveSpeed;
 
@@ -387,6 +416,44 @@ public class NetworkThirdPersonController : NetworkBehaviour
         _controller.Move(
             moveDirection *
             Runner.DeltaTime);
+    }
+
+    private void UpdateSprintMana(bool isSprinting)
+    {
+        if (!HasStateAuthority)
+            return;
+
+        if (_playerCharacter == null)
+            return;
+
+        if (isSprinting)
+        {
+            _playerCharacter.CurrentMana =
+                Mathf.Max(
+                    0f,
+                    _playerCharacter.CurrentMana -
+                    sprintManaDrainPerSecond *
+                    Runner.DeltaTime);
+
+            _playerCharacter.DelayManaRegen();
+
+            if (_playerCharacter.CurrentMana <= 0f)
+            {
+                SprintLocked = true;
+            }
+
+            return;
+        }
+
+        float recoverThreshold =
+            _playerCharacter.MaxMana *
+            sprintRecoverThresholdPercent;
+
+        if (SprintLocked &&
+            _playerCharacter.CurrentMana >= recoverThreshold)
+        {
+            SprintLocked = false;
+        }
     }
 
     public void SetRotationOnly(bool value)
@@ -702,6 +769,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
         Grounded = true;
 
         _wasGrounded = true;
+
+        if (HasStateAuthority)
+        {
+            SprintLocked = false;
+        }
 
         if (_animator != null)
         {
