@@ -7,9 +7,11 @@ public class BuffSO : ScriptableObject
     [SerializeField] private float duration;
     [SerializeField] private BuffType type;
     [SerializeField] private GameObject effect;
+    [SerializeField] private float manaRegenBonusPercent;
     [SerializeField] private float attackBonusPercent;
     [SerializeField] private float slowPercent;
     [SerializeField] private float slowDuration;
+    public float ManaRegenBonusPercent => manaRegenBonusPercent;
     public float AttackBonusPercent => attackBonusPercent;
     public float SlowPercent => slowPercent;
     public float SlowDuration => slowDuration;
