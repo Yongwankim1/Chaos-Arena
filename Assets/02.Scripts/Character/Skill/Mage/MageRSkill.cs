@@ -106,6 +106,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         _controller.SetRotationOnly(true);
         _actionLock?.Lock(ActionLockType.Attack);
         _actionLock?.Lock(ActionLockType.Dash);
+        _actionLock?.Lock(ActionLockType.Jump);
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
@@ -123,7 +124,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     {
         cancelRequested = true;
         EndLaserEffect();
-        CanMove();
+        EndRState();
 
         isUsingR = false;
 
@@ -178,15 +179,35 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         spawnedLaser = null;
     }
 
-    public void CanMove()
+    private void EndRState()
     {
         if (!HasStateAuthority)
             return;
 
-        _controller.SetRotationOnly(false);
-        _actionLock?.Unlock(ActionLockType.Move);
+        _controller?.SetRotationOnly(false);
         _actionLock?.Unlock(ActionLockType.Attack);
         _actionLock?.Unlock(ActionLockType.Dash);
+        _actionLock?.Unlock(ActionLockType.Jump);
         isUsingR = false;
+    }
+
+    public void ResetSkillState()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        cancelRequested = true;
+
+        EndLaserEffect();
+
+        _controller?.SetRotationOnly(false);
+
+        _actionLock?.Unlock(ActionLockType.Attack);
+        _actionLock?.Unlock(ActionLockType.Dash);
+        _actionLock?.Unlock(ActionLockType.Jump);
+
+        isUsingR = false;
+        cancelRequested = false;
+        spawnedLaser = null;
     }
 }

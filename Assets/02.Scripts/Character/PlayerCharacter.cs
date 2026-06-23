@@ -302,6 +302,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         if (IsDead)
             return;
 
+        GetComponent<MageRSkill>()?.ResetSkillState();
+
         _actionLock?.ClearAll();
 
         IsDead = true;
@@ -331,6 +333,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     {
         if (!HasStateAuthority)
             return;
+
+        GetComponent<MageRSkill>()?.ResetSkillState();
 
         GetComponent<Buff>().Init();
         Vector3 oldPosition = transform.position;
