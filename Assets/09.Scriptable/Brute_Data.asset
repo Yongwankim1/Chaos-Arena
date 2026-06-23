@@ -16,8 +16,8 @@ MonoBehaviour:
   className: Brute
   maxHP: 150
   maxMana: 100
-  walkSpeed: 2
-  sprintSpeed: 10
+  walkSpeed: 6
+  sprintSpeed: 12
   attackPower: 6
   SkillIcons:
     Q: {fileID: -43797029, guid: 5a3c53c60a94562428d0e7c3482608c1, type: 3}

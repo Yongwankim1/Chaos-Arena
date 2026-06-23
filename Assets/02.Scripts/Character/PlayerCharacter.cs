@@ -223,27 +223,19 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     {
         var controller =
             GetComponent<NetworkThirdPersonController>();
+
         float speedMultiplier = 1f - slowPercent;
 
         if (controller != null)
         {
-
-
             controller.MoveSpeed =
                 _classData.walkSpeed * speedMultiplier;
 
             controller.SprintSpeed =
                 _classData.sprintSpeed * speedMultiplier;
         }
-
-        var cc = GetComponent<NetworkCharacterController>();
-
-        if (cc != null)
-        {
-            cc.maxSpeed =
-                _classData.sprintSpeed * speedMultiplier;
-        }
     }
+
     public void TakeDamage(int damage, IAttacker attacker)
     {
         if (!HasStateAuthority)
