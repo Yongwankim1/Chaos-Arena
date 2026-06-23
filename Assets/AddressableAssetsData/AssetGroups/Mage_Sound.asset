@@ -33,12 +33,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - Mage
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: bb80eaeba758f34418630f02d69d87cd
-    m_Address: Assets/07.Sounds/Mage/MageTeleport.mp3
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - Mage
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: c4ca9e94c7e548f4281821c384d31ffc
     m_Address: Assets/07.Sounds/Mage/Attack2.mp3
     m_ReadOnly: 0

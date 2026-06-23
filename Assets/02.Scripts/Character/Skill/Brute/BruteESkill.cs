@@ -101,21 +101,25 @@ public class BruteESkill : NetworkBehaviour, ISkillE, ISkillCooldown
 
         RPC_PlayCastEffect();
 
-        Collider[] hits =
-            Physics.OverlapSphere(
-                transform.position,
-                radius,
-                playerMask);
+        float radiusSqr = radius * radius;
 
-        foreach (Collider hit in hits)
+        PlayerCharacter[] players =
+            FindObjectsByType<PlayerCharacter>(
+                FindObjectsSortMode.None);
+
+        foreach (PlayerCharacter target in players)
         {
-            PlayerCharacter target =
-                hit.GetComponentInParent<PlayerCharacter>();
-
             if (target == null)
                 continue;
 
             if (target.Team != _player.Team)
+                continue;
+
+            float distanceSqr =
+                (target.transform.position -
+                 transform.position).sqrMagnitude;
+
+            if (distanceSqr > radiusSqr)
                 continue;
 
             BruteDefenseBuff buff = target.GetComponent<BruteDefenseBuff>();
@@ -123,14 +127,14 @@ public class BruteESkill : NetworkBehaviour, ISkillE, ISkillCooldown
             if (buff == null)
                 continue;
 
-            buff.Apply(
+            buff.RequestApply(
                 damageReduction,
                 buffDuration);
         }
     }
 
     // Animation Event
-    public void EndSkill()
+    public void EndSkilla()
     {
         if (!HasStateAuthority)
             return;

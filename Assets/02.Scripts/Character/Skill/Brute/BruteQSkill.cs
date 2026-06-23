@@ -73,6 +73,8 @@ public class BruteQSkill : NetworkBehaviour, ISkillQ, ISkillCooldown
         _actionLock.Lock(ActionLockType.Move);
         _actionLock.Lock(ActionLockType.Attack);
         _actionLock.Lock(ActionLockType.Dash);
+        _actionLock.Lock(ActionLockType.Jump);
+        _actionLock.Lock(ActionLockType.Skill);
 
         RPC_PlaySkillQ();
     }
@@ -94,7 +96,7 @@ public class BruteQSkill : NetworkBehaviour, ISkillQ, ISkillCooldown
         RPC_PlayPunchEffect();
     }
     // Animation Event
-    public void EndSkill()
+    public void EndSkills()
     {
         if (!HasStateAuthority)
             return;
@@ -102,6 +104,8 @@ public class BruteQSkill : NetworkBehaviour, ISkillQ, ISkillCooldown
         _actionLock.Unlock(ActionLockType.Move);
         _actionLock.Unlock(ActionLockType.Attack);
         _actionLock.Unlock(ActionLockType.Dash);
+        _actionLock.Unlock(ActionLockType.Jump);
+        _actionLock.Unlock(ActionLockType.Skill);
     }
 
     private void OnDrawGizmos()
