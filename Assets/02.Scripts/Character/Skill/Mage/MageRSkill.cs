@@ -124,9 +124,6 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
     {
         cancelRequested = true;
         EndLaserEffect();
-        EndRState();
-
-        isUsingR = false;
 
         if (playCancelAnimation)
             RPC_PlayCancelR();
@@ -167,16 +164,18 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
         if (!HasStateAuthority)
             return;
 
-        if (spawnedLaser == null)
-            return;
+        if (spawnedLaser != null)
+        {
+            MageLaserAttack laser = spawnedLaser.GetComponent<MageLaserAttack>();
 
-        MageLaserAttack laser = spawnedLaser.GetComponent<MageLaserAttack>();
-        if (laser != null)
-            laser.Destroy();
-        else
-            Runner.Despawn(spawnedLaser);
+            if (laser != null)
+                laser.Destroy();
+            else
+                Runner.Despawn(spawnedLaser);
+        }
 
         spawnedLaser = null;
+        EndRState();
     }
 
     private void EndRState()
