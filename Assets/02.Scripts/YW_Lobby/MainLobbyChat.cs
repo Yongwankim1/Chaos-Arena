@@ -30,6 +30,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     private string myNickName;
     private bool isSubscribedToMainChannel;
     private bool isSendingAfterImeCommit;
+    private TMP_Text joinStatusText;
 
 
     [Header("Prefabs")]
@@ -64,8 +65,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
                 return;
             }
         }
-        TMP_Text text = Instantiate(chatTextPrefab, contentParent);
-        text.text = "채널 입장 중...";
+        SetJoinStatusMessage("채널 입장 중...");
 
         chatClient = new ChatClient(this);
 
@@ -178,6 +178,22 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
 
         LayoutRebuilder.ForceRebuildLayoutImmediate(contentParent as RectTransform);
     }
+
+    private void SetJoinStatusMessage(string message)
+    {
+        if (chatTextPrefab == null || contentParent == null)
+            return;
+
+        if (joinStatusText == null)
+        {
+            joinStatusText = Instantiate(chatTextPrefab, contentParent);
+        }
+
+        joinStatusText.text = message;
+
+        StartCoroutine(ScrollToBottomRoutine());
+    }
+
     public void SendChat()
     {
         if (chatClient == null) return;
@@ -212,8 +228,7 @@ public class MainLobbyChat : MonoBehaviour, IChatClientListener
     {
         Debug.Log("채널 입장 성공: " + channels[0]);
         isSubscribedToMainChannel = true;
-        TMP_Text text = Instantiate(chatTextPrefab, contentParent);
-        text.text = "채널 입장!";
+        SetJoinStatusMessage("채널 입장!");
 
         UpdateUserList();
     }
