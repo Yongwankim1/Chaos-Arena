@@ -604,9 +604,7 @@ public class GameBootstrap : NetworkBehaviour, INetworkRunnerCallbacks
 
         CharacterSelectUI.Instance.gameObject.SetActive(false);
 
-        Cursor.lockState = CursorLockMode.Locked;
-
-        Cursor.visible = false;
+        SettingsManager.Instance?.RefreshCursor();
     }
     public TeamType GetPlayerTeam(PlayerRef player)
     {

@@ -51,12 +51,12 @@ public class SettingsUI : MonoBehaviour
 
         sensitivitySlider.onValueChanged.AddListener(SetSensitivity);
 
-        masterInput.onEndEdit.AddListener(SetMasterInput);
-        bgmInput.onEndEdit.AddListener(SetBGMInput);
-        sfxInput.onEndEdit.AddListener(SetSFXInput);
-        voiceInput.onEndEdit.AddListener(SetVoiceInput);
-        uiInput.onEndEdit.AddListener(SetUIInput);
-        sensitivityInput.onEndEdit.AddListener(SetSensitivityInput);
+        masterInput.onValueChanged.AddListener(SetMasterInput);
+        bgmInput.onValueChanged.AddListener(SetBGMInput);
+        sfxInput.onValueChanged.AddListener(SetSFXInput);
+        voiceInput.onValueChanged.AddListener(SetVoiceInput);
+        uiInput.onValueChanged.AddListener(SetUIInput);
+        sensitivityInput.onValueChanged.AddListener(SetSensitivityInput);
     }
 
     private void OnDestroy()
@@ -73,12 +73,21 @@ public class SettingsUI : MonoBehaviour
 
         sensitivitySlider.onValueChanged.RemoveListener(SetSensitivity);
 
-        masterInput.onEndEdit.RemoveListener(SetMasterInput);
-        bgmInput.onEndEdit.RemoveListener(SetBGMInput);
-        sfxInput.onEndEdit.RemoveListener(SetSFXInput);
-        voiceInput.onEndEdit.RemoveListener(SetVoiceInput);
-        uiInput.onEndEdit.RemoveListener(SetUIInput);
-        sensitivityInput.onEndEdit.RemoveListener(SetSensitivityInput);
+        masterInput.onValueChanged.RemoveListener(SetMasterInput);
+        bgmInput.onValueChanged.RemoveListener(SetBGMInput);
+        sfxInput.onValueChanged.RemoveListener(SetSFXInput);
+        voiceInput.onValueChanged.RemoveListener(SetVoiceInput);
+        uiInput.onValueChanged.RemoveListener(SetUIInput);
+        sensitivityInput.onValueChanged.RemoveListener(SetSensitivityInput);
+    }
+    private void LateUpdate()
+    {
+        ClampInput(masterInput);
+        ClampInput(bgmInput);
+        ClampInput(sfxInput);
+        ClampInput(voiceInput);
+        ClampInput(uiInput);
+        ClampInput(sensitivityInput);
     }
 
     private void RefreshUI()
@@ -224,15 +233,34 @@ public class SettingsUI : MonoBehaviour
             SettingsData.MouseSensitivity = v;
         });
     }
-    private void UpdateInput(
-        string text,
-        Slider slider,
-        System.Action<float> onChanged)
+
+    private void ClampInput(TMP_InputField input)
     {
-        if (!float.TryParse(text, out float percent))
+        if (string.IsNullOrEmpty(input.text))
             return;
 
-        percent = Mathf.Clamp(percent, 0f, 100f);
+        if (!int.TryParse(input.text, out int value))
+            return;
+
+        value = Mathf.Clamp(value, 0, 100);
+
+        if (input.text != value.ToString())
+        {
+            input.SetTextWithoutNotify(value.ToString());
+        }
+    }
+    private void UpdateInput(
+     string text,
+     Slider slider,
+     System.Action<float> onChanged)
+    {
+        if (string.IsNullOrEmpty(text))
+            return;
+
+        if (!int.TryParse(text, out int percent))
+            return;
+
+        percent = Mathf.Clamp(percent, 0, 100);
 
         float value = percent / 100f;
 
