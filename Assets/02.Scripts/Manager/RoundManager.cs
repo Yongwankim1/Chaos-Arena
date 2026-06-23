@@ -108,6 +108,8 @@ public class RoundManager : NetworkBehaviour
     {
         MatchEnded = false;
 
+        RPC_PlayGameBGM();
+
         if (!HasStateAuthority)
             return;
 
@@ -816,5 +818,10 @@ public class RoundManager : NetworkBehaviour
         {
             SoundManager.Instance.PlayVoice(soundLibrary.Narration.TeamDeath);
         }
+    }
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayGameBGM()
+    {
+        SoundManager.Instance?.PlayBGM(soundLibrary.BGM.Game);
     }
 }

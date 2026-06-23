@@ -69,4 +69,5 @@ public class SpawnManager : MonoBehaviour
 
         return targetList[slotIndex].position;
     }
+
 }

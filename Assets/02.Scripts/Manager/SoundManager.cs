@@ -21,6 +21,7 @@ public class SoundManager : MonoBehaviour
     private readonly Dictionary<SoundEntry, Task<AudioClip>> loadingCache = new();
 
     private SoundEntry currentBGM;
+    private SoundEntry currentVoice;
 
     private void Awake()
     {
@@ -35,6 +36,7 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         CreatePool();
+        SettingsData.Load();
     }
 
     private void CreatePool()
@@ -139,7 +141,7 @@ public class SoundManager : MonoBehaviour
 
         bgmSource.clip = clip;
 
-        bgmSource.volume = entry.Volume;
+        bgmSource.volume = entry.Volume * SettingsData.MasterVolume * SettingsData.BGMVolume;
 
         bgmSource.loop = true;
 
@@ -155,6 +157,8 @@ public class SoundManager : MonoBehaviour
 
     public async void PlayVoice(SoundEntry entry)
     {
+        currentVoice = entry;
+
         AudioClip clip = await GetClip(entry);
 
         if (clip == null)
@@ -164,7 +168,7 @@ public class SoundManager : MonoBehaviour
 
         voiceSource.clip = clip;
 
-        voiceSource.volume = entry.Volume;
+        voiceSource.volume = entry.Volume * SettingsData.MasterVolume * SettingsData.VoiceVolume;
 
         voiceSource.Play();
     }
@@ -182,7 +186,7 @@ public class SoundManager : MonoBehaviour
 
         source.clip = clip;
 
-        source.volume = entry.Volume;
+        source.volume = entry.Volume * SettingsData.MasterVolume * SettingsData.SFXVolume;
 
         source.Play();
 
@@ -210,7 +214,7 @@ public class SoundManager : MonoBehaviour
 
         source.clip = clip;
 
-        source.volume = entry.Volume;
+        source.volume = entry.Volume * SettingsData.MasterVolume * SettingsData.SFXVolume;
 
         source.Play();
 
@@ -240,11 +244,34 @@ public class SoundManager : MonoBehaviour
 
         source.clip = clip;
 
-        source.volume = entry.Volume;
+        source.volume = entry.Volume * SettingsData.MasterVolume * SettingsData.SFXVolume;
 
         source.Play();
 
         StartCoroutine(ReturnAttachedRoutine(source));
+    }
+
+    public async void PlayUI(SoundEntry entry)
+    {
+        AudioClip clip = await GetClip(entry);
+
+        if (clip == null)
+            return;
+
+        AudioSource source = GetSource();
+
+        source.spatialBlend = 0f;
+
+        source.clip = clip;
+
+        source.volume =
+            entry.Volume *
+            SettingsData.MasterVolume *
+            SettingsData.UIVolume;
+
+        source.Play();
+
+        StartCoroutine(ReturnRoutine(source));
     }
 
     private IEnumerator ReturnRoutine(AudioSource source)
@@ -259,5 +286,25 @@ public class SoundManager : MonoBehaviour
         yield return new WaitWhile(() => source.isPlaying);
 
         ReturnSource(source);
+    }
+    public void RefreshVolume()
+    {
+        if (bgmSource != null &&
+            currentBGM != null)
+        {
+            bgmSource.volume =
+                currentBGM.Volume *
+                SettingsData.MasterVolume *
+                SettingsData.BGMVolume;
+        }
+
+        if (voiceSource != null &&
+            currentVoice != null)
+        {
+            voiceSource.volume =
+                currentVoice.Volume *
+                SettingsData.MasterVolume *
+                SettingsData.VoiceVolume;
+        }
     }
 }

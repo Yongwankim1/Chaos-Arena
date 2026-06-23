@@ -136,7 +136,7 @@ MonoBehaviour:
   BGM:
     Lobby:
       Clip:
-        m_AssetGUID: 
+        m_AssetGUID: f2df4c674ffa92f40b4d3abf3d9fa114
         m_SubObjectName: 
         m_SubObjectType: 
         m_SubObjectGUID: 
@@ -146,7 +146,7 @@ MonoBehaviour:
       MaxDistance: 30
     Game:
       Clip:
-        m_AssetGUID: 
+        m_AssetGUID: 9c97cd975743b964eaa9cd7d3ade48d8
         m_SubObjectName: 
         m_SubObjectType: 
         m_SubObjectGUID: 
