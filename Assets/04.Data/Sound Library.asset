@@ -146,7 +146,7 @@ MonoBehaviour:
       MaxDistance: 30
     Game:
       Clip:
-        m_AssetGUID: 9c97cd975743b964eaa9cd7d3ade48d8
+        m_AssetGUID: b4350f0df826ac84583edbdac8b3a98c
         m_SubObjectName: 
         m_SubObjectType: 
         m_SubObjectGUID: 

@@ -21,6 +21,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - BackGround
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b4350f0df826ac84583edbdac8b3a98c
+    m_Address: Assets/07.Sounds/BG/InGame_BG.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - BackGround
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: f2df4c674ffa92f40b4d3abf3d9fa114
     m_Address: Assets/07.Sounds/BG/Lobby.mp3
     m_ReadOnly: 0
