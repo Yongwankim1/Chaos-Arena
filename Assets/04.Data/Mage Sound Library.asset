@@ -134,7 +134,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillR:
     Clip:
-      m_AssetGUID: bcac492c8f3b4ee4cb234cd7fa8f3d02
+      m_AssetGUID: 828e424c3b7ec8d488bbb53e90655923
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
