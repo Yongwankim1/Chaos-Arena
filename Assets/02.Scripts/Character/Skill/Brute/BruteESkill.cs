@@ -94,7 +94,7 @@ public class BruteESkill : NetworkBehaviour, ISkillE, ISkillCooldown
     }
 
     // Animation Event
-    public void ApplyBuff()
+    public void ApplyDefenceBuff()
     {
         if (!HasStateAuthority)
             return;
@@ -134,7 +134,7 @@ public class BruteESkill : NetworkBehaviour, ISkillE, ISkillCooldown
     }
 
     // Animation Event
-    public void EndSkilla()
+    public void EndSkill()
     {
         if (!HasStateAuthority)
             return;
