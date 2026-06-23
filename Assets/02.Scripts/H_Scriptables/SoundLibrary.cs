@@ -22,8 +22,12 @@ public class NarrationCategory
     public SoundEntry Welcome;
     public SoundEntry RoundStart;
     public SoundEntry FiveSec;
+
     public SoundEntry PlayerKill;
     public SoundEntry PlayerDeath;
+    public SoundEntry TeamKill;
+    public SoundEntry TeamDeath;
+
     public SoundEntry BlueWin;
     public SoundEntry RedWin;
     public SoundEntry Victory;

@@ -11,8 +11,13 @@ public enum SoundType
     Narration_Welcome = 3000,
     Narration_RoundStart = 3001,
     Narration_5Sec = 3002,
+
     Narration_PlayerKill = 3003,
-    Narration_PlayerDeath = 3004,
+    Narration_TeamKill = 3004,
+
+    Narration_PlayerDeath = 3005,
+    Narration_TeamDeath = 3006,
+
     Narration_BlueWin = 3098,
     Narration_RedWin = 3099,
 

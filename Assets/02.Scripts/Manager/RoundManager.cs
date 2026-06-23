@@ -317,6 +317,15 @@ public class RoundManager : NetworkBehaviour
 
         if (killer != null)
         {
+            RPC_PlayKillVoice(
+                killer.Object.InputAuthority,
+                killer.Team,
+                victim.Object.InputAuthority,
+                victim.Team);
+        }
+
+        if (killer != null)
+        {
             if (killer.Team ==TeamType.Blue)
             {
                 BlueScore++;
@@ -767,5 +776,45 @@ public class RoundManager : NetworkBehaviour
         int index = Mathf.Clamp(CurrentRound - 1, 0, roundRuleData.Rounds.Length - 1);
 
         return roundRuleData.Rounds[index].RoundTime;
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_PlayKillVoice(PlayerRef killerPlayer,TeamType killerTeam,PlayerRef victimPlayer,TeamType victimTeam)
+    {
+        PlayerCharacter localPlayer =
+            GetLocalPlayer();
+
+        if (localPlayer == null)
+            return;
+
+        // ³»°¡ Å³ÇÔ
+        if (localPlayer.Object.InputAuthority == killerPlayer)
+        {
+            SoundManager.Instance.PlayVoice(soundLibrary.Narration.PlayerKill);
+
+            return;
+        }
+
+        // ¿ì¸®ÆÀÀÌ Å³ÇÔ
+        if (localPlayer.Team == killerTeam)
+        {
+            SoundManager.Instance.PlayVoice(soundLibrary.Narration.TeamKill);
+
+            return;
+        }
+
+        // ³»°¡ Á×À½
+        if (localPlayer.Object.InputAuthority == victimPlayer)
+        {
+            SoundManager.Instance.PlayVoice(soundLibrary.Narration.PlayerDeath);
+
+            return;
+        }
+
+        // ¿ì¸®ÆÀÀÌ Á×À½
+        if (localPlayer.Team == victimTeam)
+        {
+            SoundManager.Instance.PlayVoice(soundLibrary.Narration.TeamDeath);
+        }
     }
 }
