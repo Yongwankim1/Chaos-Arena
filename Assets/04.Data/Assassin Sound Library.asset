@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AssassinSoundLibrary
   FootStep:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 2531b536704aa2343a950b6c48d33650
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -59,17 +59,17 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-    Volume: 1
+    Volume: 0.7
     MinDistance: 3
     MaxDistance: 30
   Attack2:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 6da8919bb45e64f479511543914b9667
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-    Volume: 1
+    Volume: 0.7
     MinDistance: 3
     MaxDistance: 30
   Attack3:
@@ -79,7 +79,7 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-    Volume: 1
+    Volume: 0.7
     MinDistance: 3
     MaxDistance: 30
   Attack4:
@@ -89,7 +89,7 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-    Volume: 1
+    Volume: 0.7
     MinDistance: 3
     MaxDistance: 30
   Attack5:
@@ -99,7 +99,7 @@ MonoBehaviour:
       m_SubObjectType: 
       m_SubObjectGUID: 
       m_EditorAssetChanged: 0
-    Volume: 1
+    Volume: 0.7
     MinDistance: 3
     MaxDistance: 30
   Dash:
@@ -114,7 +114,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillQ:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 486677e58f0db894691b3cf2f9641075
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -124,7 +124,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillE:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 0ca2d3e89aa91884a96e0b072daea944
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 
@@ -134,7 +134,7 @@ MonoBehaviour:
     MaxDistance: 30
   SkillR:
     Clip:
-      m_AssetGUID: 
+      m_AssetGUID: 6bb62d17d0e914d44971e55ff81df3e5
       m_SubObjectName: 
       m_SubObjectType: 
       m_SubObjectGUID: 

@@ -33,6 +33,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - Assasin
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 2531b536704aa2343a950b6c48d33650
+    m_Address: Assets/07.Sounds/Assasin/AssasinFootStep.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Assasin
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6da8919bb45e64f479511543914b9667
     m_Address: Assets/07.Sounds/Assasin/AssasinAttack2.mp3
     m_ReadOnly: 0

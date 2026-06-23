@@ -14,7 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
   m_GroupName: Default Local Group
   m_GUID: b864e9e03c81504478ac28ef73b72155
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: 486677e58f0db894691b3cf2f9641075
+    m_Address: Assets/07.Sounds/Assasin/AssasinSkillQUse.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6bb62d17d0e914d44971e55ff81df3e5
+    m_Address: Assets/07.Sounds/Assasin/AssasinSkillRUse.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 1d4e407a6e0885d4bbf0c0e96ae37184, type: 2}
   m_SchemaSet:
