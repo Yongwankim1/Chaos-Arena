@@ -36114,6 +36114,8 @@ MonoBehaviour:
   RotationSmoothTime: 0.12
   SpeedChangeRate: 20
   attackMoveSpeed: 10
+  sprintManaDrainPerSecond: 5
+  sprintRecoverThresholdPercent: 0.2
   JumpCooldown: 0.25
   FallTimeout: 0.15
   Grounded: 1
@@ -36337,6 +36339,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 1538015521171091897}
   manaCost: 35
   cooldown: 10
+  recastDelay: 0.6
   damagePercent: 0.7
 --- !u!114 &5658246430456117541
 MonoBehaviour:

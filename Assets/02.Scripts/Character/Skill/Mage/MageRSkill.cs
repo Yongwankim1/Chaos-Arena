@@ -26,11 +26,19 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
 
     [SerializeField]
     private float cooldown = 5f;
+
+    [SerializeField]
+    private float recastDelay = 0.6f;
+
     [SerializeField]
     private float damagePercent = 0.8f;
 
     [Networked]
     public TickTimer Cooldown { get; set; }
+
+    [Networked]
+    private TickTimer RecastDelayTimer { get; set; }
+
     private CharacterActionLock _actionLock;
     private NetworkThirdPersonController _controller;
     public float CooldownDuration => cooldown;
@@ -85,6 +93,9 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
             return;
         if (isUsingR)
         {
+            if (!RecastDelayTimer.ExpiredOrNotRunning(Runner))
+                return;
+
             CancelR();
             return;
         }
@@ -99,6 +110,7 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
             return;
 
         Cooldown = TickTimer.CreateFromSeconds(Runner, cooldown);
+        RecastDelayTimer = TickTimer.CreateFromSeconds(Runner, recastDelay);
         isUsingR = true;
         cancelRequested = false;
 
