@@ -24,7 +24,11 @@ public class CharacterActionLock : NetworkBehaviour
     public void Unlock(ActionLockType type)
     {
         if (!HasStateAuthority)
+        {
+            RemoveLock(type);
+            RPC_RequestUnlock(type);
             return;
+        }
 
         RemoveLock(type);
         RPC_RemoveLock(type);
@@ -33,10 +37,26 @@ public class CharacterActionLock : NetworkBehaviour
     public void ClearAll()
     {
         if (!HasStateAuthority)
+        {
+            _lockCounts.Clear();
+            RPC_RequestClearAll();
             return;
+        }
 
         _lockCounts.Clear();
         RPC_ClearAll();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestUnlock(ActionLockType type)
+    {
+        Unlock(type);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestClearAll()
+    {
+        ClearAll();
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
