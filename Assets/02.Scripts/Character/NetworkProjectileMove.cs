@@ -7,7 +7,7 @@ public class NetworkProjectileMove : NetworkBehaviour
     [SerializeField] private float maxDistance = 30f;
     [SerializeField] private float height = 2f;
     [SerializeField] private float radius = 0.2f;
-    [SerializeField] private int damage = 20;
+    private int damage = 20;
     [SerializeField] private LayerMask hitMask;
     [SerializeField] private GameObject hitEffectPrefab;
     [SerializeField] bool isDebug = true;

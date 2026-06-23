@@ -7,7 +7,7 @@ public class MageLightningProjectile : NetworkBehaviour
     [SerializeField] private float maxTravelDistance = 10f;
     [SerializeField] private float explosionDelay = 0.25f;
     [SerializeField] private float explosionRadius = 3f;
-    [SerializeField] private int damage = 30;
+    private int damage = 0;
     [SerializeField] private LayerMask targetMask;
     [SerializeField] private bool isDebug = true;
     [SerializeField] private ParticleSystem effect;
@@ -21,9 +21,10 @@ public class MageLightningProjectile : NetworkBehaviour
     [Networked] private int ExplosionCount { get; set; }
     [Networked] private Vector3 ExplosionPosition { get; set; }
 
-    public void Init(IAttacker attacker)
+    public void Init(IAttacker attacker, int damage)
     {
         this.attacker = attacker;
+        this.damage = damage;
     }
 
     public override void Spawned()

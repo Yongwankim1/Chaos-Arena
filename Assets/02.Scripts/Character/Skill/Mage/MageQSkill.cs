@@ -23,6 +23,8 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
     [SerializeField]
     private float cooldown = 5f;
 
+    [SerializeField] private float damagePercent = 3f;
+
     [Networked]
     public TickTimer Cooldown { get; set; }
     public TickTimer CooldownTimer => Cooldown;
@@ -106,8 +108,9 @@ public class MageQSkill : NetworkBehaviour, ISkillQ , ISkillCooldown
     {
         if (!HasStateAuthority)
             return;
-
-        Runner.Spawn(lightingPrefab, lightingEffectSpawnPoint.position, Quaternion.LookRotation(transform.forward), Object.InputAuthority, (runner, obj) => { obj.GetComponent<MageLightningProjectile>().Init(GetComponent<IAttacker>()); });
+        float finalDamage = _player.AttackPower * damagePercent;
+        Runner.Spawn(lightingPrefab, lightingEffectSpawnPoint.position, Quaternion.LookRotation(transform.forward), Object.InputAuthority, (runner, obj) => 
+        { obj.GetComponent<MageLightningProjectile>().Init(GetComponent<IAttacker>(), (int)finalDamage); });
     }
 
 

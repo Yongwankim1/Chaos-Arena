@@ -36113,6 +36113,7 @@ MonoBehaviour:
   JumpCooldown: 0.25
   FallTimeout: 0.15
   Grounded: 1
+  IgnoreLandAnimation: 0
   PlayerCameraRoot: {fileID: 7184959071715634364}
   TopClamp: 70
   BottomClamp: -30
@@ -36247,6 +36248,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
   _ClassType: 2
   _CurrentHP: 0
+  _IsUsingUltimate:
+    _value: 0
   _CurrentMana: 0
   manaRegenDelay: 3
   manaRegenPerSecond: 8
@@ -36290,6 +36293,7 @@ MonoBehaviour:
   lightingEffectSpawnPoint: {fileID: 5363686509817726517}
   manaCost: 25
   cooldown: 6
+  damagePercent: 3
   magicSoket: {fileID: 5291362499529697245}
   orbEffect: {fileID: 3610291427603083779, guid: 6ed07c446edcd004aabff8dde33ec815, type: 3}
   magicCircle: {fileID: 4646414996598350614, guid: 1c5645e10b021c143b0da4191035173d, type: 3}
@@ -36311,6 +36315,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 408715566528550438}
   manaCost: 20
   cooldown: 7
+  damagePercent: 0.5
 --- !u!114 &2540581439080627284
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36327,6 +36332,7 @@ MonoBehaviour:
   spawnPoint: {fileID: 1538015521171091897}
   manaCost: 35
   cooldown: 10
+  damagePercent: 0.7
 --- !u!114 &5658246430456117541
 MonoBehaviour:
   m_ObjectHideFlags: 0

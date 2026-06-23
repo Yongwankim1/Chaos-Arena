@@ -26,6 +26,8 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
 
     [SerializeField]
     private float cooldown = 5f;
+    [SerializeField]
+    private float damagePercent = 0.8f;
 
     [Networked]
     public TickTimer Cooldown { get; set; }
@@ -151,11 +153,11 @@ public class MageRSkill : NetworkBehaviour, ISkillR, ISkillCooldown
             Runner.Despawn(spawnedLaser);
             spawnedLaser = null;
         }
-
+        float finalDamage = _player.AttackPower * damagePercent;
         spawnedLaser = Runner.Spawn(Prefab, spawnPoint.position,
             spawnPoint.rotation, Object.InputAuthority,
             (runner, obj) => {
-                obj.GetComponent<MageLaserAttack>().Init(GetComponent<IAttacker>());
+                obj.GetComponent<MageLaserAttack>().Init(GetComponent<IAttacker>(), (int) finalDamage);
             });
     }
 

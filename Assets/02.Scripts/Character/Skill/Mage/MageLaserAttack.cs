@@ -7,7 +7,7 @@ public class MageLaserAttack : NetworkBehaviour
     [SerializeField] bool isDebug = true;
     [SerializeField] float attackDistance = 20f;
     [SerializeField] float radius = 1f;
-    [SerializeField] int damage = 10;
+    private int damage = 0;
     [SerializeField] float damageInterval = 0.25f;
     [SerializeField] LayerMask targetMask;
     [SerializeField] LayerMask wallMask;
@@ -19,9 +19,10 @@ public class MageLaserAttack : NetworkBehaviour
         Runner.Despawn(Object);
         Destroy(gameObject);
     }
-    public void Init(IAttacker attacker)
+    public void Init(IAttacker attacker, int damage)
     {
         this.attacker = attacker;
+        this.damage = damage;
     }
 
     public override void Render()
