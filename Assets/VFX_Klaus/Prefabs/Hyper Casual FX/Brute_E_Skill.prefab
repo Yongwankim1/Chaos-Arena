@@ -10004,7 +10004,7 @@ GameObject:
   - component: {fileID: 4124775738041080703}
   - component: {fileID: 4124775738041080702}
   m_Layer: 0
-  m_Name: HCFX_MagicCircle_01
+  m_Name: Brute_E_Skill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

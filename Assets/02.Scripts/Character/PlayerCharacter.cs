@@ -48,7 +48,8 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     private float redBuffSlowPercent;
     private float redBuffSlowDuration;
     private bool hasRedBuff;
-
+    [Networked]
+    public float DamageReductionPercent { get; set; }
     public float AttackPower =>
         _classData.attackPower * (1f + redBuffAttackBonusPercent);
 
@@ -264,9 +265,14 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
 
         _lastAttacker = attacker;
 
-        CurrentHP = Mathf.Max(
-            0,
-            CurrentHP - damage);
+        float finalDamage = damage;
+
+        if (DamageReductionPercent > 0f)
+        {
+            finalDamage *= (1f - DamageReductionPercent * 0.01f);
+        }
+
+        CurrentHP = Mathf.Max(0,CurrentHP - Mathf.RoundToInt(finalDamage));
 
         RPC_PlayDamageVignette();
 
