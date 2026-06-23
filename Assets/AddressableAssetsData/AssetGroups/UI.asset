@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: Unity.Addressables.Editor::UnityEditor.AddressableAssets.Settings.AddressableAssetGroup
+  m_GroupName: UI
+  m_GUID: 4cbb75c6aa63a5c4f8fb57f17450805b
+  m_SerializeEntries:
+  - m_GUID: 06a54496fcab948ba8e0b955f19bad36
+    m_Address: Assets/07.Sounds/UI/USER_INTERFACE_Error_02.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a8d60e9314d1c43dd90f6dfe29b89c89
+    m_Address: Assets/07.Sounds/UI/BtnStartSFX.wav
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - UI
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 1d4e407a6e0885d4bbf0c0e96ae37184, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: d82b263118dc70145973bebe2462bd8b, type: 2}
+    - {fileID: 11400000, guid: e61f4f8420f360f408756d0009cbe117, type: 2}

@@ -45,6 +45,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Assasin
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 486677e58f0db894691b3cf2f9641075
+    m_Address: Assets/07.Sounds/Assasin/AssasinSkillQUse.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Assasin
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6bb62d17d0e914d44971e55ff81df3e5
+    m_Address: Assets/07.Sounds/Assasin/AssasinSkillRUse.mp3
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - Assasin
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6da8919bb45e64f479511543914b9667
     m_Address: Assets/07.Sounds/Assasin/AssasinAttack2.mp3
     m_ReadOnly: 0
