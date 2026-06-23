@@ -258,24 +258,23 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         if (SettingsManager.Instance != null &&
             SettingsManager.Instance.IsOpen)
+            return;
+
+        float sensitivity =
+            SettingsData.MouseSensitivity;
+
+        if (input.Look.sqrMagnitude >= _threshold)
         {
-            return;
+            _cinemachineTargetYaw +=
+                input.Look.x *
+                lookMultiplier *
+                sensitivity;
+
+            _cinemachineTargetPitch +=
+                input.Look.y *
+                lookMultiplier *
+                sensitivity;
         }
-
-        if (input.Look.sqrMagnitude < _threshold)
-            return;
-
-        float sensitivity = SettingsData.MouseSensitivity;
-
-        _cinemachineTargetYaw +=
-            input.Look.x *
-            lookMultiplier *
-            sensitivity;
-
-        _cinemachineTargetPitch +=
-            input.Look.y *
-            lookMultiplier *
-            sensitivity;
 
         _cinemachineTargetPitch =
             Mathf.Clamp(
