@@ -5327,7 +5327,7 @@ GameObject:
   - component: {fileID: 4526682489233482746}
   - component: {fileID: 4526682489233482747}
   m_Layer: 0
-  m_Name: HCFX_Dust_03
+  m_Name: Brute_Q_Effect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -14,6 +14,9 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
     public float CurrentHP { get; set; }
 
     [Networked]
+    public NetworkBool IsUsingUltimate { get; set; }
+
+    [Networked]
     public float CurrentMana { get; set; }
 
     [SerializeField]
@@ -190,6 +193,7 @@ public class PlayerCharacter : NetworkBehaviour, IDamageable, IDeathHandler, IHa
         _isInitialized = true;
 
         LocalInitialize();
+
     }
     private void ApplyMovementStat()
     {

@@ -9,6 +9,8 @@ public class CharacterActionLock : NetworkBehaviour
     public bool CanMove => !_lockCounts.ContainsKey(ActionLockType.Move);
     public bool CanAttack => !_lockCounts.ContainsKey(ActionLockType.Attack);
     public bool CanDash => !_lockCounts.ContainsKey(ActionLockType.Dash);
+    public bool CanJump => !_lockCounts.ContainsKey(ActionLockType.Jump);
+    public bool CanSkill => !_lockCounts.ContainsKey(ActionLockType.Skill);
 
     public void Lock(ActionLockType type)
     {

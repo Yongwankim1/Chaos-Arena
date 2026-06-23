@@ -33,7 +33,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     [Header("Ground")]
     public bool Grounded = true;
     private float _airTime;
-
+    public bool IgnoreLandAnimation;
     [Header("Camera")]
     public Transform PlayerCameraRoot;
     public float TopClamp = 70f;
@@ -208,6 +208,14 @@ public class NetworkThirdPersonController : NetworkBehaviour
     {
         bool groundedNow = _controller.Grounded;
 
+        if (IgnoreLandAnimation)
+        {
+            _airTime = 0f;
+            Grounded = groundedNow;
+            _wasGrounded = groundedNow;
+            return;
+        }
+
         if (!groundedNow)
         {
             _airTime += Runner.DeltaTime;
@@ -218,6 +226,12 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
             if (shouldPlayLand)
             {
+                if (_playerCharacter != null &&
+                    _playerCharacter.IsUsingUltimate)
+                {
+                    return;
+                }
+
                 if (HasStateAuthority)
                 {
                     if (_combat == null ||
@@ -384,6 +398,14 @@ public class NetworkThirdPersonController : NetworkBehaviour
     }
     private void JumpAndGravity(NetworkInputData input)
     {
+        if (_playerCharacter != null && _playerCharacter.IsUsingUltimate)
+        {
+            return;
+        }
+        if (_actionLock != null && !_actionLock.CanJump)
+        {
+            return;
+        }
         if (_jumpCooldownTimer > 0f)
             _jumpCooldownTimer -= Runner.DeltaTime;
 
@@ -433,7 +455,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
     }
     private void CaptureAnimationState()
     {
-        bool freeFall = !Grounded && _fallTimeoutDelta <= 0f;
+        bool freeFall =!_playerCharacter.IsUsingUltimate &&!Grounded && _fallTimeoutDelta <= 0f;
 
         if (HasInputAuthority)
         {
@@ -457,6 +479,12 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
         float speed = HasInputAuthority ? _localAnimatedSpeed : AnimatedSpeed;
         bool grounded = HasInputAuthority ? _localAnimatedGrounded : (bool)AnimatedGrounded;
+
+        if (_playerCharacter != null && _playerCharacter.IsUsingUltimate)
+        {
+            grounded = false;
+        }
+
         bool freeFall = HasInputAuthority ? _localAnimatedFreeFall : (bool)AnimatedFreeFall;
 
         _animator.SetFloat(_animIDSpeed, speed);
@@ -511,6 +539,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
         {
             return;
         }
+        if (_playerCharacter != null && _playerCharacter.IsUsingUltimate)
+        {
+            return;
+        }
+
 
         if (!input.Attack)
             return;
@@ -547,6 +580,11 @@ public class NetworkThirdPersonController : NetworkBehaviour
         if (!input.Dash)
             return;
 
+        if (_playerCharacter != null && _playerCharacter.IsUsingUltimate)
+        {
+            return;
+        }
+
         if (_actionLock != null && !_actionLock.CanDash)
             return;
 
@@ -576,6 +614,16 @@ public class NetworkThirdPersonController : NetworkBehaviour
 
     private void Skill(NetworkInputData input)
     {
+        if (_playerCharacter != null && _playerCharacter.IsUsingUltimate)
+        {
+            return;
+        }
+
+        if (_actionLock != null && !_actionLock.CanSkill)
+        {
+            return;
+        }
+
         if (input.SkillQ)
         {
             _skillQ?.UseQ();
@@ -647,4 +695,7 @@ public class NetworkThirdPersonController : NetworkBehaviour
             _animator.SetBool(_animIDFreeFall, false);
         }
     }
+
+    public void FootL() { }
+    public void FootR() { }
 }
