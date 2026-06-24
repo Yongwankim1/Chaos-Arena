@@ -22,6 +22,7 @@ public class CrosshairTargetIndicator : MonoBehaviour
     private Ray _lastCameraRay;
     private bool _lastMatched;
 
+    
     public void Initialize(PlayerCharacter player)
     {
         _player = player;
@@ -102,9 +103,48 @@ public class CrosshairTargetIndicator : MonoBehaviour
 
         return image;
     }
+    private bool _isCrosshairVisible;
 
+    private void SetVisible(bool visible)
+    {
+        if (_isCrosshairVisible == visible)
+        {
+            return;
+        }
+
+        _isCrosshairVisible = visible;
+
+        if (crosshairGraphics != null && crosshairGraphics.Length > 0)
+        {
+            foreach (Graphic graphic in crosshairGraphics)
+            {
+                if (graphic != null)
+                {
+                    graphic.enabled = visible;
+                }
+            }
+        }
+
+        if (crosshairImage != null)
+        {
+            crosshairImage.enabled = visible;
+        }
+    }
     private void Update()
     {
+        bool shouldShow =
+            Cursor.lockState == CursorLockMode.Locked &&
+            (RoundManager.Instance == null ||
+             RoundManager.Instance.CurrentState != RoundState.CharacterSelect);
+
+        SetVisible(shouldShow);
+
+        if (!shouldShow)
+        {
+            SetColor(normalColor);
+            return;
+        }
+
         if (_player == null)
         {
             SetVisible(false);
@@ -120,7 +160,6 @@ public class CrosshairTargetIndicator : MonoBehaviour
         RefreshDebugRays();
         DrawDebugRays();
 
-        bool shouldShow = IsCursorLocked();
         SetVisible(shouldShow);
 
         if (!shouldShow)
@@ -389,28 +428,6 @@ public class CrosshairTargetIndicator : MonoBehaviour
         if (crosshairImage != null && !changedAny)
         {
             crosshairImage.color = color;
-        }
-    }
-
-    private void SetVisible(bool visible)
-    {
-        bool changedAny = false;
-
-        if (crosshairGraphics != null && crosshairGraphics.Length > 0)
-        {
-            foreach (Graphic graphic in crosshairGraphics)
-            {
-                if (graphic != null)
-                {
-                    graphic.enabled = visible;
-                    changedAny = true;
-                }
-            }
-        }
-
-        if (crosshairImage != null && !changedAny)
-        {
-            crosshairImage.enabled = visible;
         }
     }
 
