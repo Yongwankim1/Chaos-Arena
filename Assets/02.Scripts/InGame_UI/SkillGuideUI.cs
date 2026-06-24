@@ -15,42 +15,60 @@ public class SkillGuideUI : MonoBehaviour
     private GameObject bruteGuide;
 
     private bool _guideSet;
+    private bool _hasShownFirstGuide;
 
     private void Start()
     {
-        guidePanel.SetActive(false);
+        SetPanelVisible(false);
     }
 
     private void Update()
     {
         if (RoundManager.Instance == null)
-            return;
-
-        if (PlayerCharacter.Local == null)
-            return;
-
-        if (!_guideSet && PlayerCharacter.Local.ClassType != CharacterClassType.None)
         {
-            ShowGuide(PlayerCharacter.Local.ClassType);
+            SetPanelVisible(false);
+            return;
+        }
 
+        RoundState state = RoundManager.Instance.CurrentState;
+
+        if (state == RoundState.Playing ||
+            state == RoundState.RoundEnd ||
+            state == RoundState.GameEnd)
+        {
+            SetPanelVisible(false);
+            return;
+        }
+
+        if (_hasShownFirstGuide)
+        {
+            return;
+        }
+
+        PlayerCharacter localPlayer = PlayerCharacter.Local;
+
+        if (localPlayer == null)
+        {
+            SetPanelVisible(false);
+            return;
+        }
+
+        if (localPlayer.ClassType == CharacterClassType.None)
+        {
+            SetPanelVisible(false);
+            return;
+        }
+
+        if (!_guideSet)
+        {
+            ShowGuide(localPlayer.ClassType);
             _guideSet = true;
         }
 
-        // 캐릭터 선택 후 대기시간
-        if (RoundManager.Instance.CurrentRound == 1 &&
-            RoundManager.Instance.CurrentState == RoundState.Preparation)
+        if (state == RoundState.CharacterSelect ||
+            state == RoundState.Preparation)
         {
-            if (!guidePanel.activeSelf)
-            {
-                guidePanel.SetActive(true);
-            }
-        }
-        else
-        {
-            if (guidePanel.activeSelf)
-            {
-                guidePanel.SetActive(false);
-            }
+            SetPanelVisible(true);
         }
     }
 
@@ -73,6 +91,25 @@ public class SkillGuideUI : MonoBehaviour
             case CharacterClassType.Brute:
                 bruteGuide.SetActive(true);
                 break;
+        }
+    }
+
+    private void SetPanelVisible(bool visible)
+    {
+        if (guidePanel == null)
+            return;
+
+        if (guidePanel.activeSelf == visible)
+            return;
+
+        guidePanel.SetActive(visible);
+
+        if (!visible &&
+            _guideSet &&
+            RoundManager.Instance != null &&
+            RoundManager.Instance.CurrentState == RoundState.Playing)
+        {
+            _hasShownFirstGuide = true;
         }
     }
 }
