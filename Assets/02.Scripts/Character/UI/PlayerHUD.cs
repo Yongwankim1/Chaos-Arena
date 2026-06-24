@@ -30,6 +30,7 @@ public class PlayerHUD : MonoBehaviour
     [SerializeField] private SkillSlotUI qSkillSlot;
     [SerializeField] private SkillSlotUI eSlot;
     [SerializeField] private SkillSlotUI rSlot;
+    [SerializeField] private CrosshairTargetIndicator crosshair;
 
     private float _lastHP = -9999;
     private float _lastMP = -9999;
@@ -50,6 +51,13 @@ public class PlayerHUD : MonoBehaviour
         _skillE = player.GetComponent<ISkillE>();
         _skillR = player.GetComponent<ISkillR>();
         SetupSkillIcons();
+
+        if (crosshair == null)
+        {
+            crosshair = CrosshairTargetIndicator.CreateDefault(transform);
+        }
+
+        crosshair?.Initialize(player);
     }
 
     private void Update()
