@@ -26569,7 +26569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonFollow
   Damping: {x: 0.1, y: 0.25, z: 0.3}
-  ShoulderOffset: {x: 1, y: 0, z: 0}
+  ShoulderOffset: {x: 0, y: 0.7, z: 0}
   VerticalArmLength: 0
   CameraSide: 0.6
   CameraDistance: 7
@@ -116957,6 +116957,114 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4222296821985314, guid: 5812f95c175b34e7a8e5a7566a43a0ef, type: 3}
   m_PrefabInstance: {fileID: 1311608744}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1311914812
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 399781693751956223, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_Name
+      value: Canvas-CrossHair
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 494824745962455967, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+--- !u!114 &1311914813 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6671350930657587598, guid: 3b7f4d6ad46057b4c812b15743a0f597, type: 3}
+  m_PrefabInstance: {fileID: 1311914812}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7378e2131eb4084a85f8ddb6075110a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CrosshairTargetIndicator
 --- !u!1001 &1313043076
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -145788,6 +145896,7 @@ MonoBehaviour:
   qSkillSlot: {fileID: 1506200394}
   eSlot: {fileID: 57626825}
   rSlot: {fileID: 1409505296}
+  crosshair: {fileID: 1311914813}
 --- !u!1001 &1635960038
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -192946,3 +193055,4 @@ SceneRoots:
   - {fileID: 857005880}
   - {fileID: 1616094770}
   - {fileID: 724265998}
+  - {fileID: 1311914812}
