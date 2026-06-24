@@ -29,8 +29,7 @@ public class SkillGuideUI : MonoBehaviour
         if (PlayerCharacter.Local == null)
             return;
 
-        if (!_guideSet &&
-            PlayerCharacter.Local.ClassType != CharacterClassType.None)
+        if (!_guideSet && PlayerCharacter.Local.ClassType != CharacterClassType.None)
         {
             ShowGuide(PlayerCharacter.Local.ClassType);
 
@@ -39,7 +38,7 @@ public class SkillGuideUI : MonoBehaviour
 
         // 캐릭터 선택 후 대기시간
         if (RoundManager.Instance.CurrentRound == 1 &&
-            RoundManager.Instance.CurrentState == RoundState.Waiting)
+            RoundManager.Instance.CurrentState == RoundState.Preparation)
         {
             if (!guidePanel.activeSelf)
             {
